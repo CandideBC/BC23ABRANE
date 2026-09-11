@@ -63,7 +63,7 @@ table 50067 "Prepa colisage"
                 recPrepa.ModifyAll("Numero camion",Rec."Numero camion");
 
                 UC.Get(Rec."No. UC");
-                UC."Numero camion" := Rec."Numero camion";
+                UC."Numero camion expedition" := Rec."Numero camion";
                 UC.Modify();
             end;
         }

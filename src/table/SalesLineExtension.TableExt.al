@@ -984,7 +984,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             PrepaColisage."No. UC" := UC."No.";
             PrepaColisage."Type UC" := UC."Type UC";
             PrepaColisage.Numerotation := UC.Numerotation;
-            PrepaColisage."Numero camion" := UC."Numero camion";
+            PrepaColisage."Numero camion" := UC."Numero camion expedition";
             PrepaColisage.Phase := Phase;
             PrepaColisage."No. article" := "No.";
             PrepaColisage.Designation := Description;

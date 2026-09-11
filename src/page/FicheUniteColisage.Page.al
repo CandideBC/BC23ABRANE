@@ -31,7 +31,15 @@ page 50128 "Fiche unite colisage"
                 field(Numerotation; Rec.Numerotation)
                 {
                 }
-                field("Numero camion"; Rec."Numero camion")
+                field("No. container"; Rec."No. container")
+                {
+                    ApplicationArea = All;
+                }
+                field("Numero camion reception"; Rec."Numero camion reception")
+                {
+                    ApplicationArea = All;
+                }
+                field("Numero camion expedition";Rec."Numero camion expedition")
                 {
                 }
             }

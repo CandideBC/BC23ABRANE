@@ -221,7 +221,7 @@ page 50123 "Fiche saisie expedition"
             {
                 SubPageLink = "Document No." = field("No.");
             }
-            part(SF_UC_Commande; SFSaisieExpPrepaColisage)
+            part(SF_UC_Commande; "SF FichE Expe UC Commande")
             {
                 SubPageLink = "No. commande" = field("No.");
             }

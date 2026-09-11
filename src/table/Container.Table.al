@@ -630,11 +630,15 @@ table 50040 Container
     var
         LigneContainer: Record "Ligne container";
         UCContainer: Record "UC container";
+        UCCommande: Record "UC Commande";
         EnteteAchat: Record "Purchase Header";
+        EnteteVente: Record "Sales Header";
+        UC: Record "Unite colisage";
         NumCdeAchat: Code[20];
         NoDocVente: Text;
         DateChargementTxt: Text;
         DateLivDemandeeTxt: Text;
+        TransfererUC: Boolean;
         RienAValiderMsg: Label 'Il n''y a rien à réceptionner (veuillez saisir la quantité à recevoir pour chaque ligne).';
         QuantiteTropGrandeErr: Label 'Sur la ligne %1 de ce container, la quantité à recevoir est supérieure à la quantité restante (commande %2, ligne %3).', Comment = '%1 = N° ligne container %2 = N° commande %3 = N° ligne commande';
         NumFactFns: Code[35];
@@ -728,17 +732,52 @@ table 50040 Container
             UCContainer.SetCurrentKey("No. container", "No. commande achat");
             UCContainer.Setrange("No. container", Rec."No.");
             UCContainer.SetFilter("No. commande achat", '<>%1', '');
-            if UCContainer.FindSet(false) then begin
+            if UCContainer.FindSet(true) then begin
                 NumCdeAchat := '';
                 repeat
                     if UCContainer."No. commande achat" <> NumCdeAchat then
                         if EnteteAchat.Get(EnteteAchat."Document Type"::Order, UCContainer."No. commande achat") then begin
                             EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVente, DateChargementTxt, DateLivDemandeeTxt);
-                            if Copystr(NoDocVente,1,2) = 'CC' then begin //Pas génial mais permet d'exclure les devis et la valeur "Multiple"
-                                //On sait ici que la commande d'achat n'est affectée qu'à une seule commande de vente, on peut transférer l'UC vers cette commande vente
-                            end;
+                            TransfererUC := (Copystr(NoDocVente, 1, 2) = 'CC'); //Pas génial mais permet d'exclure les devis et la valeur "Multiple" 
                         end;
+
+                    if transfererUC then begin
+                        //On sait ici que la commande d'achat n'est affectée qu'à une seule commande de vente, on peut transférer l'UC vers cette commande vente
+                        UCCommande.Init();
+                        UCCommande."No. commande" := copystr(NoDocVente, 1, 20);
+                        UCCommande."No. UC" := UCContainer."No. UC";
+                        UCCommande."Type UC" := UCContainer."Type UC";
+                        UCCommande.Numerotation := UCContainer.Numerotation;
+                        UCCommande.Longueur := UCContainer.Longueur;
+                        UCCommande.Largeur := UCContainer.Largeur;
+                        UCCommande.Hauteur := UCContainer.Hauteur;
+                        UCCommande.Dimensions := UCContainer.Dimensions;
+                        UCCommande."Poids brut" := UCContainer."Poids brut UC";
+                        if EnteteVente.get(EnteteVente."Document Type"::Order, NoDocVente) then
+                            UCCommande."No. client" := EnteteVente."Sell-to Customer No.";
+                        UCCommande.Insert();
+
+                        //On va créer les UC dans la table des unités de colisage (jusqu'à présent c'était juste un N° d'UC rattaché au container)
+                        if not UC.get(UCContainer."No. UC") then begin
+                            UC.Init();
+                            UC."No." := UCContainer."No. UC";
+                            UC."Type UC" := UCContainer."Type UC";
+                            UC.Numerotation := UCContainer.Numerotation;
+                            UC.Longueur := UCContainer.Longueur;
+                            UC.Largeur := UCContainer.Largeur;
+                            UC.Hauteur := UCContainer.Hauteur;
+                            UC.Dimensions := UCContainer.Dimensions;
+                            UC."Poids brut" := UCContainer."Poids brut UC";
+                            UC."No. client" := UCCommande."No. client";
+                            UC."Statut UC" := UC."Statut UC"::"Reçue";
+                            UC."No. container" := Rec."No.";
+                            UC.Insert();
+                        end;
+                    end;
+                        
                     NumCdeAchat := UCContainer."No. commande achat";
+                    UCContainer."Statut UC" := UCContainer."Statut UC"::"Reçue";
+                    UCContainer.Modify();
                 until UCContainer.Next() = 0;
             end;
             //KAN.FHA 11/09/2026 FIN

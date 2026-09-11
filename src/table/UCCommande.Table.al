@@ -37,7 +37,7 @@ table 50068 "UC Commande"
                         Rec.Hauteur := UC.Hauteur;
                         Rec.Dimensions := UC.Dimensions;
                         Rec."No. client" := UC."No. client";
-                        Rec."Numero camion" := UC."Numero camion";
+                        Rec."Numero camion" := UC."Numero camion expedition";
                         Rec.Numerotation := UC.Numerotation;
                     end;
             end;
@@ -215,7 +215,7 @@ table 50068 "UC Commande"
         UC.Hauteur := Hauteur;
         UC.Dimensions := Dimensions;
         UC.Numerotation := Numerotation;
-        UC."Numero camion" := "Numero camion";
+        UC."Numero camion expedition" := "Numero camion";
         UC."Poids brut" := "Poids brut";
         UC."Type UC" := "Type UC";
         UC."No. client" := "No. client";

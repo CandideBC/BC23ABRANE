@@ -32,7 +32,10 @@ page 50126 "Liste unites colisage"
                 field(Numerotation; Rec.Numerotation)
                 {
                 }
-                field("Numero camion"; Rec."Numero camion")
+                field("Numero camion reception";Rec."Numero camion reception")
+                {
+                }
+                field("Numero camion expedition";Rec."Numero camion expedition")
                 {
                 }
             }

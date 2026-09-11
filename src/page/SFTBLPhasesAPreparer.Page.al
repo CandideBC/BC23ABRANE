@@ -33,8 +33,6 @@ page 50044 "SF TBL Phases a preparer"
                     Editable = false;
                 }
 
-
-
                 field(PctPrepaSurStock; PctPrepaSurStock)
                 {
                     ApplicationArea = All;
@@ -45,7 +43,6 @@ page 50044 "SF TBL Phases a preparer"
                     Editable = false;
                 }
 
-
                 field(NbArticlesAPreparer; NbArticlesAPreparer)
                 {
                     ApplicationArea = All;
@@ -55,7 +52,6 @@ page 50044 "SF TBL Phases a preparer"
                     DecimalPlaces = 0 : 5;
                     Editable = false;
                 }
-
 
                 field(PctExpedie; PctExpedie)
                 {
@@ -301,8 +297,8 @@ page 50044 "SF TBL Phases a preparer"
         EnteteCommande.SetRange("No.", Rec."No. document");
         if EnteteCommande.FindSet(false) then begin
             FicheSaisieExpe.SetTableView(EnteteCommande);
-            Clear(FicheSaisieExpe);
             FicheSaisieExpe.Run();
+            Clear(FicheSaisieExpe);
         end;
     end;
 

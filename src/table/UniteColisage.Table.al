@@ -50,9 +50,20 @@ table 50066 "Unite colisage"
             Caption = 'Numérotation';
             DataClassification = ToBeClassified;
         }
-        field(40;"Numero camion"; Code[20])
+        field(35;"No. container"; Code[20])
         {
-            Caption = 'Numéro camion';
+            Caption = 'N° container';
+            DataClassification = ToBeClassified;
+            Editable = false; //Enregistré par le systeme quand on réceptionne le container.
+        }
+        field(40;"Numero camion expedition"; Code[20])
+        {
+            Caption = 'Numéro camion expé';
+            DataClassification = ToBeClassified;
+        }
+        field(41;"Numero camion reception"; Code[20])
+        {
+            Caption = 'Numéro camion récep.';
             DataClassification = ToBeClassified;
         }
         field(42;Longueur; Integer)
@@ -133,7 +144,7 @@ table 50066 "Unite colisage"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "Type UC","No.",Numerotation,"Numero camion")
+        fieldgroup(DropDown; "Type UC","No.",Numerotation,"Numero camion expedition")
         {
         }
     }
