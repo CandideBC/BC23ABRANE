@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\ABRANEImportDonnees"
+		}
+	],
+	"settings": {
+		"editor.foldingMaximumRegions": 10000
+	}
+}

@@ -1,0 +1,24 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ABRANE BC23 W2",
+            "request": "launch",
+            "type": "al",
+            "environmentType": "OnPrem",
+            "server": "http://localhost:8080/ABRANEBC23W2",
+            "serverInstance": "ABRANEBC23W2",
+            "authentication": "Windows",
+            //"startupObjectId": 9307,
+            "startupObjectType": "Page",
+            "breakOnError": "All",
+            "launchBrowser": true,
+            "enableLongRunningSqlStatements": true,
+            "enableSqlInformationDebugger": true,
+            "tenant": "default",
+            "port":10104,
+            "schemaUpdateMode": "ForceSync",
+            "usePublicURLFromServer": true
+        }
+    ]
+}

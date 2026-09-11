@@ -1,0 +1,31 @@
+# === AL / Business Central (OnPrem) ===
+
+# Symboles téléchargés (packages Microsoft/dépendances) — régénérés par "AL: Download symbols"
+.alpackages/
+.alcache/
+
+# Snapshots de compilation AL
+.snapshots/
+
+# Paquets compilés (.app) — artefacts de build, pas du code source
+*.app
+
+# Fichier RAD (Rapid Application Development) — régénéré à chaque session VS Code
+rad.json
+.vscode/rad.json
+
+# Fichier de traduction généré automatiquement (extraction) — garder les .xlf sources (EN-US, fr-FR)
+Translations/*.g.xlf
+
+# Dossiers de build / sortie éventuels
+out/
+bin/
+obj/
+
+# === Windows / OS ===
+Thumbs.db
+desktop.ini
+
+# === Éditeurs ===
+*.code-workspace.bak
+.history/

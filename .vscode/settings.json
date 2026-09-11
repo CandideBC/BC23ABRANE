@@ -1,0 +1,10 @@
+{
+    "al.compilationOptions": {
+    
+    },
+    "editor.foldingMaximumRegions": 10000,
+    "al.enableCodeActions": false,
+    "al.codeAnalyzers": [
+    "${CodeCop}"
+    ]
+}

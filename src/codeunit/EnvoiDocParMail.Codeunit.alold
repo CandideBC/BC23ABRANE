@@ -1,0 +1,250 @@
+codeunit 50010 "Envoi doc par mail"
+{
+    // Devis DC21-0565 ; report 50004
+
+    Permissions = TableData "Item Ledger Entry" = rm,
+                  TableData "Sales Shipment Line" = rm;
+
+    trigger OnRun()
+    begin
+    end;
+
+    var
+        Enseigne: Record Enseigne;
+        Chantier: Record Chantier;
+        cuMail: Codeunit Mail;
+        txtDestinataire: Text[80];
+        txtSujet: Text[100];
+        NomFichierDoc: Text[250];
+
+        CheminDocVenteNonDefiniChantierErr: Label 'Vous devez définir le %1 sur le chantier %2.',Comment='%1 = Champ ; %2 = Chantier';
+
+    procedure GenererPDFDevisCdeVente(pEnteteVente: Record "Sales Header"; pEnvoyerParMail: Boolean)
+    var
+        EnteteDocumentVente: Record "Sales Header";
+        ParamVente: Record "Sales & Receivables Setup";
+        //ReportDevis: Report "ABRANE : Sales - Quote";
+        //ReportCommande: Report "ABRANE : Sales - Order";
+
+    begin
+        pEnteteVente.TESTFIELD(Status, pEnteteVente.Status::Released);
+        ParamVente.GET();
+        ParamVente.TESTFIELD("Nom fichier CGV");
+        ParamVente.TESTFIELD("Racine dossier affaires");
+
+        txtDestinataire := ''; //Saisie à la main pour le moment
+
+        IF NOT Enseigne.GET(pEnteteVente."Code enseigne") THEN
+            Enseigne.INIT();
+
+        IF NOT Chantier.GET(pEnteteVente."Code chantier") THEN
+            Chantier.INIT();
+
+        txtSujet := copystr(FORMAT(pEnteteVente."Document Type") + ' ' + pEnteteVente."No." + '-' + FORMAT(pEnteteVente."No. of Archived Versions") + '-' + pEnteteVente.Comments,1,100);
+
+        pEnteteVente.CALCFIELDS(pEnteteVente."No. of Archived Versions");
+
+        IF pEnteteVente."Devis Stock" THEN BEGIN
+            Enseigne.TESTFIELD("Chemin acces PDF Devis Stock");
+            NomFichierDoc := copystr(ParamVente."Racine dossier affaires" + Enseigne."Chemin acces PDF Devis Stock" + DossierTests() + '\' + txtSujet + '.pdf',1,250)
+        END ELSE
+            IF Chantier."Chemin acces PDF Devis" = '' THEN
+                ERROR(CheminDocVenteNonDefiniChantierErr, Chantier.FIELDCAPTION("Chemin acces PDF Devis"), Chantier.Code)
+            ELSE
+                NomFichierDoc := COPYSTR(ParamVente."Racine dossier affaires" + Chantier."Chemin acces PDF Devis" + DossierTests() + '\' + txtSujet + '.pdf',1,250);
+
+        EnteteDocumentVente.SETRANGE("Document Type", pEnteteVente."Document Type");
+        EnteteDocumentVente.SETRANGE("No.", pEnteteVente."No.");
+
+        CASE pEnteteVente."Document Type" OF
+            pEnteteVente."Document Type"::Quote:
+                BEGIN
+                    CLEAR(ReportDevis);
+                    ReportDevis.SETTABLEVIEW(EnteteDocumentVente);
+                    ReportDevis.SAVEASPDF(NomFichierDoc);
+                END;
+            pEnteteVente."Document Type"::Order:
+                BEGIN
+                    CLEAR(ReportCommande);
+                    ReportCommande.SETTABLEVIEW(EnteteDocumentVente);
+                    ReportCommande.SAVEASPDF(NomFichierDoc);
+                END;
+        END;
+
+        IF USERID = 'ABRANE\DEVEX' THEN
+            pEnvoyerParMail := FALSE;
+
+        CLEAR(cuMail);
+
+        IF pEnvoyerParMail THEN
+            cuMail.NewMessage(
+              txtDestinataire, '', '',txtSujet, 'Veuillez trouver ci-joint notre ' + FORMAT(pEnteteVente."Document Type") + ' ainsi que nos conditions générales de vente.',
+              NomFichierDoc, TRUE);
+    end;
+
+    procedure GenererPDFAchat(pEnteteAchat: Record "Purchase Header"; pEnvoyerParMail: Boolean)
+    var
+        EnteteAchat: Record "Purchase Header";
+        ParamVente: Record "Sales & Receivables Setup";
+        //Migration
+        //ReportCommandeAchat: Report "ABRANE : Purchase Order";
+
+    begin
+        pEnteteAchat.TESTFIELD(Status, pEnteteAchat.Status::Released);
+
+        ParamVente.GET();
+        ParamVente.TESTFIELD("Racine dossier affaires");
+
+        txtDestinataire := ''; //Saisie à la main pour le moment
+
+        IF pEnteteAchat."Code enseigne" <> '' THEN BEGIN
+            Enseigne.GET(pEnteteAchat."Code enseigne");
+            Enseigne.TESTFIELD("Chemin acces PDF Achats Stock");
+        END;
+
+        IF NOT Chantier.GET(pEnteteAchat."Code chantier") THEN
+            Chantier.INIT();
+
+        pEnteteAchat.CALCFIELDS("No. of Archived Versions");
+
+        txtSujet := copystr('Achat Commande No.' + pEnteteAchat."No." + '-' + FORMAT(pEnteteAchat."No. of Archived Versions") + '-' + pEnteteAchat.Comments,1,100);
+
+        IF pEnteteAchat."Achat pour stock" THEN
+            NomFichierDoc := ParamVente."Racine dossier affaires" + Enseigne."Chemin acces PDF Achats Stock"
+        ELSE
+            IF Chantier."Chemin acces PDF Achats" <> '' THEN
+                NomFichierDoc := ParamVente."Racine dossier affaires" + Chantier."Chemin acces PDF Achats"
+            ELSE
+                ERROR(CheminDocVenteNonDefiniChantierErr, Chantier.FIELDCAPTION("Chemin acces PDF Achats"), Chantier.Code);
+
+        NomFichierDoc := copystr(NomFichierDoc + DossierTests() + txtSujet + '.pdf',1,250);
+
+        EnteteAchat.SETRANGE("Document Type", pEnteteAchat."Document Type");
+        EnteteAchat.SETRANGE("No.", pEnteteAchat."No.");
+
+        CASE pEnteteAchat."Document Type" OF
+            pEnteteAchat."Document Type"::Order:
+                BEGIN
+                    /*Migration à reprendre
+                    CLEAR(ReportCommandeAchat);
+                    ReportCommandeAchat.SETTABLEVIEW(EnteteAchat);
+                    ReportCommandeAchat.SAVEASPDF(NomFichierDoc);
+                    Migration*/
+                END;
+
+        END;
+
+        IF USERID = 'ABRANE\DEVEX' THEN
+            pEnvoyerParMail := FALSE;
+
+        CLEAR(cuMail);
+        IF pEnvoyerParMail THEN
+            cuMail.NewMessage(
+              txtDestinataire, '', '',txtSujet, 'Veuillez trouver ci-joint notre commande d''achat.',
+              NomFichierDoc, TRUE);
+    end;
+
+    procedure DossierTests(): Text[10]
+    var
+        ActiveSession: Record "Active Session";
+        SousDossierTests: Text[10];
+        txtNomInstance: Text[250];
+    begin
+        ActiveSession.SETRANGE("Session ID", SESSIONID());
+        SousDossierTests := '';
+        IF ActiveSession.FINDFIRST() THEN BEGIN
+            txtNomInstance := ActiveSession."Server Instance Name";
+            txtNomInstance := UPPERCASE(txtNomInstance);
+            IF STRPOS(txtNomInstance, 'TEST') <> 0 THEN
+                SousDossierTests := 'TESTS\'
+            ELSE
+                SousDossierTests := ''
+        END;
+
+        EXIT(SousDossierTests);
+    end;
+
+    procedure GenererPDFBL(pEnteteBL: Record "Sales Shipment Header"; pEnvoyerParMail: Boolean)
+    var
+        ParamVente: Record "Sales & Receivables Setup";
+        EnteteExpedVente: Record "Sales Shipment Header";
+        //A reprendre ReportBL: Report "ABRANE : Sales - Shipment";
+    begin
+        //Fonction executee dans le CU80 quand on genere un BL
+        ParamVente.GET();
+        ParamVente.TESTFIELD("Nom fichier CGV");
+        ParamVente.TESTFIELD("Racine dossier affaires");
+
+        txtDestinataire := ''; //Saisie à la main pour le moment
+
+        IF NOT Chantier.GET(pEnteteBL."Code chantier") THEN
+            Chantier.INIT();
+
+        IF Chantier."Chemin acces PDF BL" = '' THEN
+            EXIT;
+
+        txtSujet := copystr('Bon de livraison N°' + pEnteteBL."No." + '-' + pEnteteBL.Comments,1,100);
+
+        NomFichierDoc := COPYSTR(ParamVente."Racine dossier affaires" + Chantier."Chemin acces PDF BL" + DossierTests() + '\' + txtSujet + '.pdf',1,250);
+
+        EnteteExpedVente.SETRANGE("No.", pEnteteBL."No.");
+
+        /*A REPRENDRE
+        CLEAR(ReportBL);
+        ReportBL.SETTABLEVIEW(EnteteExpedVente);
+        ReportBL.SAVEASPDF(NomFichierDoc);
+        FIN A REPRENDRE*/
+
+
+        IF USERID = 'ABRANE\DEVEX' THEN
+            pEnvoyerParMail := FALSE;
+
+        CLEAR(cuMail);
+        IF pEnvoyerParMail THEN
+            cuMail.NewMessage(
+              txtDestinataire, '', '',txtSujet, 'Veuillez trouver ci-joint notre bon de livraison.',
+              NomFichierDoc, TRUE);
+    end;
+
+    procedure GenererPDFFacture(pEnteteFacture: Record "Sales Invoice Header"; pEnvoyerParMail: Boolean)
+    var
+        ParamVente: Record "Sales & Receivables Setup";
+        EnteteFactVente: Record "Sales Invoice Header";
+        //A REPRENDRE ReportFacture: Report "ABRANE : Sales - Invoice";
+    begin
+        //Fonction executee dans le CU80 quand on genere un BL
+        ParamVente.GET();
+        ParamVente.TESTFIELD("Nom fichier CGV");
+        ParamVente.TESTFIELD("Racine dossier affaires");
+
+        txtDestinataire := ''; //Saisie à la main pour le moment
+
+        IF NOT Chantier.GET(pEnteteFacture."Code chantier") THEN
+            Chantier.INIT();
+
+        IF Chantier."Chemin acces PDF Factures" = '' THEN
+            EXIT;
+
+        txtSujet := 'Facture N°' + pEnteteFacture."No." + '-' + pEnteteFacture.Comments;
+
+        NomFichierDoc := ParamVente."Racine dossier affaires" + Chantier."Chemin acces PDF Factures" + DossierTests() + '\' + txtSujet + '.pdf';
+
+        EnteteFactVente.SETRANGE("No.", pEnteteFacture."No.");
+
+        /*A REPRENDRE
+        CLEAR(ReportFacture);
+        ReportFacture.SETTABLEVIEW(EnteteFactVente);
+        ReportFacture.SAVEASPDF(NomFichierDoc);
+        A REPRENDRE*/
+
+        IF USERID = 'ABRANE\DEVEX' THEN
+            pEnvoyerParMail := FALSE;
+
+        CLEAR(cuMail);
+        IF pEnvoyerParMail THEN
+            cuMail.NewMessage(
+              txtDestinataire, '', '',txtSujet, 'Veuillez trouver ci-joint notre facture.',
+              NomFichierDoc, TRUE);
+    end;
+}
+
