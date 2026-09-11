@@ -133,6 +133,10 @@ table 50071 "UC container"
         {
             
         }
+        key(MyKey4; "No. container","No. commande achat")
+        {
+            
+        }
     }
 
     fieldgroups

@@ -887,8 +887,6 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
                 REPORT.Run(REPORT::"Etiquette palette", true, false, EtiquettePalette);
     end;
 
-
-
     procedure RecupDateLivDemandeeVente(var pNumCdeSiUnique: Code[20]; var pCodesDossiersBE: Text[80]): Text[20]
     var
         EnteteVente: Record "Sales Header";
@@ -964,18 +962,11 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
 
     procedure CalcValeursResteACharger(var pMontantACharger: Decimal; var pPoidsNetACharger: Decimal; var pLignesSansCout: Integer; var pNbDIVSansHSCode: Integer; var pNbLignesSansPoids: Integer)
     var
-        //MontantACharger: Decimal;
         QteRestante: Decimal;
     begin
         PurchLine.SetRange("Document Type", "Document Type");
         PurchLine.SetRange("Document No.", "No.");
-        //KAN.FHA 29/09/2023 DEBUT
         PurchLine.SetRange("Ligne acompte", false);
-        //KAN.FHA 29/09/2023 FIN
-        //KAN.FHA 04/05/2026
-        //if pSelectionneesSeulement then
-        //    PurchLine.SetRange("Selectionnee pour chargement", true);
-        //
         pMontantACharger := 0;
         pPoidsNetACharger := 0;
         pLignesSansCout := 0;
@@ -997,12 +988,7 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
                 end;
 
             until PurchLine.Next() = 0;
-
-        //KAN.FHA 05/05/2026 exit(MontantACharger);
     end;
-
-
-
 
     procedure CreerAvoirFnsSAV()
     var

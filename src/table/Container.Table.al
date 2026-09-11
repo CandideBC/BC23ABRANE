@@ -629,7 +629,12 @@ table 50040 Container
     procedure Receptionner()
     var
         LigneContainer: Record "Ligne container";
+        UCContainer: Record "UC container";
+        EnteteAchat: Record "Purchase Header";
         NumCdeAchat: Code[20];
+        NoDocVente: Text;
+        DateChargementTxt: Text;
+        DateLivDemandeeTxt: Text;
         RienAValiderMsg: Label 'Il n''y a rien à réceptionner (veuillez saisir la quantité à recevoir pour chaque ligne).';
         QuantiteTropGrandeErr: Label 'Sur la ligne %1 de ce container, la quantité à recevoir est supérieure à la quantité restante (commande %2, ligne %3).', Comment = '%1 = N° ligne container %2 = N° commande %3 = N° ligne commande';
         NumFactFns: Code[35];
@@ -718,6 +723,24 @@ table 50040 Container
             Modify();
 
             //KAN.FHA 11/09/2026 DEBUT
+            //Recopier les UC (Palettte/colis) du container vers la commande 
+            UCContainer.Reset();
+            UCContainer.SetCurrentKey("No. container", "No. commande achat");
+            UCContainer.Setrange("No. container", Rec."No.");
+            UCContainer.SetFilter("No. commande achat", '<>%1', '');
+            if UCContainer.FindSet(false) then begin
+                NumCdeAchat := '';
+                repeat
+                    if UCContainer."No. commande achat" <> NumCdeAchat then
+                        if EnteteAchat.Get(EnteteAchat."Document Type"::Order, UCContainer."No. commande achat") then begin
+                            EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVente, DateChargementTxt, DateLivDemandeeTxt);
+                            if Copystr(NoDocVente,1,2) = 'CC' then begin //Pas génial mais permet d'exclure les devis et la valeur "Multiple"
+                                //On sait ici que la commande d'achat n'est affectée qu'à une seule commande de vente, on peut transférer l'UC vers cette commande vente
+                            end;
+                        end;
+                    NumCdeAchat := UCContainer."No. commande achat";
+                until UCContainer.Next() = 0;
+            end;
             //KAN.FHA 11/09/2026 FIN
 
             if Confirm(ReceptionFaiteOuvrirBRQst, true, "No.") then
