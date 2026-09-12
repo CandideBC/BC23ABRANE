@@ -30,6 +30,7 @@ page 50128 "Fiche unite colisage"
                 }
                 field(Numerotation; Rec.Numerotation)
                 {
+                    ToolTip = 'Numérotation';
                 }
                 field("No. container"; Rec."No. container")
                 {
