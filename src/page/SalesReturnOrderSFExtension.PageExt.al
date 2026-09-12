@@ -26,6 +26,7 @@ pageextension 50107 SalesReturnOrderSFExtension extends "Sales Return Order Subf
         {
             field("Prix bloque"; Rec."Prix bloque")
             {
+                ApplicationArea = All;
                 ToolTip = 'Prix bloqué';
                 Visible = false;
                 Enabled = false;
@@ -36,10 +37,12 @@ pageextension 50107 SalesReturnOrderSFExtension extends "Sales Return Order Subf
         {
             field("Poids net"; Rec."Net Weight")
             {
+                ApplicationArea = All;
                 ToolTip = 'Poids net';
             }
             field("Poids brut"; Rec."Gross Weight")
             {
+                ApplicationArea = All;
                 ToolTip = 'Poids brut';
                 Visible = false;
             }

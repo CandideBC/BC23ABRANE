@@ -15,10 +15,12 @@ page 50063 "SF Cde achat : infos transit."
             {
                 field("No. container"; Rec."No. container")
                 {
+                    ApplicationArea = All;
                     Editable = false;
                 }
                 field("No. bon de reception"; Rec."No. bon de reception")
                 {
+                    ApplicationArea = All;
                     Editable = false;
                 }
                 field("No. ligne bon reception"; Rec."No. ligne bon reception")

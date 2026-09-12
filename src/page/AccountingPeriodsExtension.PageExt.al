@@ -7,6 +7,7 @@ pageextension 50023 AccountingPeriodsExtension extends "Accounting Periods"
         {
             field("DEB Ventes cloturee"; Rec."DEB Ventes cloturee")
             {
+                ApplicationArea = All;
                 ToolTip = 'DEB Ventes clôturée';
             }
             field("DEB Achats cloturee"; Rec."DEB Achats cloturee")
