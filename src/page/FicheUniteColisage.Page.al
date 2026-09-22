@@ -35,13 +35,16 @@ page 50128 "Fiche unite colisage"
                 field("No. container"; Rec."No. container")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'N° container';
                 }
                 field("Numero camion reception"; Rec."Numero camion reception")
                 {
                     ApplicationArea = All;
+                    ToolTip = 'N° camion réception';
                 }
                 field("Numero camion expedition";Rec."Numero camion expedition")
                 {
+                    ToolTip = 'N° camion expédition';
                 }
             }
             part(SFPrepa;SFFicheUniteColisage)

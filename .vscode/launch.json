@@ -12,11 +12,12 @@
             //"startupObjectId": 9307,
             "startupObjectType": "Page",
             "breakOnError": "All",
+            "breakOnRecordWrite": "None",
             "launchBrowser": true,
-            "enableLongRunningSqlStatements": true,
-            "enableSqlInformationDebugger": true,
+            //"enableLongRunningSqlStatements": true,
+            //"enableSqlInformationDebugger": true,
             "tenant": "default",
-            "port":10104,
+            "port": 10104,
             "schemaUpdateMode": "ForceSync",
             "usePublicURLFromServer": true
         }

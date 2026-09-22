@@ -950,7 +950,7 @@ pageextension 50087 SalesQuoteExtension extends "Sales Quote"
                 PromotedOnly = true;
                 trigger OnAction()
                 begin
-                    Rec.AfficherStockDispo();
+                    Rec.AfficherStockDispo(true);
                 end;
             }
 

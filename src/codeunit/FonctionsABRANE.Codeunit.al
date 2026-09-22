@@ -2,12 +2,12 @@ codeunit 50009 "Fonctions ABRANE"
 {
     procedure StyleLigneDevisCommande(LigneVente: Record "Sales Line"): Text
     var
-        EnteteVente: Record "Sales Header";
+        //EnteteVente: Record "Sales Header";
         Article: Record Item;
         Style: Text;
         
     begin
-        EnteteVente.GET(LigneVente."Document Type", LigneVente."Document No.");
+        //EnteteVente.GET(LigneVente."Document Type", LigneVente."Document No.");
 
         if (LigneVente.Type = LigneVente.Type::" ") or (Article.GET(LigneVente."No.") and (LigneVente."Cout unitaire force")) then begin
             Style := 'Standard';

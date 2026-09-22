@@ -119,6 +119,7 @@ page 50044 "SF TBL Phases a preparer"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Nombre de phases';
+                    Editable = false;
                 }
                 field("Date chargement"; EnteteVente."Date chargement")
                 {
@@ -193,6 +194,7 @@ page 50044 "SF TBL Phases a preparer"
                     ApplicationArea = All;
                     ToolTip = 'Phase';
                 }
+
             }
         }
 
@@ -286,6 +288,7 @@ page 50044 "SF TBL Phases a preparer"
         EnteteVente: Record "Sales Header";
         PctPrepaSurStock: Decimal;
         NbArticlesAPreparer: Decimal;
+        NbArticlesExpedies: Decimal;
         PctExpedie: Decimal;
 
     procedure OuvrirFicheSaisieExpe()
@@ -318,5 +321,13 @@ page 50044 "SF TBL Phases a preparer"
     begin
         if not EnteteVente.get(Rec."Type document", Rec."No. document") then
             EnteteVente.Init();
+
+        EnteteVente.CalcFields("Nombre phases");
+
+        EnteteVente.RecuperInfosLogistique(Rec.Phase,NbArticlesAPreparer,NbArticlesExpedies);
+        if NbArticlesAPreparer <> 0 then
+            PctExpedie := round(NbArticlesExpedies / NbArticlesAPreparer,1)
+        else
+            PctExpedie := 0;
     end;
 }

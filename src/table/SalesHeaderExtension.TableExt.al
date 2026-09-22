@@ -1373,20 +1373,21 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         ItemNo: Code[20];
         AjouterACdeNo: Code[20];
         CreerDocumentSAV: Boolean;
-        AchatMultiPhases: Boolean;
+        //AchatMultiPhases: Boolean;
         Selection: Integer;
         RemainingQtyToCover: Decimal;
         QtyToTake: Decimal;
         QteDispo: Decimal;
         QteAAcheter: Decimal;
         lLineNo: Integer;
-        PhaseAchat: Integer;
         NbCdeAchatCreees: Integer;
         NbCdeAchatCompletees: Integer;
         NbLignesAjoutees: Integer;
         ListeFournisseurAConfirmerMsg: Text;
-        PhaseText: Text[10];
-        PhaseInt: Integer;
+        //KAN.FHA 21/09/2026 DEBUT
+        PhasesParCommande: Dictionary of [Code[20], Integer]; //Pour chaque commande d'achat : la phase unique achetée, ou -98 si plusieurs phases
+        CommandeAchatPrec: Code[20]; //Sert à réinitialiser ItemNo quand on change de commande d'achat
+        //KAN.FHA 21/09/2026 FIN
         ConfirmerListeFnsQst: Label 'Confirmez-vous vouloir créer une commande pour chacun des fournisseurs suivants : %1.', Comment = '%1 = Liste fournisseurs';
         AbandonMsg: Label 'Opération interrompue à la demande de l''utilisateur.';
 
@@ -1624,16 +1625,11 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         if pAcheterQueCertainesPhases then
             lrecSalesLine.SetRange("A acheter", true);
         if lrecSalesLine.FINDSET(true) then begin
-            PhaseAchat := -99;
+            //KAN.FHA 21/09/2026 DEBUT
+            //(suppression du calcul de PhaseAchat : on stocke maintenant la phase brute de la ligne dans le tampon, voir plus bas)
+            //KAN.FHA 21/09/2026 FIN
             repeat
                 if (lrecSalesLine."Creer cde achat") and (lrecSalesLine."Quantite a acheter" <> 0) then begin
-                    //KAN.FHA 19/05/2026 DEBUT
-                    if lrecSalesLine.Phase <> PhaseAchat then
-                        if PhaseAchat = -99 then
-                            PhaseAchat := lrecSalesLine.Phase
-                        else
-                            PhaseAchat := 0;
-                    //KAN.FHA 19/05/2026 FIN
                     lrecSalesLine.TESTFIELD("Vendor No.");
                     ListeFournisseur.SetRange("Code utilisateur", CodeUtil);
                     ListeFournisseur.SetRange("No. fournisseur", lrecSalesLine."Vendor No.");
@@ -1662,7 +1658,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         TableTampon."Poids net" := lrecSalesLine."Net Weight";
                         if lrecSalesLine."Article divers" then
                             TableTampon."Prix achat prevu" := lrecSalesLine."Prix achat prevu";
-                        TableTampon."Achete pour phase (si unique)" := PhaseAchat;
+                        //KAN.FHA 21/09/2026 DEBUT
+                        TableTampon."Achete pour phase (si unique)" := lrecSalesLine.Phase; //Phase brute de la ligne de vente (0 possible)
+                        //KAN.FHA 21/09/2026 FIN
                         TableTampon.INSERT();
 
                         //Lignes texte étendus
@@ -1747,6 +1745,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             repeat
                 //Création de l'entête
                 if (lBeforeBuyFromNo <> TableTampon."No. fournisseur") then begin
+                    //KAN.FHA 21/09/2026 DEBUT
+                    ItemNo := ''; //Nouvelle commande d'achat : on repart de zéro pour ne pas cumuler sur la dernière ligne de la commande précédente
+                    //KAN.FHA 21/09/2026 FIN
                     lrecPurchaseHdr.INIT();
                     lrecPurchaseHdr."No." := '';
                     lrecPurchaseHdr.VALIDATE("Document Type", lrecPurchaseHdr."Document Type"::Order);
@@ -1796,7 +1797,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
                     //PHASE 1.1 : on crée des lignes de commandes d'achat pour les articles où on trouve une commande cadre encore disponible.
                     //On va d'abord ajouter à la commande achat que les articles pris sur une commande cadre car on veut sur la commande d'achat pouvoir dire
-                    //au fournisseur "cela, je t'en avais déjà parlé via ma commande cadre" et dans un 2e temps on fera apparaitre les articles/quantités qui ne 
+                    //au fournisseur "cela, je t'en avais déjà parlé via ma commande cadre" et dans un 2e temps on fera apparaitre les articles/quantités qui ne
                     //figuraient pas sur une commande cadre en disant au fournisseur "cela, c'est nouveau, je t'en avais pas parlé."
                     //On cherche si on a une ou plusieurs commandes cadre sur lesquelles commander
                     TamponDispoSurCdeCadre.SetRange("No. fournisseur", TableTampon."No. fournisseur");
@@ -1836,6 +1837,10 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         TableTampon.Modify();
                     end;
 
+                    //KAN.FHA 21/09/2026 DEBUT
+                    //On mémorise la phase de cette ligne pour la commande d'achat concernée (phase unique ou "multiples")
+                    NoterPhaseCommandeAchat(PhasesParCommande, lrecPurchaseHdr."No.", TableTampon."Achete pour phase (si unique)");
+                    //KAN.FHA 21/09/2026 FIN
                     TableTampon."No. commande achat creee" := lrecPurchaseHdr."No.";
                     TableTampon.Modify();
                 end;
@@ -1859,9 +1864,17 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         //On va maintenant reparcourir les lignes de tampon pour créer de nouvelles lignes de commandes hors cadre en cumulant sur l'achat les quantités vendues
         TableTampon.SetFilter("Qte a prendre hors cadre", '<>%1', 0);
         if TableTampon.FindSet(true) then begin
-            lBeforeBuyFromNo := '';
+            //KAN.FHA 21/09/2026 DEBUT
+            CommandeAchatPrec := '';
+            //KAN.FHA 21/09/2026 FIN
             ItemNo := '';
             repeat
+                //KAN.FHA 21/09/2026 DEBUT
+                if TableTampon."No. commande achat creee" <> CommandeAchatPrec then begin
+                    ItemNo := ''; //Nouvelle commande d'achat : on ne cumule pas sur la ligne de la commande précédente
+                    CommandeAchatPrec := TableTampon."No. commande achat creee";
+                end;
+                //KAN.FHA 21/09/2026 FIN
                 if (TableTampon.Type = TableTampon.Type::Item) and (TableTampon."Qte a prendre hors cadre" <> 0) then begin
                     if TableTampon."No." <> ItemNo then begin
                         //Recherche du dernier N° ligne dans la commande
@@ -1893,18 +1906,11 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         lrecSalesLine.SETRANGE("Document No.", "No.");
         lrecSalesLine.SETRANGE(Type, lrecSalesLine.Type::Item);
         if lrecSalesLine.FINDSET(true) then begin
-            //KAN.FHA 19/05/2026 DEBUT
-            PhaseAchat := -99;
-            //KAN.FHA 19/05/2026 FIN
+            //KAN.FHA 21/09/2026 DEBUT
+            //(suppression du calcul de PhaseAchat : on stocke maintenant la phase brute de la ligne dans le tampon, voir plus bas)
+            //KAN.FHA 21/09/2026 FIN
             repeat
                 if (lrecSalesLine."Ajouter à cde achat No." <> '') and (lrecSalesLine."Quantite a acheter" <> 0) then begin
-                    //KAN.FHA 19/05/2026 DEBUT
-                    if lrecSalesLine.Phase <> PhaseAchat then
-                        if PhaseAchat = -99 then
-                            PhaseAchat := lrecSalesLine.Phase
-                        else
-                            PhaseAchat := 0;
-                    //KAN.FHA 19/05/2026 FIN
                     lrecSalesLine.TESTFIELD("Vendor No.");
                     ListeFournisseur.Reset();
                     ListeFournisseur.SetRange("Code utilisateur", CodeUtil);
@@ -1930,9 +1936,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                             TableTampon."No. fournisseur" := lrecSalesLine."Vendor No.";
                             TableTampon."Nomenclature produits" := lrecSalesLine."Nomenclature produits";
                             TableTampon."Poids net" := lrecSalesLine."Net Weight";
-                            //KAN.FHA 19/05/2026 DEBUT
-                            TableTampon."Achete pour phase (si unique)" := PhaseAchat;
-                            //KAN.FHA 19/05/2026 FIN
+                            //KAN.FHA 21/09/2026 DEBUT
+                            TableTampon."Achete pour phase (si unique)" := lrecSalesLine.Phase; //Phase brute de la ligne de vente (0 possible)
+                            //KAN.FHA 21/09/2026 FIN
                             TableTampon.Insert();
 
                             //Lignes texte étendus
@@ -1978,6 +1984,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             repeat
                 //Recuperation de l'entête et du dernier N° ligne
                 if TableTampon."Ajouter a la cde No." <> AjouterACdeNo then begin
+                    //KAN.FHA 21/09/2026 DEBUT
+                    ItemNo := ''; //Nouvelle commande d'achat : on repart de zéro pour ne pas cumuler sur la dernière ligne de la commande précédente
+                    //KAN.FHA 21/09/2026 FIN
                     lrecPurchaseHdr.get(lrecPurchaseHdr."Document Type"::Order, TableTampon."Ajouter a la cde No.");
                     lrecPurchaseLine.Reset();
                     lrecPurchaseLine.Setrange("Document Type", lrecPurchaseLine."Document Type"::Order);
@@ -1997,7 +2006,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
                 //PHASE 2.1 : on crée des lignes de commandes d'achat pour les articles où on trouve une commande cadre encore disponible.
                 //On va d'abord ajouter à la commande achat que les articles pris sur une commande cadre car on veut sur la commande d'achat pouvoir dire
-                //au fournisseur "cela, je t'en avais déjà parlé via ma commande cadre" et dans un 2e temps on fera apparaitre les articles/quantités qui ne 
+                //au fournisseur "cela, je t'en avais déjà parlé via ma commande cadre" et dans un 2e temps on fera apparaitre les articles/quantités qui ne
                 //figuraient pas sur une commande cadre en disant au fournisseur "cela, c'est nouveau, je t'en avais pas parlé."
                 //On cherche si on a une ou plusieurs commandes cadre sur lesquelles commander
                 TamponDispoSurCdeCadre.SetRange("No. fournisseur", TableTampon."No. fournisseur");
@@ -2037,6 +2046,11 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                     TableTampon.Modify();
                 end;
 
+                //KAN.FHA 21/09/2026 DEBUT
+                //On mémorise la phase de cette ligne pour la commande d'achat concernée (uniquement les lignes article, pas les lignes texte)
+                if TableTampon.Type = TableTampon.Type::Item then
+                    NoterPhaseCommandeAchat(PhasesParCommande, lrecPurchaseHdr."No.", TableTampon."Achete pour phase (si unique)");
+                //KAN.FHA 21/09/2026 FIN
                 TableTampon."No. commande achat creee" := lrecPurchaseHdr."No.";
                 TableTampon.Modify();
 
@@ -2056,9 +2070,17 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             //Phase 2.2
             //On va maintenant reparcourir les lignes de tampon pour créer de nouvelles lignes de commandes hors cadre en cumulant sur l'achat les quantités vendues
             if TableTampon.FindSet(true) then begin
-                lBeforeBuyFromNo := '';
+                //KAN.FHA 21/09/2026 DEBUT
+                CommandeAchatPrec := '';
+                //KAN.FHA 21/09/2026 FIN
                 ItemNo := '';
                 repeat
+                    //KAN.FHA 21/09/2026 DEBUT
+                    if TableTampon."No. commande achat creee" <> CommandeAchatPrec then begin
+                        ItemNo := ''; //Nouvelle commande d'achat : on ne cumule pas sur la ligne de la commande précédente
+                        CommandeAchatPrec := TableTampon."No. commande achat creee";
+                    end;
+                    //KAN.FHA 21/09/2026 FIN
                     if (TableTampon.Type = TableTampon.Type::Item) and (TableTampon."Qte a prendre hors cadre" <> 0) then begin
                         if TableTampon."No." <> ItemNo then begin
                             //Recherche du dernier N° ligne dans la commande
@@ -2069,12 +2091,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                                 lLineNo := 10000;
 
                             lrecPurchaseHdr.Get(lrecPurchaseHdr."Document Type"::Order, TableTampon."No. commande achat creee");
-                            //KAN.FHA 19/05/2026 DEBUT
-                            if lrecPurchaseHdr."Info phases" <> format(TableTampon."Achete pour phase (si unique)") then begin
-                                lrecPurchaseHdr."Info phases" := format(TableTampon."Achete pour phase (si unique)");
-                                lrecPurchaseHdr.Modify();
-                            end;
-                            //KAN.FHA 19/05/2026 FIN
+                            //KAN.FHA 21/09/2026 DEBUT
+                            //(suppression de l'ancien bloc qui écrivait Info phases ici : c'est fait une seule fois à la fin par MajInfoPhasesEntetesAchat)
+                            //KAN.FHA 21/09/2026 FIN
                             CreerLigneCommandeAchat(lrecPurchaseHdr, TableTampon, lLineNo, TableTampon."Qte a prendre hors cadre", TamponDispoSurCdeCadre);
                             lrecPurchaseLine.Get(lrecPurchaseHdr."Document Type", lrecPurchaseHdr."No.", lLineNo);
                             lLineNo := lLineNo + 10000;
@@ -2090,6 +2109,11 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             end;
         end;
 
+        //KAN.FHA 21/09/2026 DEBUT
+        //Toutes les lignes d'achat sont créées : on renseigne [Info phases] sur chaque commande d'achat concernée
+        MajInfoPhasesEntetesAchat(PhasesParCommande);
+        //KAN.FHA 21/09/2026 FIN
+
         if (NbCdeAchatCreees + NbCdeAchatCompletees) = 1 then
             pPurchOrderNo := lrecPurchaseHdr."No."
         else
@@ -2103,6 +2127,60 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         end else
             exit(false);
     end;
+
+    //KAN.FHA 21/09/2026 DEBUT
+    //Valeur spéciale stockée dans le dictionnaire quand une commande d'achat contient plusieurs phases (la phase 0 est une phase valide, -98 ne peut donc pas être confondu)
+    local procedure PhaseMultiple(): Integer
+    begin
+        exit(-98);
+    end;
+
+    //Mémorise pour une commande d'achat la phase d'une ligne : phase unique tant que toutes les lignes sont de la même phase, sinon PhaseMultiple()
+    local procedure NoterPhaseCommandeAchat(var PhasesParCommande: Dictionary of [Code[20], Integer]; CommandeAchatNo: Code[20]; Phase: Integer)
+    begin
+        if not PhasesParCommande.ContainsKey(CommandeAchatNo) then
+            PhasesParCommande.Add(CommandeAchatNo, Phase)
+        else
+            if PhasesParCommande.Get(CommandeAchatNo) <> Phase then
+                PhasesParCommande.Set(CommandeAchatNo, PhaseMultiple());
+    end;
+
+    //Renseigne le champ [Info phases] de chaque commande d'achat du dictionnaire
+    local procedure MajInfoPhasesEntetesAchat(PhasesParCommande: Dictionary of [Code[20], Integer])
+    var
+        EnteteAchat: Record "Purchase Header";
+        PhaseVente: Record "Phases document";
+        CommandeAchatNo: Code[20];
+        Phase: Integer;
+        NouvelleInfo: Text;
+        InfoPhaseLbl: Label 'Phase %1 - %2 - Date chargement : %3', Comment = '%1 = Phase ; %2 = Nom phase ; %3 = Date chargement';
+        PhasesMultiplesLbl: Label 'Phases multiples';
+    begin
+        foreach CommandeAchatNo in PhasesParCommande.Keys() do begin
+            Phase := PhasesParCommande.Get(CommandeAchatNo);
+
+            NouvelleInfo := '';
+            if Phase = PhaseMultiple() then
+                NouvelleInfo := PhasesMultiplesLbl
+            else
+                if PhaseVente.Get(Rec."Document Type", Rec."No.", Phase) then
+                    NouvelleInfo := StrSubstNo(InfoPhaseLbl, Phase, PhaseVente.Description,
+                        Format(PhaseVente."Date chargement", 0, '<Day,2>/<Month,2>/<Year4>'));
+
+            if NouvelleInfo <> '' then
+                if EnteteAchat.Get(EnteteAchat."Document Type"::Order, CommandeAchatNo) then begin
+                    //Commande complétée : si elle portait déjà une autre info de phase, on passe en "multiples"
+                    if (EnteteAchat."Info phases" <> '') and (EnteteAchat."Info phases" <> NouvelleInfo) then
+                        NouvelleInfo := PhasesMultiplesLbl;
+
+                    if EnteteAchat."Info phases" <> CopyStr(NouvelleInfo, 1, MaxStrLen(EnteteAchat."Info phases")) then begin
+                        EnteteAchat."Info phases" := CopyStr(NouvelleInfo, 1, MaxStrLen(EnteteAchat."Info phases"));
+                        EnteteAchat.Modify();
+                    end;
+                end;
+        end;
+    end;
+    //KAN.FHA 21/09/2026 FIN
 
     procedure CreerLigneCommandeAchat(Var EnteteAchat: Record "Purchase Header"; TableTamponVente: Record TamponTriLignesDocument; LineNo: Integer; QtyToOrder: Decimal; var TamponCadre: record "Tampon dispo cde cadre achat")
     var
@@ -2358,13 +2436,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         end;
         EnteteFactureVente."Acompte pour No. document" := "No.";
         EnteteFactureVente."Facture acompte" := true;
-        //KAN.FHA 08/02/2021 DEBUT
-        //KAN.FHA 15/04/2025 ClientDonneurOrdre.GET("Sell-to Customer No.");
-        //KAN.FHA 15/04/2025if ClientDonneurOrdre."Code cond. paiement acomptes" <> '' then
         EnteteFactureVente.VALIDATE("Payment Terms Code", "Code cond. paiement acomptes");
-        //KAN.FHA 15/04/2025else
-        //KAN.FHA 08/02/2021 FIN
-        //KAN.FHA 15/04/2025    EnteteFactureVente.VALIDATE("Payment Terms Code", Enseigne."Code cond. paiement acomptes");
         txtLibelleEcriture := STRSUBSTNO(LibelleEcritureLbl, FORMAT("% acompte demande"), NumDoc, Chantier."Description chantier", "Sell-to Customer Name");
         EnteteFactureVente."Posting Description" := COPYSTR(txtLibelleEcriture, 1, 50);
         EnteteFactureVente."External Document No." := "External Document No.";
@@ -2732,7 +2804,24 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             until lLigneVente.NEXT() = 0;
     end;
 
-    procedure AfficherStockDispo()
+    procedure RecuperInfosLogistique(pPhase: Integer; var pQteTotale: Decimal; var pQteExpediee: Decimal)
+    var
+        LigneVente: Record "Sales Line";
+    begin
+        pQteTotale := 0;
+        pQteExpediee := 0;
+        LigneVente.SetRange("Document Type", Rec."Document Type");
+        LigneVente.SetRange("Document No.", Rec."No.");
+        LigneVente.SetRange(Type, LigneVente.Type::Item);
+        LigneVente.SetRange(Phase, pPhase);
+        if LigneVente.FindSet(false) then
+            repeat
+                pQteTotale := pQteTotale + LigneVente."Quantity (Base)";
+                pQteExpediee := pQteExpediee + LigneVente."Qty. Shipped (Base)";
+            until LigneVente.Next() = 0;
+    end;
+
+    procedure AfficherStockDispo(pOuvrirPageDispo: Boolean)
     var
         LigneVente: Record "Sales Line";
         EnteteVente: Record "Sales Header";
@@ -2799,7 +2888,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                             TamponDetailDispoStock."Quantite prise sur stock" := LigneVente."Outstanding Qty. (Base)"
                         else
                             if LigneVente."Quantite affectee" <> 0 then begin
-                                //REPLACER CECI PAR LA QTE REELLEMENT ACHETEE (aller lire les affectation du coup !!)
+                                //REMPLACER CECI PAR LA QTE REELLEMENT ACHETEE (aller lire les affectation du coup !!)
                                 TamponDetailDispoStock."Quantite achetee" := LigneVente."Quantite affectee";
 
                                 if TamponDetailDispoStock."Quantite achetee" <= LigneVente."Outstanding Qty. (Base)" then
@@ -2936,13 +3025,16 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
         commit();
 
-        StockDispo.Reset();
-        StockDispo.FilterGroup(2);
-        StockDispo.SetRange("Code utilisateur", UserId);
-        StockDispo.SetRange("Document Type", "Document Type");
-        StockDispo.SetRange("Document No.", "No.");
-        StockDispo.FilterGroup(0);
-        page.run(page::StockDispoDocumentVente, StockDispo);
+        //KAN.FHA 22/09/2026 DEBUT
+        if pOuvrirPageDispo then begin
+            StockDispo.Reset();
+            StockDispo.FilterGroup(2);
+            StockDispo.SetRange("Code utilisateur", UserId);
+            StockDispo.SetRange("Document Type", "Document Type");
+            StockDispo.SetRange("Document No.", "No.");
+            StockDispo.FilterGroup(0);
+            page.run(page::StockDispoDocumentVente, StockDispo);
+        end;
     end;
 
     procedure Archiver()

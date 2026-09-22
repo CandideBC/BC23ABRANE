@@ -38,6 +38,7 @@ page 50143 "SF Ligne Colisage container"
                     ApplicationArea = All;
                     //Caption = 'No. commande achat';
                     ToolTip = 'La palette est normalement rattachée à une seule commande d''achat qu''il faut indiquer ici.';
+                    
                 }
                 
                 field(Longueur; Rec.Longueur)

@@ -4,7 +4,8 @@ table 50044 "Statistique container"
     //   Table vidée et remplie quand un utilisateur est sur un container et demande à en voir les statististiques
 
     Caption = 'Container';
-    //DrillDownPageID = "Statistiques container";
+    LookupPageId = StatistiqueContainerLookup;
+    
 
     fields
     {
@@ -85,7 +86,7 @@ table 50044 "Statistique container"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "No. container", "Nb commande", "Montant charge", "Code devise")
+        fieldgroup(DropDown; "No. commande achat","Commentaire commande","Commentaire AIE")
         {
         }
     }

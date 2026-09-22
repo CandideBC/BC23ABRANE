@@ -1,7 +1,7 @@
 page 50072 "Stock Dispo Sur Creer Cde HA"
 {
     ApplicationArea = All;
-    UsageCategory = Lists;
+    //UsageCategory = Lists;
     DeleteAllowed = false;
     InsertAllowed = false;
     PageType = List;
