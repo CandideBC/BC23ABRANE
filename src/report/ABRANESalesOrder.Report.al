@@ -605,9 +605,9 @@ report 50005 "ABRANE : Sales - Order"
                     }
                     dataitem("Sales Line"; "Sales Line")
                     {
-                        DataItemLink = "Document Type" = FIELD("Document Type"), "Document No." = FIELD("No.");
+                        DataItemLink = "Document Type" = field("Document Type"), "Document No." = field("No.");
                         DataItemLinkReference = "Sales Header";
-                        DataItemTableView = SORTING("Document Type", "Document No.", "Line No.") WHERE("Linked to line" = CONST(0));
+                        DataItemTableView = sorting("Document Type", "Document No.", "Line No.") where("Composant de la ligne No." = CONST(0));
 
                         trigger OnPreDataItem()
                         begin
@@ -1008,7 +1008,7 @@ report 50005 "ABRANE : Sales - Order"
                             if not MoreLines then
                                 CurrReport.Break();
                             SalesLine.SetRange("Line No.", 0, SalesLine."Line No.");
-                            SalesLine.SetRange("Linked to line", 0);
+                            SalesLine.SetRange("Composant de la ligne No.", 0);
                             SetRange(Number, 1, SalesLine.Count);
                             CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
                         end;

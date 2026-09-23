@@ -8,7 +8,7 @@ page 50036 "Duplicate Sales Line"
     MultipleNewLines = true;
     PageType = Worksheet;
     SourceTable = "Sales Line";
-    SourceTableView = sorting("Eco Tax Furniture Line",TypeDocDuplique,NumDocDuplique,"Linked to line") where("Eco Tax Furniture Line" = const(true));
+    SourceTableView = sorting("Eco Tax Furniture Line",TypeDocDuplique,NumDocDuplique,"Composant de la ligne No.") where("Eco Tax Furniture Line" = const(true));
 
     layout
     {
@@ -145,7 +145,7 @@ page 50036 "Duplicate Sales Line"
         Rec.SETRANGE("Eco Tax Furniture Line", false);
         Rec.SETRANGE("Document Type", DocType);
         Rec.SETRANGE("Document No.", DocNo);
-        Rec.SETRANGE("Linked to line", 0);
+        Rec.SETRANGE("Composant de la ligne No.", 0);
         Rec.SETRANGE("Eco Tax Furniture Line", false);
         NombreDuplications := 1;
     end;
@@ -216,7 +216,7 @@ page 50036 "Duplicate Sales Line"
                             //FHA.20/02/2020 FIN
 
                             //FHA 09/01/2020 Les lignes de composants doivent etre copiees aussi s'il y en a
-                            LignesComposants.SETRANGE("Linked to line", LigneADupliquer."Line No.");
+                            LignesComposants.SETRANGE("Composant de la ligne No.", LigneADupliquer."Line No.");
                             if LignesComposants.FINDSET(false) then
                                 repeat
                                     NouvelleLigneComposant.INIT();
@@ -245,7 +245,7 @@ page 50036 "Duplicate Sales Line"
                                     NouvelleLigneComposant."BOM Item No." := LignesComposants."BOM Item No.";
                                     NouvelleLigneComposant."Prix bloque" := LignesComposants."Prix bloque";
                                     NouvelleLigneComposant."Duplicate Line" := LignesComposants."Duplicate Line";
-                                    NouvelleLigneComposant."Linked to line" := NewSalesLine."Line No.";
+                                    NouvelleLigneComposant."Composant de la ligne No." := NewSalesLine."Line No.";
                                     NouvelleLigneComposant.INSERT(true);
 
                                     LineNo := LineNo + 10000;

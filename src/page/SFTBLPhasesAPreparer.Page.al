@@ -42,12 +42,32 @@ page 50044 "SF TBL Phases a preparer"
                     DecimalPlaces = 0 : 0;
                     Editable = false;
                 }
+                /*
 
                 field(NbArticlesAPreparer; NbArticlesAPreparer)
                 {
                     ApplicationArea = All;
                     Caption = 'Nb articles à préparer';
                     ToolTip = 'Nb articles à préparer';
+                    BlankZero = true;
+                    DecimalPlaces = 0 : 5;
+                    Editable = false;
+                }
+                */
+                field("Quantites commandees";Rec."Quantites commandees")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Quantités commandées';
+                    ToolTip = 'Total des quantités du document';
+                    BlankZero = true;
+                    DecimalPlaces = 0 : 5;
+                    Editable = false;
+                }
+                field("Quantites expediees";Rec."Quantites expediees")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Quantités expédiées';
+                    ToolTip = 'Total des quantités expédiées du document';
                     BlankZero = true;
                     DecimalPlaces = 0 : 5;
                     Editable = false;
@@ -287,8 +307,8 @@ page 50044 "SF TBL Phases a preparer"
     var
         EnteteVente: Record "Sales Header";
         PctPrepaSurStock: Decimal;
-        NbArticlesAPreparer: Decimal;
-        NbArticlesExpedies: Decimal;
+        //NbArticlesAPreparer: Decimal;
+        //NbArticlesExpedies: Decimal;
         PctExpedie: Decimal;
 
     procedure OuvrirFicheSaisieExpe()
@@ -324,9 +344,11 @@ page 50044 "SF TBL Phases a preparer"
 
         EnteteVente.CalcFields("Nombre phases");
 
-        EnteteVente.RecuperInfosLogistique(Rec.Phase,NbArticlesAPreparer,NbArticlesExpedies);
-        if NbArticlesAPreparer <> 0 then
-            PctExpedie := round(NbArticlesExpedies / NbArticlesAPreparer,1)
+        rec.CalcFields("Quantites commandees","Quantites expediees");
+
+        //EnteteVente.RecuperInfosLogistique(Rec.Phase,NbArticlesAPreparer,NbArticlesExpedies);
+        if Rec."Quantites commandees" <> 0 then
+            PctExpedie := round(Rec."Quantites expediees" / Rec."Quantites commandees",1)
         else
             PctExpedie := 0;
     end;

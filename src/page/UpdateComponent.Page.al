@@ -50,7 +50,7 @@ page 50019 "Update Component"
                     RecSalesLine.Validate(Quantity, QuantitePourUnParent * QuantiteLigneParent);
                     RecSalesLine."Quantite pour 1" := QuantitePourUnParent;
                     RecSalesLine.Validate("Unit Price", 0);
-                    RecSalesLine."Linked to line" := LinkLine;
+                    RecSalesLine."Composant de la ligne No." := LinkLine;
                     RecSalesLine."BOM Item No." := ItemLink;
                     RecSalesLine.Validate("Location Code", Location);
                     RecSalesLine.Modify();

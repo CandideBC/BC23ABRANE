@@ -31,7 +31,7 @@ codeunit 50009 "Fonctions ABRANE"
             exit(Style);
         end;
 
-        IF (LigneVente."Attached to Line No." <> 0) or (LigneVente."Linked to line" <> 0) then begin
+        IF (LigneVente."Attached to Line No." <> 0) or (LigneVente."Composant de la ligne No." <> 0) then begin
             Style := 'Subordinate';
             exit(Style);
         end;

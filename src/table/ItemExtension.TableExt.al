@@ -821,7 +821,7 @@
         LigneVente.SetRange(Type, LigneVente.Type::Item);
         LigneVente.SetRange("No.", Rec."No.");
 
-        if LigneVente.FindSet(false) then begin
+        if LigneVente.FindSet(true) then begin
             NumLigne := 1;
             AffectationsAchat.SetCurrentKey("Type document vente", "No. document vente", "No. ligne document vente");
             AffectationsAchat.SetRange("Type document vente", AffectationsAchat."Type document vente"::Devis, AffectationsAchat."Type document vente"::Commande);
@@ -840,6 +840,10 @@
                     TamponDetailDispoStock."Code vendeur" := EnteteVente."Salesperson Code";
                     TamponDetailDispoStock."Proba transformation" := EnteteVente."Proba transformation";
                     TamponDetailDispoStock.Insert();
+                    //KAN.FHA 22/09/2026 DEBUT
+                    LigneVente."Quantite prise sur stock" := LigneVente."Outstanding Qty. (Base)";
+                    LigneVente.Modify();
+                    //KAN.FHA 22/09/2026 FIN
                 end else begin
                     //Si on a des achats affectés à la ligne de commande, c'est qu'on ne prend pas tout en stock, il faut déduire les quantités achetées
                     AffectationsAchat.SetRange("No. document vente", LigneVente."Document No.");
@@ -865,6 +869,14 @@
                             TamponDetailDispoStock."Proba transformation" := EnteteVente."Proba transformation";
                             TamponDetailDispoStock.Insert();
                         end;
+                        //KAN.FHA 22/09/2026 DEBUT
+                        if decQtePriseSurStockCetteLigne > 0 then
+                            LigneVente."Quantite prise sur stock" := decQtePriseSurStockCetteLigne
+                        else
+                            LigneVente."Quantite prise sur stock" := 0;
+                        LigneVente.Modify();
+                        //KAN.FHA 22/09/2026 FIN
+
                     end else
                         if (LigneVente."Document Type" = LigneVente."Document Type"::Quote) and (LigneVente.Quantity <> 0) then begin
                             //Si on arrive ici,
@@ -883,6 +895,11 @@
                             TamponDetailDispoStock."Code vendeur" := EnteteVente."Salesperson Code";
                             TamponDetailDispoStock."Proba transformation" := EnteteVente."Proba transformation";
                             TamponDetailDispoStock.Insert();
+                            //KAN.FHA 22/09/2026 DEBUT
+                            //On fait quoi pour la quantité prise sur stock ???
+                            LigneVente."Quantite prise sur stock" := LigneVente."Quantity (Base)";
+                            LigneVente.Modify();
+                            //KAN.FHA 22/09/2026 FIN
                         end;
 
                 end;
@@ -900,93 +917,7 @@
             page.Run(Page::StockDispoArticle, StockDispo);
 
     end;
-    /*FHA
-    procedure ListerQtePriseSurStock(pNumLigneParent: Integer)
-    //Fonction qui va calculer combien de pieces de l'article vont etre prises sur stock et en stocker le détail dans une table "Tampon".
-    //Cette fonction est appelée lorsque sur un devis ou une commande on demande à voir le stock dispo de chaque article du document.
-    //Pour cela, on va déduire de la qté sur commande vente les quantités achetées et affectées aux ventes.
-    //Exemple : pour l'article A1, j'ai deux commandes ventes, une de 10 et une de 20
-    //Pour la première commande, j'ai une affectation (achats affectés à cette commande) de 6 pièces. Cela veut donc dire qu'à ce stade, je prévois d'en prendre (10-6)=4 pieces 
-    //en stock.
-    //Pour la 2e commande, je n'ai pas d'affectation du tout (pas d'achats affectés à cette commande). Cela veut donc dire que je prévois de tout prendre sur stock.
-    //Au final, pour cet article, la quantité prise sur stock pour cet article est 20 + 4 = 24 pièces.
-    var
-        LigneVente: Record "Sales Line";
-        AffectationsAchat: Record "Affectations achat vente";
-        TamponDetailDispoStock: Record TamponDetailDispoStock;
-        decQtePriseSurStockCetteLigne: Decimal;
-        NumLigne: Integer;
-        CodeUtil: Text[50];
-    begin
-        if pNumLigneParent = 0 then
-            NumLigneParent := 10000
-        else
-            NumLigneParent := pNumLigneParent + 10000;
-
-        NumLigne := 1;
-        CodeUtil := CopyStr(UserId, 1, 50);
-        LigneVente.SetCurrentKey("Document Type", Type, "No.", "Variant Code", "Drop Shipment", "Location Code", "Shipment Date");
-        LigneVente.SetRange("Document Type", LigneVente."Document Type"::Quote, LigneVente."Document Type"::Order);
-        LigneVente.SetRange(Type, LigneVente.Type::Item);
-        LigneVente.SetRange("No.", Rec."No.");
-
-        if LigneVente.FindSet(false) then begin
-            AffectationsAchat.SetCurrentKey("Type document vente", "No. document vente", "No. ligne document vente");
-            AffectationsAchat.SetRange("Type document vente", AffectationsAchat."Type document vente"::Devis, AffectationsAchat."Type document vente"::Commande);
-            repeat
-                if LigneVente."Pris sur stock" then begin
-                    TamponDetailDispoStock.Init();
-                    TamponDetailDispoStock."Code utilisateur" := CodeUtil;
-                    TamponDetailDispoStock."No. article" := Rec."No.";
-                    TamponDetailDispoStock."No. document" := LigneVente."Document No.";
-                    TamponDetailDispoStock."No. ligne" := LigneVente."Line No.";
-                    //TamponDetailDispoStock."No. ligne parent" := NumLigneParent;
-                    TamponDetailDispoStock."No. ligne" := NumLigne;
-                    NumLigne := NumLigne + 1;
-                    TamponDetailDispoStock."Quantite reservee" := LigneVente."Outstanding Quantity";
-                    TamponDetailDispoStock.Insert();
-                end else begin
-                    //Si on a des achats affectés à la ligne de commande, c'est qu'on ne prend pas tout en stock, il faut déduire les quantités achetées
-                    AffectationsAchat.SetRange("No. document vente", LigneVente."Document No.");
-                    AffectationsAchat.SetRange("No. ligne document vente", LigneVente."Line No.");
-                    if AffectationsAchat.FindSet(false) then begin
-                        decQtePriseSurStockCetteLigne := LigneVente."Outstanding Qty. (Base)";
-                        repeat
-                            AffectationsAchat.CalcFields("Qte achetee", "Qte recue");
-                            decQtePriseSurStockCetteLigne := decQtePriseSurStockCetteLigne - (AffectationsAchat."Qte achetee" - AffectationsAchat."Qte recue");
-                        until AffectationsAchat.Next() = 0;
-                        if decQtePriseSurStockCetteLigne > 0 then begin
-                            TamponDetailDispoStock.Init();
-                            TamponDetailDispoStock."Code utilisateur" := CodeUtil;
-                            TamponDetailDispoStock."No. article" := Rec."No.";
-                            TamponDetailDispoStock."No. document" := LigneVente."Document No.";
-                            //TamponDetailDispoStock."No. ligne parent" := NumLigneParent;
-                            TamponDetailDispoStock."No. ligne" := NumLigne;
-                            NumLigne := NumLigne + 1;
-                            TamponDetailDispoStock."Quantite reservee" := decQtePriseSurStockCetteLigne;
-                            TamponDetailDispoStock.Insert();
-                        end;
-                    end else
-                        if (LigneVente."Document Type" = LigneVente."Document Type"::Quote) and (LigneVente.Quantity <> 0) then begin 
-                            //Si on arrive ici,
-                            //On sait qu'on ne prend pas tout sur stock et qu'on n'a pas affecté d'achats,
-                            //il faut alors décompter la ligne en [Quantité sur devis]
-                            TamponDetailDispoStock.Init();
-                            TamponDetailDispoStock."Code utilisateur" := CodeUtil;
-                            TamponDetailDispoStock."No. article" := Rec."No.";
-                            TamponDetailDispoStock."No. document" := LigneVente."Document No.";
-                            //TamponDetailDispoStock."No. ligne parent" := NumLigneParent;
-                            TamponDetailDispoStock."No. ligne" := NumLigne;
-                            NumLigne := NumLigne + 1;
-                            TamponDetailDispoStock."Quantite sur devis" := LigneVente."Quantity (Base)";
-                            TamponDetailDispoStock.Insert();
-                        end;
-                    ;
-                end;
-            until LigneVente.Next() = 0;
-        end;
-    end;
-    */
+    
     procedure PrixAchatActuel(pNumFns: Code[20]): Decimal
     var
         PrixAchat: Record "Purchase Price";

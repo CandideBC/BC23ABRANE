@@ -52,6 +52,21 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             Description = 'E10';
             Editable = false;
         }
+        field(50012; "TypeDuplique"; Enum "Sales Line Type") //Ce champ montre la meme valeur que le champ Type
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50013; "QuantiteBaseDuplique"; Decimal) //Ce champ montre la meme valeur que le champ "Quantity (Base)""
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
+        field(50014; "QuantiteExpedieeBaseDuplique"; Decimal) //Ce champ montre la meme valeur que le champ "Qty. Shipped (Base)"
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
 
         field(50030; "Vendor No."; Code[20])
         {
@@ -120,12 +135,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                     end;
                 end;
 
-                //KAN.FHA 06/09/2022 DEBUT
                 if Fournisseur.Get("Vendor No.") then
                     "Country/Region of Origin Code" := Fournisseur."Country/Region Code"
                 else
                     "Country/Region of Origin Code" := '';
-                //KAN.FHA 06/09/2022 FIN
 
                 if Rec."Reference Fiche BE" <> '' then begin
                     LigneFicheBE.Reset();
@@ -212,7 +225,6 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                 if Fournisseur."Currency Code" = '' then
                     "Montant achats prevus (DS)" := round(MontantAchatsPrevusDS, 0.01)
                 else
-                    //FacteurDevise.ExchangeRate()
                     "Montant achats prevus (DS)" := round(
                     FacteurDevise.ExchangeAmtFCYToLCY(EnteteVente."Document Date", Fournisseur."Currency Code", MontantAchatsPrevusDS,
                             FacteurDevise.GetCurrentCurrencyFactor(Fournisseur."Currency Code")), 0.01);
@@ -258,16 +270,13 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
 
             trigger OnValidate()
             begin
-                //KAN.FHA 08/10/2021 DEBUT
                 TestField("Article divers", true)
-                //KAN.FHA 08/10/2021 FIN
             end;
         }
         field(50100; "Eco Tax Furniture Code"; Code[10])
         {
             Caption = 'Code taxe éco mobilier';
             DataClassification = ToBeClassified;
-            Description = 'CPT02';
             Editable = false;
             TableRelation = "Taxe eco-mobilier";
         }
@@ -276,46 +285,40 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             Caption = 'Montant taxe éco mobilier';
             DataClassification = ToBeClassified;
             DecimalPlaces = 2 : 4;
-            Description = 'CPT02';
             Editable = false;
         }
         field(50120; "Eco Tax Furniture Qty Per"; Decimal)
         {
             Caption = 'Eco mobilier Quantité Par';
             DataClassification = ToBeClassified;
-            Description = 'CPT02';
             Editable = false;
         }
         field(50130; "Eco Tax Furniture Line"; Boolean)
         {
             Caption = 'Ligne éco mobilier';
             DataClassification = ToBeClassified;
-            Description = 'CPT02';
             Editable = false;
         }
         field(50140; "Eco Tax Furniture Family"; Text[50])
         {
             CalcFormula = lookup("Taxe eco-mobilier".Family where(Code = field("Eco Tax Furniture Code")));
             Caption = 'Famille taxe éco mobilier';
-            Description = 'CPT02';
             FieldClass = FlowField;
         }
         field(50150; "Eco Tax Furniture Sub Family"; Text[50])
         {
             CalcFormula = lookup("Taxe eco-mobilier"."Sub Family" where(Code = field("Eco Tax Furniture Code")));
             Caption = 'Sous famille taxe éco mobilier';
-            Description = 'CPT02';
             FieldClass = FlowField;
         }
         field(50160; "Price included Eco Tax"; Boolean)
         {
             Caption = 'Prix écotaxe inclus';
             DataClassification = ToBeClassified;
-            Description = 'CPT02';
         }
-        field(50200; "Linked to line"; Integer)
+        field(50200; "Composant de la ligne No."; Integer) //Anciennement nommé "Linked to line"
         {
-            Caption = 'Lié à la ligne N°';
+            Caption = 'Composant de la ligne N°';
             DataClassification = ToBeClassified;
         }
         field(50205; "Quantite pour 1"; Decimal)
@@ -398,7 +401,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                 case "Document Type" of
                     "Document Type"::Order:
                         begin
-                            if ("Linked to line" <> 0) or ("Eco Tax Furniture Line" = true) then
+                            if ("Composant de la ligne No." <> 0) or ("Eco Tax Furniture Line" = true) then
                                 Error(ABRATXT0001Err);
                             if "Do not print" = true then
                                 Validate("Qty. to Ship", 0)
@@ -406,7 +409,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                                 Validate("Qty. to Ship", "Outstanding Quantity");
                             SalesLine2.SetRange("Document Type", "Document Type");
                             SalesLine2.SetRange("Document No.", "Document No.");
-                            SalesLine2.SetFilter("Linked to line", '<>0&%1', "Line No.");
+                            SalesLine2.SetFilter("Composant de la ligne No.", '<>0&%1', "Line No.");
                             if SalesLine2.Find('-') then
                                 repeat
                                     SalesLine2."Do not print" := "Do not print";
@@ -419,11 +422,11 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                         end;
                     "Document Type"::Quote:
                         begin
-                            if ("Linked to line" <> 0) or ("Eco Tax Furniture Line" = true) then
+                            if ("Composant de la ligne No." <> 0) or ("Eco Tax Furniture Line" = true) then
                                 Error(ABRATXT0001Err);
                             SalesLine2.SetRange("Document Type", "Document Type");
                             SalesLine2.SetRange("Document No.", "Document No.");
-                            SalesLine2.SetFilter("Linked to line", '<>0&%1', "Line No.");
+                            SalesLine2.SetFilter("Composant de la ligne No.", '<>0&%1', "Line No.");
                             if SalesLine2.Find('-') then
                                 repeat
                                     SalesLine2."Do not print" := "Do not print";
@@ -756,7 +759,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             TableRelation = "UC Commande"."No. UC" where("No. commande" = field("Document No."));
             trigger OnValidate()
             var
-                UC: Record "Unite colisage";
+                //UC: Record "Unite colisage";
             begin
                 AjouterUC("No. UC");
                 CalcFields("Nombre UC");
@@ -835,7 +838,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                     //PhaseUniformeSurComposants := true;
                     LigneVenteComposant.SetRange("Document Type", "Document Type");
                     LigneVenteComposant.SetRange("Document No.", "Document No.");
-                    LigneVenteComposant.Setrange("Linked to line", Rec."Line No.");
+                    LigneVenteComposant.Setrange("Composant de la ligne No.", Rec."Line No.");
                     LigneVenteComposant.SetFilter(Phase, '<>%1', xRec.Phase);
                     if LigneVenteComposant.FindFirst() then begin
                         LigneVenteComposant.SetRange(Phase);
@@ -893,12 +896,19 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             DecimalPlaces = 2 : 5;
             DataClassification = ToBeClassified;
         }
+        field(51330; "Quantite prise sur stock"; Decimal) //Calculé quand on demande le stock dispo, pas mis à jour sinon
+        {
+            Caption = 'Quantité prise sur stock';
+            BlankZero = true;
+            DecimalPlaces = 0 : 5;
+            DataClassification = ToBeClassified;
+        }
     }
 
     keys
     {
 
-        key(MyKey1; "Document Type", "Document No.", Type)//Pas possible d'ajouter Vendor No donc probleme !!!
+        key(MyKey1; "Document Type", "Document No.", Type)
         {
 
         }
@@ -946,13 +956,17 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         {
 
         }
-        key(MyKey14; "Eco Tax Furniture Line", TypeDocDuplique, NumDocDuplique, "Linked to line")
+        key(MyKey14; "Eco Tax Furniture Line", TypeDocDuplique, NumDocDuplique, "Composant de la ligne No.")
         {
 
         }
         key(MyKey15; TypeDocDuplique, NumDocDuplique, "Vendor No.", Phase)
         {
 
+        }
+        key(MyKey16; TypeDocDuplique, NumDocDuplique,Phase,TypeDuplique,"Eco Tax Furniture Line")
+        {
+            SumIndexFields = QuantiteBaseDuplique,QuantiteExpedieeBaseDuplique,"Quantite prise sur stock";
         }
     }
 
@@ -1014,11 +1028,11 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
     var
         LigneVenteCompose: Record "Sales Line";
         LigneVenteComposant: Record "Sales Line";
-        ValeurCompose: Decimal;
+        //ValeurCompose: Decimal;
         PlusGrosMontantLigne: Decimal;
-        TotalValeurSaupoudre: Decimal;
+        //TotalValeurSaupoudre: Decimal;
         MontantComposant: Decimal;
-        NumLignePlusGrosMontant: Integer;
+        //NumLignePlusGrosMontant: Integer;
     begin
         //Cette fonction part d'un article composé (qui a un prix unitaire facturé au client) et va calculer un prix unitaire déclaré au douane
         //pour chaque article composant l'article composé.
@@ -1029,22 +1043,22 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         LigneVenteCompose.setrange(Type, LigneVenteCompose.type::Item);
         if LigneVenteCompose.findset(false) then begin
             LigneVenteComposant.RESET();
-            LigneVenteComposant.SETCURRENTKEY("Document Type", "Document No.", "Linked to line");
+            LigneVenteComposant.SETCURRENTKEY("Document Type", "Document No.", "Composant de la ligne No.");
             PlusGrosMontantLigne := 0;
-            NumLignePlusGrosMontant := 0;
-            TotalValeurSaupoudre := 0;
+            //NumLignePlusGrosMontant := 0;
+            //TotalValeurSaupoudre := 0;
             repeat
-                ValeurCompose := round(LigneVenteCompose."Unit Price" * LigneVenteCompose.Quantity, 0.01);
+                //ValeurCompose := round(LigneVenteCompose."Unit Price" * LigneVenteCompose.Quantity, 0.01);
                 LigneVenteComposant.SETRANGE("Document Type", LigneVenteCompose."Document Type");
                 LigneVenteComposant.SETRANGE("Document No.", LigneVenteCompose."Document No.");
-                LigneVenteComposant.SETRANGE("Linked to line", LigneVenteCompose."Line No.");
+                LigneVenteComposant.SETRANGE("Composant de la ligne No.", LigneVenteCompose."Line No.");
                 if LigneVenteComposant.FINDSET(true) then
                     repeat
                         MontantComposant := LigneVenteComposant."Prix unitaire composant" * LigneVenteComposant.Quantity;
-                        if MontantComposant >= PlusGrosMontantLigne then begin //>= et non > car si on n'a qu"une ligne de marchandise remisée à zéro, on aurait aucune ligne sur laquelle saupoudrer
+                        if MontantComposant >= PlusGrosMontantLigne then //begin //>= et non > car si on n'a qu"une ligne de marchandise remisée à zéro, on aurait aucune ligne sur laquelle saupoudrer
                             PlusGrosMontantLigne := MontantComposant;
-                            NumLignePlusGrosMontant := LigneVenteComposant."Line No.";
-                        end;
+                            //NumLignePlusGrosMontant := LigneVenteComposant."Line No.";
+                        //end;
                     until LigneVenteComposant.Next() = 0;
 
             until LigneVenteCompose.Next() = 0;
@@ -1091,10 +1105,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             exit;
 
         SalesLine2.RESET();
-        SalesLine2.SETCURRENTKEY("Document Type", "Document No.", "Linked to line");
+        SalesLine2.SETCURRENTKEY("Document Type", "Document No.", "Composant de la ligne No.");
         SalesLine2.SETRANGE("Document Type", LigneVenteOrigine."Document Type");
         SalesLine2.SETRANGE("Document No.", LigneVenteOrigine."Document No.");
-        SalesLine2.SETRANGE("Linked to line", LigneVenteOrigine."Line No.");
+        SalesLine2.SETRANGE("Composant de la ligne No.", LigneVenteOrigine."Line No.");
         if SalesLine2.FINDSET(true) then
             repeat
                 l_FromBOMComp.RESET();
@@ -1136,10 +1150,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             exit;
 
         SalesLine2.RESET();
-        SalesLine2.SETCURRENTKEY("Document Type", "Document No.", "Linked to line");
+        SalesLine2.SETCURRENTKEY("Document Type", "Document No.", "Composant de la ligne No.");
         SalesLine2.SETRANGE("Document Type", "Document Type");
         SalesLine2.SETRANGE("Document No.", "Document No.");
-        SalesLine2.SETRANGE("Linked to line", "Line No.");
+        SalesLine2.SETRANGE("Composant de la ligne No.", "Line No.");
         if SalesLine2.FINDSET(false) then
             repeat
                 l_FromBOMComp.RESET();
@@ -1253,10 +1267,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                 TempPurchLine.INSERT();
                 //Lignes texte tendus
                 lrecSalesLine2.RESET();
-                lrecSalesLine2.SETCURRENTKEY("Document Type", "Document No.", "Linked to line");
+                lrecSalesLine2.SETCURRENTKEY("Document Type", "Document No.", "Composant de la ligne No.");
                 lrecSalesLine2.SETRANGE("Document Type", "Document Type");
                 lrecSalesLine2.SETRANGE("Document No.", lSalesHeader."No.");
-                lrecSalesLine2.SETRANGE("Linked to line", lrecSalesLine."Line No.");
+                lrecSalesLine2.SETRANGE("Composant de la ligne No.", lrecSalesLine."Line No.");
                 lrecSalesLine2.SETRANGE(Type, lrecSalesLine2.Type::" ");
                 if lrecSalesLine2.FINDSET() then
                     repeat
@@ -1360,7 +1374,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         lSalesLine.SETRANGE("Document No.", "Document No.");
         if lSalesLine.FINDSET(true) then
             repeat
-                if (lSalesLine."Linked to line" = 0) and (lSalesLine."Eco Tax Furniture Line" = false) then begin
+                if (lSalesLine."Composant de la ligne No." = 0) and (lSalesLine."Eco Tax Furniture Line" = false) then begin
                     lSalesLine."Do not print" := not IsSelect;
                     if lSalesLine."Document Type" = lSalesLine."Document Type"::Order then
                         if not IsSelect then

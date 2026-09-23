@@ -409,9 +409,9 @@ page 50123 "Fiche saisie expedition"
                                     ContenuColisage.Description := LigneCommande.Description;
                                     ContenuColisage."Order No." := Rec."No.";
                                     ContenuColisage."Order Line No." := LigneCommande."Line No.";
-                                    if LigneCommande."Linked to line" <> 0 then begin
+                                    if LigneCommande."Composant de la ligne No." <> 0 then begin
                                         ContenuColisage."Type produit" := ContenuColisage."Type produit"::Composant;
-                                        ContenuColisage."No. ligne regroupement" := LigneCommande."Linked to line";
+                                        ContenuColisage."No. ligne regroupement" := LigneCommande."Composant de la ligne No.";
                                     end else begin
                                         ContenuColisage."Type produit" := ContenuColisage."Type produit"::"Produit fini";
                                         ContenuColisage."No. ligne regroupement" := ContenuColisage."No. ligne";

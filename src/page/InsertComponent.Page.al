@@ -109,7 +109,7 @@ page 50020 "Insert Component"
                     RecSalesLine.Validate("No.", NumComposantAjoute);
                     RecSalesLine.Validate(Quantity, Quantity);
                     RecSalesLine.Validate("Unit Price", 0);
-                    RecSalesLine."Linked to line" := NumLigneParent;
+                    RecSalesLine."Composant de la ligne No." := NumLigneParent;
                     RecSalesLine."BOM Item No." := NumArticleParent;
                     RecSalesLine."Quantite pour 1" := QuantitePour1;
                     RecSalesLine.Insert();
@@ -125,7 +125,7 @@ page 50020 "Insert Component"
                     RecSalesLine.Validate("No.", NumComposantAjoute);
                     RecSalesLine.Validate(Quantity, Quantity);
                     RecSalesLine.Validate("Unit Price", 0);
-                    RecSalesLine."Linked to line" := LigneVente."Linked to line";
+                    RecSalesLine."Composant de la ligne No." := LigneVente."Composant de la ligne No.";
                     RecSalesLine."BOM Item No." := NumArticleParent;
                     RecSalesLine.Insert();
                     RecSalesLine.Validate("Location Code", LigneVente."Location Code");

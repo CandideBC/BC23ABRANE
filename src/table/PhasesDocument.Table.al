@@ -103,6 +103,33 @@ table 50053 "Phases document"
             CalcFormula = count("Sales Line" where(TypeDocDuplique = field("Type document"), NumDocDuplique = field("No. document"), Phase = field(Phase)));
             Editable = false;
         }
+        field(32; "Quantites commandees"; Decimal)
+        {
+            Caption = 'Quantités commandées';
+            FieldClass = FlowField;
+            CalcFormula = sum("Sales Line"."Quantity (Base)" where (TypeDocDuplique=field("Type document"),NumDocDuplique=field("No. document"),TypeDuplique=const(Item),Phase=field(Phase),"Eco Tax Furniture Line"=const(false)));
+            Editable = false;
+            BlankZero = true;
+            DecimalPlaces = 0:5;
+        }
+        field(33; "Quantites expediees"; Decimal)
+        {
+            Caption = 'Quantités expédiées';
+            FieldClass = FlowField;
+            CalcFormula = sum("Sales Line"."Qty. Shipped (Base)" where (TypeDocDuplique=field("Type document"),NumDocDuplique=field("No. document"),TypeDuplique=const(Item),Phase=field(Phase),"Eco Tax Furniture Line"=const(false)));
+            Editable = false;
+            BlankZero = true;
+            DecimalPlaces = 0:5;
+        }
+        field(34; "Quantites prises sur stock"; Decimal)
+        {
+            Caption = 'Quantités prises sur stock';
+            FieldClass = FlowField;
+            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where (TypeDocDuplique=field("Type document"),NumDocDuplique=field("No. document"),TypeDuplique=const(Item),Phase=field(Phase),"Eco Tax Furniture Line"=const(false)));
+            Editable = false;
+            BlankZero = true;
+            DecimalPlaces = 0:5;
+        }
 
         field(50; "Date chargement"; Date)
         {

@@ -52,7 +52,7 @@ codeunit 50017 ConsommerEventsCodeunits
         LigneVente.Reset();
         LigneVente.SETRANGE("Document Type", SalesHeader."Document Type");
         LigneVente.SETRANGE("Document No.", SalesHeader."No.");
-        LigneVente.SETFILTER("Linked to line", '>%1', 0);
+        LigneVente.SETFILTER("Composant de la ligne No.", '>%1', 0);
         LigneVente.SETFILTER(Amount, '<>%1', 0);
         if LigneVente.FINDFIRST() then
             ERROR(ComposantAvecMontantErr, LigneVente.Amount, LigneVente."Document Type", LigneVente."Document No.", LigneVente."Line No.");
@@ -765,7 +765,7 @@ codeunit 50017 ConsommerEventsCodeunits
         if SalesLine."Ligne eclatee" then
             ItemJournalLine."Document Line No. BOM" := SalesLine."Line No."
         else
-            ItemJournalLine."Document Line No. BOM" := SalesLine."Linked to line";
+            ItemJournalLine."Document Line No. BOM" := SalesLine."Composant de la ligne No.";
 
         ItemJournalLine."Exclure DEB" := (SalesHeader.ASS); //Tout SAV Vente ne doit pas etre pris en compte dans la DEB
     end;
@@ -1882,7 +1882,7 @@ codeunit 50017 ConsommerEventsCodeunits
         LigneVente.Reset();
         LigneVente.SETRANGE("Document Type", SalesHeader."Document Type");
         LigneVente.SETRANGE("Document No.", SalesHeader."No.");
-        LigneVente.SETFILTER("Linked to line", '>%1', 0);                //DIAFTS 01/10/2015
+        LigneVente.SETFILTER("Composant de la ligne No.", '>%1', 0);                //DIAFTS 01/10/2015
         LigneVente.SETFILTER(Amount, '<>%1', 0);
         if not LigneVente.IsEmpty then
             ERROR(LigneComposantAvecMontantErr, LigneVente.Amount, LigneVente."Document Type", LigneVente."Document No.", LigneVente."Line No.");

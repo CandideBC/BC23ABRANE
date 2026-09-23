@@ -132,7 +132,7 @@ pageextension 50091 SalesQuoteSubformExtension extends "Sales Quote Subform"
                 ApplicationArea = All;
             }
 
-            field("Linked to line"; Rec."Linked to line")
+            field("Composant de la ligne No."; Rec."Composant de la ligne No.")
             {
                 ApplicationArea = All;
                 ToolTip = 'Lié à la ligne N°';
@@ -324,7 +324,7 @@ pageextension 50091 SalesQuoteSubformExtension extends "Sales Quote Subform"
 
                 trigger OnAction()
                 begin
-                    Rec.setrange("Linked to line", 0)
+                    Rec.setrange("Composant de la ligne No.", 0)
 
                 end;
             }
@@ -339,12 +339,12 @@ pageextension 50091 SalesQuoteSubformExtension extends "Sales Quote Subform"
                     DiaText0001Err: Label 'Seuls les composants peuvent être modifiés par cette fonction.';
 
                 begin
-                    if (Rec."Linked to line" = 0) and (Rec."BOM Item No." = '') then
+                    if (Rec."Composant de la ligne No." = 0) and (Rec."BOM Item No." = '') then
                         ERROR(DiaText0001Err);
 
 
                     CLEAR(ComponentModificationPage);
-                    ComponentModificationPage.SetData(Rec."No.", Rec."Quantite pour 1", Rec."Linked to line", Rec."BOM Item No.", Rec."Document Type",
+                    ComponentModificationPage.SetData(Rec."No.", Rec."Quantite pour 1", Rec."Composant de la ligne No.", Rec."BOM Item No.", Rec."Document Type",
                                                        Rec."Document No.", Rec."Line No.", Rec."Location Code");
                     ComponentModificationPage.LOOKUPMODE(true);
                     ComponentModificationPage.RUNMODAL();
@@ -362,11 +362,11 @@ pageextension 50091 SalesQuoteSubformExtension extends "Sales Quote Subform"
                     DiaText0002Err: Label 'Vous devez vous positionner sur un composant pour pouvoir utiliser cette fonction.';
 
                 begin
-                    if (Rec."Linked to line" = 0) and (Rec."BOM Item No." = '') then
+                    if (Rec."Composant de la ligne No." = 0) and (Rec."BOM Item No." = '') then
                         ERROR(DiaText0002Err);
 
                     CLEAR(ComponentInsertPage);
-                    ComponentInsertPage.SetData(false, Rec."Linked to line", Rec."BOM Item No.",
+                    ComponentInsertPage.SetData(false, Rec."Composant de la ligne No.", Rec."BOM Item No.",
                                             Rec."Document Type", Rec."Document No.", Rec."Line No.");
                     ComponentInsertPage.LOOKUPMODE(true);
                     ComponentInsertPage.RUNMODAL();
@@ -387,7 +387,7 @@ pageextension 50091 SalesQuoteSubformExtension extends "Sales Quote Subform"
                 begin
                     RecSalesLine.SETRANGE("Document Type", Rec."Document Type");
                     RecSalesLine.SETRANGE("Document No.", Rec."Document No.");
-                    RecSalesLine.SETRANGE("Linked to line", 0);
+                    RecSalesLine.SETRANGE("Composant de la ligne No.", 0);
                     RecSalesLine.SETRANGE("Eco Tax Furniture Line", false);
                     if RecSalesLine.FindFirst() then begin
                         DuplicatePage.LOOKUPMODE(true);

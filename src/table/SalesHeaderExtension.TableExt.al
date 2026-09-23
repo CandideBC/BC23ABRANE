@@ -160,6 +160,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Caption = 'Poids brut total (pesé)';
             DataClassification = ToBeClassified;
         }
+        /*
         field(50160; "At least One Ship"; Boolean)
         {
             FieldClass = FlowField;
@@ -168,6 +169,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Description = 'P21';
             Editable = false;
         }
+        */
         field(50165; "Necessite Fiche BE"; Boolean)
         {
             FieldClass = FlowField;
@@ -190,7 +192,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             var
                 Text50001Qst: Label 'Voulez-vous mettre à jour ce code sur les lignes ?';
             begin
-                //DIA£LBO 20/02/2017
                 SalesLine.RESET();
                 SalesLine.SETRANGE("Document Type", "Document Type");
                 SalesLine.SETRANGE("Document No.", "No.");
@@ -198,7 +199,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                     if CONFIRM(Text50001Qst) then
                         SalesLine.MODIFYALL("Return Reason Code", "Return Reason Code", false);
 
-                //DIA£LBO 20/02/2017//
             end;
         }
         field(50180; "Annee commande"; Integer)
@@ -264,11 +264,8 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
                 if Enseigne.GET("Code enseigne") then begin
                     "Code groupe" := Enseigne."Code groupe";
-                    //KAN.FHA 12/03/2021 DEBUT
                     if Enseigne."Enseigne interne" then
                         "Code chantier" := Enseigne.ChantierAnnuel("Posting Date");
-                    //KAN.FHA 12/03/2021 FIN
-                    //KAN.FHA 28/08/2025 DEBUT
                     if Rec."Document Type" in [Rec."Document Type"::Quote, Rec."Document Type"::Order] then begin
                         PhasesEnseigne.SetRange("Code enseigne", Rec."Code enseigne");
 
@@ -292,7 +289,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         end;
 
                     end;
-                    //KAN.FHA 28/08/2025 FIN
                     if "Code chantier" <> '' then begin
                         Chantier.GET("Code chantier");
                         if Chantier."Code enseigne" <> "Code enseigne" then
@@ -301,7 +297,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                     end else
                         VALIDATE("Code chantier", '');
 
-                    //KAN.FHA 27/10/2025 DEBUT
                     if Rec."Document Type" in ["Document Type"::Quote, "Document Type"::Order] then begin
                         PhasesDocument.SetRange("Type document", PhasesDocument."Type document");
                         PhasesDocument.SetRange("No. document", "No.");
@@ -311,7 +306,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                                 PhasesDocument.Modify();
                             until PhasesDocument.Next() = 0;
                     end;
-                    //KAN.FHA 27/10/2025 FIN
                 end;
             end;
         }
@@ -815,7 +809,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         end;
                     end;
                 end;
-                //KAN.FHA 15/01/2026 DEBUT
                 if rec."Date chargement" <> 0D then begin
                     Rec."Annee commande" := DATE2DMY(Rec."Date chargement", 3);
                     LigneVente.Reset();
@@ -824,8 +817,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                     if LigneVente.FindSet(true) then
                         LigneVente.ModifyAll("Annee commande", Rec."Annee commande");
                 end;
-                //KAN.FHA 15/01/2026 FIN
-
             end;
         }
 
@@ -898,7 +889,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         {
             Caption = 'Date chargement min. phases';
             FieldClass = FlowField;
-            CalcFormula = min("Phases document"."Date chargement" where("Type document" = Field("Document Type"), "No. document" = field("No.")));
+            CalcFormula = min("Phases document"."Date chargement" where("Type document" = field("Document Type"), "No. document" = field("No.")));
             Editable = false;
         }
         field(51278; "Date chargement max. phases"; Date)
@@ -1185,17 +1176,17 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 LigneVenteSimplifiee."% remise ligne" := LigneVente."Line Discount %";
                 //KAN.FHA 20/05/2026 FIN
                 LigneVenteSimplifiee.Montant := LigneVente.Amount;
-                if (LigneVente."Attached to Line No." = 0) and (LigneVente."Linked to line" = 0) then
+                if (LigneVente."Attached to Line No." = 0) and (LigneVente."Composant de la ligne No." = 0) then
                     LigneVenteSimplifiee."Type ligne simplifiee" := LigneVenteSimplifiee."Type ligne simplifiee"::Mere
                 else begin
                     LigneVenteSimplifiee."Type ligne simplifiee" := LigneVenteSimplifiee."Type ligne simplifiee"::Fille;
-                    if LigneVente."Linked to line" <> 0 then
-                        LigneVenteSimplifiee."No. ligne mere" := LigneVente."Linked to line"
+                    if LigneVente."Composant de la ligne No." <> 0 then
+                        LigneVenteSimplifiee."No. ligne mere" := LigneVente."Composant de la ligne No."
                     else
                         LigneVenteSimplifiee."No. ligne mere" := LigneVente."Attached to Line No.";
                 end;
                 LigneVenteSimplifiee."Attached to Line No." := LigneVente."Attached to Line No.";
-                LigneVenteSimplifiee."Linked to line No." := LigneVente."Linked to line";
+                LigneVenteSimplifiee."Linked to line No." := LigneVente."Composant de la ligne No.";
                 LigneVenteSimplifiee."Code magasin" := LigneVente."Location Code";
                 LigneVenteSimplifiee."Nomenclature produits" := LigneVente."Nomenclature produits";
                 LigneVenteSimplifiee."Eco Tax Furniture Amount" := LigneVente."Eco Tax Furniture Amount";
@@ -1373,7 +1364,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         ItemNo: Code[20];
         AjouterACdeNo: Code[20];
         CreerDocumentSAV: Boolean;
-        //AchatMultiPhases: Boolean;
         Selection: Integer;
         RemainingQtyToCover: Decimal;
         QtyToTake: Decimal;
@@ -1384,10 +1374,8 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         NbCdeAchatCompletees: Integer;
         NbLignesAjoutees: Integer;
         ListeFournisseurAConfirmerMsg: Text;
-        //KAN.FHA 21/09/2026 DEBUT
         PhasesParCommande: Dictionary of [Code[20], Integer]; //Pour chaque commande d'achat : la phase unique achetée, ou -98 si plusieurs phases
         CommandeAchatPrec: Code[20]; //Sert à réinitialiser ItemNo quand on change de commande d'achat
-        //KAN.FHA 21/09/2026 FIN
         ConfirmerListeFnsQst: Label 'Confirmez-vous vouloir créer une commande pour chacun des fournisseurs suivants : %1.', Comment = '%1 = Liste fournisseurs';
         AbandonMsg: Label 'Opération interrompue à la demande de l''utilisateur.';
 
@@ -1624,7 +1612,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         lrecSalesLine.SETRANGE(Type, lrecSalesLine.Type::Item);
         if pAcheterQueCertainesPhases then
             lrecSalesLine.SetRange("A acheter", true);
-        if lrecSalesLine.FINDSET(true) then begin
+        if lrecSalesLine.FINDSET(true) then 
             //KAN.FHA 21/09/2026 DEBUT
             //(suppression du calcul de PhaseAchat : on stocke maintenant la phase brute de la ligne dans le tampon, voir plus bas)
             //KAN.FHA 21/09/2026 FIN
@@ -1665,10 +1653,10 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
                         //Lignes texte étendus
                         lrecSalesLine2.RESET();
-                        lrecSalesLine2.SETCURRENTKEY("Document Type", "Document No.", "Linked to line");
+                        lrecSalesLine2.SETCURRENTKEY("Document Type", "Document No.", "Composant de la ligne No.");
                         lrecSalesLine2.SETRANGE("Document Type", "Document Type");
                         lrecSalesLine2.SETRANGE("Document No.", "No.");
-                        lrecSalesLine2.SETRANGE("Linked to line", lrecSalesLine."Line No.");
+                        lrecSalesLine2.SETRANGE("Composant de la ligne No.", lrecSalesLine."Line No.");
                         lrecSalesLine2.SETRANGE(Type, lrecSalesLine2.Type::" ");
                         if lrecSalesLine2.FINDSET() then
                             repeat
@@ -1691,7 +1679,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                     end;
                 end;
             until lrecSalesLine.NEXT() = 0;
-        end;
 
         //KAN.FHA 08/03/2026 DEBUT
         LigneCommandeCadre.SetCurrentKey("Document Type", "Buy-from Vendor No.");
@@ -1905,7 +1892,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         lrecSalesLine.SETRANGE("Document Type", "Document Type");
         lrecSalesLine.SETRANGE("Document No.", "No.");
         lrecSalesLine.SETRANGE(Type, lrecSalesLine.Type::Item);
-        if lrecSalesLine.FINDSET(true) then begin
+        if lrecSalesLine.FINDSET(true) then
             //KAN.FHA 21/09/2026 DEBUT
             //(suppression du calcul de PhaseAchat : on stocke maintenant la phase brute de la ligne dans le tampon, voir plus bas)
             //KAN.FHA 21/09/2026 FIN
@@ -1943,10 +1930,10 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
                             //Lignes texte étendus
                             lrecSalesLine2.Reset();
-                            lrecSalesLine2.SetCurrentKey("Document Type", "Document No.", "Linked to line");
+                            lrecSalesLine2.SetCurrentKey("Document Type", "Document No.", "Composant de la ligne No.");
                             lrecSalesLine2.SetRange("Document Type", "Document Type");
                             lrecSalesLine2.SetRange("Document No.", "No.");
-                            lrecSalesLine2.SetRange("Linked to line", lrecSalesLine."Line No.");
+                            lrecSalesLine2.SetRange("Composant de la ligne No.", lrecSalesLine."Line No.");
                             lrecSalesLine2.SetRange(Type, lrecSalesLine2.Type::" ");
                             if lrecSalesLine2.FindSet() then
                                 repeat
@@ -1970,7 +1957,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         end;
                 end;
             until lrecSalesLine.NEXT() = 0;
-        end;
 
         NbLignesAjoutees := 0;
         NbCdeAchatCompletees := 0;
@@ -2136,12 +2122,12 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
     end;
 
     //Mémorise pour une commande d'achat la phase d'une ligne : phase unique tant que toutes les lignes sont de la même phase, sinon PhaseMultiple()
-    local procedure NoterPhaseCommandeAchat(var PhasesParCommande: Dictionary of [Code[20], Integer]; CommandeAchatNo: Code[20]; Phase: Integer)
+    local procedure NoterPhaseCommandeAchat(var PhasesParCommande: Dictionary of [Code[20], Integer]; CommandeAchatNo: Code[20]; pPhase: Integer)
     begin
         if not PhasesParCommande.ContainsKey(CommandeAchatNo) then
-            PhasesParCommande.Add(CommandeAchatNo, Phase)
+            PhasesParCommande.Add(CommandeAchatNo, pPhase)
         else
-            if PhasesParCommande.Get(CommandeAchatNo) <> Phase then
+            if PhasesParCommande.Get(CommandeAchatNo) <> pPhase then
                 PhasesParCommande.Set(CommandeAchatNo, PhaseMultiple());
     end;
 
@@ -2151,20 +2137,20 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         EnteteAchat: Record "Purchase Header";
         PhaseVente: Record "Phases document";
         CommandeAchatNo: Code[20];
-        Phase: Integer;
+        PhaseCommandeAchat: Integer;
         NouvelleInfo: Text;
         InfoPhaseLbl: Label 'Phase %1 - %2 - Date chargement : %3', Comment = '%1 = Phase ; %2 = Nom phase ; %3 = Date chargement';
         PhasesMultiplesLbl: Label 'Phases multiples';
     begin
         foreach CommandeAchatNo in PhasesParCommande.Keys() do begin
-            Phase := PhasesParCommande.Get(CommandeAchatNo);
+            PhaseCommandeAchat := PhasesParCommande.Get(CommandeAchatNo);
 
             NouvelleInfo := '';
-            if Phase = PhaseMultiple() then
+            if PhaseCommandeAchat = PhaseMultiple() then
                 NouvelleInfo := PhasesMultiplesLbl
             else
-                if PhaseVente.Get(Rec."Document Type", Rec."No.", Phase) then
-                    NouvelleInfo := StrSubstNo(InfoPhaseLbl, Phase, PhaseVente.Description,
+                if PhaseVente.Get(Rec."Document Type", Rec."No.", PhaseCommandeAchat) then
+                    NouvelleInfo := StrSubstNo(InfoPhaseLbl, PhaseCommandeAchat, PhaseVente.Description,
                         Format(PhaseVente."Date chargement", 0, '<Day,2>/<Month,2>/<Year4>'));
 
             if NouvelleInfo <> '' then
@@ -2180,7 +2166,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 end;
         end;
     end;
-    //KAN.FHA 21/09/2026 FIN
 
     procedure CreerLigneCommandeAchat(Var EnteteAchat: Record "Purchase Header"; TableTamponVente: Record TamponTriLignesDocument; LineNo: Integer; QtyToOrder: Decimal; var TamponCadre: record "Tampon dispo cde cadre achat")
     var
@@ -2598,7 +2583,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         end;
         EnteteFactureVente."Fact. situation : No. document" := "No.";
         EnteteFactureVente."Facture situation" := true;
-        //EnteteFactureVente.VALIDATE("Payment Terms Code",Enseigne."Code cond. paiement acomptes");
         EnteteFactureVente.MODIFY();
 
         "No. facture situation" := EnteteFactureVente."No.";
@@ -3001,7 +2985,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
         Commit();
 
-
         //On va maintenant aller mettre à jour le champ [Stock dispo instant t] sur les lignes vente
         //On parcourt les lignes de vente et on va chercher dans la table de travail la disponibilité de chaque article
         //(si un article est plusieurs fois dans le devis/la commande, il n'est qu'une fois dans la table de travail)
@@ -3289,7 +3272,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         ParamStock: Record "Inventory Setup";
         ReferenceFicheBE: code[10];
         DateLimiteReponseBE: Date;
-        NouvelleDate: Date;
+        //NouvelleDate: Date;
         DossierBEExisteDeja: Boolean;
         intTypeDoc: Integer;
         NumLigne: Integer;
@@ -3738,9 +3721,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                     ContenuColisage.Description := LigneCommande.Description;
                     ContenuColisage."Order No." := Rec."No.";
                     ContenuColisage."Order Line No." := LigneCommande."Line No.";
-                    if LigneCommande."Linked to line" <> 0 then begin
+                    if LigneCommande."Composant de la ligne No." <> 0 then begin
                         ContenuColisage."Type produit" := ContenuColisage."Type produit"::Composant;
-                        ContenuColisage."No. ligne regroupement" := LigneCommande."Linked to line";
+                        ContenuColisage."No. ligne regroupement" := LigneCommande."Composant de la ligne No.";
                     end else begin
                         ContenuColisage."Type produit" := ContenuColisage."Type produit"::"Produit fini";
                         ContenuColisage."No. ligne regroupement" := ContenuColisage."No. ligne";

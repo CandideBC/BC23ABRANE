@@ -5,7 +5,7 @@ page 50027 "Colisage : extraire lignes cde"
     Editable = false;
     PageType = List;
     SourceTable = "Sales Line";
-    SourceTableView = where (Type = const (Item), "Linked to line"=const(0));
+    SourceTableView = where (Type = const (Item), "Composant de la ligne No."=const(0));
 
     layout
     {

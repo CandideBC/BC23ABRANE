@@ -789,7 +789,7 @@ table 50005 "Ligne vente simplifiee"
                     IF LigneVenteSimplifiee."Attached to Line No." <> 0 then
                         LigneVente."Attached to Line No." := LigneMere."Nouveau No. ligne"
                     else //Alors c'est le 2e champ de lien, [Attached to line N°]
-                        LigneVente."Linked to line" := LigneMere."Nouveau No. ligne";
+                        LigneVente."Composant de la ligne No." := LigneMere."Nouveau No. ligne";
                 end;
                 LigneVente.Description := LigneVenteSimplifiee.Description;
                 if LigneVente."Location Code" <> LigneVenteSimplifiee."Code magasin" then

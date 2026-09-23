@@ -693,12 +693,12 @@ codeunit 50019 ConsommerEventsTables
             exit;
         //KAN.FHA 03/04/2025 FIN
 
-        if (Rec."Linked to line" <> 0) and not rec.GetHideValidationDialog() then begin
+        if (Rec."Composant de la ligne No." <> 0) and not rec.GetHideValidationDialog() then begin
             LigneVente2.RESET();
             LigneVente2.SETCURRENTKEY("Document Type", "Blanket Order No.", "Blanket Order Line No.");
             LigneVente2.SETRANGE("Document No.", Rec."Document No.");
             LigneVente2.SETRANGE("Document Type", Rec."Document Type");
-            LigneVente2.SETRANGE("Line No.", Rec."Linked to line");
+            LigneVente2.SETRANGE("Line No.", Rec."Composant de la ligne No.");
             LigneVente2.SETRANGE("No.", Rec."BOM Item No.");
             if not LigneVente2.IsEmpty then
                 ERROR(Text50001Err);
@@ -706,10 +706,10 @@ codeunit 50019 ConsommerEventsTables
 
         if (Rec."Line No." <> 0) and (Rec."Ligne eclatee") then begin
             LigneVente2.RESET();
-            LigneVente2.SETCURRENTKEY("Document Type", "Document No.", "Linked to line");
+            LigneVente2.SETCURRENTKEY("Document Type", "Document No.", "Composant de la ligne No.");
             LigneVente2.SETRANGE("Document Type", Rec."Document Type");
             LigneVente2.SETRANGE("Document No.", Rec."Document No.");
-            LigneVente2.SETRANGE("Linked to line", Rec."Line No.");
+            LigneVente2.SETRANGE("Composant de la ligne No.", Rec."Line No.");
             if LigneVente2.FINDSET(true) then
                 repeat
                     LigneVente2.SetHideValidationDialog(true);
@@ -767,8 +767,10 @@ codeunit 50019 ConsommerEventsTables
         //KAN.FHA 03/12/2025 DEBUT
         SalesLine."Type Fiche BE" := TempSalesLine."Type Fiche BE";
         SalesLine.Phase := TempSalesLine.Phase;
-        //message('OnValidateTypeOnCopyFromTempSalesLine ' + format(SalesLine.Phase));
         //KAN.FHA 03/12/2025 FIN
+        //KAN.FHA 23/09/2026 DEBUT
+        SalesLine.TypeDuplique := TempSalesLine.Type;
+        //KAN.FHA 23/09/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Table, 37, OnBeforeValidateNo, '', false, false)]
@@ -778,7 +780,7 @@ codeunit 50019 ConsommerEventsTables
         ErrorTxt: Text;
     begin
         //DIA.ABRA.BOM SCH 17/03/2015 DEBUT
-        if (CurrentFieldNo = SalesLine.FIELDNO("No.")) and (SalesLine."Linked to line" <> 0) then begin
+        if (CurrentFieldNo = SalesLine.FIELDNO("No.")) and (SalesLine."Composant de la ligne No." <> 0) then begin
             ErrorTxt := Text50000Err + ' ' + SalesLine.FIELDCAPTION("No.");
             ERROR(ErrorTxt);
         end;
@@ -900,7 +902,7 @@ codeunit 50019 ConsommerEventsTables
         Text50000Err: Label 'Vous ne pouvez pas modifier le champ suivant pour une ligne "Composant". :';
         ErrorText: Text;
     begin
-        if (CallingFieldNo = SalesLine.FIELDNO(Quantity)) and (SalesLine."Linked to line" <> 0) then begin
+        if (CallingFieldNo = SalesLine.FIELDNO(Quantity)) and (SalesLine."Composant de la ligne No." <> 0) then begin
             ErrorText := Text50000Err + ' ' + SalesLine.FIELDCAPTION(Quantity);
             ERROR(ErrorText);
         end;
@@ -949,8 +951,10 @@ codeunit 50019 ConsommerEventsTables
                 SalesLine."Montant restant HT (DS)" :=
                     CurrExchRate.ExchangeAmtFCYToLCY(
                         SalesHeader."Document Date", SalesHeader."Currency Code", SalesLine.Amount * SalesLine."Outstanding Quantity" / SalesLine.Quantity, SalesHeader."Currency Factor");
-
-        //SalesLine.Modify();
+        //KAN.FHA 23/09/2026 DEBUT
+        SalesLine.QuantiteBaseDuplique := SalesLine."Quantity (Base)";
+        SalesLine.QuantiteExpedieeBaseDuplique := SalesLine."Qty. Shipped (Base)";
+        //KAN.FHA 23/09/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Table, 37, OnAfterGetUnitCost, '', false, false)]
@@ -1223,7 +1227,7 @@ codeunit 50019 ConsommerEventsTables
     var
         Text50000Err: label 'Vous ne pouvez pas modifier le champ [Référence article] pour une ligne "Composant".';
     begin
-        if ((Rec."Linked to line" <> 0)) then
+        if ((Rec."Composant de la ligne No." <> 0)) then
             ERROR(Text50000Err);
     end;
 

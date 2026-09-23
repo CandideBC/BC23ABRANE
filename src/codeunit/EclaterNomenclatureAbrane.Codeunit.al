@@ -145,7 +145,7 @@ codeunit 50001 "Eclater nomenclature ABRANE"
 
             ToSalesLine."BOM Item No." := BOMItemNo;
 
-            ToSalesLine."Linked to line" := SalesLine."Line No.";
+            ToSalesLine."Composant de la ligne No." := SalesLine."Line No.";
             ToSalesLine.Validate("Unit Price", 0);
             ToSalesLine."Prix bloque" := true;
             ToSalesLine.Insert();

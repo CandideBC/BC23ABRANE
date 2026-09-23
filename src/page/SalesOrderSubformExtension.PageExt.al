@@ -332,7 +332,7 @@ pageextension 50083 SalesOrderSubformExtension extends "Sales Order Subform"
 
                 trigger OnAction()
                 begin
-                    Rec.setrange("Linked to line", 0)
+                    Rec.setrange("Composant de la ligne No.", 0)
 
                 end;
             }
@@ -347,11 +347,11 @@ pageextension 50083 SalesOrderSubformExtension extends "Sales Order Subform"
                     DiaText0001Err: Label 'Seuls les composants peuvent tre modifis par cette fonction.';
 
                 begin
-                    if (Rec."Linked to line" = 0) and (Rec."BOM Item No." = '') then
+                    if (Rec."Composant de la ligne No." = 0) and (Rec."BOM Item No." = '') then
                         ERROR(DiaText0001Err);
 
                     CLEAR(ComponentModificationPage);
-                    ComponentModificationPage.SetData(Rec."No.", Rec.Quantity, Rec."Linked to line", Rec."BOM Item No.", Rec."Document Type",
+                    ComponentModificationPage.SetData(Rec."No.", Rec.Quantity, Rec."Composant de la ligne No.", Rec."BOM Item No.", Rec."Document Type",
                                                        Rec."Document No.", Rec."Line No.", Rec."Location Code");
                     ComponentModificationPage.LOOKUPMODE(true);
                     ComponentModificationPage.RUNMODAL();
@@ -369,11 +369,11 @@ pageextension 50083 SalesOrderSubformExtension extends "Sales Order Subform"
                     DiaText0002Err: Label 'Vous devez vous positionner sur un composant pour pouvoir utiliser cette fonction.';
 
                 begin
-                    if (Rec."Linked to line" = 0) and (Rec."BOM Item No." = '') then
+                    if (Rec."Composant de la ligne No." = 0) and (Rec."BOM Item No." = '') then
                         ERROR(DiaText0002Err);
 
                     CLEAR(ComponentInsertPage);
-                    ComponentInsertPage.SetData(false, Rec."Linked to line", Rec."BOM Item No.",
+                    ComponentInsertPage.SetData(false, Rec."Composant de la ligne No.", Rec."BOM Item No.",
                                             Rec."Document Type", Rec."Document No.", Rec."Line No.");
                     ComponentInsertPage.LOOKUPMODE(true);
                     ComponentInsertPage.RUNMODAL();
@@ -414,7 +414,7 @@ pageextension 50083 SalesOrderSubformExtension extends "Sales Order Subform"
                 begin
                     RecSalesLine.SETRANGE("Document Type", Rec."Document Type");
                     RecSalesLine.SETRANGE("Document No.", Rec."Document No.");
-                    RecSalesLine.SETRANGE("Linked to line", 0);
+                    RecSalesLine.SETRANGE("Composant de la ligne No.", 0);
                     RecSalesLine.SETRANGE("Eco Tax Furniture Line", false);
                     //KAN.FHA 26/03/2025
                     //if RecSalesLine.FindFirst() then begin

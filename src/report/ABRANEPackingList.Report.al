@@ -719,7 +719,7 @@ report 50009 "ABRANE : Packing List"
                         column(PromisedDeliveryDate_SalesLine; "Sales Line"."Promised Delivery Date")
                         {
                         }
-                        column(LinkedNo; "Sales Line"."Linked to line")
+                        column(LinkedNo; "Sales Line"."Composant de la ligne No.")
                         {
                         }
                         column(SalesLineSubTot; SousTotal)
@@ -836,12 +836,12 @@ report 50009 "ABRANE : Packing List"
 
                             SalesCompLine.SetRange("Document Type", TempSalesLine."Document Type");
                             SalesCompLine.SetRange("Document No.", TempSalesLine."Document No.");
-                            SalesCompLine.SetRange("Linked to line", TempSalesLine."Line No.");
+                            SalesCompLine.SetRange("Composant de la ligne No.", TempSalesLine."Line No.");
                             Compose := SalesCompLine.FindFirst();
                             if Compose then 
                                 TariffNo := ''
                             else
-                                if TempSalesLine."Linked to line" <> 0 then
+                                if TempSalesLine."Composant de la ligne No." <> 0 then
                                     "Sales Line"."Item Reference No." := '';
 
                             TotalWeight += TempSalesLine."Net Weight" * TempSalesLine.Quantity;
