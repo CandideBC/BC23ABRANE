@@ -940,7 +940,9 @@ report 50006 "ABRANE : Sales - Invoice"
                             if not MoreLines then
                                 CurrReport.Break();
                             SetRange("Line No.", 0, "Line No.");
-                            CurrReport.CreateTotals("Line Amount", Amount, "Amount Including VAT", "Inv. Discount Amount");
+                            //KAN.FHA 23/09/2026 DEBUT
+                            //CurrReport.CreateTotals("Line Amount", Amount, "Amount Including VAT", "Inv. Discount Amount");
+                            //KAN.FHA 23/09/2026 FIN
 
                             GetTotalLineAmount := 0;
                             //GetTotalInvDiscAmount := 0;
@@ -1027,9 +1029,11 @@ report 50006 "ABRANE : Sales - Invoice"
                         trigger OnPreDataItem()
                         begin
                             SetRange(Number, 1, TempVATAmountLine.Count);
-                            CurrReport.CreateTotals(
-                              TempVATAmountLine."Line Amount", TempVATAmountLine."Inv. Disc. Base Amount",
-                              TempVATAmountLine."Invoice Discount Amount", TempVATAmountLine."VAT Base", TempVATAmountLine."VAT Amount");
+                            //KAN.FHA 01/10/2026 DEBUT
+                            //CurrReport.CreateTotals(
+                            //  TempVATAmountLine."Line Amount", TempVATAmountLine."Inv. Disc. Base Amount",
+                            //  TempVATAmountLine."Invoice Discount Amount", TempVATAmountLine."VAT Base", TempVATAmountLine."VAT Amount");
+                            //KAN.FHA 01/10/2026 FIN
                         end;
                     }
                     dataitem(VatCounterLCY; "Integer")
@@ -1073,7 +1077,9 @@ report 50006 "ABRANE : Sales - Invoice"
                                 CurrReport.Break();
 
                             SetRange(Number, 1, TempVATAmountLine.Count);
-                            CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 23/09/2026 DEBUT
+                            //CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 23/09/2026 FIN
 
                             if GLSetup."LCY Code" = '' then
                                 VALSpecLCYHeader := Text007Lbl + Text008Lbl

@@ -1079,7 +1079,7 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
 
                 trigger OnAction()
                 begin
-                    rec.AfficherStockDispo(true);
+                    rec.CalculerStockDispo(true);
                 end;
             }
         }

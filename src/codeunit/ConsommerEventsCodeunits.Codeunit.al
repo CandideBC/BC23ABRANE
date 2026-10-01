@@ -1920,6 +1920,10 @@ codeunit 50017 ConsommerEventsCodeunits
         if SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order] then
             SalesHeader.ListerPhases();
         //KAN.FHA 08/08/2025 FIN
+
+        //KAN.FHA 23/09/2026 DEBUT
+        SalesHeader.CalculerStockDispo(false);
+        //KAN.FHA 23/09/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 414, OnAfterReopenSalesDoc, '', false, false)]

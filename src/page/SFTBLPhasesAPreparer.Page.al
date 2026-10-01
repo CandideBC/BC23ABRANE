@@ -25,6 +25,11 @@ page 50044 "SF TBL Phases a preparer"
                         OuvrirFicheSaisieExpe();
                     end;
                 }
+                field(Phase; Rec.Phase)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Phase';
+                }
 
                 field("No. doc externe"; Rec."No. doc externe")
                 {
@@ -42,18 +47,7 @@ page 50044 "SF TBL Phases a preparer"
                     DecimalPlaces = 0 : 0;
                     Editable = false;
                 }
-                /*
 
-                field(NbArticlesAPreparer; NbArticlesAPreparer)
-                {
-                    ApplicationArea = All;
-                    Caption = 'Nb articles à préparer';
-                    ToolTip = 'Nb articles à préparer';
-                    BlankZero = true;
-                    DecimalPlaces = 0 : 5;
-                    Editable = false;
-                }
-                */
                 field("Quantites commandees";Rec."Quantites commandees")
                 {
                     ApplicationArea = All;
@@ -144,7 +138,6 @@ page 50044 "SF TBL Phases a preparer"
                 field("Date chargement"; EnteteVente."Date chargement")
                 {
                     ToolTip = 'Date de chargement';
-                    //Editable = false;
                 }
                 field("Requested Delivery Date"; EnteteVente."Requested Delivery Date")
                 {
@@ -209,11 +202,7 @@ page 50044 "SF TBL Phases a preparer"
                 {
                     ToolTip = 'Poids brut total';
                 }
-                field(Phase; Rec.Phase)
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Phase';
-                }
+
 
             }
         }
@@ -307,8 +296,6 @@ page 50044 "SF TBL Phases a preparer"
     var
         EnteteVente: Record "Sales Header";
         PctPrepaSurStock: Decimal;
-        //NbArticlesAPreparer: Decimal;
-        //NbArticlesExpedies: Decimal;
         PctExpedie: Decimal;
 
     procedure OuvrirFicheSaisieExpe()
@@ -344,12 +331,14 @@ page 50044 "SF TBL Phases a preparer"
 
         EnteteVente.CalcFields("Nombre phases");
 
-        rec.CalcFields("Quantites commandees","Quantites expediees");
+        rec.CalcFields("Quantites commandees","Quantites expediees","Quantites prises sur stock");
 
-        //EnteteVente.RecuperInfosLogistique(Rec.Phase,NbArticlesAPreparer,NbArticlesExpedies);
-        if Rec."Quantites commandees" <> 0 then
-            PctExpedie := round(Rec."Quantites expediees" / Rec."Quantites commandees",1)
-        else
+        if Rec."Quantites commandees" <> 0 then begin
+            PctExpedie := round(Rec."Quantites expediees" / Rec."Quantites commandees" * 100,1);
+            PctPrepaSurStock := round(Rec."Quantites prises sur stock" / Rec."Quantites commandees" * 100, 1)
+        end else begin 
             PctExpedie := 0;
+            PctPrepaSurStock := 0;
+        end;
     end;
 }

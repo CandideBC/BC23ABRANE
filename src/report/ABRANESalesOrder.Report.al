@@ -166,7 +166,7 @@ report 50005 "ABRANE : Sales - Order"
             column(SalesHeaderOrderDateCaption; SalesHeaderOrderDateCaptionLbl)
             {
             }
-            column(LabelAffaire; LabelAffaire)
+            column(LabelAffaire; AffaireLbl)
             {
             }
             column(LabelSite; LabelSite)
@@ -178,41 +178,41 @@ report 50005 "ABRANE : Sales - Order"
             column(SiteName; SiteName)
             {
             }
-            column(LabelNoLocationName; LabelNoLocationName)
+            column(LabelNoLocationName; NoLocationNameLbl)
             {
             }
-            column(LabelNoRayon; LabelNoRayon)
+            column(LabelNoRayon; NoRayonLbl)
             {
             }
-            column(LabelInterlocuteurclient; LabelInterlocuteurclient)
+            column(LabelInterlocuteurclient; InterlocuteurclientLbl)
             {
             }
-            column(LabelCommentaire; LabelCommentaire)
+            column(LabelCommentaire; CommentaireLbl)
             {
             }
-            column(LabelShipmentDate; LabelRequestedDeliveryDate)
+            column(LabelShipmentDate; RequestedDeliveryDateLbl)
             {
             }
             column(DateChargementLbl; DateChargementLbl)
             {
             }
-            column(LabelEcoTax; LabelEcoTax)
+            column(LabelEcoTax; EcoTaxLbl)
             {
             }
-            column(LabelMontantRemisesLignes; LabelMontantRemisesLignes)
+            column(LabelMontantRemisesLignes; MontantRemisesLignesLbl)
             {
                 
             }
             column(LabelTotalHTDontEcoContrib; txtTotalHT)
             {
             }
-            column(LabelRefClient; LabelRefClient)
+            column(LabelRefClient; RefClientLbl)
             {
             }
-            column(LabelDescription; LabelDescription)
+            column(LabelDescription; DescriptionLbl)
             {
             }
-            column(LabelQuantite; LabelQuantite)
+            column(LabelQuantite; QuantiteLbl)
             {
             }
             column(LabelAgreement; LabelAgreement)
@@ -599,7 +599,7 @@ report 50005 "ABRANE : Sales - Order"
 
                         trigger OnPreDataItem()
                         begin
-                            if not ShowInternalInfo then
+                            if not ShowInternalInfoBool then
                                 CurrReport.Break();
                         end;
                     }
@@ -695,7 +695,7 @@ report 50005 "ABRANE : Sales - Order"
                         column(DisplayAssemblyInfo; DisplayAssemblyInformation)
                         {
                         }
-                        column(ShowInternalInfo; ShowInternalInfo)
+                        column(ShowInternalInfo; ShowInternalInfoBool)
                         {
                         }
                         column(No2_SalesLine; "Sales Line"."No.")
@@ -860,7 +860,7 @@ report 50005 "ABRANE : Sales - Order"
 
                             trigger OnPreDataItem()
                             begin
-                                if not ShowInternalInfo then
+                                if not ShowInternalInfoBool then
                                     CurrReport.Break();
 
                                 DimSetEntry2.SetRange("Dimension Set ID", "Sales Line"."Dimension Set ID");
@@ -944,7 +944,7 @@ report 50005 "ABRANE : Sales - Order"
                             then
                                 SalesLine."Line Amount" := 0;
 
-                            if (SalesLine.Type = SalesLine.Type::"G/L Account") and (not ShowInternalInfo) then
+                            if (SalesLine.Type = SalesLine.Type::"G/L Account") and (not ShowInternalInfoBool) then
                                 "Sales Line"."No." := '';
 
                             if not SalesLine."Eco Tax Furniture Line" then
@@ -1010,7 +1010,9 @@ report 50005 "ABRANE : Sales - Order"
                             SalesLine.SetRange("Line No.", 0, SalesLine."Line No.");
                             SalesLine.SetRange("Composant de la ligne No.", 0);
                             SetRange(Number, 1, SalesLine.Count);
-                            CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
+                            //KAN.FHA 01/10/2026 DEBUT
+                            //CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
+                            //KAN.FHA 01/10/2026 FIN
                         end;
                     }
                     dataitem(VATCounter; "Integer")
@@ -1068,9 +1070,13 @@ report 50005 "ABRANE : Sales - Order"
                             if VATAmount = 0 then
                                 CurrReport.Break();
                             SetRange(Number, 1, VATAmountLine.Count);
+                            //KAN.FHA 23/09/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
                               VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount");
+                            */
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(VATCounterLCY; "Integer")
@@ -1119,7 +1125,9 @@ report 50005 "ABRANE : Sales - Order"
                                 CurrReport.Break();
 
                             SetRange(Number, 1, VATAmountLine.Count);
-                            CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 01/10/2026 DEBUT
+                            //CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 01/10/2026 FIN
 
                             if GLSetup."LCY Code" = '' then
                                 VALSpecLCYHeader := Text007 + Text008
@@ -1241,7 +1249,7 @@ report 50005 "ABRANE : Sales - Order"
                                 if PrepmtInvBuf.Next() = 0 then
                                     CurrReport.Break();
 
-                            if ShowInternalInfo then
+                            if ShowInternalInfoBool then
                                 DimMgt.GetDimensionSet(TempPrepmtDimSetEntry, PrepmtInvBuf."Dimension Set ID");
 
                             if "Sales Header"."Prices Including VAT" then
@@ -1252,11 +1260,15 @@ report 50005 "ABRANE : Sales - Order"
 
                         trigger OnPreDataItem()
                         begin
+                            //KAN.FHA 23/09/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               PrepmtInvBuf.Amount, PrepmtInvBuf."Amount Incl. VAT",
                               PrepmtVATAmountLine."Line Amount", PrepmtVATAmountLine."VAT Base",
                               PrepmtVATAmountLine."VAT Amount",
                               PrepmtLineAmount);
+                            */
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(PrepmtVATCounter; "Integer")
@@ -1412,7 +1424,7 @@ report 50005 "ABRANE : Sales - Order"
 
                 trigger OnPreDataItem()
                 begin
-                    NoOfLoops := Abs(NoOfCopies) + 1;
+                    NoOfLoops := Abs(NoOfCopiesInt) + 1;
                     CopyText := '';
                     SetRange(Number, 1, NoOfLoops);
                     OutputNo := 1;
@@ -1610,13 +1622,14 @@ report 50005 "ABRANE : Sales - Order"
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(NoOfCopies; NoOfCopies)
+                    field(NoOfCopies; NoOfCopiesInt)
                     {
                         Caption = 'Nb. de copies';
                     }
-                    field(ShowInternalInfo; ShowInternalInfo)
+                    field(ShowInternalInfo; ShowInternalInfoBool)
                     {
                         Caption = 'Afficher infos. internes';
+                        ToolTip = 'Afficher infos. internes';
                     }
 
 
@@ -1662,6 +1675,7 @@ report 50005 "ABRANE : Sales - Order"
         SalesPurchPerson: Record "Salesperson/Purchaser";
         CompanyInfo: Record "Company Information";
         SalesSetup: Record "Sales & Receivables Setup";
+        ShippingAgent: Record "Shipping Agent";
         VATAmountLine: Record "VAT Amount Line" temporary;
         PrepmtVATAmountLine: Record "VAT Amount Line" temporary;
         PrepmtVATAmountLineDeduct: Record "VAT Amount Line" temporary;
@@ -1674,6 +1688,9 @@ report 50005 "ABRANE : Sales - Order"
         CurrExchRate: Record "Currency Exchange Rate";
         AsmHeader: Record "Assembly Header";
         AsmLine: Record "Assembly Line";
+        Chantier: Record Chantier;
+        Article: Record Item;
+        FactorTable: Record Factor;
 
         LanguageMgt: codeunit Language;
         SalesPostPrepmt: Codeunit "Sales-Post Prepayments";
@@ -1700,12 +1717,12 @@ report 50005 "ABRANE : Sales - Order"
         TotalExclVATText: Text[50];
         TotalInclVATText: Text[50];
         MoreLines: Boolean;
-        NoOfCopies: Integer;
+        NoOfCopiesInt: Integer;
         NoOfLoops: Integer;
         CopyText: Text[30];
         DimText: Text[120];
         OldDimText: Text[75];
-        ShowInternalInfo: Boolean;
+        ShowInternalInfoBool: Boolean;
         Continue: Boolean;
         //LogInteraction: Boolean;
         VATAmount: Decimal;
@@ -1786,23 +1803,23 @@ report 50005 "ABRANE : Sales - Order"
         ThankYouCaptionLbl: Label 'Thank you for your order. We are pleased to confirm following conditions :';
         DearSirMadamCaptionLbl: Label 'Dear Sir/Madam,';
         SalesHeaderQuoteNoCaptionLbl: Label 'Quote No.';
-        ShippingAgent: Record "Shipping Agent";
+        
         SalesHeaderOrderDateCaptionLbl: Label 'Date :';
         SalesPersonMailCaptionLbl: Label 'E-mail';
         JobName: Text[50];
         NNCSalesLineEcoAmt: Decimal;
-        LabelAffaire: Label 'Job :';
-        LabelNoLocationName: Label 'No. and Location Name :';
-        LabelNoRayon: Label 'Range No. : ';
-        LabelInterlocuteurclient: Label 'Contact Name :';
-        LabelCommentaire: Label 'Comments : ';
-        LabelRequestedDeliveryDate: Label 'Delivery date:';
+        AffaireLbl: Label 'Job :';
+        NoLocationNameLbl: Label 'No. and Location Name :';
+        NoRayonLbl: Label 'Range No. : ';
+        InterlocuteurclientLbl: Label 'Contact Name :';
+        CommentaireLbl: Label 'Comments : ';
+        RequestedDeliveryDateLbl: Label 'Delivery date:';
         DateChargementLbl: Label 'Shipment Date';
-        LabelEcoTax: Label 'Including Ecocontribution Amount';
-        LabelMontantRemisesLignes: Label 'Including line discounts';
-        LabelRefClient: Label 'Customer Ref.';
-        LabelDescription: Label 'Description';
-        LabelQuantite: Label 'Qty';
+        EcoTaxLbl: Label 'Including Ecocontribution Amount';
+        MontantRemisesLignesLbl: Label 'Including line discounts';
+        RefClientLbl: Label 'Customer Ref.';
+        DescriptionLbl: Label 'Description';
+        QuantiteLbl: Label 'Qty';
         NNCVATEcoAMt: Decimal;
         MontantRemisesLignes: Decimal;
         //TotalNetWeight: Decimal;
@@ -1812,7 +1829,6 @@ report 50005 "ABRANE : Sales - Order"
         QuoteAgreementLine2CaptionLbl: Label '(Date, signature and official stamp)';
         LabelSite: Label 'Site :';
         SiteName: Text[50];
-        RecDimSetEntry: Record "Dimension Set Entry";
         LabelAgreement: Label 'In                         , the';
         LabelUnitCaption: Label 'Unit';
         LabelMarchandiseLbl: Label 'Product Information';
@@ -1822,7 +1838,6 @@ report 50005 "ABRANE : Sales - Order"
         LabelCurrency: Label 'Currency :';
         ExternalDocNoLbl: Label 'External Doc. No. :';
         LabelTotalGrossWeight: Label 'Total Gross Weight (kg):';
-        //TotalGrossWeight: Decimal;
         LabelPackage: Label 'Number of Packages:';
         TexteTVA: Text[1024];
         MentionTVAFR: Label 'TVA sur les débits';
@@ -1840,23 +1855,23 @@ report 50005 "ABRANE : Sales - Order"
         ClientFrancais: Boolean;
         LabelTotalHT: Label 'Total Amount - %1 (excl. VAT)';
         txtTotalHT: Text[50];
-        Chantier: Record Chantier;
+        
         PoidsObligatoireErr: Label 'Vous devez indiquer un poids net sur la ligne %1, article %2 %3.';
         MentionEcoContribution: Text;
         MentionEcoContribution1Lbl: Label 'Ce document inclut une éco-participation de  ';
         MentionEcoContribution2Lbl: Label ' , reversée à un éco-organisme agréé conformément à la réglementation en vigueur.';
-        CondPaiementAcompte: Record "Payment Terms";
+        
 
         SoldeLbl: Label 'Remaining Amount:';
         txtSolde: Text[80];
         txtPaymentMethodDescription: Text;
         PaiementComptantLbl: Label 'pre-paid';
         SousTotalText: Text[50];
-        Article: Record Item;
+        
         //PaiementCaptionLbl: Label 'Payment:';
         InfosPaiement1: Text[1024];
         InfosPaiement2: Text[1024];
-        FactorTable: Record Factor;
+        
         AcceptationDevisTxt: Label 'The signature of this offer implies the acceptance of the general conditions of sales (annexed).';
         //TitreAcceptationDevisTxt: Label '**Offer acceptance:';
         MentionsLegalesLbl: Label 'Legal notices:';
@@ -1874,10 +1889,8 @@ report 50005 "ABRANE : Sales - Order"
 
     procedure InitializeRequest(NoOfCopiesFrom: Integer; ShowInternalInfoFrom: Boolean; ArchiveDocumentFrom: Boolean; LogInteractionFrom: Boolean; PrintFrom: Boolean; DisplayAsmInfo: Boolean)
     begin
-        NoOfCopies := NoOfCopiesFrom;
-        ShowInternalInfo := ShowInternalInfoFrom;
-        //ArchiveDocument := ArchiveDocumentFrom;
-        //LogInteraction := LogInteractionFrom;
+        NoOfCopiesInt := NoOfCopiesFrom;
+        ShowInternalInfoBool := ShowInternalInfoFrom;
         Print := PrintFrom;
         DisplayAssemblyInformation := DisplayAsmInfo;
     end;

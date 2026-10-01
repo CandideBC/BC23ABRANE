@@ -1612,7 +1612,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         lrecSalesLine.SETRANGE(Type, lrecSalesLine.Type::Item);
         if pAcheterQueCertainesPhases then
             lrecSalesLine.SetRange("A acheter", true);
-        if lrecSalesLine.FINDSET(true) then 
+        if lrecSalesLine.FINDSET(true) then
             //KAN.FHA 21/09/2026 DEBUT
             //(suppression du calcul de PhaseAchat : on stocke maintenant la phase brute de la ligne dans le tampon, voir plus bas)
             //KAN.FHA 21/09/2026 FIN
@@ -2788,24 +2788,8 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             until lLigneVente.NEXT() = 0;
     end;
 
-    procedure RecuperInfosLogistique(pPhase: Integer; var pQteTotale: Decimal; var pQteExpediee: Decimal)
-    var
-        LigneVente: Record "Sales Line";
-    begin
-        pQteTotale := 0;
-        pQteExpediee := 0;
-        LigneVente.SetRange("Document Type", Rec."Document Type");
-        LigneVente.SetRange("Document No.", Rec."No.");
-        LigneVente.SetRange(Type, LigneVente.Type::Item);
-        LigneVente.SetRange(Phase, pPhase);
-        if LigneVente.FindSet(false) then
-            repeat
-                pQteTotale := pQteTotale + LigneVente."Quantity (Base)";
-                pQteExpediee := pQteExpediee + LigneVente."Qty. Shipped (Base)";
-            until LigneVente.Next() = 0;
-    end;
 
-    procedure AfficherStockDispo(pOuvrirPageDispo: Boolean)
+    procedure CalculerStockDispo(pOuvrirPageDispo: Boolean)
     var
         LigneVente: Record "Sales Line";
         EnteteVente: Record "Sales Header";
@@ -2832,7 +2816,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         LigneVente.SetRange(Type, LigneVente.Type::Item);
         NumLigne := 10000;
 
-        if LigneVente.FindSet(false) then
+        if LigneVente.FindSet(true) then
             repeat
                 LigneVente.calcfields("Quantite affectee");
                 if Article.Get(LigneVente."No.") then begin
@@ -2903,10 +2887,14 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 LigneVente.SetRange(Type, LigneVente.Type::Item);
                 LigneVente.SetRange("No.", StockDispo."No. article");
 
-                if LigneVente.FindSet(false) then begin
+                if LigneVente.FindSet(true) then begin
                     AffectationsAchat.SetCurrentKey("Type document vente", "No. document vente", "No. ligne document vente");
                     AffectationsAchat.SetRange("Type document vente", AffectationsAchat."Type document vente"::Devis, AffectationsAchat."Type document vente"::Commande);
                     repeat
+                        //KAN.FHA 23/09/2026 DEBUT
+                        decQtePriseSurStockCetteLigne := LigneVente."Outstanding Qty. (Base)";
+                        //KAN.FHA 23/09/2026 FIN
+
                         if LigneVente."Pris sur stock" then begin
                             TamponDetailDispoStock.Init();
                             TamponDetailDispoStock."Code utilisateur" := CodeUtilisateur;
@@ -2969,6 +2957,13 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                                     TamponDetailDispoStock.Insert();
                                 end;
                         end;
+                        //KAN.FHA 23/09/2026 DEBUT
+                        if decQtePriseSurStockCetteLigne > 0 then
+                            LigneVente."Quantite prise sur stock" := decQtePriseSurStockCetteLigne
+                        else
+                            LigneVente."Quantite prise sur stock" := 0;
+                        LigneVente.Modify();
+                    //KAN.FHA 23/09/2026 FIN
                     until LigneVente.Next() = 0;
                 end;
             until StockDispo.Next() = 0;

@@ -1009,7 +1009,9 @@ report 50004 "ABRANE : Sales - Quote"
                             SalesLine.SetRange("Line No.", 0, SalesLine."Line No.");
                             SalesLine.SetRange("Composant de la ligne No.", 0);
                             SetRange(Number, 1, SalesLine.Count);
-                            CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
+                            //KAN.FHA 01/10/2026 DEBUT
+                            //CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
+                            //KAN.FHA 01/10/2026 FIN
                         end;
                     }
                     dataitem(VATCounter; "Integer")
@@ -1844,7 +1846,6 @@ report 50004 "ABRANE : Sales - Quote"
         MentionEcoContribution: Text;
         MentionEcoContribution1Lbl: Label 'Ce document inclut une éco-participation de  ';
         MentionEcoContribution2Lbl: Label ' , reversée à un éco-organisme agréé conformément à la réglementation en vigueur.';
-        CondPaiementAcompte: Record "Payment Terms";
 
         SoldeLbl: Label 'Remaining Amount:';
         txtSolde: Text[80];
@@ -1853,7 +1854,6 @@ report 50004 "ABRANE : Sales - Quote"
         SousTotalText: Text[50];
         Article: Record Item;
         //PaiementCaptionLbl: Label 'Payment:';
-        InfosPaiement1: Text[1024];
         InfosPaiement2: Text[1024];
         FactorTable: Record Factor;
         AcceptationDevisTxt: Label 'The signature of this offer implies the acceptance of the general conditions of sales (annexed).';

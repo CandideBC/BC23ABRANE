@@ -1,4 +1,4 @@
-report 50061 "Calculer stock à date"
+report 50061 "Calculer stock a date"
 {
     // LEs articles ABRANE sont paramétrés en méthode Moyen mais il a été décidé avec le CAC qu'un calcul FIFO serait utilisé.
     // Ce n'est pas l'état de valo de stock de NAV qui est utilisé mais une méthode qui cherche les factures d'achats pour couvrir la qté en stock à la date souhaitée.
@@ -21,18 +21,18 @@ report 50061 "Calculer stock à date"
     {
         dataitem(Item; Item)
         {
-            DataItemTableView = SORTING ("No.") WHERE ("No." = FILTER ('102*'));
+            DataItemTableView = sorting("No.") where("No." = filter('102*'));
             RequestFilterFields = "No. 2", "No.";
             dataitem(Location; Location)
             {
-                DataItemTableView = WHERE (Code = FILTER (<> '*C*'));
+                DataItemTableView = where(Code = filter(<> '*C*'));
 
                 trigger OnAfterGetRecord()
                 begin
                     Item.SetRange("Location Filter", Location.Code);
                     Item.CalcFields("Net Change");
                     if Item."Net Change" <> 0 then begin
-                        ListeStock.Init;
+                        ListeStock.Init();
                         ListeStock."No. article" := Item."No.";
                         ListeStock.Designation := Item.Description;
                         ListeStock."Code magasin" := Location.Code;
@@ -73,7 +73,7 @@ report 50061 "Calculer stock à date"
                             ListeStock."Ecart valeur PMP/NAV (%)" := Round(ListeStock."Ecart valeur PMP/NAV (Montant)" / ListeStock."Valeur au cout unitaire NAV" * 100, 0.01)
                         else
                             ListeStock."Ecart valeur PMP/NAV (%)" := 100;
-                        ListeStock.Insert;
+                        ListeStock.Insert();
                     end;
                 end;
             }
@@ -90,13 +90,12 @@ report 50061 "Calculer stock à date"
 
                 PMPFinExerciceNMoinsUn := 0;
                 RecalculerPMP := (Item."Date dernier achat" > DateFinExerciceNMoinsUn);
-                if not RecalculerPMP then begin //Chercher le PMP à la date de fin d'exercice précédent
+                if not RecalculerPMP then  //Chercher le PMP à la date de fin d'exercice précédent
                     if HistoriquePMP.Get(Item."No.", DateFinExerciceNMoinsUn) then begin
                         PMPFinExerciceNMoinsUn := HistoriquePMP."PMP recalcule";
                         CommentairePMP := 'PMP Inchangé / Année N-1';
                     end else
                         RecalculerPMP := true;
-                end;
 
                 LigneFactAchat.Reset();
                 LigneFactAchat.SetCurrentKey(Type, "No.", "SAV fournisseur", "Posting Date");
@@ -138,7 +137,10 @@ report 50061 "Calculer stock à date"
                     DateDernierPrixAchatN := LigneFactAchat."Posting Date";
                 end;
 
-                Window.Update(1, "No.");
+                //KAN.FHA 23/09/2026 DEBUT
+                if GuiAllowed then
+                    //KAN.FHA 23/09/2026 FIN
+                    Window.Update(1, "No.");
 
                 Item.SetFilter("Location Filter", '<>*C*');
                 Item.CalcFields("Net Change");
@@ -178,11 +180,10 @@ report 50061 "Calculer stock à date"
                     repeat
                         if EcritureArticle.Quantity > 0 then begin
                             QteTrouvee := QteTrouvee + EcritureArticle.Quantity;
-                            if QteTrouvee <= QteEnStock then begin
-                                QteRestantAValoriser := EcritureArticle.Quantity; //Sert juste à savoir si on doit tout prendre plus bas au niveau des écritures valeur.
-                            end else begin
+                            if QteTrouvee <= QteEnStock then
+                                QteRestantAValoriser := EcritureArticle.Quantity //Sert juste à savoir si on doit tout prendre plus bas au niveau des écritures valeur.
+                            else
                                 QteRestantAValoriser := EcritureArticle.Quantity - (QteTrouvee - QteEnStock); //Là le champ QteRestantAValoriser a un sens, on tombe par ex sur une ligne de 1000 mais il faut en prendre que 22.
-                            end;
 
                             DetailValeurStock.Init();
                             DetailValeurStock."No. article" := EcritureArticle."Item No.";
@@ -209,7 +210,7 @@ report 50061 "Calculer stock à date"
                             if RecalculerPMP and (DetailValeurStock.Quantite <> 0) then begin
                                 TexteAjout := Format(DetailValeurStock.Quantite) + 'x' + Format(Round(DetailValeurStock."Cout total" / DetailValeurStock.Quantite, 0.01)) + ' EUR (' + EcritureArticle."Document No." + ')';
                                 if StrLen(CommentairePMP + ' ' + TexteAjout) <= 250 then
-                                    CommentairePMP := CommentairePMP + ' ' + TexteAjout
+                                    CommentairePMP := copystr(CommentairePMP + ' ' + TexteAjout, 1, 250)
                                 else
                                     CommentairePMP := 'Trop de factures pour en donner le détail, voir dans NAV.';
                             end;
@@ -270,7 +271,10 @@ report 50061 "Calculer stock à date"
                 DateMaxPourDepreciation2 := CalcDate('<-2Y>', DateValeurStock);
                 DateMaxPourDepreciation3 := CalcDate('<-3Y>', DateValeurStock);
 
-                Window.Open(TextWindow);
+                //KAN.FHA 23/09/2026 DEBUT
+                if GuiAllowed then
+                    //KAN.FHA 23/09/2026 FIN
+                    Window.Open(TextWindowMsg);
 
                 PeriodeComptable.SetRange("New Fiscal Year", true);
                 //PeriodeComptable.SETRANGE("Starting Date",0D,TODAY);
@@ -313,7 +317,10 @@ report 50061 "Calculer stock à date"
 
             trigger OnPostDataItem()
             begin
-                Window.Close();
+                //KAN.FHA 23/09/2026 DEBUT
+                if GuiAllowed then
+                //KAN.FHA 23/09/2026 FIN
+                    Window.Close();
             end;
         }
     }
@@ -325,9 +332,10 @@ report 50061 "Calculer stock à date"
         {
             area(content)
             {
-                field(DateValeurStock; DateValeurStock)
+                field(MaDateValeurStock; DateValeurStock)
                 {
                     Caption = 'En date du';
+                    ToolTip = 'Date à laquelle on doit calculer le stock';
                 }
             }
         }
@@ -357,21 +365,25 @@ report 50061 "Calculer stock à date"
 
     var
         ListeStock: Record "Valorisation stock à date";
+        EcritureArticle: Record "Item Ledger Entry";
+        LigneFactAchat: Record "Purch. Inv. Line";
+        EcrArt2: Record "Item Ledger Entry";
+        DetailValeurStock: Record "Détail valeur stock à date";
+        PeriodeComptable: Record "Accounting Period";
+        HistoriquePMP: Record "Historique PMP article";
+        EnteteFactAchat: Record "Purch. Inv. Header";
         DPA: Decimal;
         QteTrouvee: Decimal;
         MontantAchatsAvecFrais: Decimal;
-        MontantLigneDS: Decimal;
+        //MontantLigneDS: Decimal;
         QteEnStock: Decimal;
-        TauxChange: Record "Currency Exchange Rate";
+        //TauxChange: Record "Currency Exchange Rate";
         QteRestantAValoriser: Decimal;
         PasAssezDeFactures: Text[250];
         CoutMoyenAvecFrais: Decimal;
-        EcritureArticle: Record "Item Ledger Entry";
-        LigneFactAchat: Record "Purch. Inv. Line";
+
         DateValeurStock: Date;
         DateDernMouvement: Date;
-        EcrArt2: Record "Item Ledger Entry";
-        DetailValeurStock: Record "Détail valeur stock à date";
         DateDernEntreeAchat: Date;
         PctDepreciation1: Decimal;
         PctDepreciation2: Decimal;
@@ -381,14 +393,14 @@ report 50061 "Calculer stock à date"
         DateMaxPourDepreciation2: Date;
         DateMaxPourDepreciation3: Date;
         Window: Dialog;
-        TextWindow: Label '###Article ###1#';
-        PeriodeComptable: Record "Accounting Period";
+        TextWindowMsg: Label '###Article ###1#', Comment = '%1 = N° article';
+
         DateDebutExerciceN: Date;
         DateFinExerciceN: Date;
         DateFinExerciceNMoinsUn: Date;
         PMPFinExerciceNMoinsUn: Decimal;
         RecalculerPMP: Boolean;
-        HistoriquePMP: Record "Historique PMP article";
+
         DateDernierAchat: Date;
         DernierPrixAchatN: Decimal;
         OrigineDernierPrixAchatN: Code[10];
@@ -396,9 +408,13 @@ report 50061 "Calculer stock à date"
         DernierPrixAchatNMoinsUn: Decimal;
         OrigineDernierPrixAchatNMoinsUn: Code[10];
         DateDernierPrixAchatNMoinsUn: Date;
-        EnteteFactAchat: Record "Purch. Inv. Header";
+
         CommentairePMP: Text[250];
         TexteAjout: Text[50];
         AnneeN: Integer;
+    procedure DefDate(pDate: Date)
+    begin
+        DateValeurStock := pDate;
+    end;
 }
 

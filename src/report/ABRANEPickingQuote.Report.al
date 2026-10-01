@@ -119,7 +119,7 @@ report 50012 "ABRANE : picking Quote"
             column(Range_SalesHeader; "Range No.")
             {
             }
-            column(LabelNoLocationName_SalesHeader; LabelNoLocationName)
+            column(LabelNoLocationName_SalesHeader; LabelNoLocationNameLbl)
             {
             }
             column(NoLocationName_SalesHeader; "No. And Location Name")
@@ -506,7 +506,7 @@ report 50012 "ABRANE : picking Quote"
                             Clear(DimText);
                             Continue := false;
                             repeat
-                                OldDimText := DimText;
+                                OldDimText := copystr(DimText,1,75);
                                 if DimText = '' then
                                     DimText := StrSubstNo('%1 %2', DimSetEntry1."Dimension Code", DimSetEntry1."Dimension Value Code")
                                 else
@@ -769,7 +769,7 @@ report 50012 "ABRANE : picking Quote"
                                 Clear(DimText);
                                 Continue := false;
                                 repeat
-                                    OldDimText := DimText;
+                                    OldDimText := copystr(DimText,1,75);
                                     if DimText = '' then
                                         DimText := StrSubstNo('%1 %2', DimSetEntry2."Dimension Code", DimSetEntry2."Dimension Value Code")
                                     else
@@ -919,7 +919,9 @@ report 50012 "ABRANE : picking Quote"
 
 
                             SetRange(Number, 1, TempSalesLine.Count);
-                            CurrReport.CreateTotals(TempSalesLine."Line Amount", TempSalesLine."Inv. Discount Amount");
+                            //KAN.FHA 23/09/2026 DEBUT
+                            //CurrReport.CreateTotals(TempSalesLine."Line Amount", TempSalesLine."Inv. Discount Amount");
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(VATCounter; "Integer")
@@ -977,9 +979,13 @@ report 50012 "ABRANE : picking Quote"
                             if VATAmount = 0 then
                                 CurrReport.Break();
                             SetRange(Number, 1, TempVATAmountLine.Count);
+                            //KAN.FHA 23/09/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               TempVATAmountLine."Line Amount", TempVATAmountLine."Inv. Disc. Base Amount",
                               TempVATAmountLine."Invoice Discount Amount", TempVATAmountLine."VAT Base", TempVATAmountLine."VAT Amount");
+                            */
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(VATCounterLCY; "Integer")
@@ -1028,7 +1034,9 @@ report 50012 "ABRANE : picking Quote"
                                 CurrReport.Break();
 
                             SetRange(Number, 1, TempVATAmountLine.Count);
-                            CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 23/09/2026 DEBUT
+                            //CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 23/09/2026 FIN
 
                             if GLSetup."LCY Code" = '' then
                                 VALSpecLCYHeader := Text007Lbl + Text008Lbl
@@ -1159,11 +1167,15 @@ report 50012 "ABRANE : picking Quote"
 
                         trigger OnPreDataItem()
                         begin
+                            //KAN.FHA 23/09/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               TempPrepmtInvBuf.Amount, TempPrepmtInvBuf."Amount Incl. VAT",
                               TempPrepmtVATAmountLine."Line Amount", TempPrepmtVATAmountLine."VAT Base",
                               TempPrepmtVATAmountLine."VAT Amount",
                               PrepmtLineAmount);
+                            */
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(PrepmtVATCounter; "Integer")
@@ -1409,13 +1421,19 @@ report 50012 "ABRANE : picking Quote"
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Language Code");
                 end;
 
-                ShowShippingAddr := true;
+                //KAN.FHA 23/09/2026 DEBUT
+                //ShowShippingAddr := true;
+                //KAN.FHA 23/09/2026 FIN
 
                 FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, "Sales Header");
+                //KAN.FHA 23/09/2026 DEBUT
+                /*
                 ShowShippingAddr := "Sell-to Customer No." <> "Bill-to Customer No.";
                 for i := 1 to ArrayLen(ShipToAddr) do
                     if ShipToAddr[i] <> CustAddr[i] then
                         ShowShippingAddr := true;
+                */
+                //KAN.FHA 23/09/2026 FIN
 
             end;
 
@@ -1520,8 +1538,6 @@ report 50012 "ABRANE : picking Quote"
         RecDimSetEntry: Record "Dimension Set Entry";
         SalesCountPrinted: Codeunit "Sales-Printed";
         FormatAddr: Codeunit "Format Address";
-        SegManagement: Codeunit SegManagement;
-        ArchiveManagement: Codeunit ArchiveManagement;
         SalesPostPrepmt: Codeunit "Sales-Post Prepayments";
         DimMgt: Codeunit DimensionManagement;
         LanguageMgt: Codeunit Language;
@@ -1539,13 +1555,11 @@ report 50012 "ABRANE : picking Quote"
         NoOfCopies: Integer;
         NoOfLoops: Integer;
         CopyText: Text[30];
-        ShowShippingAddr: Boolean;
-        i: Integer;
         DimText: Text[120];
         OldDimText: Text[75];
         ShowInternalInfo: Boolean;
         Continue: Boolean;
-        ArchiveDocument: Boolean;
+        //ArchiveDocument: Boolean;
         VATAmount: Decimal;
         VATBaseAmount: Decimal;
         VATDiscountAmount: Decimal;
@@ -1643,7 +1657,7 @@ report 50012 "ABRANE : picking Quote"
         SalesHeaderOrderDateCaptionLbl: Label 'Date :';
         SalesPersonMailCaptionLbl: Label 'E-mail';
         AffaireLbl: Label 'Job :';
-        LabelNoLocationName: Label 'Shop :';
+        LabelNoLocationNameLbl: Label 'Shop :';
         NoRayonLbl: Label 'Range No. : ';
         InterlocuteurclientLbl: Label 'Contact Name :';
         CommentaireLbl: Label 'Comments : ';
@@ -1679,7 +1693,9 @@ report 50012 "ABRANE : picking Quote"
     begin
         NoOfCopies := NoOfCopiesFrom;
         ShowInternalInfo := ShowInternalInfoFrom;
-        ArchiveDocument := ArchiveDocumentFrom;
+        //KAN.FHA 23/09/2026 DEBUT
+        //ArchiveDocument := ArchiveDocumentFrom;
+        //KAN.FHA 23/09/2026 FIN
         //LogInteraction := LogInteractionFrom;
         Print := PrintFrom;
         DisplayAssemblyInformation := DisplayAsmInfo;

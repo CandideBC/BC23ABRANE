@@ -935,6 +935,10 @@ codeunit 50019 ConsommerEventsTables
                     Message(LigneColisageEclateeMsg);
 
         end;
+
+        //KAN.FHA 23/09/2026 DEBUT
+        Rec.TypeDuplique := Rec.Type;
+        //KAN.FHA 23/09/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Table, 37, OnAfterInitOutstandingAmount, '', false, false)]

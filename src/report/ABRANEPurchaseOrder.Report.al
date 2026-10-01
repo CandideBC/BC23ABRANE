@@ -633,7 +633,9 @@ report 50015 "ABRANE : Purchase Order"
                                 CurrReport.Break();
                             PurchLine.SetRange("Line No.", 0, PurchLine."Line No.");
                             SetRange(Number, 1, PurchLine.Count);
-                            CurrReport.CreateTotals(PurchLine."Line Amount", PurchLine."Inv. Discount Amount");
+                            //KAN.FHA 23/09/2026 DEBUT
+                            //CurrReport.CreateTotals(PurchLine."Line Amount", PurchLine."Inv. Discount Amount");
+                            //KAN.FHA 23/09/2026 FIN
 
                             //-NEG.NG05 BCA 15/09/2010
                             dTotalDEEE := 0;
@@ -686,9 +688,13 @@ report 50015 "ABRANE : Purchase Order"
                             if VATAmount = 0 then
                                 CurrReport.Break();
                             SetRange(Number, 1, VATAmountLine.Count);
+                            //KAN.FHA 23/09/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               VATAmountLine."Line Amount", VATAmountLine."Inv. Disc. Base Amount",
                               VATAmountLine."Invoice Discount Amount", VATAmountLine."VAT Base", VATAmountLine."VAT Amount");
+                            */
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(VATCounterLCY; "Integer")
@@ -730,7 +736,9 @@ report 50015 "ABRANE : Purchase Order"
                                 CurrReport.Break();
 
                             SetRange(Number, 1, VATAmountLine.Count);
-                            CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 23/09/2026 DEBUT
+                            //CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 23/09/2026 FIN
 
                             if GLSetup."LCY Code" = '' then
                                 VALSpecLCYHeader := Text007Lbl + Text008Lbl
@@ -935,11 +943,15 @@ report 50015 "ABRANE : Purchase Order"
 
                         trigger OnPreDataItem()
                         begin
+                            //KAN.FHA 23/09/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               PrepmtInvBuf.Amount, PrepmtInvBuf."Amount Incl. VAT",
                               PrepmtVATAmountLine."Line Amount", PrepmtVATAmountLine."VAT Base",
                               PrepmtVATAmountLine."VAT Amount",
                               PrepmtLineAmount);
+                            */
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(PrepmtVATCounter; "Integer")
@@ -1335,14 +1347,14 @@ report 50015 "ABRANE : Purchase Order"
         TotalDEEEText: Text[30];
         dTxtRem: Text[30];
         Text000Lbl: Label 'Purchaser';
-        Text001Lbl: Label 'Total %1',Comment = '%1 = Devise';
-        Text002Lbl: Label 'Total %1 Incl. VAT',Comment = '%1 = Devise';
-        Text004Lbl: Label 'Order No.%1',Comment = '%1 = N° commande';
+        Text001Lbl: Label 'Total %1', Comment = '%1 = Devise';
+        Text002Lbl: Label 'Total %1 Incl. VAT', Comment = '%1 = Devise';
+        Text004Lbl: Label 'Order No.%1', Comment = '%1 = N° commande';
         //Text005: Label 'Page %1';
-        Text006Lbl: Label 'Total %1 Excl. VAT',Comment = '%1 = Devise';
+        Text006Lbl: Label 'Total %1 Excl. VAT', Comment = '%1 = Devise';
         Text007Lbl: Label 'VAT Amount Specification in ';
         Text008Lbl: Label 'Local Currency';
-        Text009Lbl: Label 'Exchange rate: %1/%2',Comment = '%1 %2 = Devise';
+        Text009Lbl: Label 'Exchange rate: %1/%2', Comment = '%1 %2 = Devise';
         CompanyInfoPhoneNoCaptionLbl: Label 'Phone No.';
         CompanyInfoVATRegNoCaptionLbl: Label 'VAT Registration No.';
         CompanyInfoGiroNoCaptionLbl: Label 'Giro No.';
@@ -1401,7 +1413,7 @@ report 50015 "ABRANE : Purchase Order"
         MentionTextLbl: Label 'Any invoice without mention of the correspondig Purchase Order No. will be not recorded in accounting.';
         CommentaireLbl: Label 'Comments : ';
         HSCode_wTxt: Text;
-        HSCodeLbl: Label 'HS Code : %1';
+        HSCodeLbl: Label 'HS Code : %1',Comment = '%1 = HS Code';
         VariantLbl: Label 'Variant';
         booGroupItem: Boolean;
 

@@ -880,7 +880,9 @@ report 50009 "ABRANE : Packing List"
                                 CurrReport.Break();
                             TempSalesLine.SetRange("Line No.", 0, TempSalesLine."Line No.");
                             SetRange(Number, 1, TempSalesLine.Count);
-                            CurrReport.CreateTotals(TempSalesLine."Line Amount", TempSalesLine."Inv. Discount Amount");
+                            //KAN.FHA 23/09/2026 DEBUT
+                            //CurrReport.CreateTotals(TempSalesLine."Line Amount", TempSalesLine."Inv. Discount Amount");
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(VATCounter; "Integer")
@@ -938,9 +940,13 @@ report 50009 "ABRANE : Packing List"
                             if VATAmount = 0 then
                                 CurrReport.Break();
                             SetRange(Number, 1, TempVATAmountLine.Count);
+                            //KAN.FHA 23/09/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               TempVATAmountLine."Line Amount", TempVATAmountLine."Inv. Disc. Base Amount",
                               TempVATAmountLine."Invoice Discount Amount", TempVATAmountLine."VAT Base", TempVATAmountLine."VAT Amount");
+                            */
+                            //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(VATCounterLCY; "Integer")
@@ -989,7 +995,9 @@ report 50009 "ABRANE : Packing List"
                                 CurrReport.Break();
 
                             SetRange(Number, 1, TempVATAmountLine.Count);
-                            CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 23/09/2026 DEBUT
+                            //CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
+                            //KAN.FHA 23/09/2026 FIN
 
                             if GLSetup."LCY Code" = '' then
                                 VALSpecLCYHeader := Text007Lbl + Text008Lbl
@@ -1097,11 +1105,16 @@ report 50009 "ABRANE : Packing List"
 
                         trigger OnPreDataItem()
                         begin
+
+                            //KAN.FHA 23/09/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               TempPrepmtInvBuf.Amount, TempPrepmtInvBuf."Amount Incl. VAT",
                               TempPrepmtVATAmountLine."Line Amount", TempPrepmtVATAmountLine."VAT Base",
                               TempPrepmtVATAmountLine."VAT Amount",
                               PrepmtLineAmount);
+                              */
+                              //KAN.FHA 23/09/2026 FIN
                         end;
                     }
                     dataitem(PrepmtVATCounter; "Integer")

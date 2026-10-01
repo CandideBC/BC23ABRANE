@@ -8,7 +8,7 @@ table 50033 "Valorisation stock à date"
             Caption = 'N° article';
             TableRelation = Item;
         }
-        field(12; Designation; Text[50])
+        field(12; Designation; Text[100])
         {
             Caption = 'Désignation';
         }
