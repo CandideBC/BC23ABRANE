@@ -95,11 +95,12 @@ page 50141 "Commandes achats container"
         DateChargementTxt := '';
         DateLivraisonDemandeeTxt := '';
         if EnteteAchat.Get(EnteteAchat."Document Type"::Order, rec."No. commande achat") then
-            EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVenteTxt, DateChargementTxt, DateLivraisonDemandeeTxt);
+            EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVenteTxt, DateChargementTxt, DateLivraisonDemandeeTxt,PhaseTxt);
     end;
 
     var
         NoDocVenteTxt: Text;
         DateChargementTxt: Text;
         DateLivraisonDemandeeTxt: Text;
+        PhaseTxt: Text;
 }

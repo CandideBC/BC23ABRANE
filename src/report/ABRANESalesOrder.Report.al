@@ -169,10 +169,10 @@ report 50005 "ABRANE : Sales - Order"
             column(LabelAffaire; AffaireLbl)
             {
             }
-            column(LabelSite; LabelSite)
+            column(LabelSite; SiteLbl)
             {
             }
-            column(LabelPackage; LabelPackage)
+            column(LabelPackage; PackageLbl)
             {
             }
             column(SiteName; SiteName)
@@ -215,28 +215,28 @@ report 50005 "ABRANE : Sales - Order"
             column(LabelQuantite; QuantiteLbl)
             {
             }
-            column(LabelAgreement; LabelAgreement)
+            column(LabelAgreement; AgreementLbl)
             {
             }
-            column(LabelPays; LabelPays)
+            column(LabelPays; PaysLbl)
             {
             }
-            column(LabelTotalGrossWeight; LabelTotalGrossWeight)
+            column(LabelTotalGrossWeight; TotalGrossWeightLbl)
             {
             }
-            column(LabelMarchandise; LabelMarchandiseLbl)
+            column(LabelMarchandise; MarchandiseLbl)
             {
             }
-            column(LabelPalette; LabelPalette)
+            column(LabelPalette; PaletteLbl)
             {
             }
-            column(LabelOrgMse; LabelOrgMse)
+            column(LabelOrgMse; OrgMseLbl)
             {
             }
             column(ExternalDocNoLbl; ExternalDocNoLbl)
             {
             }
-            column(LabelCurrency; LabelCurrency)
+            column(LabelCurrency; CurrencyLbl)
             {
             }
             column(PackageNumber; "Nombre de colis")
@@ -254,7 +254,7 @@ report 50005 "ABRANE : Sales - Order"
             column(QuoteAgreementLine1Caption; QuoteAgreementLine1CaptionLbl)
             {
             }
-            column(LabelUnitCaption; LabelUnitCaption)
+            column(LabelUnitCaption; UnitCaptionLbl)
             {
             }
             column(QuoteAgreementLine2Caption; QuoteAgreementLine2CaptionLbl)
@@ -267,19 +267,19 @@ report 50005 "ABRANE : Sales - Order"
             {
                 
             }
-            column(LabelEscompte; LabelEscompte)
+            column(LabelEscompte; EscompteLbl)
             {
             }
-            column(LabelAcompteverse; LabelAcompteverse)
+            column(LabelAcompteverse; AcompteVerseLbl)
             {
             }
-            column(LabelMontantDejaVerse; LabelMontantDejaVerse)
+            column(LabelMontantDejaVerse; MontantDejaVerseLbl)
             {
             }
-            column(LabelResteAPayer; LabelResteAPayer)
+            column(LabelResteAPayer; ResteAPayerLbl)
             {
             }
-            column(labelVariant; labelVariant)
+            column(labelVariant; VariantLbl)
             {
             }
             column(AcompteLbl; AcompteLbl)
@@ -310,7 +310,7 @@ report 50005 "ABRANE : Sales - Order"
                     column(CompanyInfoPicture; CompanyInfo.Picture)
                     {
                     }
-                    column(SalesCopyText; Text004)
+                    column(SalesCopyText; Text004Lbl)
                     {
                     }
                     column(CustAddr1; CustAddr[1])
@@ -433,7 +433,7 @@ report 50005 "ABRANE : Sales - Order"
                     column(ReferenceText; ReferenceText)
                     {
                     }
-                    column(PageCaption; StrSubstNo(Text005, ''))
+                    column(PageCaption; StrSubstNo(Text005Lbl, ''))
                     {
                     }
                     column(OutputNo; OutputNo)
@@ -637,7 +637,7 @@ report 50005 "ABRANE : Sales - Order"
                         column(SubAmount; "Sales Line"."SubTotal Amount")
                         {
                         }
-                        column(SalesLineAmt; SalesLine."Line Amount")
+                        column(SalesLineAmt; TempSalesLine."Line Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
@@ -743,7 +743,7 @@ report 50005 "ABRANE : Sales - Order"
                         column(AsmInfoExistsForLine; AsmInfoExistsForLine)
                         {
                         }
-                        column(SalesLineInvDiscAmt; VATAmountLine."Invoice Discount Amount")
+                        column(SalesLineInvDiscAmt; TempVATAmountLine."Invoice Discount Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
@@ -752,7 +752,7 @@ report 50005 "ABRANE : Sales - Order"
                         column(TotalText; TotalText)
                         {
                         }
-                        column(SalsLinAmtExclLineDiscAmt; SalesLine."Line Amount" - VATAmountLine."Invoice Discount Amount")
+                        column(SalsLinAmtExclLineDiscAmt; TempSalesLine."Line Amount" - TempVATAmountLine."Invoice Discount Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
@@ -760,7 +760,7 @@ report 50005 "ABRANE : Sales - Order"
                         column(TotalExclVATText; TotalExclVATText)
                         {
                         }
-                        column(VATAmtLineVATAmtText; VATAmountLine.VATAmountText())
+                        column(VATAmtLineVATAmtText; TempVATAmountLine.VATAmountText())
                         {
                         }
                         column(TotalInclVATText; TotalInclVATText)
@@ -772,7 +772,7 @@ report 50005 "ABRANE : Sales - Order"
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(SalesLineAmtExclLineDisc; SalesLine."Line Amount" - VATAmountLine."Invoice Discount Amount" + VATAmount)
+                        column(SalesLineAmtExclLineDisc; TempSalesLine."Line Amount" - TempVATAmountLine."Invoice Discount Amount" + VATAmount)
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
@@ -908,71 +908,71 @@ report 50005 "ABRANE : Sales - Order"
                         trigger OnAfterGetRecord()
                         begin
                             if Number = 1 then
-                                SalesLine.Find('-')
+                                TempSalesLine.Find('-')
                             else
-                                SalesLine.Next();
-                            "Sales Line" := SalesLine;
+                                TempSalesLine.Next();
+                            "Sales Line" := TempSalesLine;
                             if DisplayAssemblyInformation then
-                                AsmInfoExistsForLine := SalesLine.AsmToOrderExists(AsmHeader);
+                                AsmInfoExistsForLine := TempSalesLine.AsmToOrderExists(AsmHeader);
 
                             //KAN.FHA 21/10/2020 DEBUT
-                            if SalesLine.Type = SalesLine.Type::Item then
-                                if SalesLine."Article divers" and SalesLine."Poids obligatoire" then
-                                    if SalesLine."Net Weight" = 0 then
-                                        Error(PoidsObligatoireErr, SalesLine."Line No.", SalesLine."No.", SalesLine.Description);
+                            if TempSalesLine.Type = TempSalesLine.Type::Item then
+                                if TempSalesLine."Article divers" and TempSalesLine."Poids obligatoire" then
+                                    if TempSalesLine."Net Weight" = 0 then
+                                        Error(PoidsObligatoireErrLbl, TempSalesLine."Line No.", TempSalesLine."No.", TempSalesLine.Description);
                             //KAN.FHA 21/10/2020 FIN
 
                             //KAN.FHA 17/10/2022 DEBUT
-                            if (SalesLine.Type = SalesLine.Type::Item) and ("Sales Header"."Ship-to Country/Region Code" <> CompanyInfo."Country/Region Code") then begin
-                                SalesLine.TestField("Country/Region of Origin Code");
-                                if not SalesLine."Article divers" then begin
-                                    SalesLine.TestField("Net Weight");
-                                    Article.Get(SalesLine."No.");
+                            if (TempSalesLine.Type = TempSalesLine.Type::Item) and ("Sales Header"."Ship-to Country/Region Code" <> CompanyInfo."Country/Region Code") then begin
+                                TempSalesLine.TestField("Country/Region of Origin Code");
+                                if not TempSalesLine."Article divers" then begin
+                                    TempSalesLine.TestField("Net Weight");
+                                    Article.Get(TempSalesLine."No.");
                                     Article.TestField("Tariff No.");
                                     Article.TestField("Country/Region of Origin Code");
                                 end;
-                                if SalesLine."Article divers" then begin
-                                    Article.Get(SalesLine."No.");
+                                if TempSalesLine."Article divers" then begin
+                                    Article.Get(TempSalesLine."No.");
                                     if Article."Poids obligatoire" then
-                                        SalesLine.TestField("Nomenclature produits"); //Renseigné que sur les divers ; la feuille intracomm va chercher la nomenc produit sur l'article pour les non Divers
+                                        TempSalesLine.TestField("Nomenclature produits"); //Renseigné que sur les divers ; la feuille intracomm va chercher la nomenc produit sur l'article pour les non Divers
                                 end;
                             end;
                             //KAN.FHA 17/10/2022 FIN
 
                             if not "Sales Header"."Prices Including VAT" and
-                               (SalesLine."VAT Calculation Type" = SalesLine."VAT Calculation Type"::"Full VAT")
+                               (TempSalesLine."VAT Calculation Type" = TempSalesLine."VAT Calculation Type"::"Full VAT")
                             then
-                                SalesLine."Line Amount" := 0;
+                                TempSalesLine."Line Amount" := 0;
 
-                            if (SalesLine.Type = SalesLine.Type::"G/L Account") and (not ShowInternalInfoBool) then
+                            if (TempSalesLine.Type = TempSalesLine.Type::"G/L Account") and (not ShowInternalInfoBool) then
                                 "Sales Line"."No." := '';
 
-                            if not SalesLine."Eco Tax Furniture Line" then
-                                NNCSalesLineLineAmt += SalesLine."Line Amount" //;
+                            if not TempSalesLine."Eco Tax Furniture Line" then
+                                NNCSalesLineLineAmt += TempSalesLine."Line Amount" //;
                             else begin
-                                NNCSalesLineEcoAmt += SalesLine."Line Amount";
-                                NNCVATEcoAMt += SalesLine."Amount Including VAT" - SalesLine."Line Amount";
+                                NNCSalesLineEcoAmt += TempSalesLine."Line Amount";
+                                NNCVATEcoAMt += TempSalesLine."Amount Including VAT" - TempSalesLine."Line Amount";
                             end;
 
-                            MontantRemisesLignes := MontantRemisesLignes + SalesLine."Line Discount Amount"; 
+                            MontantRemisesLignes := MontantRemisesLignes + TempSalesLine."Line Discount Amount"; 
 
                             //KAN.FHA 29/06/2020 DEBUT
                             //FHA 28/04/2025 if NNCSalesLineEcoAmt <> 0 then
                             //FHA 28/04/2025     txtTotalHT := LabelTotalHTDontEcoContrib
                             //FHA 28/04/2025 else
                             if "Sales Header"."Currency Code" = '' then
-                                txtTotalHT := StrSubstNo(LabelTotalHT, GLSetup."LCY Code")
+                                txtTotalHT := StrSubstNo(TotalHTLbl, GLSetup."LCY Code")
                             else
-                                txtTotalHT := StrSubstNo(LabelTotalHT, "Sales Header"."Currency Code");
+                                txtTotalHT := StrSubstNo(TotalHTLbl, "Sales Header"."Currency Code");
                             //KAN.FHA 29/06/2020 FIN
 
                             //DIA£LBO 15/12/2017
                             //TotalNetWeight += SalesLine."Net Weight" * SalesLine.Quantity;
                             //DIA£LBO 15/12/2017//
 
-                            SousTotal := (SalesLine."Type ligne" = SalesLine."Type ligne"::"Fin total");
+                            SousTotal := (TempSalesLine."Type ligne" = TempSalesLine."Type ligne"::"Fin total");
 
-                            NNCSalesLineInvDiscAmt += SalesLine."Inv. Discount Amount";
+                            NNCSalesLineInvDiscAmt += TempSalesLine."Inv. Discount Amount";
 
                             NNCTotalLCY := NNCSalesLineLineAmt - NNCSalesLineInvDiscAmt;
 
@@ -988,28 +988,28 @@ report 50005 "ABRANE : Sales - Order"
                             NNCTotalExclVAT2 := VATBaseAmount;
 
                             //DIA.SCH - 15/04/15 - P1 gestion des acomptes
-                            if SalesLine."Ligne deduction acompte" or SalesLine."Ligne deduction situation" then
-                                PrepAmount += SalesLine."Line Amount";
+                            if TempSalesLine."Ligne deduction acompte" or TempSalesLine."Ligne deduction situation" then
+                                PrepAmount += TempSalesLine."Line Amount";
                         end;
 
                         trigger OnPostDataItem()
                         begin
-                            SalesLine.DeleteAll();
+                            TempSalesLine.DeleteAll();
                         end;
 
                         trigger OnPreDataItem()
                         begin
-                            MoreLines := SalesLine.Find('+');
-                            while MoreLines and (SalesLine.Description = '') and (SalesLine."Description 2" = '') and
-                                  (SalesLine."No." = '') and (SalesLine.Quantity = 0) and
-                                  (SalesLine.Amount = 0)
+                            MoreLines := TempSalesLine.Find('+');
+                            while MoreLines and (TempSalesLine.Description = '') and (TempSalesLine."Description 2" = '') and
+                                  (TempSalesLine."No." = '') and (TempSalesLine.Quantity = 0) and
+                                  (TempSalesLine.Amount = 0)
                             do
-                                MoreLines := SalesLine.Next(-1) <> 0;
+                                MoreLines := TempSalesLine.Next(-1) <> 0;
                             if not MoreLines then
                                 CurrReport.Break();
-                            SalesLine.SetRange("Line No.", 0, SalesLine."Line No.");
-                            SalesLine.SetRange("Composant de la ligne No.", 0);
-                            SetRange(Number, 1, SalesLine.Count);
+                            TempSalesLine.SetRange("Line No.", 0, TempSalesLine."Line No.");
+                            TempSalesLine.SetRange("Composant de la ligne No.", 0);
+                            SetRange(Number, 1, TempSalesLine.Count);
                             //KAN.FHA 01/10/2026 DEBUT
                             //CurrReport.CreateTotals(SalesLine."Line Amount", SalesLine."Inv. Discount Amount");
                             //KAN.FHA 01/10/2026 FIN
@@ -1018,36 +1018,36 @@ report 50005 "ABRANE : Sales - Order"
                     dataitem(VATCounter; "Integer")
                     {
                         DataItemTableView = sorting(Number);
-                        column(VATAmountLineVATBase; VATAmountLine."VAT Base")
+                        column(VATAmountLineVATBase; TempVATAmountLine."VAT Base")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATAmt; VATAmountLine."VAT Amount")
+                        column(VATAmtLineVATAmt; TempVATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineLineAmt; VATAmountLine."Line Amount")
+                        column(VATAmtLineLineAmt; TempVATAmountLine."Line Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscBaseAmt; VATAmountLine."Inv. Disc. Base Amount")
+                        column(VATAmtLineInvDiscBaseAmt; TempVATAmountLine."Inv. Disc. Base Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineInvDiscAmt; VATAmountLine."Invoice Discount Amount")
+                        column(VATAmtLineInvDiscAmt; TempVATAmountLine."Invoice Discount Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATPercentage; VATAmountLine."VAT %")
+                        column(VATAmtLineVATPercentage; TempVATAmountLine."VAT %")
                         {
                             DecimalPlaces = 0 : 5;
                         }
-                        column(VATAmtLineVATIdentifier; VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVATIdentifier; TempVATAmountLine."VAT Identifier")
                         {
                         }
                         column(InvDiscBaseAmtCaption; InvDiscBaseAmtCaptionLbl)
@@ -1056,20 +1056,20 @@ report 50005 "ABRANE : Sales - Order"
                         column(VATIdentifierCaption; VATIdentifierCaptionLbl)
                         {
                         }
-                        column(VATAmountLineCOUNT; VATAmountLine.Count)
+                        column(VATAmountLineCOUNT; TempVATAmountLine.Count)
                         {
                         }
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
+                            TempVATAmountLine.GetLine(Number);
                         end;
 
                         trigger OnPreDataItem()
                         begin
                             if VATAmount = 0 then
                                 CurrReport.Break();
-                            SetRange(Number, 1, VATAmountLine.Count);
+                            SetRange(Number, 1, TempVATAmountLine.Count);
                             //KAN.FHA 23/09/2026 DEBUT
                             /*
                             CurrReport.CreateTotals(
@@ -1081,7 +1081,7 @@ report 50005 "ABRANE : Sales - Order"
                     }
                     dataitem(VATCounterLCY; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(VALExchRate; VALExchRate)
                         {
                         }
@@ -1096,72 +1096,72 @@ report 50005 "ABRANE : Sales - Order"
                         {
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATPercentage2; VATAmountLine."VAT %")
+                        column(VATAmtLineVATPercentage2; TempVATAmountLine."VAT %")
                         {
                             DecimalPlaces = 0 : 5;
                         }
-                        column(VATAmtLineVATIdentifier2; VATAmountLine."VAT Identifier")
+                        column(VATAmtLineVATIdentifier2; TempVATAmountLine."VAT Identifier")
                         {
                         }
 
                         trigger OnAfterGetRecord()
                         begin
-                            VATAmountLine.GetLine(Number);
+                            TempVATAmountLine.GetLine(Number);
 
                             VALVATBaseLCY := Round(CurrExchRate.ExchangeAmtFCYToLCY(
                                   "Sales Header"."Posting Date", "Sales Header"."Currency Code",
-                                  VATAmountLine."VAT Base", "Sales Header"."Currency Factor"));
+                                  TempVATAmountLine."VAT Base", "Sales Header"."Currency Factor"));
                             VALVATAmountLCY := Round(CurrExchRate.ExchangeAmtFCYToLCY(
                                   "Sales Header"."Posting Date", "Sales Header"."Currency Code",
-                                  VATAmountLine."VAT Amount", "Sales Header"."Currency Factor"));
+                                  TempVATAmountLine."VAT Amount", "Sales Header"."Currency Factor"));
                         end;
 
                         trigger OnPreDataItem()
                         begin
                             if (not GLSetup."Print VAT specification in LCY") or
                                ("Sales Header"."Currency Code" = '') or
-                               (VATAmountLine.GetTotalVATAmount() = 0)
+                               (TempVATAmountLine.GetTotalVATAmount() = 0)
                             then
                                 CurrReport.Break();
 
-                            SetRange(Number, 1, VATAmountLine.Count);
+                            SetRange(Number, 1, TempVATAmountLine.Count);
                             //KAN.FHA 01/10/2026 DEBUT
                             //CurrReport.CreateTotals(VALVATBaseLCY, VALVATAmountLCY);
                             //KAN.FHA 01/10/2026 FIN
 
                             if GLSetup."LCY Code" = '' then
-                                VALSpecLCYHeader := Text007 + Text008
+                                VALSpecLCYHeader := Text007Lbl + Text008Lbl
                             else
-                                VALSpecLCYHeader := Text007 + Format(GLSetup."LCY Code");
+                                VALSpecLCYHeader := Text007Lbl + Format(GLSetup."LCY Code");
 
                             CurrExchRate.FindCurrency("Sales Header"."Posting Date", "Sales Header"."Currency Code", 1);
-                            VALExchRate := StrSubstNo(Text009, CurrExchRate."Relational Exch. Rate Amount", CurrExchRate."Exchange Rate Amount");
+                            VALExchRate := StrSubstNo(Text009Lbl, CurrExchRate."Relational Exch. Rate Amount", CurrExchRate."Exchange Rate Amount");
                         end;
                     }
                     dataitem(PrepmtLoop; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = FILTER(1 ..));
+                        DataItemTableView = sorting(Number) where(Number = filter(1 ..));
                         column(PrepmtLineAmount; PrepmtLineAmount)
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(PrepmtInvBufDesc; PrepmtInvBuf.Description)
+                        column(PrepmtInvBufDesc; TempPrepmtInvBuf.Description)
                         {
                         }
-                        column(PrepmtInvBufGLAccNo; PrepmtInvBuf."G/L Account No.")
+                        column(PrepmtInvBufGLAccNo; TempPrepmtInvBuf."G/L Account No.")
                         {
                         }
                         column(TotalExclVATText2; TotalExclVATText)
                         {
                         }
-                        column(PrepmtVATAmtLineVATAmtTxt; PrepmtVATAmountLine.VATAmountText())
+                        column(PrepmtVATAmtLineVATAmtTxt; TempPrepmtVATAmountLine.VATAmountText())
                         {
                         }
                         column(TotalInclVATText2; TotalInclVATText)
                         {
                         }
-                        column(PrepmtInvAmount; PrepmtInvBuf.Amount)
+                        column(PrepmtInvAmount; TempPrepmtInvBuf.Amount)
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
@@ -1171,12 +1171,12 @@ report 50005 "ABRANE : Sales - Order"
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(PrepmtInvAmtInclVATAmt; PrepmtInvBuf.Amount + PrepmtVATAmount)
+                        column(PrepmtInvAmtInclVATAmt; TempPrepmtInvBuf.Amount + PrepmtVATAmount)
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(VATAmtLineVATAmtText2; VATAmountLine.VATAmountText())
+                        column(VATAmtLineVATAmtText2; TempVATAmountLine.VATAmountText())
                         {
                         }
                         column(PrepmtTotalAmountInclVAT; PrepmtTotalAmountInclVAT)
@@ -1243,19 +1243,19 @@ report 50005 "ABRANE : Sales - Order"
 
                         begin
                             if Number = 1 then begin
-                                if not PrepmtInvBuf.Find('-') then
+                                if not TempPrepmtInvBuf.Find('-') then
                                     CurrReport.Break();
                             end else
-                                if PrepmtInvBuf.Next() = 0 then
+                                if TempPrepmtInvBuf.Next() = 0 then
                                     CurrReport.Break();
 
                             if ShowInternalInfoBool then
-                                DimMgt.GetDimensionSet(TempPrepmtDimSetEntry, PrepmtInvBuf."Dimension Set ID");
+                                DimMgt.GetDimensionSet(TempPrepmtDimSetEntry, TempPrepmtInvBuf."Dimension Set ID");
 
                             if "Sales Header"."Prices Including VAT" then
-                                PrepmtLineAmount := PrepmtInvBuf."Amount Incl. VAT"
+                                PrepmtLineAmount := TempPrepmtInvBuf."Amount Incl. VAT"
                             else
-                                PrepmtLineAmount := PrepmtInvBuf.Amount;
+                                PrepmtLineAmount := TempPrepmtInvBuf.Amount;
                         end;
 
                         trigger OnPreDataItem()
@@ -1273,27 +1273,27 @@ report 50005 "ABRANE : Sales - Order"
                     }
                     dataitem(PrepmtVATCounter; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
-                        column(PrepmtVATAmtLineVATAmt; PrepmtVATAmountLine."VAT Amount")
+                        DataItemTableView = sorting(Number);
+                        column(PrepmtVATAmtLineVATAmt; TempPrepmtVATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(PrepmtVATAmtLineVATBase; PrepmtVATAmountLine."VAT Base")
+                        column(PrepmtVATAmtLineVATBase; TempPrepmtVATAmountLine."VAT Base")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(PrepmtVATAmtLineLineAmt; PrepmtVATAmountLine."Line Amount")
+                        column(PrepmtVATAmtLineLineAmt; TempPrepmtVATAmountLine."Line Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(PrepmtVATAmtLineVATPerc; PrepmtVATAmountLine."VAT %")
+                        column(PrepmtVATAmtLineVATPerc; TempPrepmtVATAmountLine."VAT %")
                         {
                             DecimalPlaces = 0 : 5;
                         }
-                        column(PrepmtVATAmtLineVATIdent; PrepmtVATAmountLine."VAT Identifier")
+                        column(PrepmtVATAmtLineVATIdent; TempPrepmtVATAmountLine."VAT Identifier")
                         {
                         }
                         column(PrepmtVATCounterNumber; Number)
@@ -1305,17 +1305,17 @@ report 50005 "ABRANE : Sales - Order"
 
                         trigger OnAfterGetRecord()
                         begin
-                            PrepmtVATAmountLine.GetLine(Number);
+                            TempPrepmtVATAmountLine.GetLine(Number);
                         end;
 
                         trigger OnPreDataItem()
                         begin
-                            SetRange(Number, 1, PrepmtVATAmountLine.Count);
+                            SetRange(Number, 1, TempPrepmtVATAmountLine.Count);
                         end;
                     }
                     dataitem(PrepmtTotal; "Integer")
                     {
-                        DataItemTableView = SORTING(Number) WHERE(Number = CONST(1));
+                        DataItemTableView = sorting(Number) where(Number = CONST(1));
                         column(PrepmtPmtTermsDesc; PrepmtPaymentTerms.Description)
                         {
                         }
@@ -1325,7 +1325,7 @@ report 50005 "ABRANE : Sales - Order"
 
                         trigger OnPreDataItem()
                         begin
-                            if not PrepmtInvBuf.Find('-') then
+                            if not TempPrepmtInvBuf.Find('-') then
                                 CurrReport.Break();
                         end;
                     }
@@ -1335,62 +1335,62 @@ report 50005 "ABRANE : Sales - Order"
                 var
                     TempSalesLineDisc: Record "Sales Line" temporary;
                     TempSalesLine: Record "Sales Line" temporary;
-                    PrepmtSalesLine: Record "Sales Line" temporary;
+                    TempPrepmtSalesLine: Record "Sales Line" temporary;
                     SalesPost: Codeunit "Sales-Post";
 
                 begin
-                    Clear(SalesLine);
+                    Clear(TempSalesLine);
                     Clear(SalesPost);
                     Clear(TempSalesLineDisc);
-                    VATAmountLine.DeleteAll();
-                    SalesLine.DeleteAll();
+                    TempVATAmountLine.DeleteAll();
+                    TempSalesLine.DeleteAll();
                     TempSalesLineDisc.DeleteAll();
-                    SalesPost.GetSalesLines("Sales Header", SalesLine, 0);
-                    SalesLine.CalcVATAmountLines(0, "Sales Header", SalesLine, VATAmountLine);
-                    SalesLine.UpdateVATOnLines(0, "Sales Header", SalesLine, VATAmountLine);
+                    SalesPost.GetSalesLines("Sales Header", TempSalesLine, 0);
+                    TempSalesLine.CalcVATAmountLines(0, "Sales Header", TempSalesLine, TempVATAmountLine);
+                    TempSalesLine.UpdateVATOnLines(0, "Sales Header", TempSalesLine, TempVATAmountLine);
                     SalesPost.GetSalesLines("Sales Header", TempSalesLineDisc, 0);
-                    TempSalesLineDisc.CalcVATAmountLines(0, "Sales Header", TempSalesLineDisc, VATAmountLine);
-                    TempSalesLineDisc.UpdateVATOnLines(0, "Sales Header", TempSalesLineDisc, VATAmountLine);
-                    SalesLine."Inv. Discount Amount" := VATAmountLine."Invoice Discount Amount";
-                    VATAmount := VATAmountLine.GetTotalVATAmount();
-                    VATBaseAmount := VATAmountLine.GetTotalVATBase();
+                    TempSalesLineDisc.CalcVATAmountLines(0, "Sales Header", TempSalesLineDisc, TempVATAmountLine);
+                    TempSalesLineDisc.UpdateVATOnLines(0, "Sales Header", TempSalesLineDisc, TempVATAmountLine);
+                    TempSalesLine."Inv. Discount Amount" := TempVATAmountLine."Invoice Discount Amount";
+                    VATAmount := TempVATAmountLine.GetTotalVATAmount();
+                    VATBaseAmount := TempVATAmountLine.GetTotalVATBase();
                     VATDiscountAmount :=
-                      VATAmountLine.GetTotalVATDiscount("Sales Header"."Currency Code", "Sales Header"."Prices Including VAT");
-                    TotalAmountInclVAT := VATAmountLine.GetTotalAmountInclVAT();
+                      TempVATAmountLine.GetTotalVATDiscount("Sales Header"."Currency Code", "Sales Header"."Prices Including VAT");
+                    TotalAmountInclVAT := TempVATAmountLine.GetTotalAmountInclVAT();
 
-                    PrepmtInvBuf.DeleteAll();
-                    SalesPostPrepmt.GetSalesLines("Sales Header", 0, PrepmtSalesLine);
+                    TempPrepmtInvBuf.DeleteAll();
+                    SalesPostPrepmt.GetSalesLines("Sales Header", 0, TempPrepmtSalesLine);
 
-                    if not PrepmtSalesLine.IsEmpty then begin
+                    if not TempPrepmtSalesLine.IsEmpty then begin
                         SalesPostPrepmt.GetSalesLinesToDeduct("Sales Header", TempSalesLine);
                         if not TempSalesLine.IsEmpty then
-                            SalesPostPrepmt.CalcVATAmountLines("Sales Header", TempSalesLine, PrepmtVATAmountLineDeduct, 1);
+                            SalesPostPrepmt.CalcVATAmountLines("Sales Header", TempSalesLine, TempPrepmtVATAmountLineDeduct, 1);
                     end;
-                    SalesPostPrepmt.CalcVATAmountLines("Sales Header", PrepmtSalesLine, PrepmtVATAmountLine, 0);
-                    if PrepmtVATAmountLine.FindSet() then
+                    SalesPostPrepmt.CalcVATAmountLines("Sales Header", TempPrepmtSalesLine, TempPrepmtVATAmountLine, 0);
+                    if TempPrepmtVATAmountLine.FindSet() then
                         repeat
-                            PrepmtVATAmountLineDeduct := PrepmtVATAmountLine;
-                            if PrepmtVATAmountLineDeduct.Find() then begin
-                                PrepmtVATAmountLine."VAT Base" := PrepmtVATAmountLine."VAT Base" - PrepmtVATAmountLineDeduct."VAT Base";
-                                PrepmtVATAmountLine."VAT Amount" := PrepmtVATAmountLine."VAT Amount" - PrepmtVATAmountLineDeduct."VAT Amount";
-                                PrepmtVATAmountLine."Amount Including VAT" := PrepmtVATAmountLine."Amount Including VAT" -
-                                  PrepmtVATAmountLineDeduct."Amount Including VAT";
-                                PrepmtVATAmountLine."Line Amount" := PrepmtVATAmountLine."Line Amount" - PrepmtVATAmountLineDeduct."Line Amount";
-                                PrepmtVATAmountLine."Inv. Disc. Base Amount" := PrepmtVATAmountLine."Inv. Disc. Base Amount" -
-                                  PrepmtVATAmountLineDeduct."Inv. Disc. Base Amount";
-                                PrepmtVATAmountLine."Invoice Discount Amount" := PrepmtVATAmountLine."Invoice Discount Amount" -
-                                  PrepmtVATAmountLineDeduct."Invoice Discount Amount";
-                                PrepmtVATAmountLine."Calculated VAT Amount" := PrepmtVATAmountLine."Calculated VAT Amount" -
-                                  PrepmtVATAmountLineDeduct."Calculated VAT Amount";
-                                PrepmtVATAmountLine.Modify();
+                            TempPrepmtVATAmountLineDeduct := TempPrepmtVATAmountLine;
+                            if TempPrepmtVATAmountLineDeduct.Find() then begin
+                                TempPrepmtVATAmountLine."VAT Base" := TempPrepmtVATAmountLine."VAT Base" - TempPrepmtVATAmountLineDeduct."VAT Base";
+                                TempPrepmtVATAmountLine."VAT Amount" := TempPrepmtVATAmountLine."VAT Amount" - TempPrepmtVATAmountLineDeduct."VAT Amount";
+                                TempPrepmtVATAmountLine."Amount Including VAT" := TempPrepmtVATAmountLine."Amount Including VAT" -
+                                  TempPrepmtVATAmountLineDeduct."Amount Including VAT";
+                                TempPrepmtVATAmountLine."Line Amount" := TempPrepmtVATAmountLine."Line Amount" - TempPrepmtVATAmountLineDeduct."Line Amount";
+                                TempPrepmtVATAmountLine."Inv. Disc. Base Amount" := TempPrepmtVATAmountLine."Inv. Disc. Base Amount" -
+                                  TempPrepmtVATAmountLineDeduct."Inv. Disc. Base Amount";
+                                TempPrepmtVATAmountLine."Invoice Discount Amount" := TempPrepmtVATAmountLine."Invoice Discount Amount" -
+                                  TempPrepmtVATAmountLineDeduct."Invoice Discount Amount";
+                                TempPrepmtVATAmountLine."Calculated VAT Amount" := TempPrepmtVATAmountLine."Calculated VAT Amount" -
+                                  TempPrepmtVATAmountLineDeduct."Calculated VAT Amount";
+                                TempPrepmtVATAmountLine.Modify();
                             end;
-                        until PrepmtVATAmountLine.Next() = 0;
+                        until TempPrepmtVATAmountLine.Next() = 0;
 
-                    SalesPostPrepmt.UpdateVATOnLines("Sales Header", PrepmtSalesLine, PrepmtVATAmountLine, 0);
-                    SalesPostPrepmt.BuildInvLineBuffer("Sales Header", PrepmtSalesLine, 0, PrepmtInvBuf);
-                    PrepmtVATAmount := PrepmtVATAmountLine.GetTotalVATAmount();
-                    PrepmtVATBaseAmount := PrepmtVATAmountLine.GetTotalVATBase();
-                    PrepmtTotalAmountInclVAT := PrepmtVATAmountLine.GetTotalAmountInclVAT();
+                    SalesPostPrepmt.UpdateVATOnLines("Sales Header", TempPrepmtSalesLine, TempPrepmtVATAmountLine, 0);
+                    SalesPostPrepmt.BuildInvLineBuffer("Sales Header", TempPrepmtSalesLine, 0, TempPrepmtInvBuf);
+                    PrepmtVATAmount := TempPrepmtVATAmountLine.GetTotalVATAmount();
+                    PrepmtVATBaseAmount := TempPrepmtVATAmountLine.GetTotalVATBase();
+                    PrepmtTotalAmountInclVAT := TempPrepmtVATAmountLine.GetTotalAmountInclVAT();
 
                     if Number > 1 then
                         //  CopyText := Text003;
@@ -1472,7 +1472,7 @@ report 50005 "ABRANE : Sales - Order"
                     SalesPersonText := '';
                 end else begin
                     SalesPurchPerson.Get("Salesperson Code");
-                    SalesPersonText := Text000;
+                    SalesPersonText := Text000Lbl;
                 end;
 
                 "Sales Header".RecupInfosDerniereArchive(MontantDernArchive, NoVersionDernArchive, DateDernArchive);
@@ -1532,17 +1532,17 @@ report 50005 "ABRANE : Sales - Order"
 
                 if "Currency Code" = '' then begin
                     GLSetup.TestField("LCY Code");
-                    TotalText := StrSubstNo(Text001, GLSetup."LCY Code");
-                    TotalInclVATText := Text002;
-                    TotalExclVATText := Text006;
+                    TotalText := StrSubstNo(Text001Lbl, GLSetup."LCY Code");
+                    TotalInclVATText := Text002Lbl;
+                    TotalExclVATText := Text006Lbl;
                     SousTotalText := SubtotalCaptionLbl;
 
                     if "Montant eco-taxe" <> 0 then
                         MentionEcoContribution := MentionEcoContribution + ' ' + GLSetup."LCY Code" + MentionEcoContribution2Lbl;
                 end else begin
-                    TotalText := StrSubstNo(Text001, "Currency Code");
-                    TotalInclVATText := Text002;
-                    TotalExclVATText := Text006;
+                    TotalText := StrSubstNo(Text001Lbl, "Currency Code");
+                    TotalInclVATText := Text002Lbl;
+                    TotalExclVATText := Text006Lbl;
                     SousTotalText := SubtotalCaptionLbl;
                     if "Montant eco-taxe" <> 0 then
                         MentionEcoContribution := MentionEcoContribution + "Currency Code" + MentionEcoContribution2Lbl;
@@ -1591,16 +1591,16 @@ report 50005 "ABRANE : Sales - Order"
 
                 TexteTVA := '';
                 if "Bill-to Country/Region Code" = CompanyInfo."Country/Region Code" then begin
-                    TexteTVA := MentionTVAFR;
-                    TextePenalitesRetard := PenalitesRetardFR;
+                    TexteTVA := MentionTVAFRLbl;
+                    TextePenalitesRetard := PenalitesRetardFRLbl;
                 end else begin
-                    TextePenalitesRetard := PenalitesRetardENU;
+                    TextePenalitesRetard := PenalitesRetardENULbl;
                     if not Pays.Get("Bill-to Country/Region Code") then
                         Pays.init();
                     if Pays."Intrastat Code" <> '' then
-                        TexteTVA := MentionTVAUE
+                        TexteTVA := MentionTVAUELbl
                     else
-                        TexteTVA := MentionTVAExport;
+                        TexteTVA := MentionTVAExportLbl;
                 end;
             end;
 
@@ -1625,6 +1625,7 @@ report 50005 "ABRANE : Sales - Order"
                     field(NoOfCopies; NoOfCopiesInt)
                     {
                         Caption = 'Nb. de copies';
+                        ToolTip = 'Nb. de copies';
                     }
                     field(ShowInternalInfo; ShowInternalInfoBool)
                     {
@@ -1676,14 +1677,14 @@ report 50005 "ABRANE : Sales - Order"
         CompanyInfo: Record "Company Information";
         SalesSetup: Record "Sales & Receivables Setup";
         ShippingAgent: Record "Shipping Agent";
-        VATAmountLine: Record "VAT Amount Line" temporary;
-        PrepmtVATAmountLine: Record "VAT Amount Line" temporary;
-        PrepmtVATAmountLineDeduct: Record "VAT Amount Line" temporary;
-        SalesLine: Record "Sales Line" temporary;
+        TempVATAmountLine: Record "VAT Amount Line" temporary;
+        TempPrepmtVATAmountLine: Record "VAT Amount Line" temporary;
+        TempPrepmtVATAmountLineDeduct: Record "VAT Amount Line" temporary;
+        TempSalesLine: Record "Sales Line" temporary;
         DimSetEntry1: Record "Dimension Set Entry";
         DimSetEntry2: Record "Dimension Set Entry";
         TempPrepmtDimSetEntry: Record "Dimension Set Entry" temporary;
-        PrepmtInvBuf: Record "Prepayment Inv. Line Buffer" temporary;
+        TempPrepmtInvBuf: Record "Prepayment Inv. Line Buffer" temporary;
         RespCenter: Record "Responsibility Center";
         CurrExchRate: Record "Currency Exchange Rate";
         AsmHeader: Record "Assembly Header";
@@ -1698,13 +1699,13 @@ report 50005 "ABRANE : Sales - Order"
 
         SalesCountPrinted: Codeunit "Sales-Printed";
         FormatAddr: Codeunit "Format Address";
-        Text000: Label 'Followed by :'; //Salesperson :
-        Text001: Label 'Total %1';
-        Text002: Label 'Total Incl. VAT'; //FRA = Total TTC
+        Text000Lbl: Label 'Followed by :'; //Salesperson :
+        Text001Lbl: Label 'Total %1',Comment = '%1 = Total';
+        Text002Lbl: Label 'Total Incl. VAT'; //FRA = Total TTC
         //Migration Text003: Label 'Copie';
-        Text004: Label 'Order No.';
-        Text005: Label 'Page %1';
-        Text006: Label 'Total'; //FRA = Total H.T.
+        Text004Lbl: Label 'Order No.';
+        Text005Lbl: Label 'Page %1',Comment = '%1 = N° page';
+        Text006Lbl: Label 'Total'; //FRA = Total H.T.
         BankDetailsLbl: Label 'Bank Details :';
         CustAddr: array[8] of Text[50];
         BillToAddr: array[8] of Text[50];
@@ -1721,7 +1722,7 @@ report 50005 "ABRANE : Sales - Order"
         NoOfLoops: Integer;
         CopyText: Text[30];
         DimText: Text[120];
-        OldDimText: Text[75];
+        OldDimText: Text[120];
         ShowInternalInfoBool: Boolean;
         Continue: Boolean;
         //LogInteraction: Boolean;
@@ -1732,9 +1733,9 @@ report 50005 "ABRANE : Sales - Order"
         VALVATBaseLCY: Decimal;
         VALVATAmountLCY: Decimal;
         VALSpecLCYHeader: Text[80];
-        Text007: Label 'VAT Amount Specification in ';
-        Text008: Label 'Local Currency';
-        Text009: Label 'Exchange rate: %1/%2';
+        Text007Lbl: Label 'VAT Amount Specification in ';
+        Text008Lbl: Label 'Local Currency';
+        Text009Lbl: Label 'Exchange rate: %1/%2',Comment = '%1 = Devise 1 ; %2 = Devise 2';
         VALExchRate: Text[50];
         PrepmtVATAmount: Decimal;
         PrepmtVATBaseAmount: Decimal;
@@ -1827,36 +1828,36 @@ report 50005 "ABRANE : Sales - Order"
         QuoteValidityCaptionLbl: Label 'Quote valid for two months.';
         QuoteAgreementLine1CaptionLbl: Label 'Agreement';
         QuoteAgreementLine2CaptionLbl: Label '(Date, signature and official stamp)';
-        LabelSite: Label 'Site :';
+        SiteLbl: Label 'Site :';
         SiteName: Text[50];
-        LabelAgreement: Label 'In                         , the';
-        LabelUnitCaption: Label 'Unit';
-        LabelMarchandiseLbl: Label 'Product Information';
-        LabelPalette: Label 'Number of Pallets';
-        LabelOrgMse: Label 'Origine marchandise';
-        LabelPays: Label 'Pays exportateur';
-        LabelCurrency: Label 'Currency :';
+        AgreementLbl: Label 'In                         , the';
+        UnitCaptionLbl: Label 'Unit';
+        MarchandiseLbl: Label 'Product Information';
+        PaletteLbl: Label 'Number of Pallets';
+        OrgMseLbl: Label 'Origine marchandise';
+        PaysLbl: Label 'Pays exportateur';
+        CurrencyLbl: Label 'Currency :';
         ExternalDocNoLbl: Label 'External Doc. No. :';
-        LabelTotalGrossWeight: Label 'Total Gross Weight (kg):';
-        LabelPackage: Label 'Number of Packages:';
+        TotalGrossWeightLbl: Label 'Total Gross Weight (kg):';
+        PackageLbl: Label 'Number of Packages:';
         TexteTVA: Text[1024];
-        MentionTVAFR: Label 'TVA sur les débits';
-        MentionTVAUE: Label 'Intra-Community Supply : VAT Exemption under Article 262 ter I of the French General Tax Code';
-        MentionTVAExport: Label 'VAT exempt under Article 262 I of the French General Tax Code (CGI)';
+        MentionTVAFRLbl: Label 'TVA sur les débits';
+        MentionTVAUELbl: Label 'Intra-Community Supply : VAT Exemption under Article 262 ter I of the French General Tax Code';
+        MentionTVAExportLbl: Label 'VAT exempt under Article 262 I of the French General Tax Code (CGI)';
         TextePenalitesRetard: Text[1024];
-        PenalitesRetardFR: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
-        PenalitesRetardENU: Label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardFRLbl: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardENULbl: Label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
         PrepAmount: Decimal;
-        LabelAcompteverse: Label 'Prepayment Amount';
-        LabelMontantDejaVerse: Label 'Already Paid';
-        LabelResteAPayer: Label 'Still to pay (€)';
-        labelVariant: Label 'Variant';
+        AcompteverseLbl: Label 'Prepayment Amount';
+        MontantDejaVerseLbl: Label 'Already Paid';
+        ResteAPayerLbl: Label 'Still to pay (€)';
+        VariantLbl: Label 'Variant';
         SousTotal: Boolean;
         ClientFrancais: Boolean;
-        LabelTotalHT: Label 'Total Amount - %1 (excl. VAT)';
+        TotalHTLbl: Label 'Total Amount - %1 (excl. VAT)',Comment = '%1 = Devise';
         txtTotalHT: Text[50];
         
-        PoidsObligatoireErr: Label 'Vous devez indiquer un poids net sur la ligne %1, article %2 %3.';
+        PoidsObligatoireErrLbl: Label 'Vous devez indiquer un poids net sur la ligne %1, article %2 %3.',Comment = '%1 = Ligne ; %2 = N° article ; %3 = Description';
         MentionEcoContribution: Text;
         MentionEcoContribution1Lbl: Label 'Ce document inclut une éco-participation de  ';
         MentionEcoContribution2Lbl: Label ' , reversée à un éco-organisme agréé conformément à la réglementation en vigueur.';
@@ -1868,8 +1869,6 @@ report 50005 "ABRANE : Sales - Order"
         PaiementComptantLbl: Label 'pre-paid';
         SousTotalText: Text[50];
         
-        //PaiementCaptionLbl: Label 'Payment:';
-        InfosPaiement1: Text[1024];
         InfosPaiement2: Text[1024];
         
         AcceptationDevisTxt: Label 'The signature of this offer implies the acceptance of the general conditions of sales (annexed).';
@@ -1885,7 +1884,7 @@ report 50005 "ABRANE : Sales - Order"
         CondPaiementSituationTxt: Text;
         CondPaiementAcompteTxt: Text;
         CondPaiementSoldeTxt: Text;
-        LabelEscompte: Label 'No prompt-payment discount granted in the case of payment before invoice due date.';
+        EscompteLbl: Label 'No prompt-payment discount granted in the case of payment before invoice due date.';
 
     procedure InitializeRequest(NoOfCopiesFrom: Integer; ShowInternalInfoFrom: Boolean; ArchiveDocumentFrom: Boolean; LogInteractionFrom: Boolean; PrintFrom: Boolean; DisplayAsmInfo: Boolean)
     begin

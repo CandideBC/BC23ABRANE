@@ -1658,7 +1658,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         lrecSalesLine2.SETRANGE("Document No.", "No.");
                         lrecSalesLine2.SETRANGE("Composant de la ligne No.", lrecSalesLine."Line No.");
                         lrecSalesLine2.SETRANGE(Type, lrecSalesLine2.Type::" ");
-                        if lrecSalesLine2.FINDSET() then
+                        if lrecSalesLine2.FINDSET(false) then
                             repeat
                                 TableTampon.RESET();
                                 TableTampon.INIT();
@@ -2100,6 +2100,10 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         MajInfoPhasesEntetesAchat(PhasesParCommande);
         //KAN.FHA 21/09/2026 FIN
 
+        //KAN.FHA 01/10/2026 DEBUT
+        Rec.CalculerStockDispo(false);
+        //KAN.FHA 01/10/2026 FIN
+
         if (NbCdeAchatCreees + NbCdeAchatCompletees) = 1 then
             pPurchOrderNo := lrecPurchaseHdr."No."
         else
@@ -2195,7 +2199,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
         lrecPurchaseLine.VALIDATE(Quantity, QtyToOrder);
 
-        // Reprise des champs spécifiques de ton algo
         lrecPurchaseLine.Description := TableTamponVente.Description;
         lrecPurchaseLine."Nomenclature produits" := TableTamponVente."Nomenclature produits";
         Article.Get(TableTamponVente."No.");
@@ -2205,7 +2208,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             if TableTamponVente."Prix achat prevu" <> 0 then
                 lrecPurchaseLine.Validate("Direct Unit Cost", TableTamponVente."Prix achat prevu");
         end;
-        //lrecPurchaseLine."Annee commande" := "Annee commande";
         if TableTamponVente."Fournisseur divers" then
             lrecPurchaseLine."Country/Region of Origin Code" := TableTamponVente."Code pays origine";
 

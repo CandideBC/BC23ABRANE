@@ -129,12 +129,13 @@ page 50053 ListeCommandesAchatsImport
         DateChargementTxt := '';
         DateLivraisonDemandeeTxt := '';
         if EnteteAchat.Get(EnteteAchat."Document Type"::Order, Rec."No.") then
-            EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVenteTxt, DateChargementTxt, DateLivraisonDemandeeTxt);
+            EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVenteTxt, DateChargementTxt, DateLivraisonDemandeeTxt,PhaseTxt);
     end;
 
     var
         NoDocVenteTxt: Text;
         DateChargementTxt: Text;
         DateLivraisonDemandeeTxt: Text;
+        PhaseTxt: Text;
 
 }

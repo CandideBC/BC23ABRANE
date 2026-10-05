@@ -55,8 +55,6 @@ codeunit 50012 CalculerMontantACharger
         MontantSemaine: Decimal;
         MontantFournisseur: Decimal;
         MontantTotal: Decimal;
-        Ratio: Decimal;
-        RatioInferieur: Decimal;
         Pct1: Decimal;
         Pct2: Decimal;
         Pct3: Decimal;
@@ -64,8 +62,8 @@ codeunit 50012 CalculerMontantACharger
         i: Integer;
         DelaiTransit: Text;
         DelaiTransitLbl: Label '<%1D>', Comment = '%1 = nombre de jours';
-        RemplissageTerrestreLbl: label 'VAN %1% - Porteur %2% - Semi %3%';
-        RemplissageMaritimeeLbl: label 'Container 20p %1% - Container 40p %2%';
+        RemplissageTerrestreLbl: label 'VAN %1% - Porteur %2% - Semi %3%',Comment = '%1 = VAN ; %2 = Porteur ; %3 = Semi';
+        RemplissageMaritimeeLbl: label 'Container 20p %1% - Container 40p %2%',Comment = '%1 = Container 20p ; %2 = Container 40p';
     begin
         //Example de code pour utiliser RecRef et FieldRef
         /*

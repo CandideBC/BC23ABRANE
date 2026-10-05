@@ -329,8 +329,17 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
                     error(SaisieErr, Rec.FieldCaption("Date intention chargement"), Rec.FieldCaption("Date chargement confirmee"));
                 //KAN.FHA 11/05/2026 FIN
                 //KAN.FHA 22/05/2026 DEBUT
-                "Date intention chargement" := CalcDate('<-CW>', "Date intention chargement");
-                "Semaine chargement" := Date2DWY("Date intention chargement", 2);
+                //KAN.FHA 01/10/2026 DEBUT
+                if "Date intention chargement" <> 0D then begin
+                    //KAN.FHA 01/10/2026 FIN
+                    "Date intention chargement" := CalcDate('<-CW>', "Date intention chargement");
+                    "Semaine chargement" := Date2DWY("Date intention chargement", 2);
+                    //KAN.FHA 01/10/2026 DEBUT
+                end else begin
+                    "Date intention chargement" := 0D;
+                    "Semaine chargement" := 0;
+                    //KAN.FHA 01/10/2026 FIN
+                end;
                 //KAN.FHA 22/05/2026 FIN
                 MAJAnneeCommande();
             end;
@@ -1153,17 +1162,21 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
         end;
     end;
 
-    procedure ObtenirInfosDocumentVenteLie(var pNoDocVente: Text; var pDateChargementTxt: Text; var pDateLivraisonDemandeeTxt: Text)
+    procedure ObtenirInfosDocumentVenteLie(var pNoDocVente: Text; var pDateChargementTxt: Text; var pDateLivraisonDemandeeTxt: Text; var pVarPhasesTxt: Text)
     var
         Affectation: Record "Affectations achat vente";
         SalesHeader: Record "Sales Header";
         TempSalesHeader: Record "Sales Header" temporary;
-        NbTrouve: Integer;
+        TempPhasesDocument: Record "Phases document" temporary;
+        LigneVente: Record "Sales Line";
+        NbDocVenteTrouves: Integer;
+        NbPhasesTrouve: Integer;
         MultipleTxt: Label 'Multiple';
     begin
         pNoDocVente := '';
         pDateChargementTxt := '';
         pDateLivraisonDemandeeTxt := '';
+        pVarPhasesTxt := '';
 
         if "No." = '' then
             exit;
@@ -1184,17 +1197,35 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
                 TempSalesHeader."No." := Affectation."No. document vente";
                 TempSalesHeader.Insert();
             end;
+
+            if Affectation."Type document vente" = Affectation."Type document vente"::Commande then
+                if LigneVente.Get(LigneVente."Document Type"::Order, Affectation."No. document vente", Affectation."No. ligne document vente") then
+                    if not TempPhasesDocument.Get(TempPhasesDocument."Type document"::Order, Affectation."No. document vente", LigneVente.Phase) then begin
+                        TempPhasesDocument.Init();
+                        TempPhasesDocument."Type document" := TempPhasesDocument."Type document"::Order;
+                        TempPhasesDocument."No. document" := Affectation."No. document vente";
+                        TempPhasesDocument.Phase := LigneVente.Phase;
+                        TempPhasesDocument.Insert();
+                    end;
         until Affectation.Next() = 0;
 
-        NbTrouve := TempSalesHeader.Count();
+        NbDocVenteTrouves := TempSalesHeader.Count();
+        NbPhasesTrouve := TempPhasesDocument.Count();
 
-        if NbTrouve = 0 then
+        if NbDocVenteTrouves = 0 then
             exit;
 
-        if NbTrouve > 1 then begin
+        if NbPhasesTrouve = 1 then
+            pVarPhasesTxt := Format(TempPhasesDocument.Phase)
+        else
+            if NbPhasesTrouve > 1 then
+                pVarPhasesTxt := MultipleTxt;
+        
+        if NbDocVenteTrouves > 1 then begin
             pNoDocVente := MultipleTxt;
             pDateChargementTxt := MultipleTxt;
             pDateLivraisonDemandeeTxt := MultipleTxt;
+            pVarPhasesTxt := MultipleTxt; //Si on a trouvé plusieurs documents de vente, c'est comme si on avait plusieurs phases
             exit;
         end;
 

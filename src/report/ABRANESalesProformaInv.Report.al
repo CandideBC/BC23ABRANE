@@ -596,7 +596,7 @@ report 50008 "ABRANE : Sales Proforma Inv."
 
                         trigger OnPreDataItem()
                         begin
-                            if not ShowInternalInfo then
+                            if not ShowInternalInfoBool then
                                 CurrReport.Break();
                         end;
                     }
@@ -692,7 +692,7 @@ report 50008 "ABRANE : Sales Proforma Inv."
                         column(DisplayAssemblyInfo; DisplayAssemblyInformation)
                         {
                         }
-                        column(ShowInternalInfo; ShowInternalInfo)
+                        column(ShowInternalInfo; ShowInternalInfoBool)
                         {
                         }
                         column(No2_SalesLine; "Sales Line"."No.")
@@ -857,7 +857,7 @@ report 50008 "ABRANE : Sales Proforma Inv."
 
                             trigger OnPreDataItem()
                             begin
-                                if not ShowInternalInfo then
+                                if not ShowInternalInfoBool then
                                     CurrReport.Break();
 
                                 DimSetEntry2.SetRange("Dimension Set ID", "Sales Line"."Dimension Set ID");
@@ -941,7 +941,7 @@ report 50008 "ABRANE : Sales Proforma Inv."
                             then
                                 SalesLine."Line Amount" := 0;
 
-                            if (SalesLine.Type = SalesLine.Type::"G/L Account") and (not ShowInternalInfo) then
+                            if (SalesLine.Type = SalesLine.Type::"G/L Account") and (not ShowInternalInfoBool) then
                                 "Sales Line"."No." := '';
 
                             if not SalesLine."Eco Tax Furniture Line" then
@@ -1244,7 +1244,7 @@ report 50008 "ABRANE : Sales Proforma Inv."
                                 if PrepmtInvBuf.Next() = 0 then
                                     CurrReport.Break();
 
-                            if ShowInternalInfo then
+                            if ShowInternalInfoBool then
                                 DimMgt.GetDimensionSet(TempPrepmtDimSetEntry, PrepmtInvBuf."Dimension Set ID");
 
                             if "Sales Header"."Prices Including VAT" then
@@ -1255,11 +1255,15 @@ report 50008 "ABRANE : Sales Proforma Inv."
 
                         trigger OnPreDataItem()
                         begin
+                            //KAN.FHA 05/10/2026 DEBUT
+                            /*
                             CurrReport.CreateTotals(
                               PrepmtInvBuf.Amount, PrepmtInvBuf."Amount Incl. VAT",
                               PrepmtVATAmountLine."Line Amount", PrepmtVATAmountLine."VAT Base",
                               PrepmtVATAmountLine."VAT Amount",
                               PrepmtLineAmount);
+                            */
+                            //KAN.FHA 05/10/2026 FIN
                         end;
                     }
                     dataitem(PrepmtVATCounter; "Integer")
@@ -1415,7 +1419,7 @@ report 50008 "ABRANE : Sales Proforma Inv."
 
                 trigger OnPreDataItem()
                 begin
-                    NoOfLoops := Abs(NoOfCopies) + 1;
+                    NoOfLoops := Abs(NoOfCopiesInt) + 1;
                     CopyText := '';
                     SetRange(Number, 1, NoOfLoops);
                     OutputNo := 1;
@@ -1613,13 +1617,16 @@ report 50008 "ABRANE : Sales Proforma Inv."
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(NoOfCopies; NoOfCopies)
+                    field(NoOfCopies; NoOfCopiesInt)
                     {
                         Caption = 'Nb. de copies';
+                        ToolTip = 'Nb. de copies';
+
                     }
-                    field(ShowInternalInfo; ShowInternalInfo)
+                    field(ShowInternalInfo; ShowInternalInfoBool)
                     {
                         Caption = 'Afficher infos. internes';
+                        ToolTip = 'Afficher infos. internes';
                     }
 
 
@@ -1702,12 +1709,12 @@ report 50008 "ABRANE : Sales Proforma Inv."
         TotalExclVATText: Text[50];
         TotalInclVATText: Text[50];
         MoreLines: Boolean;
-        NoOfCopies: Integer;
+        NoOfCopiesInt: Integer;
         NoOfLoops: Integer;
         CopyText: Text[30];
         DimText: Text[120];
         OldDimText: Text[75];
-        ShowInternalInfo: Boolean;
+        ShowInternalInfoBool: Boolean;
         Continue: Boolean;
         //LogInteraction: Boolean;
         VATAmount: Decimal;
@@ -1876,8 +1883,8 @@ report 50008 "ABRANE : Sales Proforma Inv."
 
     procedure InitializeRequest(NoOfCopiesFrom: Integer; ShowInternalInfoFrom: Boolean; ArchiveDocumentFrom: Boolean; LogInteractionFrom: Boolean; PrintFrom: Boolean; DisplayAsmInfo: Boolean)
     begin
-        NoOfCopies := NoOfCopiesFrom;
-        ShowInternalInfo := ShowInternalInfoFrom;
+        NoOfCopiesInt := NoOfCopiesFrom;
+        ShowInternalInfoBool := ShowInternalInfoFrom;
         //ArchiveDocument := ArchiveDocumentFrom;
         //LogInteraction := LogInteractionFrom;
         Print := PrintFrom;

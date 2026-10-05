@@ -7234,11 +7234,11 @@ End Function
         <Field Name="SubAmountFormat">
           <DataField>SubAmountFormat</DataField>
         </Field>
-        <Field Name="SalesLineAmt">
-          <DataField>SalesLineAmt</DataField>
+        <Field Name="TempSalesLineAmt">
+          <DataField>TempSalesLineAmt</DataField>
         </Field>
-        <Field Name="SalesLineAmtFormat">
-          <DataField>SalesLineAmtFormat</DataField>
+        <Field Name="TempSalesLineAmtFormat">
+          <DataField>TempSalesLineAmtFormat</DataField>
         </Field>
         <Field Name="Desc_SalesLine">
           <DataField>Desc_SalesLine</DataField>
@@ -7537,8 +7537,8 @@ End Function
         <Field Name="VATIdentifierCaption">
           <DataField>VATIdentifierCaption</DataField>
         </Field>
-        <Field Name="VATAmountLineCOUNT">
-          <DataField>VATAmountLineCOUNT</DataField>
+        <Field Name="TempVATAmountLineCOUNT">
+          <DataField>TempVATAmountLineCOUNT</DataField>
         </Field>
         <Field Name="VALExchRate">
           <DataField>VALExchRate</DataField>

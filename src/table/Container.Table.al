@@ -238,7 +238,7 @@ table 50040 Container
                 UCContainer: Record "UC container";
                 ContenuColisage: record "Contenu colisage container";
                 LigneContainer: Record "Ligne container";
-                NoCdeAchtUnique: Code[50];
+                NoCdeAchtUnique: Code[20];
                 NbUC: Integer;
                 NbLignes: Integer;
                 MiseAJourManuelleNecessaireMsg: Label 'Vous avez réduit le nombre de palettes, le système ne va pas décider tout seul quelles lignes de palettes il doit supprimer.';
@@ -638,6 +638,7 @@ table 50040 Container
         NoDocVente: Text;
         DateChargementTxt: Text;
         DateLivDemandeeTxt: Text;
+        PhasesTxt: Text;
         TransfererUC: Boolean;
         RienAValiderMsg: Label 'Il n''y a rien à réceptionner (veuillez saisir la quantité à recevoir pour chaque ligne).';
         QuantiteTropGrandeErr: Label 'Sur la ligne %1 de ce container, la quantité à recevoir est supérieure à la quantité restante (commande %2, ligne %3).', Comment = '%1 = N° ligne container %2 = N° commande %3 = N° ligne commande';
@@ -737,11 +738,11 @@ table 50040 Container
                 repeat
                     if UCContainer."No. commande achat" <> NumCdeAchat then
                         if EnteteAchat.Get(EnteteAchat."Document Type"::Order, UCContainer."No. commande achat") then begin
-                            EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVente, DateChargementTxt, DateLivDemandeeTxt);
+                            EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVente, DateChargementTxt, DateLivDemandeeTxt,PhasesTxt);
                             TransfererUC := (Copystr(NoDocVente, 1, 2) = 'CC'); //Pas génial mais permet d'exclure les devis et la valeur "Multiple" 
                         end;
 
-                    if transfererUC then begin
+                    if TransfererUC then begin
                         //On sait ici que la commande d'achat n'est affectée qu'à une seule commande de vente, on peut transférer l'UC vers cette commande vente
                         UCCommande.Init();
                         UCCommande."No. commande" := copystr(NoDocVente, 1, 20);

@@ -1028,8 +1028,6 @@ codeunit 50017 ConsommerEventsCodeunits
     [EventSubscriber(ObjectType::Codeunit, 90, OnBeforePostPurchaseDoc, '', false, false)]
     local procedure CU90_OnBeforePostPurchaseDoc(var PurchaseHeader: Record "Purchase Header")
     var
-        PurchLine: Record "Purchase Line";
-        TextCheckItemErr: Label 'Sur la ligne %1 de la commande %2, on a un N° article vide, vous devez supprimer la ligne ou mettre une référence article.', Comment = '%1 = N° ligne ; %2 = N° commande';
         RemplacerDateComptaQst: label 'Vous n''avez pas saisi de date de comptabilisation, souhaitez-vous valider en date du jour';
         ArretValidationErr: label 'Opération annulée à la demande de l''utilisateur.';
     begin
@@ -1763,7 +1761,6 @@ codeunit 50017 ConsommerEventsCodeunits
         DateObligatoireErr: Label 'Vérifiez la phase %1 car elle n''a pas de date de chargement ou de date de livraison confirmée.', Comment = '%1 = Code phase';
 
     begin
-        //DIAFTS - 28/03/2019 - AT0694017 - Ctrl coherence des souches
         ParamVte.Get();
         if SalesHeader.ASS then begin
             //KAN.FHA 28/08/2020 DEBUT
@@ -1799,11 +1796,8 @@ codeunit 50017 ConsommerEventsCodeunits
                                         ParamVte."ASS Posted Credit Memo Nos."]) then
                 ERROR('La souche de validation %1 du document SAV %2 est exclusivement réservée aux documents du SAV', SalesHeader."Posting No. Series", SalesHeader."No.");
         end;
-        //DIAFTS - 28/03/2019
 
-        //KAN.FHA 13/04/2023 DEBUT
         SalesHeader.TESTFIELD("Ship-to Country/Region Code");
-        //KAN.FHA 13/04/2023 FIN
 
         //KAN.FHA 08/12/2025 DEBUT
         SalesHeader.TestField("Salesperson Code");
@@ -1825,7 +1819,9 @@ codeunit 50017 ConsommerEventsCodeunits
             //On va commencer par supprimer les phases qui n'ont aucun article (sauf la phase 0 qu'on va conserver pour pouvoir tjs ajouter un article qui se mettrait par défaut sur la phase 0)
             PhasesDocument.SetRange("Type document", SalesHeader."Document Type");
             PhasesDocument.SetRange("No. document", SalesHeader."No.");
-            PhasesDocument.SetFilter(Phase, '>%1', 0);
+            //KAN.FHA 01/10/2026 DEBUT
+            //PhasesDocument.SetFilter(Phase, '>%1', 0);
+            //KAN.FHA 01/10/2026 FIN
             if PhasesDocument.FindSet(true) then begin
                 repeat
                     PhasesDocument.CalcFields("Nb lignes dans phase");
@@ -1928,10 +1924,37 @@ codeunit 50017 ConsommerEventsCodeunits
 
     [EventSubscriber(ObjectType::Codeunit, 414, OnAfterReopenSalesDoc, '', false, false)]
     local procedure CU414_OnAfterReopenSalesDoc(var SalesHeader: Record "Sales Header")
+    var
+        PhasesDocument: Record "Phases document";
+        TypeDocPhase: Integer;
+        PhaseIndefinieLbl: Label 'Indéfinie';
     begin
         //- DIA/BPE 17/11/14
         SalesHeader.UpdateFieldReleaseStatus_T();
         //+ DIA/BPE 17/11/14
+        //KAN.FHA 01/10/2026 DEBUT
+        //Création de la phase "Indéfinie"
+        case SalesHeader."Document Type" of
+            SalesHeader."Document Type"::Quote:
+                TypeDocPhase := 0;
+            SalesHeader."Document Type"::Order:
+                TypeDocPhase := 1;
+            else
+                exit;
+        end;
+
+        if not PhasesDocument.Get(TypeDocPhase, SalesHeader."No.", 0) then begin
+            PhasesDocument.Init();
+            PhasesDocument."Type document" := TypeDocPhase;
+            PhasesDocument."No. document" := SalesHeader."No.";
+            PhasesDocument.Phase := 0;
+            PhasesDocument.Description := PhaseIndefinieLbl;
+            PhasesDocument."Code vendeur" := SalesHeader."Salesperson Code";
+            PhasesDocument."Code enseigne" := SalesHeader."Code enseigne";
+            PhasesDocument."Code chantier" := SalesHeader."Code chantier";
+            PhasesDocument.Insert();
+        end;
+        //KAN.FHA 01/10/2026 FIN
 
     end;
 
@@ -1960,7 +1983,7 @@ codeunit 50017 ConsommerEventsCodeunits
         //KAN.FHA 17/08/2026 DEBUT
         PurchaseHeader.VerifierLigneArticleSansNum();
         //KAN.FHA 17/08/2026 FIN
-        
+
         //KAN.FHA 17/10/2022 DEBUT
         if PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::Order then begin
             CompanyInfo.GET();
@@ -2125,11 +2148,11 @@ codeunit 50017 ConsommerEventsCodeunits
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 5720, OnEnterSalesItemReferenceOnAfterFillDescriptionFromItemVariant, '', false, false)]
-    local procedure CU5720_OnEnterSalesItemReferenceOnAfterFillDescriptionFromItemVariant(var SalesLine: Record "Sales Line";var ItemVariant: Record "Item Variant")
+    local procedure CU5720_OnEnterSalesItemReferenceOnAfterFillDescriptionFromItemVariant(var SalesLine: Record "Sales Line"; var ItemVariant: Record "Item Variant")
     var
         Article: Record Item;
     begin
-        if not ItemVariant."Remplacer desi. sur vente" then 
+        if not ItemVariant."Remplacer desi. sur vente" then
             if Article.Get(SalesLine."No.") then
                 SalesLine.Description := Article.Description;
     end;
