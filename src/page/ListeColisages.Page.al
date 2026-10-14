@@ -1,15 +1,15 @@
-page 50029 "Liste colisages"
+page 50029 "Liste colisages expedies"
 {
     ApplicationArea = All;
     UsageCategory = Lists;
-    Caption = 'Liste colisages';
-    CardPageID = "Fiche colisage";
+    Caption = 'Liste colisages expédiés';
+    CardPageID = "Fiche colisage expedie";
     DeleteAllowed = false;
     Editable = false;
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = List;
-    SourceTable = "Entete colisage";
+    SourceTable = "Entete colisage expedie";
     SourceTableView = sorting("No.")
                       order(descending);
 
@@ -117,6 +117,7 @@ page 50029 "Liste colisages"
     {
         area(creation)
         {
+            /*
             action(Nouveau)
             {
                 Caption = 'Nouveau';
@@ -137,9 +138,10 @@ page 50029 "Liste colisages"
                             NewPackingFree();
                 end;
             }
+            */
         }
         area(reporting)
-        {
+        {   /*
             action("Edition Liste de colisage")
             {
                 Caption = 'Edition Liste de colisage';
@@ -157,6 +159,8 @@ page 50029 "Liste colisages"
                     REPORT.RunModal(50032, true, true, Packing);
                 end;
             }
+            */
+            /*
             action("Edition Détail Palette")
             {
                 Caption = 'Edition Détail Palette';
@@ -174,6 +178,8 @@ page 50029 "Liste colisages"
                     REPORT.RunModal(50031, true, true, Packing);
                 end;
             }
+            */
+            /*
             action("Edition Etiquette Livraison")
             {
                 Caption = 'Edition Etiquette Livraison';
@@ -191,6 +197,7 @@ page 50029 "Liste colisages"
                     REPORT.RunModal(50030, true, true, Packing);
                 end;
             }
+            */
         }
     }
 
@@ -219,6 +226,7 @@ page 50029 "Liste colisages"
         SalesHeader := pRec;
     end;
 
+    /*
     procedure NewPacking(pHeader: Record "Sales Header")
     var
         Packing: Record "Entete colisage";
@@ -292,12 +300,15 @@ page 50029 "Liste colisages"
         fCard.SetTableView(Packing);
         fCard.RunModal();
     end;
-
+    */
+    /*
     procedure SetShipment(pRec: Record "Sales Shipment Header")
     begin
         SalesShptHeader := pRec;
     end;
+    */
 
+    /*
     procedure NewPackingShpt(pHeader: Record "Sales Shipment Header")
     var
 
@@ -373,7 +384,8 @@ page 50029 "Liste colisages"
         fCard.SetTableView(EnteteColisage);
         fCard.RunModal();
     end;
-
+    */
+    /*
     procedure NewPackingFree()
     var
         EnteteColisage: Record "Entete colisage";
@@ -386,5 +398,6 @@ page 50029 "Liste colisages"
         fCard.SetTableView(EnteteColisage);
         fCard.RunModal();
     end;
+    */
 }
 

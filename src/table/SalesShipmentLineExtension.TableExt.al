@@ -154,7 +154,7 @@ tableextension 50041 SalesShipmentLineExtension extends "Sales Shipment Line"
             DataClassification = ToBeClassified;
             Description = 'Champ 8056420 renumeroté pendant la migration BC23';
             Editable = false;
-            TableRelation = "Entete colisage";
+            TableRelation = "Entete colisage expedie";
         }
         field(78580; "Packing in Progress"; Boolean)
         {
@@ -170,7 +170,7 @@ tableextension 50041 SalesShipmentLineExtension extends "Sales Shipment Line"
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             FieldClass = FlowField;
-            CalcFormula = sum("Contenu colisage"."Quantite UC" where("Shipment No." = field("Document No."), "Shipment Line No." = field("Line No.")));
+            CalcFormula = sum("Detail UC colisage expedie"."Quantite UC" where("Shipment No." = field("Document No."), "Shipment Line No." = field("Line No.")));
         }
         field(78590; SubTotal; Boolean)
         {

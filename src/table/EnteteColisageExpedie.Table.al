@@ -1,5 +1,10 @@
-table 50014 "Entete colisage"
+table 50014 "Entete colisage expedie"
 {
+    //Un colisage est généré au moment où génère le BL, pas avant.
+    //Un colisage regroupe un certain nombre d'unités de colisage (Palettes/colis).
+    //Le détail de quels articles sont présents dans quelle UC n'est pas obligatoire.
+    //Donc 1 BL = 1 entete de colisage, les articles sont ceux dans le BL et si besoin on a deux tables qui permettent
+    //de connaitre les UC d'un colisage et eventuellement comment les articles du BL sont repartis sur ces UC.
     Caption = 'Entête colisage';
     DrillDownPageID = 50029;
     LookupPageID = 50029;
@@ -29,7 +34,7 @@ table 50014 "Entete colisage"
             var
                 Text001Err: Label 'Pas possible de modifier le client quand il y a des lignes';
             begin
-                CheckPackingStatus();
+                //CheckPackingStatus();
                 CalcFields("Nb UC");
                 if "Nb UC" <> 0 then
                     Error(Text001Err);
@@ -44,10 +49,6 @@ table 50014 "Entete colisage"
                     "Ship-To County Code" := Customer.County;
                     Validate("Ship-To Country Code", Customer."Country/Region Code");
                     "Ship-To Address Code" := '';
-                    //if Customer."Bill-to Customer No." <> '' then
-                    //    Validate("Bill-To Customer No.", Customer."Bill-to Customer No.")
-                    //else
-                    //    Validate("Bill-To Customer No.", Customer."No.");
                 end;
             end;
         }
@@ -168,7 +169,7 @@ table 50014 "Entete colisage"
         field(210; "Nb UC"; Integer)
         {
             BlankZero = true;
-            CalcFormula = count("Detail colisage" where("No. colisage" = field("No.")));
+            CalcFormula = count("UC colisage expedie" where("No. colisage" = field("No.")));
             Caption = 'Nombre UC';
             Editable = false;
             FieldClass = FlowField;
@@ -180,7 +181,7 @@ table 50014 "Entete colisage"
         }
         field(220; "Poids brut total colise"; Decimal)
         {
-            CalcFormula = sum("Detail colisage"."Poids brut UC" where("No. colisage" = field("No.")));
+            CalcFormula = sum("UC colisage expedie"."Poids brut UC" where("No. colisage" = field("No.")));
             Caption = 'Total poids brut colisé';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -189,7 +190,7 @@ table 50014 "Entete colisage"
 
         field(230; "Poids net total colise"; Decimal)
         {
-            CalcFormula = sum("Contenu colisage"."Poids net ligne" where("No. colisage" = field("No.")));
+            CalcFormula = sum("Detail UC colisage expedie"."Poids net ligne" where("No. colisage" = field("No.")));
             Caption = 'Poids net total colisé';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -198,7 +199,7 @@ table 50014 "Entete colisage"
 
         field(232; "Poids net total articles"; Decimal)
         {
-            CalcFormula = sum("Contenu colisage"."Poids net ligne" where("No. colisage" = field("No.")));
+            CalcFormula = sum("Detail UC colisage expedie"."Poids net ligne" where("No. colisage" = field("No.")));
             Caption = 'Poids net total articles';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -206,7 +207,7 @@ table 50014 "Entete colisage"
         }
         field(233; "Poids brut total articles"; Decimal)
         {
-            CalcFormula = sum("Contenu colisage"."Poids brut ligne" where("No. colisage" = field("No.")));
+            CalcFormula = sum("Detail UC colisage expedie"."Poids brut ligne" where("No. colisage" = field("No.")));
             Caption = 'Poids brut total articles';
             DecimalPlaces = 0 : 5;
             Editable = false;
@@ -216,7 +217,7 @@ table 50014 "Entete colisage"
         {
             Caption = 'Nombre de colis';
             FieldClass = FlowField;
-            CalcFormula = count("Detail colisage" where("No. colisage" = field("No."), "Type UC" = const(Colis)));
+            CalcFormula = count("UC colisage expedie" where("No. colisage" = field("No."), "Type UC" = const(Colis)));
             Editable = false;
 
         }
@@ -224,7 +225,7 @@ table 50014 "Entete colisage"
         {
             Caption = 'Nombre de palettes';
             FieldClass = FlowField;
-            CalcFormula = count("Detail colisage" where("No. colisage" = field("No."), "Type UC" = const(Palette)));
+            CalcFormula = count("UC colisage expedie" where("No. colisage" = field("No."), "Type UC" = const(Palette)));
             Editable = false;
         }
         field(49900; "No. expedition enregistree"; Code[20])
@@ -345,34 +346,23 @@ table 50014 "Entete colisage"
         key(Key4; "Packing Status", "Sell-to Customer No.")
         {
         }
-        key(MyKey5; Expedie,"No. commande", "No. expedition enregistree")
+        key(MyKey5; Expedie, "No. commande", "No. expedition enregistree")
         {
 
         }
         key(MyKey6; Expedie)
         {
-            
+
         }
-        key(MyKey7; "Sell-to Customer No.",Expedie,"No. commande")
+        key(MyKey7; "Sell-to Customer No.", Expedie, "No. commande")
         {
-            
+
         }
     }
 
     fieldgroups
     {
     }
-
-    trigger OnDelete()
-    var
-        ContenuColisage: Record "Contenu colisage";
-    begin
-        ContenuColisage.SetRange("No. colisage", "No.");
-        ContenuColisage.DeleteAll();
-
-        DetailColisage.SetRange("No. colisage", "No.");
-        DetailColisage.DeleteAll();
-    end;
 
     trigger OnInsert()
     begin
@@ -393,17 +383,16 @@ table 50014 "Entete colisage"
     var
         SalesSetup: Record "Sales & Receivables Setup";
         //ContenuColisage: Record "Contenu colisage";
-        ContenuColisage2: Record "Contenu colisage";
         ShipToAddr: Record "Ship-to Address";
         Customer: Record Customer;
         ShptLine: Record "Sales Shipment Line";
-        DetailColisage: Record "Detail colisage";
+        //DetailColisage: Record "UC colisage expedie";
         NoSeriesMgt: Codeunit NoSeriesManagement;
         Text001Lbl: Label 'Vous ne pouvez pas renommer l''enregistrement %1.', Comment = '%1 = Enregistrement';
-        Text002Lbl: Label 'BL %1 Ligne %2 quantité %3 alors que la somme des qtés colisage est de %4', Comment = '%1 = N° BL ; %2 = N° ligne ; %3 = Quantité ; %4 = Somme des quantités';
-        Text004Lbl: Label 'Manque le poids brut sur UC %1', Comment = '%1 = N° UC';
-        Text005Lbl: Label 'Manque le poids net sur UC %1', Comment = '%1 = N° UC';
-        Text009Lbl: Label 'Des lignes du colisage n''ont pas été livrées';
+        //Text002Lbl: Label 'BL %1 Ligne %2 quantité %3 alors que la somme des qtés colisage est de %4', Comment = '%1 = N° BL ; %2 = N° ligne ; %3 = Quantité ; %4 = Somme des quantités';
+        //Text004Lbl: Label 'Manque le poids brut sur UC %1', Comment = '%1 = N° UC';
+        //Text005Lbl: Label 'Manque le poids net sur UC %1', Comment = '%1 = N° UC';
+        //Text009Lbl: Label 'Des lignes du colisage n''ont pas été livrées';
 
     local procedure GetNoSeriesCode(): Code[20]
     begin
@@ -428,86 +417,11 @@ table 50014 "Entete colisage"
         Modify();
     end;
 
-    procedure CheckPacking()
-    var
-        ContenuColisage: Record "Contenu colisage";
-    begin
-        TestField("Packing Status", "Packing Status"::" ");
 
-        //Contrôle des lignes
-        //-------------------------
-        ContenuColisage.SetCurrentKey("No. colisage", "Shipment No.", "Shipment Line No.");
-        ContenuColisage.SetRange("No. colisage", "No.");
-
-        //on ne peut pas terminer un colisage dont les lignes ne comporte pas de n° BL
-        ContenuColisage.SetRange("Shipment No.", '');
-        if ContenuColisage.FindFirst() then
-            Error(Text009Lbl);
-
-        ContenuColisage.SetRange("Shipment No.");
-        if ContenuColisage.FindSet() then
-            repeat
-                ContenuColisage.CalcFields("Quantite colisee totale", "Qte expediee");
-                ContenuColisage.TestField("No. UC");
-
-                if ContenuColisage."Quantite colisee totale" <> ContenuColisage."Qte expediee" then
-                    Error(Text002Lbl, ContenuColisage."Shipment No.", ContenuColisage."Shipment Line No.", ContenuColisage."Qte expediee",
-                    ContenuColisage."Quantite colisee totale");
-
-                if ContenuColisage."Poids brut ligne" = 0 then begin
-                    ContenuColisage2.Reset();
-                    ContenuColisage2.SetCurrentKey("No. colisage", "Shipment No.", "Shipment Line No.");
-                    ContenuColisage2.SetRange("No. colisage", "No.");
-                    ContenuColisage2.SetFilter(Type, '<>%1', 0);
-                    ContenuColisage2.SetRange("No. UC", ContenuColisage."No. UC");
-                    ContenuColisage2.SetFilter("Poids brut ligne", '<>%1', 0);
-                    if not ContenuColisage2.FindFirst() then
-                        Error(Text004Lbl, ContenuColisage."No. UC");    //poids brut obligatoire
-                end;
-
-                if ContenuColisage."Poids net ligne" = 0 then begin
-                    ContenuColisage2.Reset();
-                    ContenuColisage2.SetCurrentKey("No. colisage", "Shipment No.", "Shipment Line No.");
-                    ContenuColisage2.SetRange("No. colisage", "No.");
-                    ContenuColisage2.SetFilter(Type, '<>%1', 0);
-                    ContenuColisage2.SetRange("No. UC", ContenuColisage."No. UC");
-                    ContenuColisage2.SetFilter("Poids net ligne", '<>%1', 0);
-                    if not ContenuColisage2.FindFirst() then
-                        Error(Text005Lbl, ContenuColisage."No. UC");    //Poids net
-                end;
-
-            until ContenuColisage.Next() = 0;
-
-        //Mettre le n° colisage dans les lignes BL
-        //-----------------------
-        ContenuColisage.Reset();
-        ContenuColisage.SetRange("No. colisage", "No.");
-        if ContenuColisage.FindSet() then
-            repeat
-                if ShptLine.Get(ContenuColisage."Shipment No.", ContenuColisage."Shipment Line No.") then begin
-                    ShptLine."No. colisage" := "No.";
-                    ShptLine."Packing in Progress" := false;
-                    ShptLine.Modify();
-                end;
-            until ContenuColisage.Next() = 0;
-
-        //Mettre à jour le statut entête
-        "Date comptabilisation" := WorkDate();
-        "Packing Status" := "Packing Status"::"Terminé";
-        Modify();
-    end;
-
-    procedure CheckPackingStatus()
-    var
-        Text001Err: Label 'Modification non autorisée en raison du statut du colis';
-    begin
-        if "Packing Status" <> 0 then
-            Error(Text001Err);
-    end;
 
     procedure MAJPoidsSurContenuColisage()
     var
-        ContenuColisage: Record "Contenu colisage";
+        ContenuColisage: Record "Detail UC colisage expedie";
         PoidsBrutDeReference: Decimal;
         PoidsBrutReparti: Decimal;
         PoidsNetTotalArticles: Decimal;
@@ -567,6 +481,7 @@ table 50014 "Entete colisage"
         end;
     end;
 
+    /*
     procedure Expedier()
     //Va générer le BL pour chaque commande présente dans le colisage (normalement une seule commande)
     var
@@ -645,7 +560,8 @@ table 50014 "Entete colisage"
                     Rec."Commentaire validation" := StrSubstNo(NbCdesValideesLbl,NbCdesValidees,NbCdes) 
         end;
     end;
-
+    */
+    /*
     procedure ExtraireColisage()
     //On a parfois besoin de rassembler plusieurs colisages en un seul.
     //Si on livre par exemple une commande en deux fois la même journée (sans faire partir la marchandise) et que dans les faits, cela ne corresponde qu'à un 
@@ -741,15 +657,18 @@ table 50014 "Entete colisage"
                         ContenuColisage.Insert(true);
 
                     until ShptLineAtt.Next() = 0;
-                    */
+                    
                 until ContenuColisageSource.Next() = 0;
                 ColisageSource.Reset();
                 ColisageSource.get(NumColisageSource);
                 ColisageSource.Delete(true);
+                
             end;
+            
         end;
+        
     end;
-
+*/
 
 }
 

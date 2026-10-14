@@ -680,12 +680,12 @@ codeunit 50019 ConsommerEventsTables
         end;
     end;
 
+    
     [EventSubscriber(ObjectType::Table, 37, OnBeforeDeleteEvent, '', false, false)]
     local procedure SalesLineOnBeforeDeleteEvent(var Rec: Record "Sales Line")
     var
         LigneVente2: Record "Sales Line";
         lrecPurchaseLine: Record "Purchase Line";
-        ContenuColisage: Record "Contenu colisage";
         Text50001Err: Label 'Vous ne pouvez pas supprimer une ligne "Composant".';
     begin
         //KAN.FHA 03/04/2025 DEBUT
@@ -725,6 +725,7 @@ codeunit 50019 ConsommerEventsTables
             lrecPurchaseLine.MODIFY();
         end;
 
+        /*
         //KAN.FHA 03/02/2026 DEBUT
         if Rec."Document Type" = Rec."Document Type"::Order then begin
             ContenuColisage.SetCurrentKey("Order No.", "Order Line No.");
@@ -734,6 +735,7 @@ codeunit 50019 ConsommerEventsTables
             ContenuColisage.DeleteAll();
         end;
         //KAN.FHA 03/02/2026 FIN
+        */
     end;
 
     [EventSubscriber(ObjectType::Table, 37, OnAfterDeleteEvent, '', false, false)]
@@ -911,7 +913,7 @@ codeunit 50019 ConsommerEventsTables
     [EventSubscriber(ObjectType::Table, 37, OnAfterValidateEvent, Quantity, false, false)]
     local procedure SalesLineOnAfterValidateQuantity(var Rec: Record "Sales Line")
     var
-        ContenuColisage: Record "Contenu colisage";
+        //ContenuColisage: Record "Contenu colisage";
         WEEEMgt: Codeunit "Gestion Ecopart";
         LigneColisageEclateeMsg: Label 'Cette ligne de commande a déjà été éclatée sur le colisage, le système ne peut pas reporter la modification de quantité vers le colisage.\Voir avec la logistique.';
 
@@ -922,6 +924,7 @@ codeunit 50019 ConsommerEventsTables
 
         Rec.fctMajQuantiteComposant(Rec);
 
+        /*
         if rec."Document Type" = Rec."Document Type"::Order then begin
             ContenuColisage.SetCurrentKey("Order No.", "Order Line No.");
             ContenuColisage.SetRange("Order No.", Rec."Document No.");
@@ -935,6 +938,7 @@ codeunit 50019 ConsommerEventsTables
                     Message(LigneColisageEclateeMsg);
 
         end;
+        */
 
         //KAN.FHA 23/09/2026 DEBUT
         Rec.TypeDuplique := Rec.Type;

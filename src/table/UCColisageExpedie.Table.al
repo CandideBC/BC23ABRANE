@@ -1,4 +1,4 @@
-table 50016 "Detail colisage"
+table 50016 "UC colisage expedie"
 {
     Caption = 'Détail colisage';
 
@@ -7,7 +7,7 @@ table 50016 "Detail colisage"
         field(1; "No. colisage"; Code[20])
         {
             Caption = 'N° colisage';
-            TableRelation = "Entete colisage";
+            TableRelation = "Entete colisage expedie";
         }
 
         field(9; "No. UC"; Code[20])
@@ -34,7 +34,7 @@ table 50016 "Detail colisage"
             DecimalPlaces = 0 : 5;
             FieldClass=FlowField;
             Editable = false;
-            CalcFormula=sum("Contenu colisage"."Poids net ligne" where ("No. colisage"=field("No. colisage"),"No. UC"=field("No. UC")));
+            CalcFormula=sum("Detail UC colisage expedie"."Poids net ligne" where ("No. colisage"=field("No. colisage"),"No. UC"=field("No. UC")));
         }
 
         field(21; "Poids brut UC"; Decimal)
@@ -136,15 +136,14 @@ table 50016 "Detail colisage"
     end;
 
     var
-        ContenuColisage: Record "Contenu colisage";
+        ContenuColisage: Record "Detail UC colisage expedie";
         SalesSetup: Record "Sales & Receivables Setup";
-        T50016: Record "Detail colisage";
         NoSeriesMgt: Codeunit NoSeriesManagement;
         codFiller: Code[20];
 
     procedure CheckPackingStatus()
     var
-        lEnteteColisage: Record "Entete colisage";
+        lEnteteColisage: Record "Entete colisage expedie";
         Text001Lbl: Label 'Mise à jour non autorisée avec ce statut de colisage.';
     begin
         if lEnteteColisage.Get("No. colisage") and (lEnteteColisage."Packing Status" <> 0) then

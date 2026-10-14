@@ -201,12 +201,14 @@ page 50123 "Fiche saisie expedition"
                         ToolTip = 'Poids brut total que vous allez expédier, ne saisissez cette information qu''après avoir saisi les [Quantité à expédier] de chaque ligne.';
 
                     }
+                    /*
                     field("Colisages non valides"; Rec."Colisages non valides")
                     {
                         ApplicationArea = All;
                         ToolTip = 'Indique combien de colisages sont en cours de préparation (non encore expédiés).';
                         Visible = false;
                     }
+                    */
 
                     field("Nb UC en prepa"; Rec."Nb UC en prepa")
                     {
@@ -221,10 +223,7 @@ page 50123 "Fiche saisie expedition"
             {
                 SubPageLink = "Document No." = field("No.");
             }
-            part(SF_UC_Commande; "SF FichE Expe UC Commande")
-            {
-                SubPageLink = "No. commande" = field("No.");
-            }
+
         }
     }
     actions
@@ -242,16 +241,15 @@ page 50123 "Fiche saisie expedition"
                 RunObject = page "Sales Order";
                 RunPageLink = "Document Type" = field("Document Type"), "No." = field("No.");
             }
-            action(AfficherUC)
+            action(AfficherColisage)
             {
                 Caption = 'Palettes/Colis';
                 ToolTip = 'Permet d''afficher ou définir les palettes et colis nécessaires à la préparation de cette commande.';
-                //Image = ;
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                RunObject = page "UC Commande";
-                RunPageLink = "No. commande" = field("No.");
+                RunObject = page "Fiche colisage commande";
+                RunPageLink = "Document Type" = field("Document Type"),"No."=field("No.");
             }
             action(SuiviAchats)
             {
@@ -285,10 +283,10 @@ page 50123 "Fiche saisie expedition"
                 var
                     PhasesDocVente: Record "Phases document";
                     LigneCommande: Record "Sales Line";
-                    EnteteColisage: Record "Entete colisage";
-                    ContenuColisage: Record "Contenu colisage";
-                    DetailColisage: Record "Detail colisage";
-                    LignePrepa: Record "Prepa colisage";
+                    EnteteColisage: Record "Entete colisage expedie";
+                    ContenuColisage: Record "Detail UC colisage expedie";
+                    DetailColisage: Record "UC colisage expedie";
+                    LignePrepa: Record "Detail UC Commande";
                     UC: Record "Unite colisage";
                     CU80: codeunit "Sales-Post";
                     PagePhases: Page "Phases document vente";
@@ -445,14 +443,11 @@ page 50123 "Fiche saisie expedition"
     }
     trigger OnAfterGetRecord()
     var
-    //DossierBE: Record "Dossier BE";
     begin
-        //CommentairesDossierBE := Rec.GetCommentairesDossierBE();
         CommentairesPrepa := Rec.GetCommentairesPrepa();
 
     end;
 
     var
-        //CommentairesDossierBE: Text;
         CommentairesPrepa: Text;
 }

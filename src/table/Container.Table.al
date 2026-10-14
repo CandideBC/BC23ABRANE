@@ -467,7 +467,6 @@ table 50040 Container
         ContenuColisage: Record "Contenu colisage container";
         PrecisionArrondi: Decimal;
     begin
-        //LigneContainer.SetCurrentKey(TypeDocDuplique, NumDocDuplique, Phase);
         LigneContainer.SetRange("No. container", Rec."No.");
         LigneContainer.SetRange(Type, LigneContainer.Type::Article);
         if LigneContainer.FindSet(false) then
@@ -480,8 +479,6 @@ table 50040 Container
                     ContenuColisage."Item No." := LigneContainer."No.";
                     ContenuColisage."Quantite UC" := LigneContainer.Quantite;
                     ContenuColisage.Description := LigneContainer.Description;
-                    //ContenuColisage."Order No." := Rec."No.";
-                    //ContenuColisage."Order Line No." := LigneContainer."Line No.";
                     ContenuColisage."Poids net unitaire" := LigneContainer."Poids net unitaire";
                     PrecisionArrondi := 0;
                     if ContenuColisage."Poids net unitaire" < 1 then

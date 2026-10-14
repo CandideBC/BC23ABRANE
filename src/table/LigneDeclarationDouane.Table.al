@@ -38,7 +38,7 @@ table 50065 "Ligne declaration douane"
         field(65; "No. colisage"; Code[20])
         {
             Caption = 'N° colisage';
-            TableRelation = "Entete colisage";
+            TableRelation = "Entete colisage expedie";
         }
         field(70; "Type UC"; Option)
         {

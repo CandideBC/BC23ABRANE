@@ -238,12 +238,9 @@ codeunit 50017 ConsommerEventsCodeunits
     [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeSalesShptLineInsert, '', false, false)]
     local procedure CU80_OnBeforeSalesShptLineInsert(var SalesShptLine: Record "Sales Shipment Line"; SalesShptHeader: Record "Sales Shipment Header")
     var
-        dNegPackingMgt: Codeunit "Packing Management";
-
+        //dNegPackingMgt: Codeunit "Packing Management";
     begin
-        dNegPackingMgt.MAJContenuColisage(SalesShptLine);
-
-
+        //dNegPackingMgt.MAJContenuColisage(SalesShptLine);
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeSalesInvLineInsert, '', false, false)]

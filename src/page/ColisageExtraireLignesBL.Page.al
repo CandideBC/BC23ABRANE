@@ -172,6 +172,7 @@ page 50028 "Colisage : extraire lignes BL"
         DocumentNoOnFormat();
     end;
 
+    /*
     trigger OnQueryClosePage(CloseAction: Action): Boolean
     begin
         //-DNFR7.03 FHA 11/07/2013
@@ -179,21 +180,24 @@ page 50028 "Colisage : extraire lignes BL"
             CreateLines();
         //+DNFR7.03 FHA 11/07/2013
     end;
+    */
 
     var
         SalesShptHeader: Record "Sales Shipment Header";
-        EnteteColisage: Record "Entete colisage";
+        //EnteteColisage: Record "Entete colisage";
         TempSalesShptLine: Record "Sales Shipment Line" temporary;
-        PackingMgt: Codeunit "Packing Management";
+        //PackingMgt: Codeunit "Packing Management";
         
         "Document No.HideValue": Boolean;
         
         "Document No.Emphasize": Boolean;
 
+    /*
     procedure SetSalesHeader(var EnteteColisage2: Record "Entete colisage")
     begin
         EnteteColisage.GET(EnteteColisage2."No.");
     end;
+    */
 
     local procedure IsFirstDocLine(): Boolean
     var
@@ -221,11 +225,13 @@ page 50028 "Colisage : extraire lignes BL"
             "Document No.HideValue" := true;
     end;
 
+    /*
     procedure CreateLines()
     begin
         CurrPage.SETSELECTIONFILTER(Rec);
         PackingMgt.SetSalesHeader(EnteteColisage);
         PackingMgt.CreateLinesFromShpt(Rec);
     end;
+    */
 }
 

@@ -762,11 +762,14 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                 //UC: Record "Unite colisage";
             begin
                 AjouterUC("No. UC");
+                /*
                 CalcFields("Nombre UC");
                 if "Nombre UC" > 1 then
                     "No. UC" := 'Multiple';
+                */
             end;
         }
+        /*
         field(51263; "Nombre UC"; Integer)
         {
             Caption = 'Nombre UC';
@@ -775,6 +778,8 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             FieldClass = FlowField;
             CalcFormula = Count("Prepa colisage" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No.")));
         }
+        */
+        
         field(51264; "Quantite prepa colisage"; Decimal)
         {
             Caption = 'Quantité colisée';
@@ -782,8 +787,9 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             FieldClass = FlowField;
-            CalcFormula = sum("Prepa colisage"."Quantite dans UC" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No.")));
+            CalcFormula = sum("Detail UC Commande"."Quantite dans UC" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No.")));
         }
+        
 
         /*
         field(51265; "Quantite colisee"; Decimal)
@@ -973,7 +979,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
     procedure AjouterUC(pNumUC: Code[20])
     var
         UC: Record "Unite colisage";
-        PrepaColisage: Record "Prepa colisage";
+        PrepaColisage: Record "Detail UC Commande";
         QteNonPreparee: Decimal;
         QuantiteEntierementPrepareeErr: Label 'La quantité a déjà été entièrement préparée.';
     begin
@@ -1010,7 +1016,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
 
     procedure MAJPhaseSurPrepaColisage()
     var
-        PrepaColisage: Record "Prepa colisage";
+        PrepaColisage: Record "Detail UC Commande";
     begin
         if "Document Type" <> "Document Type"::Order then
             exit;

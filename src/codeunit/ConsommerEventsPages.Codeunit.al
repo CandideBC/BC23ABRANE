@@ -4,18 +4,7 @@ codeunit 50018 ConsommerEventsPages
     begin
     end;
 
-    [EventSubscriber(ObjectType::Page, 42, OnDeleteRecordEvent, '', false, false)]
-    local procedure Page42_OnDeleteRecordEvent(var Rec: Record "Sales Header")
-    var 
-        Colisage: Record "Entete colisage";
-        
-    begin
-        Colisage.SetCurrentKey("No. commande", "No. expedition enregistree");
-        Colisage.SetRange("No. commande",Rec."No.");
-        Colisage.SetRange("No. expedition enregistree",'');
-        if Colisage.FindSet(true) then
-            Colisage.DeleteAll(true);
-    end;
+
 
     [EventSubscriber(ObjectType::Page, 42, OnBeforePostSalesOrder, '', false, false)]
     local procedure Page42_OnBeforePostSalesOrder(var SalesHeader: Record "Sales Header")

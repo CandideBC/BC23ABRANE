@@ -1,15 +1,14 @@
-page 50025 "Eclater contenu colisage"
+page 50025 "Eclater detail UC commande"
 {
     ApplicationArea = All;
     UsageCategory = None;
     Caption = 'Eclater contenu colisage';
-    DataCaptionFields = "No. colisage", "No. ligne";
+    DataCaptionFields = "No. commande","No. ligne commande";
     DelayedInsert = true;
     PageType = List;
-    SourceTable = "Contenu colisage";
-    SourceTableView = sorting ("No. colisage", "No. ligne")
-                      order(ascending)
-                      where (Type = const (Item));
+    SourceTable = "Detail UC Commande";
+    SourceTableView = sorting ("No. commande", "No. ligne commande")
+                      order(ascending);
 
     layout
     {
@@ -18,40 +17,39 @@ page 50025 "Eclater contenu colisage"
             repeater(Control8056003)
             {
                 ShowCaption = false;
+                /*
                 field(Type; Rec.Type)
                 {
                     ToolTip = 'Type';
                     Editable = false;
                     Visible = false;
                 }
-                field("Item No."; Rec."Item No.")
+                */
+                field("No. article"; Rec."No. article")
                 {
                     ToolTip = 'N° article';
                 }
-                field(Description; Rec.Description)
+                field(Designation; Rec.Designation)
                 {
                     ToolTip = 'Description';
                     Editable = false;
 
                     trigger OnValidate()
                     begin
-                        if (xRec.Description <> Rec.Description) and
-                           ((Rec."Item No." <> '') or (Rec."Attached to Line No." <> 0))
+                        /*
+                        if (xRec.Designation <> Rec.Designation) and
+                           ((Rec."No. article" <> '') or (Rec."Attached to Line No." <> 0))
                         then
                             Error(Text0001Err)
+                        */
                     end;
                 }
-                field("Description 2"; Rec."Description 2")
+                field("Designation 2"; Rec."Designation 2")
                 {
                     ToolTip = 'Description 2';
                     Editable = false;
                 }
-                field("Designation article";Rec."Designation article")
-                {
-                    ToolTip = 'Désignation article';
-                    Editable = false;
-                    Visible = false;
-                }
+                
                 /*
                 field("Cross-Reference No."; Rec."Cross-Reference No.")
                 {
@@ -60,16 +58,7 @@ page 50025 "Eclater contenu colisage"
                     Visible = false;
                 }
                 */
-                field("Shipment No."; Rec."Shipment No.")
-                {
-                    ToolTip = 'N° BL';
-                    Editable = false;
-                }
-                field("Shipment Line No."; Rec."Shipment Line No.")
-                {
-                    ToolTip = 'N° Ligne BL';
-                    Editable = false;
-                }
+                /*
                 field("No. ligne"; Rec."No. ligne")
                 {
                     ToolTip = 'N° ligne';
@@ -81,12 +70,13 @@ page 50025 "Eclater contenu colisage"
                     Editable = false;
                     Visible = false;
                 }
+                */
                 field("Package No."; Rec."No. UC")
                 {
                     ToolTip = 'N° UC';
                 }
 
-                field("Quantite UC"; Rec."Quantite UC")
+                field("Quantite dans UC"; Rec."Quantite dans UC")
                 {
                     ToolTip = 'Quantité';
                     BlankZero = true;
@@ -96,15 +86,18 @@ page 50025 "Eclater contenu colisage"
 
                     trigger OnValidate()
                     begin
-                        QuantityOnAfterValidate();
+                        //QuantityOnAfterValidate();
                     end;
                 }
+                /*
                 field("Quantite colisee totale";Rec."Quantite colisee totale")
                 {
                     ToolTip = 'Quantité colisée totale';
                     BlankZero = true;
                     Visible = true;
                 }
+                */
+                /*
                 field("Qte expediee"; Rec."Qte expediee")
                 {
                     ToolTip = 'Quantité expédiée';
@@ -112,6 +105,8 @@ page 50025 "Eclater contenu colisage"
                     Editable = false;
                     Visible = true;
                 }
+                */
+                /*
                 field("Poids brut ligne";Rec."Poids brut ligne")
                 {
                     ToolTip = 'Poids brut';
@@ -122,6 +117,7 @@ page 50025 "Eclater contenu colisage"
                     ToolTip = 'Poids net';
                     BlankZero = true;
                 }
+                */
 
 
 
@@ -133,12 +129,15 @@ page 50025 "Eclater contenu colisage"
     {
     }
 
+    /*
     trigger OnAfterGetRecord()
     begin
         Rec.CalcFields("Quantite colisee totale", "Qte expediee");
         //QuantityOnFormat();
     end;
+    */
 
+    /*
     trigger OnInsertRecord(BelowxRec: Boolean): Boolean
     begin
         ContenuColisage.Reset();
@@ -169,7 +168,8 @@ page 50025 "Eclater contenu colisage"
                 until ContenuColisageLiee.Next() = 0;
         end;
     end;
-
+    */
+    /*
     trigger OnNewRecord(BelowxRec: Boolean)
     begin
         Rec."Item No." := xRec."Item No.";
@@ -193,25 +193,16 @@ page 50025 "Eclater contenu colisage"
         Rec."No. ligne" := InsertLineNo(xRec);
         Rec.CalcFields("Quantite colisee totale", "Qte expediee");
     end;
-
+    */
     var
-        ContenuColisage: Record "Contenu colisage";
-        ContenuColisageNew: Record "Contenu colisage";
-        ContenuColisageLiee: Record "Contenu colisage";
+        ContenuColisage: Record "Detail UC Commande";
+        ContenuColisageNew: Record "Detail UC Commande";
+        ContenuColisageLiee: Record "Detail UC Commande";
         NumRec: Decimal;
-        Text0001Err: Label 'Description can''t be modified';
 
     procedure UpdateForm(SetSaveRecord: Boolean)
     begin
         CurrPage.Update(SetSaveRecord);
-    end;
-
-    procedure Initialize()
-    begin
-        Rec.SetRange("Shipment No.", Rec."Shipment No.");
-        Rec.SetRange("Shipment Line No.", Rec."Shipment Line No.");
-        Rec.SetRange("Order No.", Rec."Order No.");
-        Rec.SetRange("Order Line No.", Rec."Order Line No.");
     end;
 
     /*
@@ -228,6 +219,7 @@ page 50025 "Eclater contenu colisage"
     end;
     */
 
+    /*
     procedure InsertLineNo(pRec: Record "Contenu colisage"): Decimal
     var
         lContenuColisage: Record "Contenu colisage";
@@ -247,10 +239,11 @@ page 50025 "Eclater contenu colisage"
                 exit(10000);
         end;
     end;
-
+    */
+    /*
     procedure InsertNewLine()
     var
-        lContenuColisage: Record "Contenu colisage";
+        lContenuColisage: Record "Detail UC Commande";
     begin
         Rec.CalcFields("Quantite colisee totale", "Qte expediee");
         if Rec."Qte expediee" - Rec."Quantite colisee totale" > 0 then begin
@@ -277,12 +270,14 @@ page 50025 "Eclater contenu colisage"
             CurrPage.Update();
         end;
     end;
-
+    */
+    /*
     local procedure QuantityOnAfterValidate()
     begin
         CurrPage.Update();
         InsertNewLine();
     end;
+    */
 
     /*
     local procedure QuantityOnFormat()

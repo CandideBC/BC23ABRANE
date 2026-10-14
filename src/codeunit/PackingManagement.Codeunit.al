@@ -2,7 +2,7 @@ codeunit 50003 "Packing Management"
 {
     Permissions = TableData "Sales Line" = rm,
                   TableData "Sales Shipment Line" = rm;
-    TableNo = "Contenu colisage";
+    //TableNo = "Contenu colisage";
 
     trigger OnRun()
     begin
@@ -29,12 +29,12 @@ codeunit 50003 "Packing Management"
     end;
 
     var
-        EnteteColisage: Record "Entete colisage";
+        //EnteteColisage: Record "Entete colisage";
 
         SalesShptHeader: Record "Sales Shipment Header";
         //SalesShptLine: Record "Sales Shipment Line";
-        recEnteteListeColisage: Record "Entete colisage";
-        ContenuColisage: Record "Contenu colisage";
+        //recEnteteListeColisage: Record "Entete colisage";
+        //ContenuColisage: Record "Contenu colisage";
         ShptLineAtt: Record "Sales Shipment Line";
         Item: Record Item;
         //GetShipmentsPage: Page "Colisage : extraire lignes BL";
@@ -53,10 +53,10 @@ codeunit 50003 "Packing Management"
     begin
         LastLineNo := 0;
         if SalesShptLine2.FindSet() then begin
-            ContenuColisage.LockTable();
-            ContenuColisage.SetRange("No. colisage", EnteteColisage."No.");
-            if ContenuColisage.FindLast() then
-                LastLineNo := ContenuColisage."No. ligne";
+            //ContenuColisage.LockTable();
+            //ContenuColisage.SetRange("No. colisage", EnteteColisage."No.");
+            //if ContenuColisage.FindLast() then
+            //    LastLineNo := ContenuColisage."No. ligne";
 
             Window.Open(Text002Msg + Text003Msg);
 
@@ -71,12 +71,14 @@ codeunit 50003 "Packing Management"
 
                 //Créer ligne colisage
                 LastLineNo += 10000;
+                /*
                 ContenuColisage.Init();
                 ContenuColisage."No. colisage" := EnteteColisage."No.";
                 ContenuColisage."No. ligne" := LastLineNo;
                 ContenuColisage."Shipment No." := SalesShptLine2."Document No.";
                 ContenuColisage.Validate("Shipment Line No.", SalesShptLine2."Line No.");
                 ContenuColisage.Insert(true);
+                */
                 SavLineNo := LastLineNo;
 
                 //recherche des lignes commentaires attachées à la ligne de BL
@@ -87,13 +89,13 @@ codeunit 50003 "Packing Management"
                 if ShptLineAtt.FindSet() then
                     repeat
                         LastLineNo += 10000;
+                        /*
                         ContenuColisage."No. ligne" := LastLineNo;
                         ContenuColisage."Attached to Line No." := SavLineNo;
                         ContenuColisage."Item No." := ShptLineAtt."No.";
                         ContenuColisage.Description := ShptLineAtt.Description;
                         ContenuColisage."Description 2" := ShptLineAtt."Description 2";
                         ContenuColisage."Designation article" := '';
-                        //ContenuColisage."Cross-Reference No." := ShptLineAtt."Item Reference No.";
                         ContenuColisage."Quantite UC" := 0;
                         ContenuColisage."Shipment No." := ShptLineAtt."Document No.";
                         ContenuColisage."Shipment Line No." := ShptLineAtt."Line No.";
@@ -113,6 +115,7 @@ codeunit 50003 "Packing Management"
                         ContenuColisage."Order No." := ShptLineAtt."Order No.";
                         ContenuColisage."Order Line No." := ShptLineAtt."Order Line No.";
                         ContenuColisage.Insert(true);
+                        */
 
                     until ShptLineAtt.Next() = 0;
             until SalesShptLine2.Next() = 0;
@@ -120,11 +123,14 @@ codeunit 50003 "Packing Management"
 
     end;
 
+    /*
     procedure SetSalesHeader(var EnteteColisage2: Record "Entete colisage")
     begin
         EnteteColisage.Get(EnteteColisage2."No.");
     end;
+    */
 
+    /*
     procedure CreateLinesFromOrder(var SalesLine2: Record "Sales Line")
     var
         SalesOrderHeader: Record "Sales Header";
@@ -162,7 +168,9 @@ codeunit 50003 "Packing Management"
             until SalesLine2.Next() = 0;
         end;
     end;
+    */
 
+    /*
     procedure GetSalesLines(pContenuColisage: Record "Contenu colisage")
     var
         lSalesLine: Record "Sales Line";
@@ -186,7 +194,8 @@ codeunit 50003 "Packing Management"
         GetOrderLines.LookupMode := true;
         if GetOrderLines.RunModal() <> ACTION::Cancel then;
     end;
-
+    */
+    /*
     procedure MAJContenuColisage(var pShptLine: Record "Sales Shipment Line")
     var
 
@@ -238,5 +247,6 @@ codeunit 50003 "Packing Management"
                 until Packing.Next() = 0;
         end;
     end;
+    */
 }
 

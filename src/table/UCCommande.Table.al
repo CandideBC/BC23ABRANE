@@ -164,10 +164,11 @@ table 50068 "UC Commande"
     trigger OnDelete()
     var
         PrepaColisage: Record "UC Commande";
-        ContenuColisage: Record "Contenu colisage";
+        ContenuColisage: Record "Detail UC colisage expedie";
         UC: Record "Unite colisage";
         PaletteVide: Boolean;
     begin
+        /*
         //Si on supprime une UC des UC de la commande, il faut vérifier si cette UC apparait est utilisée dans d'autres commandes.
         //S'il n'y a pas d'autre commande sur l'UC, on peut supprimer l'UC de la liste des UC.
         PrepaColisage.SetCurrentKey("No. UC");
@@ -185,6 +186,7 @@ table 50068 "UC Commande"
             UC.Get("No. UC");
             UC.Delete();
         end;
+        */
     end;
 
     trigger OnInsert()

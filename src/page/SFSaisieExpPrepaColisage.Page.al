@@ -4,7 +4,7 @@ page 50127 "SFSaisieExpPrepaColisage"
     LinksAllowed = false;
     MultipleNewLines = true;
     PageType = ListPart;
-    SourceTable = "Prepa colisage";
+    SourceTable = "Detail UC Commande";
     InsertAllowed = false;
     //DeleteAllowed = false;
 

@@ -1,7 +1,7 @@
-page 50145 "SF FichE Expe UC Commande"
+page 50146 "SF Colisage commande : UC"
 {
     ApplicationArea = All;
-    Caption = 'UC Commande';
+    Caption = 'UC';
     PageType = ListPart;
     SourceTable = "UC Commande";
     

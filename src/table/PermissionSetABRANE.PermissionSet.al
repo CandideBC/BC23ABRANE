@@ -11,14 +11,14 @@ permissionset 50000 "PermissionSet ABRANE"
         table "Mes Chantiers" = X,
         tabledata "Mes Chantiers" = RMID,
 
-        table "Entete colisage"= X,
-        tabledata "Entete colisage" = RMID,
+        table "Entete colisage expedie"= X,
+        tabledata "Entete colisage expedie" = RMID,
 
-        table "Contenu colisage"= X,
+        table "Detail UC colisage expedie"= X,
         tabledata "Ligne fiche BE" = RMID,
 
-        table "Detail colisage"= X,
-        tabledata "Detail colisage" = RMID,
+        table "UC colisage expedie"= X,
+        tabledata "UC colisage expedie" = RMID,
 
         table "Creation/MAJ article"= X,
         tabledata "Creation/MAJ article" = RMID,

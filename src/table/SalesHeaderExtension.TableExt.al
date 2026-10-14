@@ -104,17 +104,103 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             DataClassification = ToBeClassified;
             Description = 'X01';
         }
-        field(50090; "Nombre de colis"; Decimal)
+        field(50088; "Nb UC Palette"; Integer)
+        {
+            Caption = 'Nb UC Palette';
+            FieldClass = FlowField;
+            CalcFormula = count("UC Commande" where ("No. commande"= field("No."),"Type UC"=const(Palette)));
+            Editable = false;
+        }
+        field(50089; "Nb UC Colis"; Integer)
+        {
+            Caption = 'Nb UC Colis';
+            FieldClass = FlowField;
+            CalcFormula = count("UC Commande" where ("No. commande"= field("No."),"Type UC"=const(Colis)));
+            Editable = false;
+        }
+        
+        field(50090; "Nombre de colis"; Decimal) //Champ de saisie
         {
             Caption = 'Nombre de colis';
             DataClassification = ToBeClassified;
             DecimalPlaces = 0 : 0;
+            trigger OnValidate()
+            var
+                UCCommande: Record "UC Commande";
+                DetailUCCommande: Record "Detail UC Commande";
+                //LigneContainer: Record "Ligne container";
+                NbUC: Integer;
+                NbLignes: Integer;
+                MiseAJourManuelleNecessaireMsg: Label 'Vous avez réduit le nombre de colis, le système ne va pas décider tout seul quelles lignes de colis il doit supprimer.';
+            begin
+                //Si l'utilisateur joue avec la valeur de ce champ, on l'autorise à augmenter la valeur, pas à la baisser 
+                //(s'il avait saisi 4 colis, le système a rattaché 4 UC de type colis, s'il réduit à 2, je ne veux pas décider quels colis doivent être supprimés,
+                //l'utilisateur a peut-être déjà renseigné des informations sur telle ou telle ligne de colis.)
+                CalcFields("Nb UC Colis");
+                DetailUCCommande.SetRange("No. commande", Rec."No.");
+                if DetailUCCommande.IsEmpty then
+                    ExtraireContenuCommande();
+
+                NbUC := "Nb UC Colis";
+
+                if "Nombre de colis" > NbUC then begin
+                    NbLignes := NbUC;
+
+                    while NbLignes < Rec."Nombre de colis" do begin
+                        UCCommande.Init();
+                        UCCommande."No. commande" := "No.";
+                        UCCommande."No. UC" := '';
+                        UCCommande.Insert(true);
+                        UCCommande."Type UC" := UCCommande."Type UC"::Colis;
+                        UCCommande.Modify();
+                        NbLignes := NbLignes + 1;
+                    end;
+                end else
+                    if "Nombre de colis" < NbUC then
+                        Message(MiseAJourManuelleNecessaireMsg);
+            end;
+
         }
         field(50091; "Nombre de palettes"; Decimal)
         {
             Caption = 'Nombre de palettes';
             DataClassification = ToBeClassified;
             DecimalPlaces = 0 : 0;
+            trigger OnValidate()
+            var
+                UCCommande: Record "UC Commande";
+                DetailUCCommande: Record "Detail UC Commande";
+                NbUC: Integer;
+                NbLignes: Integer;
+                MiseAJourManuelleNecessaireMsg: Label 'Vous avez réduit le nombre de palettes, le système ne va pas décider tout seul quelles lignes de colis il doit supprimer.';
+            begin
+                //Si l'utilisateur joue avec la valeur de ce champ, on l'autorise à augmenter la valeur, pas à la baisser 
+                //(s'il avait saisi 4 palettes, le système a rattaché 4 UC de type Palette, s'il réduit à 2, je ne veux pas décider quels colis doivent être supprimés,
+                //l'utilisateur a peut-être déjà renseigné des informations sur telle ou telle ligne de palette.)
+                CalcFields("Nb UC Palette");
+                DetailUCCommande.SetRange("No. commande", Rec."No.");
+                if DetailUCCommande.IsEmpty then
+                    ExtraireContenuCommande();
+
+                NbUC := "Nb UC Palette";
+
+                if "Nombre de palettes" > NbUC then begin
+                    NbLignes := NbUC;
+
+                    while NbLignes < Rec."Nombre de palettes" do begin
+                        UCCommande.Init();
+                        UCCommande."No. commande" := "No.";
+                        UCCommande."No. UC" := '';
+                        UCCommande.Insert(true);
+                        UCCommande."Type UC" := UCCommande."Type UC"::Palette;
+                        UCCommande.Modify();
+                        NbLignes := NbLignes + 1;
+                    end;
+                end else
+                    if "Nombre de palettes" < NbUC then
+                        Message(MiseAJourManuelleNecessaireMsg);
+            end;
+
         }
         field(50100; ASS; Boolean)
         {
@@ -909,6 +995,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Caption = 'Libellé phase à expédier';
             DataClassification = ToBeClassified;
         }
+        /*
         field(51290; "Colisages non valides"; Integer)
         {
             Caption = 'Colisages non validés';
@@ -916,6 +1003,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             CalcFormula = count("Entete colisage" where("No. commande" = field("No."), "No. expedition enregistree" = const('')));
             Editable = false;
         }
+        */
         field(51300; "Nb UC en prepa"; Integer)
         {
             Caption = 'Nb UC en prépa';
@@ -961,10 +1049,13 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
         }
     }
+    procedure ExtraireContenuCommande()
+    begin
 
+    end;
     procedure ColisageEnAttente(pPhase: Integer): Boolean
     var
-        EnteteColisage: Record "Entete colisage";
+        EnteteColisage: Record "Entete colisage expedie";
     begin
         EnteteColisage.SetRange("No. commande", Rec."No.");
         EnteteColisage.Setrange(Phase, pPhase);
@@ -3636,7 +3727,8 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         end;
     end;
 
-    procedure CreerColisage(pOuvrirFiche: Boolean)
+    /*
+    procedure OuvrirOuCreerColisage(pOuvrirFiche: Boolean)
     var
         EnteteColisage: Record "Entete colisage";
         ContenuColisage: Record "Contenu colisage";
@@ -3745,6 +3837,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             end;
         end;
     end;
+    */
 
     procedure ComparerVersionsArchives(pVersion1: Integer; pVersion2: Integer)
     var

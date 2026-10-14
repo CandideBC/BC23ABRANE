@@ -1,16 +1,16 @@
-table 50015 "Contenu colisage"
+table 50015 "Detail UC colisage expedie"
 {
-    Caption = 'Contenu colisage';
+    Caption = 'Articles colisage expedie';
     //Cette table ne fait que rattacher des articles à un colisage global de vente, sans rattacher chaque article à telle ou telle unité de colisage.
     //En effet, parfois on a un colisage qui dit "3 palettes et 2 colis" pour 1200kg mais on ne sait quel article est sur quelle palette. Cas de l'UE en général.
     //Parfois, on va devoir détailler quel article est sur quelle palette et là c'est une autre table qui fait le lien; la table détail colisage.
-
+    //Si le champ N° UC est rempli on a alors le lien entre article et UC.
     fields
     {
         field(1; "No. colisage"; Code[20])
         {
             Caption = 'N° colisage';
-            TableRelation = "Entete colisage";
+            TableRelation = "Entete colisage expedie";
         }
         field(2; "No. ligne"; Integer)
         {
@@ -23,38 +23,6 @@ table 50015 "Contenu colisage"
 
             trigger OnValidate()
             begin
-                CheckPackingStatus();
-
-                if "Shipment No." <> '' then begin
-                    //Controle existence dans le BL
-                    ShptLine.SetRange("Document No.", "Shipment No.");
-                    ShptLine.SetRange(Type, Type);
-                    ShptLine.SetRange("No.", "Item No.");
-                    if not ShptLine.FindFirst() then
-                        Error(Text003Err, "Item No.", "Shipment No.");
-
-                    //Mettre à jour la ligne du BL
-                    "Shipment Line No." := ShptLine."Line No.";
-                    Description := ShptLine.Description;
-                    "Description 2" := ShptLine."Description 2";
-                    "Quantite UC" := ShptLine.Quantity;
-                    //"Cross-Reference No." := ShptLine."Item Reference No.";
-                end else
-                    if "Order No." <> '' then begin
-                        //Controle existence dans le BL
-                        SalesLine.SetRange("Document Type", SalesLine."Document Type"::Order);
-                        SalesLine.SetRange("Document No.", "Order No.");
-                        SalesLine.SetRange(Type, Type);
-                        SalesLine.SetRange("No.", "Item No.");
-                        if SalesLine.IsEmpty then
-                            Error(Text006Err, "Item No.", "Order No.");
-                    end;
-
-                "Designation article" := '';
-                if Type = Rec.Type::Item then begin
-                    Item.Get("Item No.");
-                    "Designation article" := Item.Description;
-                end;
             end;
         }
         field(4; Description; Text[100])
@@ -63,7 +31,6 @@ table 50015 "Contenu colisage"
 
             trigger OnValidate()
             begin
-                CheckPackingStatus();
             end;
         }
         
@@ -87,21 +54,8 @@ table 50015 "Contenu colisage"
         field(9; "No. UC"; Code[20])
         {
             Caption = 'N° UC';
-            TableRelation = "Detail colisage"."No. UC" where ("No. colisage" = field ("No. colisage"));
+            TableRelation = "UC colisage expedie"."No. UC" where ("No. colisage" = field ("No. colisage"));
 
-            trigger OnValidate()
-            begin
-                CheckPackingStatus();
-
-                Package.Reset();
-                Package.SetRange("No. colisage", "No. colisage");
-                Package.SetRange("No. UC", "No. UC");
-                if Package.FindFirst() then
-                    "Poids brut ligne" := Package."Poids brut UC"
-                else 
-                    "Poids brut ligne" := 0;
-                
-            end;
         }
         field(10; "Quantite UC"; Decimal)
         {
@@ -111,7 +65,6 @@ table 50015 "Contenu colisage"
 
             trigger OnValidate()
             begin
-                CheckPackingStatus();
                 "Poids net ligne" := "Poids net unitaire" * "Quantite UC";
             end;
         }
@@ -134,6 +87,7 @@ table 50015 "Contenu colisage"
             Caption = 'N° livraison';
             TableRelation = "Sales Shipment Header";
 
+            /*
             trigger OnLookup()
             begin
                 if not EnteteColisage.Get("No. colisage") then
@@ -150,7 +104,9 @@ table 50015 "Contenu colisage"
                 end;
 
             end;
+            */
 
+            /*
             trigger OnValidate()
             begin
                 CheckPackingStatus();
@@ -175,6 +131,7 @@ table 50015 "Contenu colisage"
                             Validate("Shipment Line No.", ShptLine."Line No.");
                 end;
             end;
+            */
         }
         field(21; "Shipment Line No."; Integer)
         {
@@ -182,6 +139,7 @@ table 50015 "Contenu colisage"
             Caption = 'N° ligne livraison';
             TableRelation = "Sales Shipment Line"."Line No." where ("Document No." = field ("Shipment No."));
 
+            /*
             trigger OnValidate()
             begin
                 CheckPackingStatus();
@@ -217,6 +175,7 @@ table 50015 "Contenu colisage"
                     "Designation article" := Item.Description;
                 end;
             end;
+            */
         }
         field(22; Type; Enum "Sales Line Type")
         {
@@ -226,7 +185,7 @@ table 50015 "Contenu colisage"
 
             trigger OnValidate()
             begin
-                CheckPackingStatus();
+                //CheckPackingStatus();
             end;
         }
         field(23; "Description 2"; Text[50])
@@ -241,7 +200,7 @@ table 50015 "Contenu colisage"
         }
         field(25; "Quantite colisee totale"; Decimal)
         {
-            CalcFormula = sum ("Contenu colisage"."Quantite UC" where ("Shipment No." = field ("Shipment No."),
+            CalcFormula = sum ("Detail UC colisage expedie"."Quantite UC" where ("Shipment No." = field ("Shipment No."),
                                                              "Shipment Line No." = field ("Shipment Line No."),
                                                              "Order No." = field ("Order No."),
                                                              "Order Line No." = field ("Order Line No.")));
@@ -286,11 +245,11 @@ table 50015 "Contenu colisage"
         {
             BlankZero = true;
             Caption = 'Attaché à la ligne n°';
-            TableRelation = "Contenu colisage"."No. ligne" where ("No. colisage" = field ("No. colisage"));
+            TableRelation = "Detail UC colisage expedie"."No. ligne" where ("No. colisage" = field ("No. colisage"));
 
             trigger OnValidate()
             begin
-                CheckPackingStatus();
+                //CheckPackingStatus();
             end;
         }
         field(110; "Order No."; Code[20])
@@ -298,6 +257,7 @@ table 50015 "Contenu colisage"
             Caption = 'N° commande';
             TableRelation = "Sales Header"."No." where ("Document Type" = const (Order));
 
+            /*
             trigger OnLookup()
             begin
                 TestField("Shipment No.", '');
@@ -321,6 +281,8 @@ table 50015 "Contenu colisage"
                     end;
                 end;
             end;
+            */
+            /*
             trigger OnValidate()
             begin
                 CheckPackingStatus();
@@ -329,6 +291,7 @@ table 50015 "Contenu colisage"
                 if "Order No." <> xRec."Order No." then
                     "Order Line No." := 0;
             end;
+            */
         }
         field(115; "Order Line No."; Integer)
         {
@@ -338,6 +301,7 @@ table 50015 "Contenu colisage"
                                                            "Document No." = field ("Order No."),
                                                            Type = const (Item));
 
+            /*
             trigger OnValidate()
             var
                 AttachedSalesLine: Record "Sales Line";
@@ -400,7 +364,9 @@ table 50015 "Contenu colisage"
                         until AttachedSalesLine.Next() = 0;
                     end;
                 end;
+                
             end;
+            */
         }
 
 
@@ -466,137 +432,8 @@ table 50015 "Contenu colisage"
 
     trigger OnDelete()
     begin
-        EnteteColisage.Get("No. colisage");
-        if EnteteColisage."Packing Status" = EnteteColisage."Packing Status"::Terminé then
-            Error(Text001Err);
-
-        ReleaseLine(Rec);
-        //supprimer les lignes attachées
-        ContenuColisage.SetRange("No. colisage", EnteteColisage."No.");
-        ContenuColisage.SetRange("Attached to Line No.", "No. ligne");
-        ContenuColisage.DeleteAll();
     end;
 
-    trigger OnInsert()
-    begin
-        CheckPackingStatus();
-        EnteteColisage.Get("No. colisage");
-        BlockLine();
-        Package.SetRange("No. colisage", "No. colisage");
-        if Package.FindFirst() then
-            Validate("No. UC", Package."No. UC");
-    end;
 
-    trigger OnModify()
-    begin
-        EnteteColisage.Get("No. colisage");
-        if EnteteColisage."Packing Status" = EnteteColisage."Packing Status"::"Terminé" then
-            Error(Text002Err);
-
-        //Libérer la ligne du BL  précédent s'il n'est référencé sur une autre ligne colisage
-        if (xRec."Shipment No." <> "Shipment No.") or (xRec."Shipment Line No." <> "Shipment Line No.") or
-           (xRec."Order No." <> "Order No.") or (xRec."Order Line No." <> "Order Line No.")
-        then
-            ReleaseLine(xRec);
-        BlockLine();
-
-        //Repercuter sur les lignes attachées
-        ContenuColisageLiee.Reset();
-        ContenuColisageLiee.SetRange("No. colisage", "No. colisage");
-        ContenuColisageLiee.SetRange("Attached to Line No.", "No. ligne");
-        if ContenuColisageLiee.FindSet() then
-            repeat
-                ContenuColisageLiee.Validate("No. UC", "No. UC");
-                ContenuColisageLiee.Modify();
-            until ContenuColisageLiee.Next() = 0;
-    end;
-
-    var
-        EnteteColisage: Record "Entete colisage";
-        ContenuColisage: Record "Contenu colisage";
-        ShptHeader: Record "Sales Shipment Header";
-        ShptLine: Record "Sales Shipment Line";
-        Package: Record "Detail colisage";
-        ContenuColisageLiee: Record "Contenu colisage";
-        Item: Record Item;
-        SalesLine: Record "Sales Line";
-        SalesHeader: Record "Sales Header";
-        fLookup: Page "Posted Sales Shipments";
-        fLookupOrder: Page "Sales List";
-        bRelease: Boolean;
-        Text001Err: Label 'Statut colisage "Terminé" - Suppression de ligne impossible';
-        Text002Err: Label 'Statut colisage "Terminé" - modification impossible';
-        Text003Err: Label 'Article %1 n''appartient pas au BL %2',Comment = '%1 = N° article ; %2 = N° BL';
-        Text004Err: Label 'Ligne %1 n''existe pas pour le BL %2',Comment = '%1 = N° ligne ; %2 = N° BL';
-        Text005Err: Label 'La ligne %1 du BL %2 est déjà associée à la liste de colisage %3',Comment = '%1 = N° ligne ; %2 = N° BL ; %3 = N° colisage';
-        Text006Err: Label 'Article %1 n''appartient pas à la commande %2',Comment = '%1 = N° article ; %2 = N° commande';
-
-    procedure ReleaseLine(pRec: Record "Contenu colisage")
-    begin
-        //Libérer la ligne du BL
-        if pRec."Shipment No." <> '' then begin
-            ContenuColisage.Reset();
-            ContenuColisage.SetRange("Shipment No.", pRec."Shipment No.");
-            ContenuColisage.SetRange("Shipment Line No.", pRec."Shipment Line No.");
-            bRelease := true;
-            if ContenuColisage.FindSet() then
-                repeat
-                    if (ContenuColisage."No. colisage" <> pRec."No. colisage") or
-                       (ContenuColisage."No. ligne" <> pRec."No. ligne")
-                    then
-                        bRelease := false;
-                until (ContenuColisage.Next() = 0) or not bRelease;
-            if bRelease then
-                if ShptLine.Get(pRec."Shipment No.", pRec."Shipment Line No.") then begin
-                    ShptLine."Packing in Progress" := false;
-                    ShptLine.Modify();
-                end;
-        end;
-        if pRec."Order No." <> '' then begin
-            ContenuColisage.Reset();
-            ContenuColisage.SetRange("Order No.", pRec."Order No.");
-            ContenuColisage.SetRange("Order Line No.", pRec."Order Line No.");
-            bRelease := true;
-            if ContenuColisage.FindSet() then
-                repeat
-                    if (ContenuColisage."No. colisage" <> pRec."No. colisage") or
-                       (ContenuColisage."No. ligne" <> pRec."No. ligne")
-                    then
-                        bRelease := false;
-                until (ContenuColisage.Next() = 0) or not bRelease;
-            if bRelease then
-                if SalesLine.Get(SalesLine."Document Type"::Order, pRec."Order No.", pRec."Order Line No.") then begin
-                    SalesLine."Packing in Progress" := false;
-                    SalesLine.Modify();
-                end;
-        end;
-    end;
-
-    procedure BlockLine()
-    begin
-        //Bloquer la ligne du BL  en cours
-        if "Shipment No." <> '' then begin
-            if ShptLine.Get("Shipment No.", "Shipment Line No.") then begin
-                ShptLine."Packing in Progress" := true;
-                ShptLine.Modify();
-            end;
-        end else
-            //Bloquer la ligne de commande
-            if "Order No." <> '' then
-                if SalesLine.Get(SalesLine."Document Type"::Order, "Order No.", "Order Line No.") then begin
-                    SalesLine."Packing in Progress" := true;
-                    SalesLine.Modify();
-                end;
-    end;
-
-    procedure CheckPackingStatus()
-    var
-        lEnteteColisage: Record "Entete colisage";
-        lText001Err: Label 'Modification non autorisée en raison du statut du colisage';
-    begin
-        //NEG.NL05 DIAGONAL YCH 11/10/2010 RTC
-        if lEnteteColisage.Get("No. colisage") and (lEnteteColisage."Packing Status" <> 0) then
-            Error(lText001Err);
-    end;
 }
 

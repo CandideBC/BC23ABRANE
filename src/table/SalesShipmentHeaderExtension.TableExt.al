@@ -145,7 +145,7 @@ tableextension 50040 SalesShipmentHeaderExtension extends "Sales Shipment Header
         {
             Caption = 'Nbre colisages';
             FieldClass = FlowField;
-            CalcFormula = count("Entete colisage" where("No. expedition enregistree" = field("No.")));
+            CalcFormula = count("Entete colisage expedie" where("No. expedition enregistree" = field("No.")));
             Editable = false;
         }
 
@@ -160,11 +160,11 @@ tableextension 50040 SalesShipmentHeaderExtension extends "Sales Shipment Header
 
     procedure CreerColisage(pOuvrirFiche: Boolean)
     var
-        EnteteColisage: Record "Entete colisage";
-        DetailColisage: Record "Detail colisage";
-        ContenuColisage: Record "Contenu colisage";
+        EnteteColisage: Record "Entete colisage expedie";
+        DetailColisage: Record "UC colisage expedie";
+        ContenuColisage: Record "Detail UC colisage expedie";
         LigneExpeditionEnregistree: Record "Sales Shipment Line";
-        FicheColisage: page "Fiche colisage";
+        FicheColisage: page "Fiche colisage expedie";
         NumColisage: Code[20];
         NbLignes: Integer;
         PrecisionArrondi: Decimal;

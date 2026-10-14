@@ -1,9 +1,9 @@
-page 50026 "SF Ligne Colisage"
+page 50026 "SF Colisage expedie : UC"
 {
     ApplicationArea = All;
     Caption = 'Palettes / Colis';
     PageType = ListPart;
-    SourceTable = "Detail colisage";
+    SourceTable = "UC colisage expedie";
 
     layout
     {
@@ -87,7 +87,7 @@ page 50026 "SF Ligne Colisage"
 
     procedure fctCheckPackingStatus()
     var
-        lEnteteColisage: Record "Entete colisage";
+        lEnteteColisage: Record "Entete colisage expedie";
         Text000001Err: Label 'Mise à jour non autorisée avec ce statut de colisage';
     begin
         if lEnteteColisage.Get(Rec."No. colisage") and (lEnteteColisage."Packing Status" <> 0) then

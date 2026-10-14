@@ -202,10 +202,10 @@ pageextension 50126 OrderProcessorRCExtension extends "Order Processor Role Cent
 
                 action(Colisages)
                 {
-                    Caption = 'Colisages';
-                    RunObject = page "Liste colisages";
+                    Caption = 'Colisages expédiés';
+                    RunObject = page "Liste colisages expedies";
                     RunPageView = order(descending);
-                    Tooltip = 'Liste des colisages';
+                    Tooltip = 'Liste des colisages expédiés';
                 }
 
             }

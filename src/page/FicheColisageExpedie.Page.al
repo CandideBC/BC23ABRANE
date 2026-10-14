@@ -1,14 +1,15 @@
-page 50023 "Fiche colisage"
+page 50023 "Fiche colisage expedie"
 {
     UsageCategory = Documents;
     ApplicationArea = All;
     Caption = 'Fiche colisage';
-
+    Editable = false;
     InsertAllowed = false;
+    DeleteAllowed = false;
     PageType = ListPlus;
-    Permissions = TableData "Sales Line" = rm,
-                  TableData "Sales Shipment Line" = rm;
-    SourceTable = "Entete colisage";
+    //Permissions = TableData "Sales Line" = rm,
+    //              TableData "Sales Shipment Line" = rm;
+    SourceTable = "Entete colisage expedie";
 
     layout
     {
@@ -158,13 +159,13 @@ page 50023 "Fiche colisage"
                 }
                 
             }
-            part(UC; "SF Ligne Colisage")
+            part(UC; "SF Colisage expedie : UC")
             {
                 SubPageLink = "No. colisage" = field("No.");
                 SubPageView = sorting("No. colisage", "No. UC");
 
             }
-            part(ContenuUC; "SF Contenu colisage")
+            part(ContenuUC; "SF Colisage expedie ; detailUC")
             {
                 SubPageLink = "No. colisage" = field("No.");
             }
@@ -176,25 +177,7 @@ page 50023 "Fiche colisage"
     {
         area(processing)
         {
-            group("&Validation")
-            {
-                Caption = 'Posting';
-                action("Valider")
-                {
-                    Caption = 'Valider';
-                    ToolTip = 'Valider';
-                    Image = Approve;
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    PromotedIsBig = true;
-                    ShortCutKey = 'F9';
-
-                    trigger OnAction()
-                    begin
-                        Rec.CheckPacking();
-                    end;
-                }
-            }
+            
             group("Fonction&s")
             {
                 Caption = 'F&unctions';
@@ -212,34 +195,6 @@ page 50023 "Fiche colisage"
                         CurrPage.Update();
                     end;
                 }
-                action(Expedier)
-                {
-                    Caption = 'Expédier';
-                    ToolTip = 'Permet de générer le BL pour chaque commande présente dans le colisage.';
-                    Image = Post;
-                    Promoted = true;
-                    PromotedCategory = Process;
-
-                    trigger OnAction()
-                    begin
-                        Rec.Expedier();
-                    end;
-                }
-                action(ExtraireColisage)
-                {
-                    Caption = 'Extraire colisage';
-                    ToolTip = 'Permet d''ajouter le contenu d''un autre colisage à ce colisage (le colisage extrait sera supprimé).';
-                    Image = GetLines;
-                    Promoted = true;
-                    PromotedCategory = Process;
-
-                    trigger OnAction()
-                    begin
-                        Rec.ExtraireColisage();
-                    end;
-                }
-
-
                 action(CalculerPoids)
                 {
                     Caption = 'Calculer poids';
@@ -270,7 +225,7 @@ page 50023 "Fiche colisage"
 
                 trigger OnAction()
                 var
-                    EnteteColisage: Record "Entete colisage";
+                    EnteteColisage: Record "Entete colisage expedie";
                 begin
                     Rec.TestField("Packing Status", Rec."Packing Status"::"Terminé");
                     EnteteColisage.SetRange("No.", Rec."No.");
@@ -287,7 +242,7 @@ page 50023 "Fiche colisage"
 
                 trigger OnAction()
                 var
-                    EnteteColisage: Record "Entete colisage";
+                    EnteteColisage: Record "Entete colisage expedie";
                 begin
                     Rec.TestField("Packing Status", Rec."Packing Status"::"Terminé");
                     EnteteColisage.SetRange("No.", Rec."No.");
@@ -304,7 +259,7 @@ page 50023 "Fiche colisage"
 
                 trigger OnAction()
                 var
-                    EnteteColisage: Record "Entete colisage";
+                    EnteteColisage: Record "Entete colisage expedie";
                 begin
                     Rec.TestField("Packing Status", Rec."Packing Status"::"Terminé");
                     EnteteColisage.SetRange("No.", Rec."No.");

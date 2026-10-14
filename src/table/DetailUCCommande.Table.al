@@ -1,6 +1,6 @@
-table 50067 "Prepa colisage"
+table 50067 "Detail UC Commande"
 {
-    Caption = 'Préparation colisage';
+    Caption = 'Détail UC Commande';
     //Cette table permet de rattacher une ou plusieurs unités de colisage (palette/colis) à une ligne de commande de vente.
     //Cette etape n'est pas obligatoire, on peut directement valider une commande en bon de livraison.
     
@@ -33,7 +33,7 @@ table 50067 "Prepa colisage"
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
-                recPrepa: Record "Prepa colisage";
+                recPrepa: Record "Detail UC Commande";
                 UC: Record "Unite colisage";
             begin
                 recPrepa.SetCurrentKey("No. commande", "No. UC");
@@ -53,7 +53,7 @@ table 50067 "Prepa colisage"
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
-                recPrepa: Record "Prepa colisage";
+                recPrepa: Record "Detail UC Commande";
                 UC: Record "Unite colisage";
             begin
                 recPrepa.SetCurrentKey("No. commande", "No. UC");
@@ -75,7 +75,7 @@ table 50067 "Prepa colisage"
             OptionCaption = ' ,Palette,Colis';
             trigger OnValidate()
             var
-                recPrepa: Record "Prepa colisage";
+                recPrepa: Record "Detail UC Commande";
                 UC: Record "Unite colisage";
             begin
                 recPrepa.SetCurrentKey("No. commande", "No. UC");
