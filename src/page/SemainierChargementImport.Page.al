@@ -28,6 +28,11 @@ page 50137 "Semainier chargement import"
                 field("Nom du fournisseur"; Rec."Nom du fournisseur")
                 {
                     ToolTip = 'Nom du fournisseur';
+                    trigger OnDrillDown()
+                    begin
+                        //Pour empecher d'ouvrir la fiche fournisseur sans le vouloir
+                        error('');
+                    end;
                 }
                 field("Mnt restant a charger liv. dir"; Rec."Mnt restant a charger liv. dir")
                 {
@@ -46,7 +51,7 @@ page 50137 "Semainier chargement import"
                     ToolTip = 'Budget approche';
                     BlankZero = true;
                 }
-                field("Remplissages transport";Rec."Remplissages transport")
+                field("Remplissages transport"; Rec."Remplissages transport")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Remplissage transport';
@@ -143,17 +148,17 @@ page 50137 "Semainier chargement import"
         Rec.SetFilter("Mnt restant a charger", '>0');
 
         // 2. On tente de trouver le premier enregistrement correspondant
-        if Rec.FindFirst() then 
+        if Rec.FindFirst() then
             // 3. IMPORTANT : On enlève le filtre sur le montant 
             // pour que l'utilisateur voie tous les lundis (même ceux à 0)
             Rec.SetRange("Mnt restant a charger")
 
-            // Le curseur de la page restera positionné sur l'enregistrement 
-            // trouvé par le FindFirst, mais la liste affichera tout.
+        // Le curseur de la page restera positionné sur l'enregistrement 
+        // trouvé par le FindFirst, mais la liste affichera tout.
         else begin
-            DateLundiCetteSemaine := CalcDate('<-CW>',Today);
+            DateLundiCetteSemaine := CalcDate('<-CW>', Today);
             // Si aucun montant n'est trouvé, on se replace au début par défaut
-            Rec.SetFilter("Date debut semaine",'>=%1',DateLundiCetteSemaine);
+            Rec.SetFilter("Date debut semaine", '>=%1', DateLundiCetteSemaine);
             if Rec.FindFirst() then;
         end;
     end;

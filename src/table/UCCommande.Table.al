@@ -2,6 +2,7 @@ table 50068 "UC Commande"
 {
     Caption = 'UC Commande';
     DrillDownPageId = "UC Commande";
+    LookupPageId = "UC Commande";
 
     fields
     {
@@ -15,33 +16,6 @@ table 50068 "UC Commande"
             Caption = 'N° UC';
             TableRelation = "Unite colisage";
             ValidateTableRelation = false;
-            trigger OnValidate()
-            var
-                UC: Record "Unite colisage";
-                EnteteCommande: Record "Sales Header";
-            begin
-                if "No. UC" <> '' then
-                    if "No. UC" = '+' then begin
-                        EnteteCommande.Get(EnteteCommande."Document Type"::Order, Rec."No. commande");
-                        UC.Init();
-                        UC."No." := '';
-                        UC.Insert(true);
-                        UC."No. client" := EnteteCommande."Sell-to Customer No.";
-                        UC.Modify();
-                        Rec."No. UC" := UC."No.";
-                    end else begin
-                        UC.Get("No. UC");
-                        Rec."Type UC" := UC."Type UC";
-                        Rec.Longueur := UC.Longueur;
-                        rec.Largeur := UC.Largeur;
-                        Rec.Hauteur := UC.Hauteur;
-                        Rec.Dimensions := UC.Dimensions;
-                        Rec."No. client" := UC."No. client";
-                        Rec."Numero camion" := UC."Numero camion expedition";
-                        Rec.Numerotation := UC.Numerotation;
-                    end;
-            end;
-
         }
         field(20; "Type UC"; Option)
         {
@@ -133,6 +107,30 @@ table 50068 "UC Commande"
             Caption = 'Poids brut';
             DataClassification = ToBeClassified;
         }
+        field(70; "Statut UC"; Option)
+        {
+            Caption = 'Statut UC';
+            OptionMembers = " ","Reçue","Expédiée";
+            OptionCaption = ' ,Reçue,Expédiée';
+            DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                DetailUCCommande: Record "Detail UC Commande";
+            begin
+                if "No. UC" = '' then
+                    exit;
+                DetailUCCommande.SetRange("No. commande", Rec."No. commande");
+                DetailUCCommande.SetRange("No. UC", Rec."No. UC");
+                DetailUCCommande.ModifyAll("Statut UC", Rec."Statut UC");
+            end;
+        }
+        field(80; "A expedier"; Boolean)
+        {
+            Caption = 'A expédier';
+            DataClassification = ToBeClassified;
+        }
+                
+
 
     }
 
@@ -148,6 +146,14 @@ table 50068 "UC Commande"
         }
         key(MyKey2; "No. UC")
         {
+
+        }
+        key(MyKey3; "Statut UC")
+        {
+
+        }
+        key(MyKey4; "No. commande","Statut UC")
+        {
             
         }
 
@@ -155,7 +161,7 @@ table 50068 "UC Commande"
 
     fieldgroups
     {
-        fieldgroup(DropDown; "No. commande", Dimensions, Numerotation, "Numero camion")
+        fieldgroup(DropDown; "No. UC", Numerotation, Dimensions, "Numero camion")
         {
 
         }
@@ -163,10 +169,6 @@ table 50068 "UC Commande"
 
     trigger OnDelete()
     var
-        PrepaColisage: Record "UC Commande";
-        ContenuColisage: Record "Detail UC colisage expedie";
-        UC: Record "Unite colisage";
-        PaletteVide: Boolean;
     begin
         /*
         //Si on supprime une UC des UC de la commande, il faut vérifier si cette UC apparait est utilisée dans d'autres commandes.
@@ -197,7 +199,7 @@ table 50068 "UC Commande"
         SalesSetup.Get();
         SalesSetup.TestField("No. UC");
         NoSeriesMgt.InitSeries(SalesSetup."No. UC", '', 0D, "No. UC", codFiller);
-        EnteteCommande.Get(EnteteCommande."Document Type"::order,"No. commande");
+        EnteteCommande.Get(EnteteCommande."Document Type"::order, "No. commande");
         Rec."No. client" := EnteteCommande."Sell-to Customer No.";
     end;
 
@@ -228,7 +230,7 @@ table 50068 "UC Commande"
     begin
 
     end;
-    
+
     var
         SalesSetup: Record "Sales & Receivables Setup";
         NoSeriesMgt: Codeunit NoSeriesManagement;

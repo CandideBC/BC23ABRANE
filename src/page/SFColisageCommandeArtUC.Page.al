@@ -19,11 +19,25 @@ page 50024 "SF colisage commande Art/UC"
                     Style = Strong;
                     StyleExpr = true;
 
+                    /*
                     trigger OnValidate()
                     begin
                         PackageNoOnAfterValidate();
                     end;
+                    */
                 }
+                field("No. article"; Rec."No. article")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'N° article';
+                }
+                field(Designation; Rec.Designation)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Désignation';
+                }
+                
+                
                 field("Quantite dans UC";Rec."Quantite dans UC")
                 {
                     ToolTip = 'Quantité UC';

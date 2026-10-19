@@ -104,6 +104,14 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             DataClassification = ToBeClassified;
             Description = 'X01';
         }
+        field(50084; "Palettisation en cours"; Boolean) //Indique si on des colis/palettes non expédiés avec un détail d'article 
+        {
+            Caption = 'Palettisation en cours';
+            FieldClass = FlowField;
+            CalcFormula = exist("Detail UC Commande" where ("No. commande"= field("No."),"Statut UC"= filter(<>2)));
+            Editable = false;
+        }
+        
         field(50088; "Nb UC Palette"; Integer)
         {
             Caption = 'Nb UC Palette';
@@ -2787,31 +2795,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         "Poids brut total" := l_TotalGrossWeight;
         MODIFY();
     end;
-
-    //procedure RemplirQteExpedierPhase()
-    //var
-    //PhasesChantier: Record "Phases chantier";
-    //l_SalesLine: Record "Sales Line";
-    //begin
-    /*
-    PhasesChantier.SETRANGE("Code chantier", "Code chantier");
-
-    if page.RUNMODAL(page::"Phases chantier", PhasesChantier) = action::LookupOK then begin
-        l_SalesLine.SETRANGE("Document Type", "Document Type");
-        l_SalesLine.SETRANGE("Document No.", "No.");
-        if l_SalesLine.FINDSET(true) then
-            repeat
-                if not ((l_SalesLine."Attached to Line No." <> 0) or (l_SalesLine."Eco Tax Furniture Line")) then begin
-                    if l_SalesLine."Code phase" = PhasesChantier.Code then
-                        l_SalesLine.VALIDATE("Qty. to Ship", l_SalesLine."Outstanding Quantity")
-                    else
-                        l_SalesLine.VALIDATE("Qty. to Ship", 0);
-                    l_SalesLine.MODIFY();
-                end;
-            until l_SalesLine.NEXT() = 0;
-    end;
-    */
-    //end;
 
     procedure DefMasquerVerifCredit(pCacher: Boolean)
     begin

@@ -751,6 +751,7 @@ table 50040 Container
                         UCCommande.Hauteur := UCContainer.Hauteur;
                         UCCommande.Dimensions := UCContainer.Dimensions;
                         UCCommande."Poids brut" := UCContainer."Poids brut UC";
+                        UCCommande."Statut UC" := UCCommande."Statut UC"::"Reçue";
                         if EnteteVente.get(EnteteVente."Document Type"::Order, NoDocVente) then
                             UCCommande."No. client" := EnteteVente."Sell-to Customer No.";
                         UCCommande.Insert();

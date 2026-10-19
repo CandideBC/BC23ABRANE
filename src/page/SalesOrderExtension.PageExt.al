@@ -106,7 +106,11 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
             Visible = false;
         }
 
-        addbefore("No.")
+        modify("No.")
+        {
+            Visible = true;
+        }
+        addafter("No.")
         {
             field(ass; Rec.ass)
             {
@@ -115,7 +119,11 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
             }
 
         }
-        movebefore(ass; Status)
+        modify("Quote No.")
+        {
+            Visible = true;
+        }
+        movebefore(ass; "Quote No.",Status)
 
         movebefore("Sell-to Address"; "Sell-to Customer No.", "Sell-to Customer Name")
         moveafter("Sell-to Country/Region Code"; "Sell-to Contact")

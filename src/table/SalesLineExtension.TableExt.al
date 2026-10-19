@@ -755,11 +755,11 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             Caption = 'N° UC';
             DataClassification = ToBeClassified;
             //TableRelation = "Unite colisage"."No." where("No. client" = field("Sell-to Customer No."));
-            //ValidateTableRelation = false;
+            ValidateTableRelation = false;
             TableRelation = "UC Commande"."No. UC" where("No. commande" = field("Document No."));
             trigger OnValidate()
             var
-                //UC: Record "Unite colisage";
+            //UC: Record "Unite colisage";
             begin
                 AjouterUC("No. UC");
                 /*
@@ -779,7 +779,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             CalcFormula = Count("Prepa colisage" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No.")));
         }
         */
-        
+
         field(51264; "Quantite prepa colisage"; Decimal)
         {
             Caption = 'Quantité colisée';
@@ -789,7 +789,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             FieldClass = FlowField;
             CalcFormula = sum("Detail UC Commande"."Quantite dans UC" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No.")));
         }
-        
+
 
         /*
         field(51265; "Quantite colisee"; Decimal)
@@ -970,46 +970,54 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         {
 
         }
-        key(MyKey16; TypeDocDuplique, NumDocDuplique,Phase,TypeDuplique,"Eco Tax Furniture Line")
+        key(MyKey16; TypeDocDuplique, NumDocDuplique, Phase, TypeDuplique, "Eco Tax Furniture Line")
         {
-            SumIndexFields = QuantiteBaseDuplique,QuantiteExpedieeBaseDuplique,"Quantite prise sur stock";
+            SumIndexFields = QuantiteBaseDuplique, QuantiteExpedieeBaseDuplique, "Quantite prise sur stock";
         }
     }
 
     procedure AjouterUC(pNumUC: Code[20])
     var
         UC: Record "Unite colisage";
-        PrepaColisage: Record "Detail UC Commande";
+        EnteteCommande: Record "Sales Header";
+        UCCommande: Record "UC Commande";
         QteNonPreparee: Decimal;
-        QuantiteEntierementPrepareeErr: Label 'La quantité a déjà été entièrement préparée.';
     begin
         if pNumUC = '' then
             exit;
 
+        if pNumUC = '+' then begin
+            EnteteCommande.Get(EnteteCommande."Document Type"::Order, Rec."Document No.");
+            UC.Init();
+            UC."No." := '';
+            UC.Insert(true);
+            UC."No. client" := EnteteCommande."Sell-to Customer No.";
+            UC.Modify();
+            Rec."No. UC" := UC."No.";
+            pNumUC := "No. UC";
+            UCCommande.Init();
+            UCCommande."No. commande" := "Document No.";
+            //UCCommande."No. ligne commande" := "Line No.";
+            UCCommande."No. UC" := UC."No.";
+            UCCommande."Type UC" := UC."Type UC";
+            UCCommande.Numerotation := UC.Numerotation;
+            UCCommande."Numero camion" := UC."Numero camion expedition";
+            //UCCommande.Phase := Phase;
+            //UCCommande."No. article" := "No.";
+            //UCCommande.Designation := Description;
+            //UCCommande."Quantite dans UC" := QteNonPreparee;
+            UCCommande.Insert();
+        end;
+
         CalcFields("Quantite prepa colisage");
         QteNonPreparee := Rec."Outstanding Qty. (Base)" - "Quantite prepa colisage";
 
-        if QteNonPreparee <= 0 then
-            error(QuantiteEntierementPrepareeErr);
+        //if QteNonPreparee <= 0 then
+        //    error(QuantiteEntierementPrepareeErr);
 
         if not UC.Get(pNumUC) then begin
             "No. UC" := '';
             exit;
-        end;
-
-        if UC."No." <> '' then begin
-            PrepaColisage.Init();
-            PrepaColisage."No. commande" := "Document No.";
-            PrepaColisage."No. ligne commande" := "Line No.";
-            PrepaColisage."No. UC" := UC."No.";
-            PrepaColisage."Type UC" := UC."Type UC";
-            PrepaColisage.Numerotation := UC.Numerotation;
-            PrepaColisage."Numero camion" := UC."Numero camion expedition";
-            PrepaColisage.Phase := Phase;
-            PrepaColisage."No. article" := "No.";
-            PrepaColisage.Designation := Description;
-            PrepaColisage."Quantite dans UC" := QteNonPreparee;
-            PrepaColisage.Insert();
         end;
 
     end;
@@ -1038,7 +1046,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         PlusGrosMontantLigne: Decimal;
         //TotalValeurSaupoudre: Decimal;
         MontantComposant: Decimal;
-        //NumLignePlusGrosMontant: Integer;
+    //NumLignePlusGrosMontant: Integer;
     begin
         //Cette fonction part d'un article composé (qui a un prix unitaire facturé au client) et va calculer un prix unitaire déclaré au douane
         //pour chaque article composant l'article composé.
@@ -1063,8 +1071,8 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                         MontantComposant := LigneVenteComposant."Prix unitaire composant" * LigneVenteComposant.Quantity;
                         if MontantComposant >= PlusGrosMontantLigne then //begin //>= et non > car si on n'a qu"une ligne de marchandise remisée à zéro, on aurait aucune ligne sur laquelle saupoudrer
                             PlusGrosMontantLigne := MontantComposant;
-                            //NumLignePlusGrosMontant := LigneVenteComposant."Line No.";
-                        //end;
+                    //NumLignePlusGrosMontant := LigneVenteComposant."Line No.";
+                    //end;
                     until LigneVenteComposant.Next() = 0;
 
             until LigneVenteCompose.Next() = 0;

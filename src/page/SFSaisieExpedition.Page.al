@@ -88,11 +88,7 @@ page 50125 "SF Saisie expedition"
                     ToolTip = 'Indique la quantité que vous voulez expédier.';
                 }
 
-                field("No. UC"; Rec."No. UC")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Vous pouvez soit choisir une UC existante, soit taper + pour en créer une nouvelle.';
-                }
+
                 field("Quantite prepa colisage"; Rec."Quantite prepa colisage")
                 {
                     ApplicationArea = All;

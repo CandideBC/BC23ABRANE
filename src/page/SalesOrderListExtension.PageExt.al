@@ -2,7 +2,11 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
 {
     layout
     {
-        moveafter("No."; Status)
+        modify("Quote No.")
+        {
+            Visible = true;
+        }
+        moveafter("No."; Status,"Quote No.")
 
         modify("Sell-to Customer No.")
         {

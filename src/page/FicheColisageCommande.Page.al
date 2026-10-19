@@ -34,6 +34,11 @@ page 50145 "Fiche colisage commande"
                 }
 
             }
+            part(LignesCommandes; "SF Saisie expedition")
+            {
+                ApplicationArea = all;
+                SubPageLink = "Document No." = field("No.");
+            }
             part(UC; "SF Colisage commande : UC")
             {
                 ApplicationArea = all;

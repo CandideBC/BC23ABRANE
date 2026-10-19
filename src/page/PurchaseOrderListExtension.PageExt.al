@@ -7,15 +7,33 @@ pageextension 50050 PurchaseOrderListExtension extends "Purchase Order List"
         {
             Visible = false;
         }
-        
+
         addafter(Status)
         {
+            field("No. Doc. Vente Lie"; NoDocVenteTxt)
+            {
+                Caption = 'N° doc. vente lié';
+                ToolTip = 'N° document vente lié';
+                ApplicationArea = All;
+            }
+            field("Date chargement doc. vente"; DateChargementTxt)
+            {
+                Caption = 'Date chargement doc. vente';
+                ToolTip = 'Date chargement doc. vente';
+                ApplicationArea = All;
+            }
+            field("Date liv. demandee doc. vente"; DateLivraisonDemandeeTxt)
+            {
+                Caption = 'Date livraison demandée doc. vente';
+                ToolTip = 'Date livraison demandée doc. vente';
+                ApplicationArea = All;
+            }
             field("Achat pour stock"; Rec."Achat pour stock")
             {
                 ApplicationArea = All;
                 ToolTip = 'Achat pour stock';
             }
-            
+
             field("SAV Type"; Rec."SAV Type")
             {
                 ApplicationArea = All;
@@ -69,7 +87,7 @@ pageextension 50050 PurchaseOrderListExtension extends "Purchase Order List"
             }
 
         }
-        moveafter(Commentaires; Amount, "Amount Including VAT","Purchaser Code")
+        moveafter(Commentaires; Amount, "Amount Including VAT", "Purchaser Code")
 
         addafter(Commentaires)
         {
@@ -80,7 +98,7 @@ pageextension 50050 PurchaseOrderListExtension extends "Purchase Order List"
             }
         }
 
-        
+
 
         addafter("Purchaser Code")
         {
@@ -89,13 +107,13 @@ pageextension 50050 PurchaseOrderListExtension extends "Purchase Order List"
                 ApplicationArea = All;
                 ToolTip = 'Numéro de semaine de chargement';
             }
-            
+
             field("Date chargement confirmee"; Rec."Date chargement confirmee")
             {
                 ApplicationArea = All;
                 ToolTip = 'Date de chargement réelle saisie par l''AIE';
             }
-            
+
         }
         addafter("Date chargement confirmee")
         {
@@ -104,7 +122,7 @@ pageextension 50050 PurchaseOrderListExtension extends "Purchase Order List"
                 ApplicationArea = All;
                 ToolTip = 'Date réception prévue';
             }
-            
+
         }
 
         modify("Document Date")
@@ -198,4 +216,21 @@ pageextension 50050 PurchaseOrderListExtension extends "Purchase Order List"
             }
         }
     }
+    trigger OnAfterGetRecord()
+    var
+        EnteteAchat: Record "Purchase Header";
+
+    begin
+        NoDocVenteTxt := '';
+        DateChargementTxt := '';
+        DateLivraisonDemandeeTxt := '';
+        if EnteteAchat.Get(EnteteAchat."Document Type"::Order, rec."No.") then
+            EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVenteTxt, DateChargementTxt, DateLivraisonDemandeeTxt, PhaseTxt);
+    end;
+
+    var
+        NoDocVenteTxt: Text;
+        DateChargementTxt: Text;
+        DateLivraisonDemandeeTxt: Text;
+        PhaseTxt: Text;
 }

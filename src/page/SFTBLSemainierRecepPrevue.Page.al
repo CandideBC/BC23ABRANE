@@ -32,22 +32,11 @@ page 50138 "SF TBL Semainier recep prevue"
                     ApplicationArea = All;
                     ToolTip = 'Nombre de commandes concernées';
                     trigger OnDrillDown()
-                    var
-                        EnteteAchat: Record "Purchase Header";
                     begin
-                        EnteteAchat.SetCurrentKey("No. fournisseur", "Suivi container", "Suivi container OK", "Date intention chargement");
-                        EnteteAchat.SetRange("No. fournisseur", Rec."No. fournisseur");
-                        EnteteAchat.SetRange("Suivi container", true);
-                        EnteteAchat.SetRange("Suivi container OK", false);
-                        EnteteAchat.SetRange("Date intention chargement", Rec."Date debut semaine");
-                        Page.Run(page::"Purchase Order List", EnteteAchat);
+                        AfficherCommandesAchat();
                     end;
                 }
-                //field("Date semaine reception prevue"; Rec."Date semaine reception prevue")
-                //{
-                //    ApplicationArea = All;
-                //    ToolTip = 'Date semaine réception prévue';
-                //}
+
                 field("No. semaine reception prevue"; Rec."No. semaine reception prevue")
                 {
                     ApplicationArea = All;
@@ -71,46 +60,41 @@ page 50138 "SF TBL Semainier recep prevue"
                     ToolTip = 'Remplissages transport';
                     ApplicationArea = All;
                 }
-                
+
 
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
         {
-
-
-
+            action(AfficherCommandes)
+            {
+                ApplicationArea = All;
+                Caption = 'Commandes';
+                ToolTip = 'Affiche les commandes d''achats liées.';
+                trigger OnAction()
+                begin
+                    AfficherCommandesAchat();
+                end;
+            }
         }
-        
+
     }
-    
-    /*
-    trigger OnOpenPage()
+
+    procedure AfficherCommandesAchat()
     var
-        DateLundiCetteSemaine: date;
+        EnteteAchat: Record "Purchase Header";
+
     begin
-        // 1. On cherche d'abord s'il existe un enregistrement avec un montant > 0
-        // On applique un filtre temporaire sur le champ Montant
-        Rec.SetFilter("Mnt restant a charger", '>0');
+        EnteteAchat.SetCurrentKey("No. fournisseur", "Suivi container", "Suivi container OK", "Date intention chargement");
+        EnteteAchat.SetRange("No. fournisseur", Rec."No. fournisseur");
+        EnteteAchat.SetRange("Suivi container", true);
+        EnteteAchat.SetRange("Suivi container OK", false);
+        EnteteAchat.SetRange("Date intention chargement", Rec."Date debut semaine");
+        Page.Run(page::"Purchase Order List", EnteteAchat);
 
-        // 2. On tente de trouver le premier enregistrement correspondant
-        if Rec.FindFirst() then 
-            // 3. IMPORTANT : On enlève le filtre sur le montant 
-            // pour que l'utilisateur voie tous les lundis (même ceux à 0)
-            Rec.SetRange("Mnt restant a charger")
-
-            // Le curseur de la page restera positionné sur l'enregistrement 
-            // trouvé par le FindFirst, mais la liste affichera tout.
-        else begin
-            DateLundiCetteSemaine := CalcDate('<-CW>',Today);
-            // Si aucun montant n'est trouvé, on se replace au début par défaut
-            Rec.SetFilter("Date debut semaine",'>=%1',DateLundiCetteSemaine);
-            if Rec.FindFirst() then;
-        end;
     end;
-    */
 }

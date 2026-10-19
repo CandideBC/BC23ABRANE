@@ -120,6 +120,9 @@ table 50066 "Unite colisage"
             DataClassification = ToBeClassified;
         }
 
+
+
+
     }
 
     keys

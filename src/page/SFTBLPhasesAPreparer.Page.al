@@ -25,19 +25,6 @@ page 50044 "SF TBL Phases a preparer"
                         OuvrirFicheSaisieExpe();
                     end;
                 }
-                field(Phase; Rec.Phase)
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Phase';
-                }
-
-                field("No. doc externe"; Rec."No. doc externe")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'N° doc. externe';
-                    Editable = false;
-                }
-
                 field(PctPrepaSurStock; PctPrepaSurStock)
                 {
                     ApplicationArea = All;
@@ -47,25 +34,7 @@ page 50044 "SF TBL Phases a preparer"
                     DecimalPlaces = 0 : 0;
                     Editable = false;
                 }
-
-                field("Quantites commandees";Rec."Quantites commandees")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Quantités commandées';
-                    ToolTip = 'Total des quantités du document';
-                    BlankZero = true;
-                    DecimalPlaces = 0 : 5;
-                    Editable = false;
-                }
-                field("Quantites expediees";Rec."Quantites expediees")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Quantités expédiées';
-                    ToolTip = 'Total des quantités expédiées du document';
-                    BlankZero = true;
-                    DecimalPlaces = 0 : 5;
-                    Editable = false;
-                }
+                //Afficher ici la Qté Prepa sur stock
 
                 field(PctExpedie; PctExpedie)
                 {
@@ -76,14 +45,6 @@ page 50044 "SF TBL Phases a preparer"
                     ToolTip = '% expédié';
                     Editable = false;
                 }
-
-                field("Completely Shipped"; EnteteVente."Completely Shipped")
-                {
-                    ApplicationArea = All;
-                    Caption = 'Complètement expédiée';
-                    ToolTip = 'Complètement expédiée';
-                    Editable = false;
-                }
                 field(Commentaire; EnteteVente.Commentaire)
                 {
                     ApplicationArea = All;
@@ -91,43 +52,11 @@ page 50044 "SF TBL Phases a preparer"
                     Editable = false;
                 }
 
-                field(CompterCdesAchatsLiees; Rec.CompterCdesAchatsLiees())
-                {
-                    Caption = 'Nb cdes achats';
-                    ToolTip = 'Indique combien de commandes d''achats sont liées aux articles de cette phase.';
-                }
-                field("Prepa finie"; EnteteVente."Prepa finie")
+
+                field(Phase; Rec.Phase)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Indique si la préparation de commande est finie';
-                    trigger OnValidate()
-                    var
-                        EnteteCommande: Record "Sales Header";
-                    begin
-                        if EnteteCommande.Get(Rec."Type document", Rec."No. document") then begin
-                            EnteteCommande."Prepa finie" := EnteteVente."Prepa finie";
-                            EnteteCommande.Modify();
-                        end;
-                    end;
-                }
-                field("Commentaire factu."; Rec."Commentaire factu.")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Commentaire factu.';
-                }
-                field("Facturation en compta (O/N)"; EnteteVente."Facturation en compta (O/N)")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Facturation en compta (O/N)';
-                    trigger OnValidate()
-                    var
-                        EnteteCommande: Record "Sales Header";
-                    begin
-                        if EnteteCommande.Get(Rec."Type document", Rec."No. document") then begin
-                            EnteteCommande."Facturation en compta (O/N)" := EnteteVente."Facturation en compta (O/N)";
-                            EnteteCommande.Modify();
-                        end;
-                    end;
+                    ToolTip = 'Phase';
                 }
                 field("Nombre phases"; EnteteVente."Nombre phases")
                 {
@@ -144,10 +73,98 @@ page 50044 "SF TBL Phases a preparer"
                     Caption = 'Date livraison demandée';
                     ToolTip = 'Date de livraison demandée';
                 }
+                field("Prepa finie"; EnteteVente."Prepa finie")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Indique si la préparation de commande est finie';
+                    trigger OnValidate()
+                    var
+                        EnteteCommande: Record "Sales Header";
+                    begin
+                        if EnteteCommande.Get(Rec."Type document", Rec."No. document") then begin
+                            EnteteCommande."Prepa finie" := EnteteVente."Prepa finie";
+                            EnteteCommande.Modify();
+                        end;
+                    end;
+                }
+
+                field("Facturation en compta (O/N)"; EnteteVente."Facturation en compta (O/N)")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Facturation en compta (O/N)';
+                    trigger OnValidate()
+                    var
+                        EnteteCommande: Record "Sales Header";
+                    begin
+                        if EnteteCommande.Get(Rec."Type document", Rec."No. document") then begin
+                            EnteteCommande."Facturation en compta (O/N)" := EnteteVente."Facturation en compta (O/N)";
+                            EnteteCommande.Modify();
+                        end;
+                    end;
+                }
+                field("Commentaire factu."; Rec."Commentaire factu.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Commentaire factu.';
+                }
+
+                field("No. doc externe"; Rec."No. doc externe")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'N° doc. externe';
+                    Editable = false;
+                }
+                field("Nombre de colis"; EnteteVente."Nombre de colis")
+                {
+                    ToolTip = 'Nombre de colis';
+                }
+                field("Nombre de palettes"; EnteteVente."Nombre de palettes")
+                {
+                    ToolTip = 'Nombre de palettes';
+                }
+                field("Poids brut total"; EnteteVente."Poids brut total")
+                {
+                    ToolTip = 'Poids brut total';
+                }
+                field("Quantites commandees"; Rec."Quantites commandees")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Quantités commandées';
+                    ToolTip = 'Total des quantités du document';
+                    BlankZero = true;
+                    DecimalPlaces = 0 : 5;
+                    Editable = false;
+                    Visible = false;
+                }
+                field("Quantites expediees"; Rec."Quantites expediees")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Quantités expédiées';
+                    ToolTip = 'Total des quantités expédiées du document';
+                    BlankZero = true;
+                    DecimalPlaces = 0 : 5;
+                    Editable = false;
+                    Visible = false;
+                }
+
+                field("Completely Shipped"; EnteteVente."Completely Shipped")
+                {
+                    ApplicationArea = All;
+                    Caption = 'Complètement expédiée';
+                    ToolTip = 'Complètement expédiée';
+                    Editable = false;
+                }
+
+                field(CompterCdesAchatsLiees; Rec.CompterCdesAchatsLiees())
+                {
+                    Caption = 'Nb cdes achats';
+                    ToolTip = 'Indique combien de commandes d''achats sont liées aux articles de cette phase.';
+                }
                 field("Ship-to Name"; EnteteVente."Ship-to Name")
                 {
                     Caption = 'Nom destinataire';
                     ToolTip = 'Nom du destinataire';
+                    Visible = false;
                 }
                 field("Ship-to Name 2"; EnteteVente."Ship-to Name 2")
                 {
@@ -159,54 +176,46 @@ page 50044 "SF TBL Phases a preparer"
                 {
                     Caption = 'Adresse destinataire';
                     ToolTip = 'Adresse du destinataire';
+                    Visible = false;
                 }
                 field("Ship-to Address 2"; EnteteVente."Ship-to Address 2")
                 {
                     Caption = 'Adresse destinataire 2';
                     ToolTip = 'Adresse 2 du destinataire';
+                    Visible = false;
                 }
 
                 field("Ship-to Post Code"; EnteteVente."Ship-to Post Code")
                 {
                     Caption = 'Code postal destinataire';
                     ToolTip = 'Code postal du destinataire';
+                    Visible = false;
                 }
                 field("Ship-to City"; EnteteVente."Ship-to City")
                 {
                     Caption = 'Ville destinataire';
                     ToolTip = 'Ville du destinataire';
+                    Visible = false;
                 }
                 field("Ship-to Country/Region Code"; EnteteVente."Ship-to Country/Region Code")
                 {
                     ApplicationArea = All;
                     Caption = 'Code pays destinataire';
                     ToolTip = 'Code pays destinataire';
+                    Visible = false;
                 }
 
-                field("Nombre de colis"; EnteteVente."Nombre de colis")
-                {
-                    ToolTip = 'Nombre de colis';
-                }
-                field("Nombre de palettes"; EnteteVente."Nombre de palettes")
-                {
-                    ToolTip = 'Nombre de palettes';
 
-                }
                 field("Total Net Weight"; EnteteVente."Total Net Weight")
                 {
                     Caption = 'Poids net total';
                     ToolTip = 'Poids net total';
                     Editable = false;
+                    Visible = false;
                 }
-                field("Poids brut total"; EnteteVente."Poids brut total")
-                {
-                    ToolTip = 'Poids brut total';
-                }
-
 
             }
         }
-
     }
     actions
     {
@@ -221,6 +230,28 @@ page 50044 "SF TBL Phases a preparer"
                 trigger OnAction()
                 begin
                     OuvrirFicheSaisieExpe();
+                end;
+            }
+            action(PhasesDocument)
+            {
+                ApplicationArea = All;
+                Caption = 'Phases';
+                ToolTip = 'Affiche les phases du document ainsi que les articles rattachés à chaque phase.';
+                //Promoted = true;
+                //PromotedIsBig = true;
+                //Image = JobTimeSheet;
+                //PromotedCategory = Process;
+                trigger OnAction()
+                var
+                    PhasesDocument: Record "Phases document";
+                    PagePhases: page "Phases document vente";
+                begin
+                    Clear(PagePhases);
+                    PagePhases.DefinirConditionsAppel(false);
+                    PhasesDocument.SetRange("Type document", PhasesDocument."Type document"::Order);
+                    PhasesDocument.SetRange("No. document", rec."No. document");
+                    PagePhases.SetTableView(PhasesDocument);
+                    PagePhases.Run();
                 end;
             }
 
@@ -331,12 +362,12 @@ page 50044 "SF TBL Phases a preparer"
 
         EnteteVente.CalcFields("Nombre phases");
 
-        rec.CalcFields("Quantites commandees","Quantites expediees","Quantites prises sur stock");
+        rec.CalcFields("Quantites commandees", "Quantites expediees", "Quantites prises sur stock");
 
         if Rec."Quantites commandees" <> 0 then begin
-            PctExpedie := round(Rec."Quantites expediees" / Rec."Quantites commandees" * 100,1);
+            PctExpedie := round(Rec."Quantites expediees" / Rec."Quantites commandees" * 100, 1);
             PctPrepaSurStock := round(Rec."Quantites prises sur stock" / Rec."Quantites commandees" * 100, 1)
-        end else begin 
+        end else begin
             PctExpedie := 0;
             PctPrepaSurStock := 0;
         end;
