@@ -468,13 +468,13 @@ table 50014 "Entete colisage expedie"
 
                 PoidsBrutReparti := PoidsBrutReparti + ContenuColisage."Poids brut ligne";
 
-                ContenuColisage."Poids brut unitaire" := ROUND(ContenuColisage."Poids brut ligne" / ContenuColisage."Quantite UC", 0.01);
+                ContenuColisage."Poids brut unitaire" := ROUND(ContenuColisage."Poids brut ligne" / ContenuColisage."Quantite dans UC", 0.01);
                 ContenuColisage.Modify();
             until ContenuColisage.Next() = 0;
             if PoidsBrutDeReference <> PoidsBrutReparti then begin
                 ContenuColisage.get(Rec."No.", NumLignePlusGrosPoids);
                 ContenuColisage."Poids brut ligne" := ContenuColisage."Poids brut ligne" + ROUND(PoidsBrutDeReference - PoidsBrutReparti, 0.1);
-                ContenuColisage."Poids brut unitaire" := ROUND(ContenuColisage."Poids brut ligne" / ContenuColisage."Quantite UC", 0.01);
+                ContenuColisage."Poids brut unitaire" := ROUND(ContenuColisage."Poids brut ligne" / ContenuColisage."Quantite dans UC", 0.01);
                 ContenuColisage.Modify();
             end;
 

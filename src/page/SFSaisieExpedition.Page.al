@@ -8,6 +8,7 @@ page 50125 "SF Saisie expedition"
     SourceTableView = sorting("Document Type", "Document No.", Type, "No.", "System-Created Entry") where("Document Type" = filter(Order),Type=const(Item));
     InsertAllowed = false;
     DeleteAllowed = false;
+    Editable = false;
 
     layout
     {

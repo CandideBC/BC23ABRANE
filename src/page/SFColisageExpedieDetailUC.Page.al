@@ -1,7 +1,7 @@
 page 50022 "SF Colisage expedie ; detailUC"
 {
     ApplicationArea = All;
-    Caption = 'SF Colisage expedie ; detailUC';
+    Caption = 'Détail colisage';
     PageType = ListPart;
     SourceTable = "Detail UC colisage expedie";
     Editable = false;
@@ -35,7 +35,7 @@ page 50022 "SF Colisage expedie ; detailUC"
                 field("Qte expediee"; Rec."Qte expediee")
                 {
                 }
-                field("Quantite UC"; Rec."Quantite UC")
+                field("Quantite dans UC"; Rec."Quantite dans UC")
                 {
                 }
                 field("No. UC"; Rec."No. UC")

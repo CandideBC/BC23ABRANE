@@ -286,6 +286,7 @@ page 50123 "Fiche saisie expedition"
                     DetailColisageExpedie: Record "Detail UC colisage expedie";
                     UC: Record "Unite colisage";
                     UCCommande: Record "UC Commande";
+                    UCCommandeMAJ: Record "UC Commande";
                     DetailUCCommande: Record "Detail UC Commande";
                     CU80: codeunit "Sales-Post";
                     ListeUCCommande: Page "UC Commande a expedier";
@@ -323,38 +324,15 @@ page 50123 "Fiche saisie expedition"
                         ListeUCCommande.LookupMode(true);
                         if ListeUCCommande.RunModal() = Action::LookupOK then begin
                             Commit();
-                            //Quel que soit le cas (détail de palettes/colis a été saisi ou non), on crée un colisage expédié
-                            EnteteColisageExpedie.Init();
-                            EnteteColisageExpedie."No." := '';
-                            EnteteColisageExpedie.Insert(true);
-                            //NumColisage := EnteteColisage."No.";
-                            EnteteColisageExpedie."Sell-to Customer No." := Rec."Sell-to Customer No.";
-                            EnteteColisageExpedie.Validate("No. commande", Rec."No.");
-                            EnteteColisageExpedie."Poids brut non colise" := Rec."Poids brut total";
-                            EnteteColisageExpedie."Date comptabilisation" := Rec."Posting Date";
-                            EnteteColisageExpedie.Modify();
-                            NumLigne := 1;
 
                             Rec.ViderQteAExpedierAutresPhases(-999); //Pour vider les quantités de toutes les phases
 
                             UCCommande.SetRange("A expedier", true);
                             if UCCommande.FindSet(false) then begin
-
                                 DetailUCCommande.SetCurrentKey("No. commande", "No. UC");
                                 DetailUCCommande.SetRange("No. commande", Rec."No.");
 
                                 repeat
-                                    //On copie les UC vers le colisage expédié
-                                    UCColisageExpedie.Init();
-                                    UCColisageExpedie."No. colisage" := EnteteColisageExpedie."No.";
-                                    UCColisageExpedie."No. UC" := UCCommande."No. UC";
-                                    UCColisageExpedie."Type UC" := UCCommande."Type UC";
-                                    UCColisageExpedie."Numero camion" := UCCommande."Numero camion";
-                                    UCColisageExpedie.Numerotation := UCCommande.Numerotation;
-                                    UCColisageExpedie."Type UC" := UCCommande."Type UC";
-                                    UCColisageExpedie."Poids brut UC" := UCCommande."Poids brut";
-                                    UCColisageExpedie.Insert();
-
                                     DetailUCCommande.Setrange("No. UC", UCCommande."No. UC");
                                     if DetailUCCommande.FindSet(false) then
                                         repeat
@@ -365,84 +343,81 @@ page 50123 "Fiche saisie expedition"
                                 until UCCommande.Next() = 0;
                             end;
                         end;
-
-
-
                     end;
 
+                    //Quel que soit le cas (détail de palettes/colis a été saisi ou non), on crée un colisage expédié
+                    EnteteColisageExpedie.Init();
+                    EnteteColisageExpedie."No." := '';
+                    EnteteColisageExpedie.Insert(true);
+                    //NumColisage := EnteteColisage."No.";
+                    EnteteColisageExpedie."Sell-to Customer No." := Rec."Sell-to Customer No.";
+                    EnteteColisageExpedie.Validate("No. commande", Rec."No.");
+                    EnteteColisageExpedie."Poids brut non colise" := Rec."Poids brut total";
+                    EnteteColisageExpedie."Date comptabilisation" := Rec."Posting Date";
+                    EnteteColisageExpedie.Modify();
+                    NumLigne := 1;
+
+                    //Si le détail de chaque palette n'a pas été donné et uniquement dans ce cas,
+                    //on inscrit le N° du colisage expédié sur l'entete de la commande car c'est dans le CU80
+                    //que le système va ensuite aller compléter les lignes du colisage (1 ligne de BL = 1 ligne de colisage dans ce cas).
+                    //A l'inverse, si le contenu de chaque palette est connu, c'est ici (pas dans le CU80) qu'on rattacher
+                    //le détai de chaque palette au colisage (plusieurs lignes possibles par ligne de BL).
+                    if not DetailPalettesFourni then
+                        Rec."Utiliser colisage No." := EnteteColisageExpedie."No.";
 
                     //Quel que soit le cas (détail de palettes/colis a été saisi ou non), on copie les UC 
-                    // (L'utilisateur peut s'être contenté de dire 3 palette et 2 colis sans les détailler)
-                    repeat
-                        if not UCColisageExpedie.Get(EnteteColisage."No.", LignePrepa."No. UC") then begin
-                        end;
-                        if DetailPalettesFourni then begin
-                            //Pour chaque ligne de prepa (chaque palette associée à une ligne de commande), on detaille le detail du colisage
-                            ContenuColisage.Init();
-                            ContenuColisage."No. colisage" := EnteteColisage."No.";
-                            ContenuColisage."No. ligne" := NumLigne;
-                            NumLigne := NumLigne + 1;
-                            ContenuColisage."Item No." := LignePrepa."No. article";
-                            ContenuColisage.Description := LignePrepa.Designation;
-                            ContenuColisage."No. UC" := LignePrepa."No. UC";
-                            LigneCommande.Get(LigneCommande."Document Type"::order, LignePrepa."No. commande", LignePrepa."No. ligne commande");
-                            ContenuColisage."Poids net unitaire" := LigneCommande."Net Weight";
-                            ContenuColisage.Validate("Quantite UC", LignePrepa."Quantite dans UC");
-                            ContenuColisage."Order No." := LignePrepa."No. commande";
-                            ContenuColisage."Order Line No." := LignePrepa."No. ligne commande";
-                            ContenuColisage.Insert();
-                        until LignePrepa.Next() = 0
-                            else begin //On va se contenter de rattacher les articles au colisage sans lien avec des palettes 
-                                LigneCommande.SetCurrentKey(TypeDocDuplique, NumDocDuplique, Phase);
-                                LigneCommande.SetRange(TypeDocDuplique, Rec."Document Type");
-                                LigneCommande.SetRange(NumDocDuplique, Rec."No.");
-                                LigneCommande.SetRange(Phase, PhasesDocVente.Phase);
-                                LigneCommande.SetRange(Type, LigneCommande.Type::Item);
-                                if LigneCommande.FindSet(false) then
+                    // (L'utilisateur peut s'être contenté de dire 3 palettes et 2 colis sans les détailler)
+                    UCCommande.Reset();
+                    UCCommande.SetCurrentKey("No. commande", "Statut UC");
+                    UCCommande.SetRange("No. commande", Rec."No.");
+                    UCCommande.SetRange("Statut UC", UCCommande."Statut UC"::" ", UCCommande."Statut UC"::"Reçue");
+                    UCCommande.SetRange("A expedier");
+                    if UCCommande.FindSet(true) then 
+                        repeat
+                            UCColisageExpedie.Init();
+                            UCColisageExpedie."No. colisage" := EnteteColisageExpedie."No.";
+                            UCColisageExpedie."No. UC" := UCCommande."No. UC";
+                            UCColisageExpedie."Type UC" := UCCommande."Type UC";
+                            UCColisageExpedie.Numerotation := UCCommande.Numerotation;
+                            UCColisageExpedie."Numero camion" := UCCommande."Numero camion";
+                            UCColisageExpedie."Poids brut UC" := UCCommande."Poids brut";
+                            UCColisageExpedie.Insert();
+                            if DetailPalettesFourni then begin
+                                DetailUCCommande.Reset();
+                                DetailUCCommande.SetCurrentKey("No. commande", "No. UC");
+                                DetailUCCommande.SetRange("No. commande", UCCommande."No. commande");
+                                DetailUCCommande.Setrange("No. UC", UCCommande."No. UC");
+                                if DetailUCCommande.FindSet(false) then
                                     repeat
-                                        if LigneCommande."Qty. to Ship" <> 0 then begin
-                                            ContenuColisage.Init();
-                                            ContenuColisage."No. colisage" := EnteteColisage."No.";
-                                            ContenuColisage."No. ligne" := LigneCommande."Line No.";
-                                            ContenuColisage.Type := ContenuColisage.Type::Item;
-                                            ContenuColisage."Item No." := LigneCommande."No.";
-                                            ContenuColisage."Quantite UC" := LigneCommande."Qty. to Ship (Base)";
-                                            ContenuColisage.Description := LigneCommande.Description;
-                                            ContenuColisage."Order No." := Rec."No.";
-                                            ContenuColisage."Order Line No." := LigneCommande."Line No.";
-                                            if LigneCommande."Composant de la ligne No." <> 0 then begin
-                                                ContenuColisage."Type produit" := ContenuColisage."Type produit"::Composant;
-                                                ContenuColisage."No. ligne regroupement" := LigneCommande."Composant de la ligne No.";
-                                            end else begin
-                                                ContenuColisage."Type produit" := ContenuColisage."Type produit"::"Produit fini";
-                                                ContenuColisage."No. ligne regroupement" := ContenuColisage."No. ligne";
-                                            end;
-                                            ContenuColisage."Poids net unitaire" := LigneCommande."Net Weight";
-                                            PrecisionArrondi := 0;
-                                            if ContenuColisage."Poids net unitaire" < 1 then
-                                                PrecisionArrondi := 0.001
-                                            else
-                                                PrecisionArrondi := 0.01;
-                                            ContenuColisage."Poids net ligne" := ROUND(ContenuColisage."Quantite UC" * ContenuColisage."Poids net unitaire", PrecisionArrondi);
-                                            ContenuColisage.Insert();
-                                        end;
-                                    until LigneCommande.Next() = 0;
-
+                                        DetailColisageExpedie.Init();
+                                        DetailColisageExpedie."No. colisage" := EnteteColisageExpedie."No.";
+                                        DetailColisageExpedie."No. ligne" := NumLigne;
+                                        NumLigne := NumLigne + 1;
+                                        DetailColisageExpedie."Item No." := DetailUCCommande."No. article";
+                                        DetailColisageExpedie.Description := DetailUCCommande.Designation;
+                                        DetailColisageExpedie."Description 2" := DetailUCCommande."Designation 2";
+                                        DetailColisageExpedie."Quantite dans UC" := DetailUCCommande."Quantite dans UC";
+                                        DetailColisageExpedie.Insert();
+                                    until DetailUCCommande.Next() = 0;
                             end;
+                            UCCommandeMAJ.Get(UCCommande."No. commande",UCCommande."No. UC");
+                            UCCommandeMAJ."Statut UC" := UCCommande."Statut UC"::"Expédiée";
+                            UCCommandeMAJ.Modify();
+                            UC.Get(UCCommande."No. UC");
+                            UC."Statut UC" := UC."Statut UC"::"Expédiée";
+                            UC.Modify();
+                        until UCCommande.Next() = 0;
+                    
+                    EnteteColisageExpedie.MAJPoidsSurContenuColisage();
 
-                            EnteteColisageExpedie.MAJPoidsSurContenuColisage();
-
-                            //On valide le BL
-                            Rec.Ship := true;
-                            Rec.Invoice := false;
-                            CU80.Run(Rec);
-
-
-                        end;
+                    //On valide le BL
+                    Rec.Ship := true;
+                    Rec.Invoice := false;
+                    CU80.Run(Rec);
+                end;
             }
-
         }
-        }
+    }
     trigger OnAfterGetRecord()
     var
     begin

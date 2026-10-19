@@ -68,7 +68,7 @@ page 50027 "UC Commande a expedier"
                 trigger OnAction()
 
                 begin
-                    Rec.ExtraireUCContainer();
+                    //Rec.ExtraireUCContainer();
                 end;
             }
         }

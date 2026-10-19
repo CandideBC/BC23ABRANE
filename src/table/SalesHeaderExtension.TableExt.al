@@ -78,10 +78,8 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
             trigger OnValidate()
             begin
-                //DIA£NBE 13/04/2015 DEBUT
                 if "Acompte verse (Montant)" <> 0 then
                     TESTFIELD("Acompte a deduire (HT)", 0);
-                //DIA£NBE 13/04/2015 FIN
             end;
         }
         field(50072; "Acompte a deduire (HT)"; Decimal)
@@ -91,11 +89,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
             trigger OnValidate()
             begin
-                //DIA£NBE 13/04/2015 DEBUT
                 TESTFIELD(Status, Status::Open);
                 if "Acompte a deduire (HT)" <> 0 then
                     TESTFIELD("Acompte verse (Montant)", 0);
-                //DIA£NBE 13/04/2015 FIN
             end;
         }
         field(50080; Factoring; Boolean)
@@ -109,6 +105,11 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Caption = 'Palettisation en cours';
             FieldClass = FlowField;
             CalcFormula = exist("Detail UC Commande" where ("No. commande"= field("No."),"Statut UC"= filter(<>2)));
+            Editable = false;
+        }
+        field(50086; "Utiliser colisage No."; Code[20])  
+        {
+            Caption = 'Utiliser colisage N°';
             Editable = false;
         }
         
@@ -135,6 +136,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             trigger OnValidate()
             var
                 UCCommande: Record "UC Commande";
+                //UC: Record "Unite colisage";
                 DetailUCCommande: Record "Detail UC Commande";
                 //LigneContainer: Record "Ligne container";
                 NbUC: Integer;
@@ -160,7 +162,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         UCCommande."No. UC" := '';
                         UCCommande.Insert(true);
                         UCCommande."Type UC" := UCCommande."Type UC"::Colis;
-                        UCCommande.Modify();
+                        UCCommande.Modify(true); //Va créer l'UC
                         NbLignes := NbLignes + 1;
                     end;
                 end else
@@ -201,7 +203,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         UCCommande."No. UC" := '';
                         UCCommande.Insert(true);
                         UCCommande."Type UC" := UCCommande."Type UC"::Palette;
-                        UCCommande.Modify();
+                        UCCommande.Modify(true);
                         NbLignes := NbLignes + 1;
                     end;
                 end else

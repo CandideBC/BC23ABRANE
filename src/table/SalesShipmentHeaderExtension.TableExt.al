@@ -38,6 +38,11 @@ tableextension 50040 SalesShipmentHeaderExtension extends "Sales Shipment Header
             Caption = 'Acompte à déduire (HT)]';
             DataClassification = ToBeClassified;
         }
+        field(50086; "No. colisage expedie"; Code[20])  
+        {
+            Caption = 'N° colisage expédié';
+            Editable = false;
+        }
         field(50090; "Nombre de colis"; Decimal)
         {
             Caption = 'Nombre de colis';
@@ -197,7 +202,7 @@ tableextension 50040 SalesShipmentHeaderExtension extends "Sales Shipment Header
                     ContenuColisage."No. ligne" := LigneExpeditionEnregistree."Line No.";
                     ContenuColisage.Type := LigneExpeditionEnregistree.Type;
                     ContenuColisage."Item No." := LigneExpeditionEnregistree."No.";
-                    ContenuColisage."Quantite UC" := LigneExpeditionEnregistree.Quantity;
+                    ContenuColisage."Quantite dans UC" := LigneExpeditionEnregistree.Quantity;
                     ContenuColisage.Description := LigneExpeditionEnregistree.Description;
                     ContenuColisage."Shipment No." := LigneExpeditionEnregistree."Document No.";
                     ContenuColisage."Shipment Line No." := LigneExpeditionEnregistree."Line No.";
@@ -216,7 +221,7 @@ tableextension 50040 SalesShipmentHeaderExtension extends "Sales Shipment Header
                         PrecisionArrondi := 0.001
                     else
                         PrecisionArrondi := 0.01;
-                    ContenuColisage."Poids net ligne" := ROUND(ContenuColisage."Quantite UC" * ContenuColisage."Poids net unitaire",PrecisionArrondi);
+                    ContenuColisage."Poids net ligne" := ROUND(ContenuColisage."Quantite dans UC" * ContenuColisage."Poids net unitaire",PrecisionArrondi);
                     ContenuColisage.Insert();
                 end;
             until LigneExpeditionEnregistree.Next() = 0;

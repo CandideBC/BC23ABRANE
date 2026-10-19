@@ -57,7 +57,7 @@ table 50015 "Detail UC colisage expedie"
             TableRelation = "UC colisage expedie"."No. UC" where ("No. colisage" = field ("No. colisage"));
 
         }
-        field(10; "Quantite UC"; Decimal)
+        field(10; "Quantite dans UC"; Decimal)
         {
             BlankZero = true;
             Caption = 'Quantité UC';
@@ -65,7 +65,7 @@ table 50015 "Detail UC colisage expedie"
 
             trigger OnValidate()
             begin
-                "Poids net ligne" := "Poids net unitaire" * "Quantite UC";
+                "Poids net ligne" := "Poids net unitaire" * "Quantite dans UC";
             end;
         }
         field(11; "Poids brut ligne"; Decimal)
@@ -200,7 +200,7 @@ table 50015 "Detail UC colisage expedie"
         }
         field(25; "Quantite colisee totale"; Decimal)
         {
-            CalcFormula = sum ("Detail UC colisage expedie"."Quantite UC" where ("Shipment No." = field ("Shipment No."),
+            CalcFormula = sum ("Detail UC colisage expedie"."Quantite dans UC" where ("Shipment No." = field ("Shipment No."),
                                                              "Shipment Line No." = field ("Shipment Line No."),
                                                              "Order No." = field ("Order No."),
                                                              "Order Line No." = field ("Order Line No.")));
@@ -399,11 +399,11 @@ table 50015 "Detail UC colisage expedie"
         }
         key(Key4; "No. colisage", "Shipment No.", "Shipment Line No.", "Order No.", "Order Line No.")
         {
-            SumIndexFields = "Quantite UC";
+            SumIndexFields = "Quantite dans UC";
         }
         key(Key5; "No. colisage", "No. UC", "Shipment No.", "Shipment Line No.")
         {
-            SumIndexFields = "Quantite UC";
+            SumIndexFields = "Quantite dans UC";
         }
         key(Key6; "No. colisage", "No. UC", "Order No.", "Order Line No.")
         {
@@ -413,11 +413,11 @@ table 50015 "Detail UC colisage expedie"
         }
         key(MyKey8; "Shipment No.","Shipment Line No.")
         {
-            SumIndexFields = "Quantite UC";
+            SumIndexFields = "Quantite dans UC";
         }
         key(MyKey9; "Order No.","Order Line No.")
         {
-            SumIndexFields = "Quantite UC";
+            SumIndexFields = "Quantite dans UC";
         }
         key(MyKey10; "No. UC")
         {

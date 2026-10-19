@@ -68,7 +68,7 @@ page 50042 "UC Commande"
                 trigger OnAction()
 
                 begin
-                    Rec.ExtraireUCContainer();
+                    //Rec.ExtraireUCContainer();
                 end;
             }
         }

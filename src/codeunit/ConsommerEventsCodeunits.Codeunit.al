@@ -236,11 +236,22 @@ codeunit 50017 ConsommerEventsCodeunits
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeSalesShptLineInsert, '', false, false)]
-    local procedure CU80_OnBeforeSalesShptLineInsert(var SalesShptLine: Record "Sales Shipment Line"; SalesShptHeader: Record "Sales Shipment Header")
+    local procedure CU80_OnBeforeSalesShptLineInsert(SalesHeader: Record "Sales Header"; var SalesShptLine: Record "Sales Shipment Line"; SalesShptHeader: Record "Sales Shipment Header")
     var
-        //dNegPackingMgt: Codeunit "Packing Management";
+        DetailUCColisageExpedie: Record "Detail UC colisage expedie";
     begin
-        //dNegPackingMgt.MAJContenuColisage(SalesShptLine);
+        if SalesHeader."Utiliser colisage No." <> '' then 
+            if (SalesShptLine.Type = SalesShptLine.Type::Item) and (SalesShptLine.Quantity <> 0) then begin
+                DetailUCColisageExpedie.Init();
+                DetailUCColisageExpedie."No. colisage" := SalesHeader."Utiliser colisage No.";
+                DetailUCColisageExpedie."No. ligne" := SalesShptLine."Line No.";
+                DetailUCColisageExpedie."Item No." := SalesShptLine."No.";
+                DetailUCColisageExpedie.Description := SalesShptLine.Description;
+                DetailUCColisageExpedie."Quantite dans UC" := SalesShptLine.Quantity;
+                DetailUCColisageExpedie."Poids net ligne" := round(SalesShptLine.Quantity * SalesShptLine."Net Weight",0.01);
+                DetailUCColisageExpedie.Insert();
+            end;
+        
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeSalesInvLineInsert, '', false, false)]
@@ -644,16 +655,6 @@ codeunit 50017 ConsommerEventsCodeunits
 
     end;
 
-    [EventSubscriber(ObjectType::Codeunit, 825, OnBeforeInitGenJnlLine, '', false, false)]
-    //Car l'event OnBeforeInitNewLineFromInvoicePostBuffer du CU80 est marque par Microsoft comme etant supprime dans une prochaine version
-    local procedure CU825_OnBeforeInitGenJnlLine(var GenJnlLine: Record "Gen. Journal Line"; SalesHeader: Record "Sales Header")
-    begin
-        //KAN.FHA 21/10/2022 DEBUT
-        GenJnlLine."Code enseigne" := SalesHeader."Code enseigne";
-        //KAN.FHA 21/10/2022 FIN
-        GenJnlLine.Modify();
-
-    end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnPostUpdateOrderLineOnBeforeInitOutstanding, '', false, false)]
     local procedure CU80_OnPostUpdateOrderLineOnBeforeInitOutstanding(var TempSalesLine: Record "Sales Line" temporary)
@@ -688,6 +689,10 @@ codeunit 50017 ConsommerEventsCodeunits
         SalesHeader."Nombre de colis" := 0;
         SalesHeader."Nombre de palettes" := 0;
         //KAN.FHA 19/01/2026 FIN
+
+        //KAN.FHA 19/10/2026 DEBUT
+        SalesHeader."Utiliser colisage No." := '';
+        //KAN.FHA 19/10/2026 FIN
 
         InvSetup.Get();
         InvSetup.TestField("Mod. feuil. art. remise stk BL");
@@ -1317,18 +1322,6 @@ codeunit 50017 ConsommerEventsCodeunits
                     until AffectationFraisAnnexe.NEXT() = 0;
             until LigneAchatFraisAnnexe.NEXT() = 0;
         end;
-    end;
-
-
-
-    //Morceau de CU90 deplace vers nouveau CU
-    [EventSubscriber(ObjectType::Codeunit, 826, OnPostLedgerEntryOnBeforeGenJnlPostLine, '', false, false)]
-    local procedure CU826_OnPostLedgerEntryOnBeforeGenJnlPostLine(var GenJnlLine: Record "Gen. Journal Line"; var PurchHeader: Record "Purchase Header")
-    begin
-        //KAN.FHA 21/10/2022 DEBUT
-        GenJnlLine."Code enseigne" := PurchHeader."Code enseigne";
-        //KAN.FHA 21/10/2022 FIN
-        GenJnlLine.Modify();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 90, OnAfterUpdateLastPostingNos, '', false, false)]
@@ -2065,6 +2058,24 @@ codeunit 50017 ConsommerEventsCodeunits
                 until AffectationsAchatsVente.NEXT() = 0;
         end;
         //KAN.FHA 16/04/2020 FIN
+    end;
+
+    [EventSubscriber(ObjectType::Codeunit, 825, OnBeforeInitGenJnlLine, '', false, false)]
+    //Car l'event OnBeforeInitNewLineFromInvoicePostBuffer du CU80 est marque par Microsoft comme etant supprime dans une prochaine version
+    local procedure CU825_OnBeforeInitGenJnlLine(var GenJnlLine: Record "Gen. Journal Line"; SalesHeader: Record "Sales Header")
+    begin
+        //KAN.FHA 21/10/2022 DEBUT
+        GenJnlLine."Code enseigne" := SalesHeader."Code enseigne";
+        //KAN.FHA 21/10/2022 FIN
+        GenJnlLine.Modify();
+    end;
+
+    //Morceau de CU90 deplace vers nouveau CU
+    [EventSubscriber(ObjectType::Codeunit, 826, OnPostLedgerEntryOnBeforeGenJnlPostLine, '', false, false)]
+    local procedure CU826_OnPostLedgerEntryOnBeforeGenJnlPostLine(var GenJnlLine: Record "Gen. Journal Line"; var PurchHeader: Record "Purchase Header")
+    begin
+        GenJnlLine."Code enseigne" := PurchHeader."Code enseigne";
+        GenJnlLine.Modify();
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 1405, OnBeforePurchInvHeaderModify, '', false, false)]

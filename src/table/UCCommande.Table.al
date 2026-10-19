@@ -226,10 +226,7 @@ table 50068 "UC Commande"
         UC.Modify();
     end;
 
-    procedure ExtraireUCContainer()
-    begin
 
-    end;
 
     var
         SalesSetup: Record "Sales & Receivables Setup";

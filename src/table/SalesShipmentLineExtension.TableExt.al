@@ -170,7 +170,7 @@ tableextension 50041 SalesShipmentLineExtension extends "Sales Shipment Line"
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             FieldClass = FlowField;
-            CalcFormula = sum("Detail UC colisage expedie"."Quantite UC" where("Shipment No." = field("Document No."), "Shipment Line No." = field("Line No.")));
+            CalcFormula = sum("Detail UC colisage expedie"."Quantite dans UC" where("Shipment No." = field("Document No."), "Shipment Line No." = field("Line No.")));
         }
         field(78590; SubTotal; Boolean)
         {
