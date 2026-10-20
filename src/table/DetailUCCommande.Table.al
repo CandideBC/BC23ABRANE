@@ -3,7 +3,7 @@ table 50067 "Detail UC Commande"
     Caption = 'Détail UC Commande';
     //Cette table permet de rattacher une ou plusieurs unités de colisage (palette/colis) à une ligne de commande de vente.
     //Cette etape n'est pas obligatoire, on peut directement valider une commande en bon de livraison.
-    
+
 
     fields
     {
@@ -34,7 +34,7 @@ table 50067 "Detail UC Commande"
             TableRelation = "Unite colisage";
 
         }
-        field(21;Numerotation; Code[10])
+        field(21; Numerotation; Code[10])
         {
             Caption = 'Numérotation';
             DataClassification = ToBeClassified;
@@ -44,17 +44,17 @@ table 50067 "Detail UC Commande"
                 UC: Record "Unite colisage";
             begin
                 recPrepa.SetCurrentKey("No. commande", "No. UC");
-                recPrepa.SetRange("No. commande",Rec."No. commande");
-                recPrepa.SetRange("No. UC",Rec."No. UC");
-                recPrepa.SetFilter("No. ligne commande",'<>%1',Rec."No. ligne commande");
-                recPrepa.ModifyAll(Numerotation,Rec.Numerotation);
+                recPrepa.SetRange("No. commande", Rec."No. commande");
+                recPrepa.SetRange("No. UC", Rec."No. UC");
+                recPrepa.SetFilter("No. ligne commande", '<>%1', Rec."No. ligne commande");
+                recPrepa.ModifyAll(Numerotation, Rec.Numerotation);
 
                 UC.Get(Rec."No. UC");
                 UC.Numerotation := Rec.Numerotation;
                 UC.Modify();
             end;
         }
-        field(22;"Numero camion"; Code[20])
+        field(22; "Numero camion"; Code[20])
         {
             Caption = 'Numéro camion';
             DataClassification = ToBeClassified;
@@ -64,10 +64,10 @@ table 50067 "Detail UC Commande"
                 UC: Record "Unite colisage";
             begin
                 recPrepa.SetCurrentKey("No. commande", "No. UC");
-                recPrepa.SetRange("No. commande",Rec."No. commande");
-                recPrepa.SetRange("No. UC",Rec."No. UC");
-                recPrepa.SetFilter("No. ligne commande",'<>%1',Rec."No. ligne commande");
-                recPrepa.ModifyAll("Numero camion",Rec."Numero camion");
+                recPrepa.SetRange("No. commande", Rec."No. commande");
+                recPrepa.SetRange("No. UC", Rec."No. UC");
+                recPrepa.SetFilter("No. ligne commande", '<>%1', Rec."No. ligne commande");
+                recPrepa.ModifyAll("Numero camion", Rec."Numero camion");
 
                 UC.Get(Rec."No. UC");
                 UC."Numero camion expedition" := Rec."Numero camion";
@@ -77,24 +77,11 @@ table 50067 "Detail UC Commande"
         field(23; "Type UC"; Option)
         {
             Caption = 'Type UC';
-            DataClassification = ToBeClassified;
             OptionMembers = " ",Palette,"Colis";
             OptionCaption = ' ,Palette,Colis';
-            trigger OnValidate()
-            var
-                recPrepa: Record "Detail UC Commande";
-                UC: Record "Unite colisage";
-            begin
-                recPrepa.SetCurrentKey("No. commande", "No. UC");
-                recPrepa.SetRange("No. commande",Rec."No. commande");
-                recPrepa.SetRange("No. UC",Rec."No. UC");
-                recPrepa.SetFilter("No. ligne commande",'<>%1',Rec."No. ligne commande");
-                recPrepa.ModifyAll("Type UC",Rec."Type UC");
-
-                UC.Get(Rec."No. UC");
-                UC."Type UC" := Rec."Type UC";
-                UC.Modify();
-            end;
+            FieldClass = FlowField;
+            CalcFormula = lookup("UC Commande"."Type UC" where("No. commande" = field("No. commande"), "No. UC" = field("No. UC")));
+            Editable = false;
         }
         field(25; Phase; Integer)
         {
@@ -132,17 +119,17 @@ table 50067 "Detail UC Commande"
             Clustered = true;
             SumIndexFields = "Quantite dans UC";
         }
-        key(MyKey1; "No. commande",Phase)
+        key(MyKey1; "No. commande", Phase)
         {
-            
+
         }
-        key(MyKey2; "No. commande","No. UC")
+        key(MyKey2; "No. commande", "No. UC")
         {
-            
+
         }
-        key(MyKey3; "No. commande","Statut UC")
+        key(MyKey3; "No. commande", "Statut UC")
         {
-            
+
         }
     }
 

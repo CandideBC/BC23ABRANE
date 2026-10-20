@@ -19,6 +19,12 @@ page 50146 "SF Colisage commande : UC"
                 {
                     ToolTip = 'Specifies the value of the Type UC field.';
                 }
+                field("Statut UC"; Rec."Statut UC")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Indique si l''UC a été expédiée, vient juste d''être reçue ou est en cours de création.';
+                }
+                
                 field(Numerotation; Rec.Numerotation)
                 {
                     ToolTip = 'Specifies the value of the Numérotation field.';

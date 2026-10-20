@@ -8,7 +8,6 @@ page 50125 "SF Saisie expedition"
     SourceTableView = sorting("Document Type", "Document No.", Type, "No.", "System-Created Entry") where("Document Type" = filter(Order),Type=const(Item));
     InsertAllowed = false;
     DeleteAllowed = false;
-    Editable = false;
 
     layout
     {
@@ -43,6 +42,7 @@ page 50125 "SF Saisie expedition"
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Indique la désignation.';
+                    Editable = false;
                 }
                 field("Description 2"; Rec."Description 2")
                 {
@@ -58,13 +58,12 @@ page 50125 "SF Saisie expedition"
                     Editable = false;
                     ToolTip = 'Indique le magasin depuis lequel la ligne sera livrée.';
                     Visible = false;
-
-
                 }
                 field(Phase; Rec.Phase)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Phase';
+                    Editable = false;
                 }
                 field(Quantity; Rec.Quantity)
                 {

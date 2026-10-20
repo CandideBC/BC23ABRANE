@@ -198,17 +198,16 @@ table 50015 "Detail UC colisage expedie"
             Caption = 'Désignation article';
             Editable = false;
         }
+        
         field(25; "Quantite colisee totale"; Decimal)
         {
-            CalcFormula = sum ("Detail UC colisage expedie"."Quantite dans UC" where ("Shipment No." = field ("Shipment No."),
-                                                             "Shipment Line No." = field ("Shipment Line No."),
-                                                             "Order No." = field ("Order No."),
-                                                             "Order Line No." = field ("Order Line No.")));
+            CalcFormula = sum ("Detail UC colisage expedie"."Quantite dans UC" where ("No. colisage" = field ("No. colisage")));
             Caption = 'Qté colisée totale';
             Editable = false;
             FieldClass = FlowField;
             DecimalPlaces = 0:5;
         }
+        /*
         field(26; "Qte expediee"; Decimal)
         {
             CalcFormula = lookup ("Sales Shipment Line".Quantity where ("Document No." = field ("Shipment No."),
@@ -226,6 +225,7 @@ table 50015 "Detail UC colisage expedie"
             FieldClass = FlowField;
             DecimalPlaces = 0:5;
         }
+        */
         field(40; "Type produit"; Option)
         {
             Caption = 'Type produit';
@@ -387,7 +387,7 @@ table 50015 "Detail UC colisage expedie"
         key(Key1; "No. colisage", "No. ligne")
         {
             Clustered = true;
-            SumIndexFields = "Poids net ligne","Poids brut ligne";
+            SumIndexFields = "Poids net ligne","Poids brut ligne","Quantite dans UC";
         }
         key(Key2; "No. colisage", "Item No.")
         {

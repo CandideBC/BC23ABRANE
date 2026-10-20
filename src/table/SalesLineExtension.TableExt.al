@@ -974,6 +974,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         {
             SumIndexFields = QuantiteBaseDuplique, QuantiteExpedieeBaseDuplique, "Quantite prise sur stock";
         }
+        key(MyKey17; "No. UC")
+        {
+            
+        }
     }
 
     procedure AjouterUC(pNumUC: Code[20])
@@ -981,6 +985,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         UC: Record "Unite colisage";
         EnteteCommande: Record "Sales Header";
         UCCommande: Record "UC Commande";
+        DetailUCCommande: Record "Detail UC Commande";
         QteNonPreparee: Decimal;
     begin
         if pNumUC = '' then
@@ -997,15 +1002,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             pNumUC := "No. UC";
             UCCommande.Init();
             UCCommande."No. commande" := "Document No.";
-            //UCCommande."No. ligne commande" := "Line No.";
             UCCommande."No. UC" := UC."No.";
             UCCommande."Type UC" := UC."Type UC";
             UCCommande.Numerotation := UC.Numerotation;
             UCCommande."Numero camion" := UC."Numero camion expedition";
-            //UCCommande.Phase := Phase;
-            //UCCommande."No. article" := "No.";
-            //UCCommande.Designation := Description;
-            //UCCommande."Quantite dans UC" := QteNonPreparee;
             UCCommande.Insert();
         end;
 
@@ -1018,6 +1018,21 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         if not UC.Get(pNumUC) then begin
             "No. UC" := '';
             exit;
+        end;
+
+        if UC."No." <> '' then begin
+            DetailUCCommande.Init();
+            DetailUCCommande."No. commande" := "Document No.";
+            DetailUCCommande."No. ligne commande" := "Line No.";
+            DetailUCCommande."No. UC" := UC."No.";
+            DetailUCCommande."Type UC" := UC."Type UC";
+            DetailUCCommande.Numerotation := UC.Numerotation;
+            DetailUCCommande."Numero camion" := UC."Numero camion expedition";
+            DetailUCCommande.Phase := Phase;
+            DetailUCCommande."No. article" := "No.";
+            DetailUCCommande.Designation := Description;
+            DetailUCCommande."Quantite dans UC" := QteNonPreparee;
+            DetailUCCommande.Insert();
         end;
 
     end;

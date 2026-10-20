@@ -1,4 +1,4 @@
-page 50022 "SF Colisage expedie ; detailUC"
+page 50022 "SF Colisage expedie : detailUC"
 {
     ApplicationArea = All;
     Caption = 'Détail colisage';
@@ -29,12 +29,14 @@ page 50022 "SF Colisage expedie ; detailUC"
                 field("Quantite colisee totale"; Rec."Quantite colisee totale")
                 {
                 }
+                /*
                 field("Qte commandee"; Rec."Qte commandee")
                 {
                 }
                 field("Qte expediee"; Rec."Qte expediee")
                 {
                 }
+                */
                 field("Quantite dans UC"; Rec."Quantite dans UC")
                 {
                 }

@@ -6,6 +6,7 @@ page 50123 "Fiche saisie expedition"
     SourceTable = "Sales Header";
     SourceTableView = where("Document Type" = const(Order));
     DeleteAllowed = false;
+    RefreshOnActivate = true;
 
     layout
     {
@@ -291,7 +292,7 @@ page 50123 "Fiche saisie expedition"
                     CU80: codeunit "Sales-Post";
                     ListeUCCommande: Page "UC Commande a expedier";
                     //PagePhases: Page "Phases document vente";
-                    PrecisionArrondi: Decimal;
+                    //PrecisionArrondi: Decimal;
                     //NbPhasesDocument: Integer;
                     NumLigne: integer;
                     DetailPalettesFourni: Boolean;
@@ -301,6 +302,7 @@ page 50123 "Fiche saisie expedition"
 
                 begin
                     Rec.CalcSubTotal(Rec);
+                    Commit();
 
                     //Deux cas peuvent se présenter :
                     // - on a detaillé le contenu de palettes ==>On va proposer quelles palettes l'utilisateur souhaite
@@ -319,7 +321,6 @@ page 50123 "Fiche saisie expedition"
                         UCCommande.SetRange("No. commande", Rec."No.");
                         UCCommande.SetRange("Statut UC", UCCommande."Statut UC"::" ", UCCommande."Statut UC"::"Reçue");
 
-                        //ListeUCCommande.DefinirConditionsAppel(true);
                         ListeUCCommande.SetTableView(UCCommande);
                         ListeUCCommande.LookupMode(true);
                         if ListeUCCommande.RunModal() = Action::LookupOK then begin
@@ -371,7 +372,8 @@ page 50123 "Fiche saisie expedition"
                     UCCommande.SetCurrentKey("No. commande", "Statut UC");
                     UCCommande.SetRange("No. commande", Rec."No.");
                     UCCommande.SetRange("Statut UC", UCCommande."Statut UC"::" ", UCCommande."Statut UC"::"Reçue");
-                    UCCommande.SetRange("A expedier");
+                    if DetailPalettesFourni then
+                        UCCommande.SetRange("A expedier",true);
                     if UCCommande.FindSet(true) then 
                         repeat
                             UCColisageExpedie.Init();

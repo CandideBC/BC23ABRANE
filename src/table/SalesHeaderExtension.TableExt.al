@@ -113,18 +113,18 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Editable = false;
         }
         
-        field(50088; "Nb UC Palette"; Integer)
+        field(50088; "Nb UC Palette en cours"; Integer)
         {
-            Caption = 'Nb UC Palette';
+            Caption = 'Nb UC Palette en cours';
             FieldClass = FlowField;
-            CalcFormula = count("UC Commande" where ("No. commande"= field("No."),"Type UC"=const(Palette)));
+            CalcFormula = count("UC Commande" where ("No. commande"= field("No."),"Type UC"=const(Palette),"Statut UC"=filter(0..1))); //Statut = vide ou reçu, pas Expedie
             Editable = false;
         }
-        field(50089; "Nb UC Colis"; Integer)
+        field(50089; "Nb UC Colis en cours"; Integer)
         {
-            Caption = 'Nb UC Colis';
+            Caption = 'Nb UC Colis en cours';
             FieldClass = FlowField;
-            CalcFormula = count("UC Commande" where ("No. commande"= field("No."),"Type UC"=const(Colis)));
+            CalcFormula = count("UC Commande" where ("No. commande"= field("No."),"Type UC"=const(Colis),"Statut UC"=filter(0..1))); //Statut = vide ou reçu, pas Expedie
             Editable = false;
         }
         
@@ -146,12 +146,12 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 //Si l'utilisateur joue avec la valeur de ce champ, on l'autorise à augmenter la valeur, pas à la baisser 
                 //(s'il avait saisi 4 colis, le système a rattaché 4 UC de type colis, s'il réduit à 2, je ne veux pas décider quels colis doivent être supprimés,
                 //l'utilisateur a peut-être déjà renseigné des informations sur telle ou telle ligne de colis.)
-                CalcFields("Nb UC Colis");
+                CalcFields("Nb UC Colis en cours");
                 DetailUCCommande.SetRange("No. commande", Rec."No.");
                 if DetailUCCommande.IsEmpty then
                     ExtraireContenuCommande();
 
-                NbUC := "Nb UC Colis";
+                NbUC := "Nb UC Colis en cours";
 
                 if "Nombre de colis" > NbUC then begin
                     NbLignes := NbUC;
@@ -187,12 +187,12 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 //Si l'utilisateur joue avec la valeur de ce champ, on l'autorise à augmenter la valeur, pas à la baisser 
                 //(s'il avait saisi 4 palettes, le système a rattaché 4 UC de type Palette, s'il réduit à 2, je ne veux pas décider quels colis doivent être supprimés,
                 //l'utilisateur a peut-être déjà renseigné des informations sur telle ou telle ligne de palette.)
-                CalcFields("Nb UC Palette");
+                CalcFields("Nb UC Palette en cours");
                 DetailUCCommande.SetRange("No. commande", Rec."No.");
                 if DetailUCCommande.IsEmpty then
                     ExtraireContenuCommande();
 
-                NbUC := "Nb UC Palette";
+                NbUC := "Nb UC Palette en cours";
 
                 if "Nombre de palettes" > NbUC then begin
                     NbLignes := NbUC;

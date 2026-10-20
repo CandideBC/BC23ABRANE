@@ -13,6 +13,13 @@ page 50024 "SF colisage commande Art/UC"
             repeater(Control50000)
             {
                 ShowCaption = false;
+
+                field("Type UC"; Rec."Type UC")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Indique si l''UC est une palette ou un colis.';
+                }
+                
                 field("No. UC"; Rec."No. UC")
                 {
                     ToolTip = 'N° UC';

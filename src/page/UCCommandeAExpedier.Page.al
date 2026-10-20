@@ -1,7 +1,7 @@
 page 50027 "UC Commande a expedier"
 {
     ApplicationArea = All;
-    Caption = 'UC Commande à exépdier';
+    Caption = 'UC Commande à expédier';
     PageType = List;
     SourceTable = "UC Commande";
     UsageCategory = None;
@@ -12,17 +12,23 @@ page 50027 "UC Commande a expedier"
         {
             repeater(General)
             {
-                field("No. UC"; Rec."No. UC")
-                {
-                    ToolTip = 'Specifies the value of the N° field.';
-                }
                 field("Type UC"; Rec."Type UC")
                 {
                     ToolTip = 'Specifies the value of the Type UC field.';
                 }
+
+                field("No. UC"; Rec."No. UC")
+                {
+                    ToolTip = 'Specifies the value of the N° field.';
+                }
                 field(Numerotation; Rec.Numerotation)
                 {
                     ToolTip = 'Specifies the value of the Numérotation field.';
+                }
+                field("A expedier"; Rec."A expedier")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'A cocher si vous voulez que cette UC fasse partie de la validation en bon de livraison.';
                 }
 
                 field(Longueur; Rec.Longueur)
@@ -60,17 +66,7 @@ page 50027 "UC Commande a expedier"
     {
         area(Processing)
         {
-            action(ExtrairePalettesContainer)
-            {
-                ApplicationArea = All;
-                ToolTip = 'Permet de sélectionner une palette arrivée par Container.';
-                
-                trigger OnAction()
 
-                begin
-                    //Rec.ExtraireUCContainer();
-                end;
-            }
         }
     }
 }

@@ -34,9 +34,9 @@ page 50145 "Fiche colisage commande"
                 }
 
             }
-            part(LignesCommandes; "SF Saisie expedition")
+            part(LignesCommandes; "SF colisage commande : art")
             {
-                ApplicationArea = all;
+                ApplicationArea = All;
                 SubPageLink = "Document No." = field("No.");
             }
             part(UC; "SF Colisage commande : UC")
@@ -50,8 +50,10 @@ page 50145 "Fiche colisage commande"
                 SubPageLink = "No. commande" = field("No.");
             }
         }
+        
 
     }
+
 
     actions
     {
@@ -117,6 +119,25 @@ page 50145 "Fiche colisage commande"
             */
         }
     }
+    trigger OnQueryClosePage(CloseAction: Action): Boolean
+    var 
+        modifNeeded: Boolean;
+    begin
+        Rec.CalcFields("Nb UC Colis en cours","Nb UC Palette en cours");
+        if Rec."Nombre de colis" <> Rec."Nb UC Colis en cours" then begin
+            Rec."Nombre de colis" := Rec."Nb UC Colis en cours";
+            modifNeeded := true;
+        end;
+
+        if Rec."Nombre de palettes" <> Rec."Nb UC Palette en cours" then begin 
+            Rec."Nombre de palettes" := Rec."Nb UC Palette en cours";
+            modifNeeded := True;
+        end;
+
+        if modifNeeded then
+            Rec.Modify();
+        
+    end;
 
 
 

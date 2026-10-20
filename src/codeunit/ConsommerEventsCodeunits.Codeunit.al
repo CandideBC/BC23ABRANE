@@ -692,6 +692,8 @@ codeunit 50017 ConsommerEventsCodeunits
 
         //KAN.FHA 19/10/2026 DEBUT
         SalesHeader."Utiliser colisage No." := '';
+        SalesHeader."Nombre de colis" := 0;
+        SalesHeader."Nombre de palettes" := 0;
         //KAN.FHA 19/10/2026 FIN
 
         InvSetup.Get();

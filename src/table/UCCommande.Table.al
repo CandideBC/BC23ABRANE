@@ -134,6 +134,7 @@ table 50068 "UC Commande"
 
     }
 
+
     keys
     {
         key(PK; "No. commande", "No. UC")
@@ -156,6 +157,10 @@ table 50068 "UC Commande"
         {
             
         }
+        key(MyKey5; "No. commande","Type UC","Statut UC")
+        {
+            
+        }
 
     }
 
@@ -169,7 +174,32 @@ table 50068 "UC Commande"
 
     trigger OnDelete()
     var
+        DetailUCCommande: Record "Detail UC Commande";
+        LigneVente: Record "Sales Line";
+        LigneVenteMAJ: Record "Sales Line";
+
+        SuppressionInterditeErr: Label 'Vous ne pouvez pas supprimer une UC dont le statut vaut Expédiée.';
+
     begin
+        if not ("Statut UC" in ["Statut UC"::" ","Statut UC"::"Reçue"]) then
+            Error(SuppressionInterditeErr);
+        
+        DetailUCCommande.Reset();
+        DetailUCCommande.SetCurrentKey("No. commande", "No. UC");
+        DetailUCCommande.SetRange("No. commande",Rec."No. commande");
+        DetailUCCommande.SetRange("No. UC",Rec."No. UC");
+        if DetailUCCommande.FindSet(true) then
+            DetailUCCommande.DeleteAll();
+
+        LigneVente.Reset();
+        LigneVente.SetCurrentKey("No. UC");
+        LigneVente.SetRange("No. UC",Rec."No. UC");
+        if LigneVente.FindSet(false) then
+            repeat
+                LigneVenteMAJ.Get(LigneVente."Document Type",LigneVente."Document No.",LigneVente."Line No.");
+                LigneVenteMAJ."No. UC" := '';
+                LigneVenteMAJ.Modify();
+            until LigneVente.Next() = 0;
         /*
         //Si on supprime une UC des UC de la commande, il faut vérifier si cette UC apparait est utilisée dans d'autres commandes.
         //S'il n'y a pas d'autre commande sur l'UC, on peut supprimer l'UC de la liste des UC.

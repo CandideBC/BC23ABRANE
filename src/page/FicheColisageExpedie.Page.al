@@ -165,7 +165,7 @@ page 50023 "Fiche colisage expedie"
                 SubPageView = sorting("No. colisage", "No. UC");
 
             }
-            part(ContenuUC; "SF Colisage expedie ; detailUC")
+            part(ContenuUC; "SF Colisage expedie : detailUC")
             {
                 SubPageLink = "No. colisage" = field("No.");
             }

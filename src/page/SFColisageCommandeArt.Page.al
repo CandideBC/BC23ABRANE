@@ -8,7 +8,6 @@ page 50147 "SF colisage commande : art"
     SourceTableView = sorting("Document Type", "Document No.", Type, "No.", "System-Created Entry") where("Document Type" = filter(Order),Type=const(Item));
     InsertAllowed = false;
     DeleteAllowed = false;
-    Editable = false;
 
     layout
     {
