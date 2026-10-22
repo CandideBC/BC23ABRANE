@@ -34,7 +34,7 @@ page 50044 "SF TBL Phases a preparer"
                     DecimalPlaces = 0 : 0;
                     Editable = false;
                 }
-                //Afficher ici la Qté Prepa sur stock
+                //Afficher ici la Qté Prepa sur stock ICI
 
                 field(PctExpedie; PctExpedie)
                 {
@@ -73,6 +73,12 @@ page 50044 "SF TBL Phases a preparer"
                     Caption = 'Date livraison demandée';
                     ToolTip = 'Date de livraison demandée';
                 }
+                field("Quantité prise sur stock";EnteteVente."Quantité prise sur stock")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Quantité prise sur stock';
+                }
+                
                 field("Prepa finie"; EnteteVente."Prepa finie")
                 {
                     ApplicationArea = All;
@@ -237,10 +243,6 @@ page 50044 "SF TBL Phases a preparer"
                 ApplicationArea = All;
                 Caption = 'Phases';
                 ToolTip = 'Affiche les phases du document ainsi que les articles rattachés à chaque phase.';
-                //Promoted = true;
-                //PromotedIsBig = true;
-                //Image = JobTimeSheet;
-                //PromotedCategory = Process;
                 trigger OnAction()
                 var
                     PhasesDocument: Record "Phases document";
@@ -360,7 +362,7 @@ page 50044 "SF TBL Phases a preparer"
         if not EnteteVente.get(Rec."Type document", Rec."No. document") then
             EnteteVente.Init();
 
-        EnteteVente.CalcFields("Nombre phases");
+        EnteteVente.CalcFields("Nombre phases","Quantité prise sur stock");
 
         rec.CalcFields("Quantites commandees", "Quantites expediees", "Quantites prises sur stock");
 

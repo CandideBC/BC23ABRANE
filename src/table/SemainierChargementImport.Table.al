@@ -135,11 +135,15 @@ table 50030 "Semainier chargement import"
         {
             Clustered = true;
         }
-        key(MyKey1; "No. fournisseur","Date debut semaine","Reste a charger")
+        key(MyKey1; "No. fournisseur","Date debut semaine")
         {
         }
         key(MyKey2; "Date semaine reception prevue","No. fournisseur")
         {
+        }
+        key(MyKey3; "Reste a charger","Date debut semaine", "No. fournisseur")
+        {
+            
         }
     }
 

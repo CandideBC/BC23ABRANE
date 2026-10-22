@@ -1005,15 +1005,15 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Caption = 'Libellé phase à expédier';
             DataClassification = ToBeClassified;
         }
-        /*
-        field(51290; "Colisages non valides"; Integer)
+        
+        field(51290; "Quantité prise sur stock"; Decimal)
         {
             Caption = 'Colisages non validés';
             FieldClass = FlowField;
-            CalcFormula = count("Entete colisage" where("No. commande" = field("No."), "No. expedition enregistree" = const('')));
+            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Document Type"),NumDocDuplique = field("No.")));
             Editable = false;
         }
-        */
+        
         field(51300; "Nb UC en prepa"; Integer)
         {
             Caption = 'Nb UC en prépa';
@@ -2840,7 +2840,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                                             lLigneVente.Description := Article.Description;
                                             lLigneVente.MODIFY();
                                         end
-            UNTIL lLigneVente.NEXT() = 0;
+            until lLigneVente.NEXT() = 0;
     end;
 
     procedure MAJDescriptionsEnENU()

@@ -62,8 +62,8 @@ codeunit 50012 CalculerMontantACharger
         i: Integer;
         DelaiTransit: Text;
         DelaiTransitLbl: Label '<%1D>', Comment = '%1 = nombre de jours';
-        RemplissageTerrestreLbl: label 'VAN %1% - Porteur %2% - Semi %3%',Comment = '%1 = VAN ; %2 = Porteur ; %3 = Semi';
-        RemplissageMaritimeeLbl: label 'Container 20p %1% - Container 40p %2%',Comment = '%1 = Container 20p ; %2 = Container 40p';
+        RemplissageTerrestreLbl: label 'VAN %1% - Porteur %2% - Semi %3%', Comment = '%1 = VAN ; %2 = Porteur ; %3 = Semi';
+        RemplissageMaritimeeLbl: label 'Container 20p %1% - Container 40p %2%', Comment = '%1 = Container 20p ; %2 = Container 40p';
     begin
         //Example de code pour utiliser RecRef et FieldRef
         /*
@@ -104,10 +104,19 @@ codeunit 50012 CalculerMontantACharger
         EnteteAchat.SetRange("Suivi container", true);
         EnteteAchat.SetRange("Suivi container OK", false);
         EnteteAchat.SetRange("Document Type", EnteteAchat."Document Type"::Order);
-        if EnteteAchat.FindSet(false) then begin
+        if EnteteAchat.FindSet(true) then begin
             DateChargementMin := 99991231D;
             DateChargementMax := 0D;
             EnteteAchat.CalcFields("Completely Received");
+            //KAN.FHA 22/10/2026 DEBUT
+            if EnteteAchat."Completely Received" then begin
+                if EnteteAchat."Reste a charger" then begin
+                    EnteteAchat."Reste a charger" := false;
+                    EnteteAchat.Modify();
+                end;
+            end else
+                EnteteAchat."Reste a charger" := false;
+            //KAN.FHA 22/10/2026 FIN
             repeat
                 if not Pays.get(EnteteAchat."Buy-from Country/Region Code") then
                     Pays.Init();
@@ -163,6 +172,13 @@ codeunit 50012 CalculerMontantACharger
                                     //KAN.FHA 20/05/2026 FIN
                                     //KAN.FHA 22/10/2026 DEBUT
                                     SemainierChargement."Reste a charger" := (SemainierChargement."Mnt restant a charger" <> 0) or (SemainierChargement."Mnt restant a charger liv. dir" <> 0);
+                                    //KAN.FHA 22/10/2026 DEBUT
+                                    if SemainierChargement."Reste a charger" then 
+                                        if not EnteteAchat."Reste a charger" then begin
+                                            EnteteAchat."Reste a charger" := true;
+                                            EnteteAchat.Modify();
+                                        end;
+                                    //KAN.FHA 22/10/2026 FIN
                                     //KAN.FHA 22/10/2026 FIN
                                     SemainierChargement.Modify();
                                 end;

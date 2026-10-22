@@ -948,7 +948,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         }
         key(MyKey10; TypeDocDuplique, NumDocDuplique, "Ligne deduction acompte", "Ligne deduction situation")
         {
-            SumIndexFields = "Montant restant HT (DS)";
+            SumIndexFields = "Montant restant HT (DS)","Quantite prise sur stock";
         }
         key(MyKey11; TypeDocDuplique, NumDocDuplique, "Ligne deduction situation")
         {

@@ -209,6 +209,12 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
             Caption = 'Semaine reception prévue';
             DataClassification = ToBeClassified;
         }
+        field(50085; "Reste a charger"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Reste à charger';
+            Description = 'Calculé par le CU. Coché si on un montant restant à charger sur la commande.';
+        }
         field(50190; "Code groupe"; Code[20])
         {
             DataClassification = ToBeClassified;
@@ -458,7 +464,6 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
     {
         key(MyKey1; "Code chantier")
         {
-
         }
         key(MyKey2; "Code groupe", "Code enseigne", "Code chantier", "Achat pour stock")
         {
@@ -491,6 +496,10 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
         key(MyKey9; "No. doc. vente")
         {
 
+        }
+        key(MyKey10; "Suivi container","Reste a charger", "Suivi container OK", "Semaine chargement", "No. fournisseur")
+        {
+            
         }
     }
 

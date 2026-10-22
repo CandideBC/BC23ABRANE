@@ -4,6 +4,7 @@ page 50137 "Semainier chargement import"
     Caption = 'Semainier chargement import';
     PageType = List;
     SourceTable = "Semainier chargement import";
+    SourceTableView = sorting("Reste a charger", "Date debut semaine", "No. fournisseur") where ("Reste a charger" = const(true));
     UsageCategory = None;
     Editable = false;
 

@@ -5,8 +5,8 @@ page 50092 "SF Montant a charger par sem"
     InsertAllowed = false;
     PageType = ListPart;
     SourceTable = "Purchase Header";
-    SourceTableView = sorting("Document Type", "Suivi container", "Suivi container OK", "Semaine chargement", "Buy-from Vendor No.")
-                      where("Suivi container" = const(true));
+    SourceTableView = sorting("Suivi container","Reste a charger", "Suivi container OK", "Semaine chargement", "No. fournisseur")
+                      where("Suivi container" = const(true),"Reste a charger"=const(true));
 
     layout
     {
@@ -148,13 +148,11 @@ page 50092 "SF Montant a charger par sem"
                     Editable = false;
                 }
                 
-                
                 field(NumerosDossiersBE; NumerosDossiersBE)
                 {
                     Caption = 'Dossier(s) BE';
                     ToolTip = 'Indique le(s) dossier(s) BE lié(s).';
                     Editable = false;
-
                 }
 
                 field("Commentaires suivi production"; Rec."Commentaires suivi production")
