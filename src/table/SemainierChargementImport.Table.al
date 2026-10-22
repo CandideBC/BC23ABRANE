@@ -27,6 +27,13 @@ table 50030 "Semainier chargement import"
             DataClassification = ToBeClassified;
         }
 
+        field(9; "Reste a charger"; Boolean)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Reste à charger';
+            Description = 'Coché si on un montant restant à charger cette semaine. Permet de filtrer notamment sur le TBL.';
+        }
+
         field(10; "No. fournisseur"; Code[20])
         {
             Caption = 'N° fournisseur';
@@ -76,13 +83,7 @@ table 50030 "Semainier chargement import"
             Editable = false;
             DecimalPlaces = 2:2;
         }
-        /*
-        field(50; "Type transport pressenti"; Text[30])
-        {
-            Caption = 'Type transport pressenti';
-            DataClassification = ToBeClassified;
-        }
-        */
+
         field(60; "Remplissages transport"; Text[50])
         {
             Caption = 'Remplissages transport';
@@ -134,7 +135,7 @@ table 50030 "Semainier chargement import"
         {
             Clustered = true;
         }
-        key(MyKey1; "No. fournisseur","Date debut semaine")
+        key(MyKey1; "No. fournisseur","Date debut semaine","Reste a charger")
         {
         }
         key(MyKey2; "Date semaine reception prevue","No. fournisseur")

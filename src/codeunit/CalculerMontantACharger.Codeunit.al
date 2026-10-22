@@ -88,13 +88,8 @@ codeunit 50012 CalculerMontantACharger
         SemainierChargement.Reset();
         SemainierChargement.ModifyAll("Mnt restant a charger", 0);
         SemainierChargement.ModifyAll("Mnt restant a charger liv. dir", 0);
-        //KAN.FHA 20/05/2026 DEBUT
         SemainierChargement.ModifyAll("Budget approche", 0);
-        //KAN.FHA 20/05/2026 FIN
-        //KAN.FHA 27/05/2026 DEBUT
-        //SemainierChargement.ModifyAll("Type transport pressenti", '');
         SemainierChargement.ModifyAll("Remplissages transport", '');
-        //KAN.FHA 27/05/2026 FIN
 
         PlanningChargementParFns.Reset();
         PlanningChargementParFns.DeleteAll();
@@ -166,6 +161,9 @@ codeunit 50012 CalculerMontantACharger
                                     //KAN.FHA 20/05/2026 DEBUT
                                     SemainierChargement."Budget approche" := round(Pays."% frais approche" / 100 * SemainierChargement."Mnt restant a charger", 0.01);
                                     //KAN.FHA 20/05/2026 FIN
+                                    //KAN.FHA 22/10/2026 DEBUT
+                                    SemainierChargement."Reste a charger" := (SemainierChargement."Mnt restant a charger" <> 0) or (SemainierChargement."Mnt restant a charger liv. dir" <> 0);
+                                    //KAN.FHA 22/10/2026 FIN
                                     SemainierChargement.Modify();
                                 end;
 

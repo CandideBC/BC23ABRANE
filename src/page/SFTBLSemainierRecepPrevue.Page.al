@@ -4,7 +4,7 @@ page 50138 "SF TBL Semainier recep prevue"
     Caption = 'Réceptions import';
     PageType = ListPart;
     SourceTable = "Semainier chargement import";
-    SourceTableView = sorting("Date semaine reception prevue", "No. fournisseur");
+    SourceTableView = sorting("Date semaine reception prevue", "No. fournisseur","Reste a charger") where ("Reste a charger" = const(true));
     UsageCategory = None;
     Editable = false;
 
