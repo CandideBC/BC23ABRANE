@@ -289,7 +289,7 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
             end;
         }
         //Lorsque l'achat n'est passé que pour une phase d'un document de vente, la phase est recopiée sur l'achat au moment du "Créer commande achat" depuis la vente
-        field(50224; "Info phases"; Text[10])
+        field(50224; "Info phases"; Text[250])
         {
             Caption = 'Info phases';
             DataClassification = ToBeClassified;
@@ -300,18 +300,23 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
             Caption = 'Type doc. vente';
             DataClassification = ToBeClassified;
         }
-        field(50227; "No. doc. vente"; Code[20])
+        field(50227; "No. doc. vente"; Code[20]) //Renseigné si l'achat est passé pour une commande vente unique
         {
             Caption = 'N° doc. vente';
             DataClassification = ToBeClassified;
         }
 
-        field(50228; "Date livraison chantier"; Date)
+        field(50228; "Phase unique"; Integer) // - 98 si multi-phase
         {
             Caption = 'Date livraison chantier';
             DataClassification = ToBeClassified;
-            //FieldClass = FlowField;
-            //CalcFormula = lookup("Phases document"."Date livraison demandee" where("Type document" = field("Type doc. vente"), "No. document" = field("No. doc. vente"), Phase = field(Phase)));
+            Editable = false;
+        }
+        field(50229; "Date livraison chantier"; Date)
+        {
+            Caption = 'Date livraison chantier';
+            FieldClass = FlowField;
+            CalcFormula = lookup("Phases document"."Date livraison demandee" where("Type document" = field("Type doc. vente"), "No. document" = field("No. doc. vente"), Phase = field("Phase unique")));
             Editable = false;
         }
 

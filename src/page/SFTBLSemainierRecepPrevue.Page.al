@@ -17,6 +17,10 @@ page 50138 "SF TBL Semainier recep prevue"
                 field("Nom du fournisseur"; Rec."Nom du fournisseur")
                 {
                     ToolTip = 'Nom du fournisseur';
+                    trigger OnDrillDown()
+                    begin
+                        error('');
+                    end;
                 }
                 field("Mnt restant a charger liv. dir"; Rec."Mnt restant a charger liv. dir")
                 {

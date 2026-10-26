@@ -4,7 +4,7 @@ page 50152 "Liste semaines chargement"
     Caption = 'Liste semaines chargement';
     PageType = List;
     SourceTable = "Semainier chargement import";
-    SourceTableView = sorting("Reste a charger", "Date debut semaine", "No. fournisseur");
+    //SourceTableView = sorting("Reste a charger", "Date debut semaine", "No. fournisseur");
     UsageCategory = None;
     Editable = false;
 
@@ -160,7 +160,9 @@ page 50152 "Liste semaines chargement"
             DateLundiCetteSemaine := CalcDate('<-CW>', Today);
             // Si aucun montant n'est trouvé, on se replace au début par défaut
             Rec.SetFilter("Date debut semaine", '>=%1', DateLundiCetteSemaine);
+
             if Rec.FindFirst() then;
         end;
+        Rec.SetRange("Mnt restant a charger");
     end;
 }

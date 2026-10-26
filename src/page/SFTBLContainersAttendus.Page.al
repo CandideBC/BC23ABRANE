@@ -28,10 +28,15 @@ page 50134 "SF TBL containers attendus"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Nom transporteur';
+
                 }
                 field("Nom fournisseur"; Rec."Nom fournisseur")
                 {
                     ToolTip = 'Nom fournisseur';
+                    trigger OnDrillDown()
+                    begin
+                        error('');
+                    end;
                 }
                 field("No. Immat / Container"; Rec."No. Immat / Container")
                 {
@@ -51,6 +56,10 @@ page 50134 "SF TBL containers attendus"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Montant facture (papier)';
+                    trigger OnDrillDown()
+                    begin
+                        error('');
+                    end;
                 }
                 field(Commentaire; Rec.Commentaire)
                 {

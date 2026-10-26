@@ -19,6 +19,8 @@ table 50053 "Phases document"
             if ("Type document" = const(Order)) "Sales Header"."No." where("document type" = const(Order));
 
         }
+
+        
         field(12; "Code enseigne"; Code[20])
         {
             Caption = 'Code enseigne';

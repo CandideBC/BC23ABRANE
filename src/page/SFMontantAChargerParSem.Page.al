@@ -40,8 +40,6 @@ page 50092 "SF Montant a charger par sem"
                     Editable = false;
                     ToolTip = 'Code acheteur';
                 }
-
-
                 field(CalcMontantRestantACharger; MontantACharger)
                 {
                     Caption = 'Montant restant à charger';
@@ -80,8 +78,6 @@ page 50092 "SF Montant a charger par sem"
                 {
                     Caption = 'Date intention chargement';
                     ToolTip = 'Date de la semaine de chargement';
-                    //Editable = false;
-
                 }
                 field("Semaine chargement"; Rec."Semaine chargement")
                 {
@@ -102,7 +98,6 @@ page 50092 "SF Montant a charger par sem"
                 {
                     Caption = 'Date réception prévue';
                     Editable = false;
-                    //Visible = false;
                     ToolTip = 'Date réception prévue';
                 }
                 field("Commentaires pour AIE"; Rec."Commentaires pour AIE")
@@ -244,8 +239,14 @@ page 50092 "SF Montant a charger par sem"
     trigger OnAfterGetRecord()
     begin
         Rec.CalcValeursResteACharger(MontantACharger, PoidsNetACharger, LignesSansCout, NbDIVSansHSCode, NbLignesSansPoids);
-        if Rec."Info phases" ='Multiple' then
+        if Rec."Info phases" = 'Multiple' then
             DateLivDemandeeTxt := '';
+
+        NumerosDossiersBE := '';
+        
+        if Rec."No. doc. vente" <> '' then
+            if EnteteVente.Get(Rec."Type doc. vente",Rec."No. doc. vente") then
+                NumerosDossiersBE := EnteteVente."No. dossier BE";
     end;
 
     var

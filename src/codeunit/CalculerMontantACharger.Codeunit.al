@@ -36,6 +36,7 @@ codeunit 50012 CalculerMontantACharger
         FieldRefLigneTitre: FieldRef;
         RecRefLigneFournisseur: RecordRef;
         FieldRefLigneFournisseur: FieldRef;
+        SupprimerCdesAchatsFacturees: Report "Delete Invoiced Purch. Orders";
         RangSemaine: Integer;
         DateLundiCetteSemaine: date;
         LigneSupprimable: Boolean;
@@ -79,10 +80,15 @@ codeunit 50012 CalculerMontantACharger
             END;
           END;
         */
+        //On supprime les commandes d'achats facturées
+        Clear(SupprimerCdesAchatsFacturees);
+        SupprimerCdesAchatsFacturees.UseRequestPage(false);
+        SupprimerCdesAchatsFacturees.Run();
+        Commit();
+        
         //==========================================================
         //INITIALISATION - VIDAGE DES DONNEES A RECALCULER
         //==========================================================
-
         DateFinAnnee := DMY2DATE(31, 12, Date2DMY(Today, 3));
 
         SemainierChargement.Reset();

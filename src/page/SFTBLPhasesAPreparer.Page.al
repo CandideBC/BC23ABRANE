@@ -25,13 +25,21 @@ page 50044 "SF TBL Phases a preparer"
                         OuvrirFicheSaisieExpe();
                     end;
                 }
-                field(PctPrepaSurStock; PctPrepaSurStock)
+
+                field(VersionDocument; VersionDocVente)
+                {
+                    ApplicationArea = All;
+                    Caption = 'Version';
+                    ToolTip = 'Version'; 
+                }
+                
+                field(PctPrepaSurStock; format(PctPrepaSurStock) + ' %')
                 {
                     ApplicationArea = All;
                     Caption = '% prépa / stock';
                     ToolTip = '% prépa / stock';
-                    BlankZero = true;
-                    DecimalPlaces = 0 : 0;
+                    //BlankZero = true;
+                    //DecimalPlaces = 0 : 0;
                     Editable = false;
                 }
                 field("Quantité prise sur stock";EnteteVente."Quantité prise sur stock")
@@ -77,12 +85,12 @@ page 50044 "SF TBL Phases a preparer"
                     Caption = 'Date livraison demandée';
                     ToolTip = 'Date de livraison demandée';
                 }
-
                 
                 field("Prepa finie"; EnteteVente."Prepa finie")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indique si la préparation de commande est finie';
+                    Caption = 'Prépa finie';
                     trigger OnValidate()
                     var
                         EnteteCommande: Record "Sales Header";
@@ -324,12 +332,39 @@ page 50044 "SF TBL Phases a preparer"
                     ComparaisonPage.Run();
                 end;
             }
+            action(StockDispo)
+            {
+                ApplicationArea = All;
+                Caption = 'Stock dispo';
+                ToolTip = 'Affiche le stock pour les articles de la commande';
+                Image = ItemAvailability;
+
+                trigger OnAction()
+                var
+                    EnteteVente: Record "Sales Header";
+                begin
+                    EnteteVente.Get(Rec."Type document", Rec."No. document");
+                    EnteteVente.CalculerStockDispo(true);
+                end;
+            }
+            
+            action(ExpeEnregistrees)
+            {
+                ApplicationArea = All;
+                Caption = 'Expé. enregistrées';
+                ToolTip = 'Affiche la liste des expéditions enregistrées liées à la commande de vente.';
+                Image = ShipmentLines;
+                RunObject = page "Posted Sales Shipments";
+                RunPageView = sorting ("Order No.");
+                RunPageLink = "Order No." = field("No. document");
+            }
         }
     }
     var
         EnteteVente: Record "Sales Header";
         PctPrepaSurStock: Decimal;
         PctExpedie: Decimal;
+        VersionDocVente: Integer;
 
     procedure OuvrirFicheSaisieExpe()
     var
@@ -362,7 +397,9 @@ page 50044 "SF TBL Phases a preparer"
         if not EnteteVente.get(Rec."Type document", Rec."No. document") then
             EnteteVente.Init();
 
-        EnteteVente.CalcFields("Nombre phases","Quantité prise sur stock");
+        EnteteVente.CalcFields("Nombre phases","Quantité prise sur stock","No. of Archived Versions");
+
+        VersionDocVente := EnteteVente."No. of Archived Versions";
 
         rec.CalcFields("Quantites commandees", "Quantites expediees", "Quantites prises sur stock");
 

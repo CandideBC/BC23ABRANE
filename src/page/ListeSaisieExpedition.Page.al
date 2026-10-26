@@ -20,13 +20,13 @@ page 50124 "Liste saisie expedition"
                     ToolTip = 'N° commande';
                 }
                 //ICI
-                field(PctPrepaSurStock; PctPrepaSurStock)
+                field(PctPrepaSurStock; format(PctPrepaSurStock) + ' %')
                 {
                     ApplicationArea = All;
                     Caption = '% prépa / stock';
                     ToolTip = '% prépa / stock';
-                    BlankZero = true;
-                    DecimalPlaces = 0:0;
+                    //BlankZero = true;
+                    //DecimalPlaces = 0:0;
                 }
                 field(NbArticlesAPreparer; NbArticlesAPreparer)
                 {

@@ -104,30 +104,30 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         {
             Caption = 'Palettisation en cours';
             FieldClass = FlowField;
-            CalcFormula = exist("Detail UC Commande" where ("No. commande"= field("No."),"Statut UC"= filter(<>2)));
+            CalcFormula = exist("Detail UC Commande" where("No. commande" = field("No."), "Statut UC" = filter(<> 2)));
             Editable = false;
         }
-        field(50086; "Utiliser colisage No."; Code[20])  
+        field(50086; "Utiliser colisage No."; Code[20])
         {
             Caption = 'Utiliser colisage N°';
             Editable = false;
         }
-        
+
         field(50088; "Nb UC Palette en cours"; Integer)
         {
             Caption = 'Nb UC Palette en cours';
             FieldClass = FlowField;
-            CalcFormula = count("UC Commande" where ("No. commande"= field("No."),"Type UC"=const(Palette),"Statut UC"=filter(0..1))); //Statut = vide ou reçu, pas Expedie
+            CalcFormula = count("UC Commande" where("No. commande" = field("No."), "Type UC" = const(Palette), "Statut UC" = filter(0 .. 1))); //Statut = vide ou reçu, pas Expedie
             Editable = false;
         }
         field(50089; "Nb UC Colis en cours"; Integer)
         {
             Caption = 'Nb UC Colis en cours';
             FieldClass = FlowField;
-            CalcFormula = count("UC Commande" where ("No. commande"= field("No."),"Type UC"=const(Colis),"Statut UC"=filter(0..1))); //Statut = vide ou reçu, pas Expedie
+            CalcFormula = count("UC Commande" where("No. commande" = field("No."), "Type UC" = const(Colis), "Statut UC" = filter(0 .. 1))); //Statut = vide ou reçu, pas Expedie
             Editable = false;
         }
-        
+
         field(50090; "Nombre de colis"; Decimal) //Champ de saisie
         {
             Caption = 'Nombre de colis';
@@ -1005,16 +1005,16 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Caption = 'Libellé phase à expédier';
             DataClassification = ToBeClassified;
         }
-        
+
         field(51290; "Quantité prise sur stock"; Decimal)
         {
             Caption = 'Colisages non validés';
             FieldClass = FlowField;
-            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Document Type"),NumDocDuplique = field("No.")));
+            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No.")));
             Editable = false;
-            DecimalPlaces = 0:5;
+            DecimalPlaces = 0 : 5;
         }
-        
+
         field(51300; "Nb UC en prepa"; Integer)
         {
             Caption = 'Nb UC en prépa';
@@ -1064,6 +1064,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
     begin
 
     end;
+
     procedure ColisageEnAttente(pPhase: Integer): Boolean
     var
         EnteteColisage: Record "Entete colisage expedie";
@@ -1105,22 +1106,13 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
     procedure SetCommentairesPrepa(NewCommentairesPrepa: Text)
     var
-        //DossierBE: Record "Dossier BE";
         OutStream: OutStream;
     begin
         Clear("Commentaires Prepa");
         "Commentaires prepa".CreateOutStream(OutStream, TEXTENCODING::UTF8);
         OutStream.WriteText(NewCommentairesPrepa);
         Modify();
-        /*
-        if Rec."No. dossier BE" <> '' then
-            if DossierBE.Get(Rec."No. dossier BE") then begin
-                Clear(DossierBE."Commentaires dossier BE");
-                DossierBE."Commentaires dossier BE".CreateOutStream(OutStream, TEXTENCODING::UTF8);
-                OutStream.WriteText(NewCommentairesDossierBE);
-                DossierBE.Modify();
-            end;
-        */
+
     end;
 
     procedure GetCommentairesPrepa() CommentairesPrepa: Text
@@ -2179,9 +2171,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                                 lLineNo := 10000;
 
                             lrecPurchaseHdr.Get(lrecPurchaseHdr."Document Type"::Order, TableTampon."No. commande achat creee");
-                            //KAN.FHA 21/09/2026 DEBUT
-                            //(suppression de l'ancien bloc qui écrivait Info phases ici : c'est fait une seule fois à la fin par MajInfoPhasesEntetesAchat)
-                            //KAN.FHA 21/09/2026 FIN
                             CreerLigneCommandeAchat(lrecPurchaseHdr, TableTampon, lLineNo, TableTampon."Qte a prendre hors cadre", TamponDispoSurCdeCadre);
                             lrecPurchaseLine.Get(lrecPurchaseHdr."Document Type", lrecPurchaseHdr."No.", lLineNo);
                             lLineNo := lLineNo + 10000;
@@ -2252,14 +2241,22 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             PhaseCommandeAchat := PhasesParCommande.Get(CommandeAchatNo);
 
             NouvelleInfo := '';
-            if PhaseCommandeAchat = PhaseMultiple() then begin 
+            if PhaseCommandeAchat = PhaseMultiple() then begin
                 NouvelleInfo := PhasesMultiplesLbl;
-                EnteteAchat."Date livraison chantier" := 0D;
+                EnteteAchat."No. doc. vente" := '';
+                EnteteAchat."Phase unique" := -98;
+                EnteteAchat.Modify();
             end else
                 if PhaseVente.Get(Rec."Document Type", Rec."No.", PhaseCommandeAchat) then begin
                     NouvelleInfo := StrSubstNo(InfoPhaseLbl, PhaseCommandeAchat, PhaseVente.Description,
                         Format(PhaseVente."Date chargement", 0, '<Day,2>/<Month,2>/<Year4>'));
-                    EnteteAchat."Date livraison chantier" := PhaseVente."Date livraison demandee";
+                    if EnteteAchat.Get(EnteteAchat."Document Type"::Order, CommandeAchatNo) then begin
+                        EnteteAchat."Type doc. vente" := PhaseVente."Type document";
+                        EnteteAchat."No. doc. vente" := PhaseVente."No. document";
+                        EnteteAchat."Phase unique" := PhaseVente.Phase;
+                        //EnteteAchat."Date livraison chantier" := PhaseVente."Date livraison demandee";
+                        EnteteAchat.Modify();
+                    end;
                 end;
 
             if NouvelleInfo <> '' then
@@ -3661,7 +3658,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 LigneVente.Modify();
             until LigneVente.Next() = 0;
     end;
-
 
     procedure CompterPhasesActives(): Integer;
     var

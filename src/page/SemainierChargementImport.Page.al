@@ -105,7 +105,7 @@ page 50137 "Semainier chargement import"
             {
                 ApplicationArea = All;
                 ToolTip = 'Recalculer le montant à charger par semaine.';
-                Caption = 'Calculer';
+                Caption = 'MAJ données';
                 RunObject = codeunit CalculerMontantACharger;
                 Promoted = true;
                 PromotedCategory = Process;
