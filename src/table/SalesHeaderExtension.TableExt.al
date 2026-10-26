@@ -1012,6 +1012,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             FieldClass = FlowField;
             CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Document Type"),NumDocDuplique = field("No.")));
             Editable = false;
+            DecimalPlaces = 0:5;
         }
         
         field(51300; "Nb UC en prepa"; Integer)

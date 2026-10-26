@@ -1,7 +1,7 @@
 table 50030 "Semainier chargement import"
 {
     Caption = 'Semainier chargement import';
-    LookupPageId = "Semainier chargement import";
+    LookupPageId = "Liste semaines chargement";
 
     fields
     {
@@ -126,7 +126,6 @@ table 50030 "Semainier chargement import"
             BlankZero = true;
             DecimalPlaces = 0:2;
         }
-
     }
 
     keys

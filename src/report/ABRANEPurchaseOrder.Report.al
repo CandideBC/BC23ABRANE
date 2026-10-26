@@ -1099,7 +1099,7 @@ report 50015 "ABRANE : Purchase Order"
 
                 trigger OnPreDataItem()
                 begin
-                    NoOfLoops := Abs(NoOfCopies) + 1;
+                    NoOfLoops := Abs(NoOfCopiesInt) + 1;
                     CopyText := '';
                     SetRange(Number, 1, NoOfLoops);
                     OutputNo := 1;
@@ -1237,7 +1237,7 @@ report 50015 "ABRANE : Purchase Order"
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(NoofCopies; NoOfCopies)
+                    field(NoofCopies; NoOfCopiesInt)
                     {
                         Caption = 'Nb. de copies';
                         ToolTip = 'Nb. de copies';
@@ -1422,14 +1422,14 @@ report 50015 "ABRANE : Purchase Order"
         FournisseurPoseur: Boolean;
         txtMention: Text;
         MontantArchive: Decimal;
-        NoOfCopies: Integer;
+        NoOfCopiesint: Integer;
         VersionLbl: Label 'Version';
         VersionNo: Integer;
         VersionDate: Date;
 
     procedure InitializeRequest(NewNoOfCopies: Integer; NewShowInternalInfo: Boolean; NewLogInteraction: Boolean)
     begin
-        NoOfCopies := NewNoOfCopies;
+        NoOfCopiesInt := NewNoOfCopies;
         ShowInternalInfo := NewShowInternalInfo;
         //ArchiveDocument := NewArchiveDocument;
 

@@ -34,7 +34,11 @@ page 50044 "SF TBL Phases a preparer"
                     DecimalPlaces = 0 : 0;
                     Editable = false;
                 }
-                //Afficher ici la Qté Prepa sur stock ICI
+                field("Quantité prise sur stock";EnteteVente."Quantité prise sur stock")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Quantité prise sur stock';
+                }
 
                 field(PctExpedie; PctExpedie)
                 {
@@ -73,11 +77,7 @@ page 50044 "SF TBL Phases a preparer"
                     Caption = 'Date livraison demandée';
                     ToolTip = 'Date de livraison demandée';
                 }
-                field("Quantité prise sur stock";EnteteVente."Quantité prise sur stock")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Quantité prise sur stock';
-                }
+
                 
                 field("Prepa finie"; EnteteVente."Prepa finie")
                 {
