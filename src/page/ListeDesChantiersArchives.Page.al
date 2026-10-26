@@ -1,7 +1,7 @@
 page 50087 "Liste des chantiers archives"
 {
     // InsertAllowed à Non car on doit créer un chantier depuis l'enseigne
-
+    ApplicationArea = All;
     CardPageID = "Fiche chantier";
     Caption = 'Liste des chantiers archivés';
     UsageCategory = Lists;
@@ -50,6 +50,7 @@ page 50087 "Liste des chantiers archives"
                 {
                     ToolTip = 'Code concept';
                 }
+                
                 field("No. client"; Rec."No. client")
                 {
                     ToolTip = 'N° client';

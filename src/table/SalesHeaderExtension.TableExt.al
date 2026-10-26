@@ -2252,12 +2252,15 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             PhaseCommandeAchat := PhasesParCommande.Get(CommandeAchatNo);
 
             NouvelleInfo := '';
-            if PhaseCommandeAchat = PhaseMultiple() then
-                NouvelleInfo := PhasesMultiplesLbl
-            else
-                if PhaseVente.Get(Rec."Document Type", Rec."No.", PhaseCommandeAchat) then
+            if PhaseCommandeAchat = PhaseMultiple() then begin 
+                NouvelleInfo := PhasesMultiplesLbl;
+                EnteteAchat."Date livraison chantier" := 0D;
+            end else
+                if PhaseVente.Get(Rec."Document Type", Rec."No.", PhaseCommandeAchat) then begin
                     NouvelleInfo := StrSubstNo(InfoPhaseLbl, PhaseCommandeAchat, PhaseVente.Description,
                         Format(PhaseVente."Date chargement", 0, '<Day,2>/<Month,2>/<Year4>'));
+                    EnteteAchat."Date livraison chantier" := PhaseVente."Date livraison demandee";
+                end;
 
             if NouvelleInfo <> '' then
                 if EnteteAchat.Get(EnteteAchat."Document Type"::Order, CommandeAchatNo) then begin
