@@ -781,6 +781,7 @@
         TamponDetailDispoStock: Record TamponDetailDispoStock;
         LigneVente: Record "Sales Line";
         EnteteVente: Record "Sales Header";
+        Article: Record item;
         AffectationsAchat: Record "Affectations achat vente";
         InfoSoc: Record "Company Information";
         decQtePriseSurStockCetteLigne: Decimal;
@@ -822,6 +823,10 @@
         LigneVente.SetRange("No.", Rec."No.");
 
         if LigneVente.FindSet(true) then begin
+            if not Article.get(LigneVente."No.") then
+                Article.Init();
+            
+            Article.CalcFields("Assembly BOM");
             NumLigne := 1;
             AffectationsAchat.SetCurrentKey("Type document vente", "No. document vente", "No. ligne document vente");
             AffectationsAchat.SetRange("Type document vente", AffectationsAchat."Type document vente"::Devis, AffectationsAchat."Type document vente"::Commande);
@@ -841,7 +846,10 @@
                     TamponDetailDispoStock."Proba transformation" := EnteteVente."Proba transformation";
                     TamponDetailDispoStock.Insert();
                     //KAN.FHA 22/09/2026 DEBUT
-                    LigneVente."Quantite prise sur stock" := LigneVente."Outstanding Qty. (Base)";
+                    //KAN.FHA 29/10/2026 DEBUT
+                    if not Article."Assembly BOM" then
+                    //KAN.FHA 29/10/2026 FIN
+                        LigneVente."Quantite prise sur stock" := LigneVente."Outstanding Qty. (Base)";
                     LigneVente.Modify();
                     //KAN.FHA 22/09/2026 FIN
                 end else begin
@@ -870,7 +878,7 @@
                             TamponDetailDispoStock.Insert();
                         end;
                         //KAN.FHA 22/09/2026 DEBUT
-                        if decQtePriseSurStockCetteLigne > 0 then
+                        if (decQtePriseSurStockCetteLigne > 0) and not (Article."Assembly BOM") then
                             LigneVente."Quantite prise sur stock" := decQtePriseSurStockCetteLigne
                         else
                             LigneVente."Quantite prise sur stock" := 0;
@@ -897,7 +905,10 @@
                             TamponDetailDispoStock.Insert();
                             //KAN.FHA 22/09/2026 DEBUT
                             //On fait quoi pour la quantité prise sur stock ???
-                            LigneVente."Quantite prise sur stock" := LigneVente."Quantity (Base)";
+                            //KAN.FHA 29/10/2026 DEBUT
+                            if not Article."Assembly BOM" then
+                            //KAN.FHA 29/10/2026 FIN
+                                LigneVente."Quantite prise sur stock" := LigneVente."Quantity (Base)";
                             LigneVente.Modify();
                             //KAN.FHA 22/09/2026 FIN
                         end;

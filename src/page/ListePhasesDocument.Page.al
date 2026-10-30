@@ -40,20 +40,42 @@ page 50109 "Liste phases document"
                     ToolTip = 'A cocher pour indiquer que les articles liés à la phase doivent être achetés.';
                     Visible = AcheterVisible;
                 }
+                //KAN.FHA 30/10/2026 DEBUT
+                field("Remplir qte. a exp."; Rec."Remplir qte. a exp.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'A cocher pour remplir automatiquement la quantité à expédier des articles de la phase.';
+                    Visible = RemplirQteAExpVisible;
+                }
+                //KAN.FHA 30/10/2026 FIN
 
             }
         }
     }
     var
         AcheterVisible: Boolean;
+        RemplirQteAExpVisible: Boolean;
 
-    procedure DefinirTypeAppel(pType: Text)
+    procedure DefinirTypeAppel(pButAppel: Text)
     begin
-        case pType of
+        case pButAppel of
             'Acheter':
-                AcheterVisible := true;
+                begin
+                    AcheterVisible := true;
+                    RemplirQteAExpVisible := false;
+                end;
             'Coliser':
-                AcheterVisible := false;
+                begin
+                    AcheterVisible := false;
+                    RemplirQteAExpVisible := false;
+                end;
+            //KAN.FHA 30/10/2026 DEBUT
+            'Remplir Qté à expédier':
+                begin
+                    AcheterVisible := false;
+                    RemplirQteAExpVisible := true;
+                end;
+            //KAN.FHA 30/10/2026 FIN
         end;
     end;
 }

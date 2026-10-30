@@ -143,9 +143,9 @@ page 50092 "SF Montant a charger par sem"
                     Editable = false;
                 }
                 
-                field(NumerosDossiersBE; NumerosDossiersBE)
+                field(NumeroDossierBE; NumeroDossierBE)
                 {
-                    Caption = 'Dossier(s) BE';
+                    Caption = 'Dossier BE';
                     ToolTip = 'Indique le(s) dossier(s) BE lié(s).';
                     Editable = false;
                 }
@@ -234,25 +234,45 @@ page 50092 "SF Montant a charger par sem"
                             end;
                 end;
             }
+            action(OuvrirDossierBE)
+            {
+                Caption = 'Ouvrir dossier BE';
+                ToolTip = 'Affiche le dossier BE';
+                trigger OnAction()
+                var
+                    DossierBE: Record "Dossier BE";
+                    PasDeDossierBELieErr: Label 'Aucun dossier BE n''est rattaché à cette ligne.';
+                    DossierBEInconnuErr: Label 'Dossier BE inconnu';
+                begin
+                    if NumeroDossierBE = '' then
+                        error(PasDeDossierBELieErr);
+                    
+                    if not DossierBE.GET(NumeroDossierBE) then
+                        Error(DossierBEInconnuErr);
+
+                    DossierBE.SetRange("No.",NumeroDossierBE);
+                    Page.Run(Page::"Fiche dossier BE",DossierBE);
+                end;
+            }
         }
     }
     trigger OnAfterGetRecord()
     begin
         Rec.CalcValeursResteACharger(MontantACharger, PoidsNetACharger, LignesSansCout, NbDIVSansHSCode, NbLignesSansPoids);
-        if Rec."Info phases" = 'Multiple' then
-            DateLivDemandeeTxt := '';
+        //if Rec."Info phases" = 'Multiple' then
+        //    DateLivDemandeeTxt := '';
 
-        NumerosDossiersBE := '';
+        NumeroDossierBE := '';
         
         if Rec."No. doc. vente" <> '' then
             if EnteteVente.Get(Rec."Type doc. vente",Rec."No. doc. vente") then
-                NumerosDossiersBE := EnteteVente."No. dossier BE";
+                NumeroDossierBE := EnteteVente."No. dossier BE";
     end;
 
     var
         EnteteVente: Record "Sales Header";
-        NumerosDossiersBE: Text[80];
-        DateLivDemandeeTxt: Text[20];
+        NumeroDossierBE: Text[80];
+        //DateLivDemandeeTxt: Text[20];
         MontantACharger: Decimal;
         PoidsNetACharger: Decimal;
         LignesSansCout: Integer;

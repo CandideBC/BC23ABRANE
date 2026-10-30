@@ -509,11 +509,15 @@ pageextension 50080 PurchaseOrderExtension extends "Purchase Order"
                 RunObject = Page "Lien cde transitaire-reception";
                 RunPageLink = "No. commande transitaire" = field("No.");
 
+                //KAN.FHA 29/10/2026 DEBUT
+                /*
                 trigger OnAction()
 
                 begin
                     AfficherDiversSansAffectation();
                 end;
+                */
+                //KAN.FHA 29/10/2026 FIN
             }
 
             action("Pousser vers container")

@@ -5,7 +5,7 @@ page 50147 "SF colisage commande : art"
     MultipleNewLines = true;
     PageType = ListPart;
     SourceTable = "Sales Line";
-    SourceTableView = sorting("Document Type", "Document No.", Type, "No.", "System-Created Entry") where("Document Type" = filter(Order),Type=const(Item));
+    SourceTableView = sorting(TypeDocDuplique, NumDocDuplique, "Article a coliser") where(TypeDocDuplique = filter(Order),"Article a coliser"=const(true));
     InsertAllowed = false;
     DeleteAllowed = false;
 
@@ -42,6 +42,7 @@ page 50147 "SF colisage commande : art"
                 {
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Indique la désignation.';
+                    Editable = false;
                 }
                 field("Description 2"; Rec."Description 2")
                 {
@@ -64,6 +65,7 @@ page 50147 "SF colisage commande : art"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Phase';
+                    Editable = false;
                 }
                 field(Quantity; Rec.Quantity)
                 {

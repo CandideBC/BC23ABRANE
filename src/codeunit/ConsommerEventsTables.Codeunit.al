@@ -913,9 +913,8 @@ codeunit 50019 ConsommerEventsTables
     [EventSubscriber(ObjectType::Table, 37, OnAfterValidateEvent, Quantity, false, false)]
     local procedure SalesLineOnAfterValidateQuantity(var Rec: Record "Sales Line")
     var
-        //ContenuColisage: Record "Contenu colisage";
+        Article: Record Item;
         WEEEMgt: Codeunit "Gestion Ecopart";
-        LigneColisageEclateeMsg: Label 'Cette ligne de commande a déjà été éclatée sur le colisage, le système ne peut pas reporter la modification de quantité vers le colisage.\Voir avec la logistique.';
 
     begin
         WEEEMgt.SalesUpdateWEEE(Rec, Rec.FIELDNO(Quantity));
@@ -924,25 +923,23 @@ codeunit 50019 ConsommerEventsTables
 
         Rec.fctMajQuantiteComposant(Rec);
 
-        /*
-        if rec."Document Type" = Rec."Document Type"::Order then begin
-            ContenuColisage.SetCurrentKey("Order No.", "Order Line No.");
-            ContenuColisage.SetRange("Order No.", Rec."Document No.");
-            ContenuColisage.SetRange("Order Line No.", Rec."Line No.");
-            if not ContenuColisage.IsEmpty then
-                if ContenuColisage.Count = 1 then begin
-                    ContenuColisage.FindFirst();
-                    ContenuColisage."Quantite UC" := Rec.Quantity;
-                    ContenuColisage.Modify();
-                end else
-                    Message(LigneColisageEclateeMsg);
-
-        end;
-        */
-
         //KAN.FHA 23/09/2026 DEBUT
         Rec.TypeDuplique := Rec.Type;
         //KAN.FHA 23/09/2026 FIN
+
+        //KAN.FHA 29/10/2026 DEBUT
+        if (Rec.Type <> Rec.Type::Item) or (Rec.Quantity = 0) then
+            Rec."Article a coliser" := false
+        else begin
+            if not Article.Get(Rec."No.") then
+                Article.Init();
+            Article.CalcFields("Assembly BOM");
+            if Article."Assembly BOM" then
+                Rec."Article a coliser" := false
+            else
+                Rec."Article a coliser" := true;
+        end;
+        //KAN.FHA 29/10/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Table, 37, OnAfterInitOutstandingAmount, '', false, false)]
@@ -992,7 +989,6 @@ codeunit 50019 ConsommerEventsTables
 
                 SalesLine.VALIDATE("Unit Cost (LCY)", ROUND(TotalAchatsPourCetteLigne / SalesLine.Quantity, 0.01));
             end;
-            //SalesLine.Modify();
         end else
             //KAN.FHA 11/09/2020 DEBUT
             if Location.GET(SalesLine."Location Code") then

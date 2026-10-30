@@ -289,7 +289,7 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
             end;
         }
         //Lorsque l'achat n'est passé que pour une phase d'un document de vente, la phase est recopiée sur l'achat au moment du "Créer commande achat" depuis la vente
-        field(50224; "Info phases"; Text[250])
+        field(50224; "Info phases"; Text[100])
         {
             Caption = 'Info phases';
             DataClassification = ToBeClassified;
@@ -503,6 +503,10 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
 
         }
         key(MyKey10; "Suivi container","Reste a charger", "Suivi container OK", "Semaine chargement", "No. fournisseur")
+        {
+            
+        }
+        key(MyKey11; "Type doc. vente","No. doc. vente","Phase unique")
         {
             
         }

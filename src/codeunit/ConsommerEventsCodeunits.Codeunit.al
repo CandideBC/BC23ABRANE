@@ -495,6 +495,9 @@ codeunit 50017 ConsommerEventsCodeunits
     local procedure CU80_OnAfterInsertShipmentHeader(var SalesShipmentHeader: Record "Sales Shipment Header")
     begin
         SalesShipmentHeader."Annee commande" := Date2DMY(SalesShipmentHeader."Posting Date", 3);
+        //KAN.FHA 30/10/2026 DEBUT
+        SalesShipmentHeader.Modify();
+        //KAN.FHA 30/10/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 81, OnBeforeConfirmSalesPost, '', false, false)]
@@ -941,7 +944,7 @@ codeunit 50017 ConsommerEventsCodeunits
     local procedure CU86_OnBeforeInsertSalesOrderLine(var SalesOrderLine: record "Sales line"; SalesOrderHeader: Record "Sales Header"; SalesQuoteHeader: Record "Sales Header"; SalesQuoteLine: Record "Sales Line")
 
     begin
-        SalesOrderLine."Do not print" := false;
+        SalesOrderLine."Ne pas imprimer" := false;
         //KAN.FHA 18/11/2020 DEBUT
         if SalesQuoteLine."Article divers" then begin
             SalesQuoteLine.CALCFIELDS("Cout achats affectes");

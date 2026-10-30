@@ -915,9 +915,7 @@ report 50012 "ABRANE : picking Quote"
                             TempSalesLine.SetRange("Line No.", 0, TempSalesLine."Line No.");
                             //Exclure les Assemblés
                             TempSalesLine.SetRange("Ligne eclatee", false);
-                            TempSalesLine.SetRange("Do not print", false);
-
-
+                            TempSalesLine.SetRange("Ne pas imprimer", false);
                             SetRange(Number, 1, TempSalesLine.Count);
                             //KAN.FHA 23/09/2026 DEBUT
                             //CurrReport.CreateTotals(TempSalesLine."Line Amount", TempSalesLine."Inv. Discount Amount");

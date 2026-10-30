@@ -20,7 +20,7 @@ table 50053 "Phases document"
 
         }
 
-        
+
         field(12; "Code enseigne"; Code[20])
         {
             Caption = 'Code enseigne';
@@ -109,28 +109,28 @@ table 50053 "Phases document"
         {
             Caption = 'Quantités commandées';
             FieldClass = FlowField;
-            CalcFormula = sum("Sales Line"."Quantity (Base)" where (TypeDocDuplique=field("Type document"),NumDocDuplique=field("No. document"),TypeDuplique=const(Item),Phase=field(Phase),"Eco Tax Furniture Line"=const(false)));
+            CalcFormula = sum("Sales Line"."Quantity (Base)" where(TypeDocDuplique = field("Type document"), NumDocDuplique = field("No. document"), TypeDuplique = const(Item), Phase = field(Phase), "Eco Tax Furniture Line" = const(false)));
             Editable = false;
             BlankZero = true;
-            DecimalPlaces = 0:5;
+            DecimalPlaces = 0 : 5;
         }
         field(33; "Quantites expediees"; Decimal)
         {
             Caption = 'Quantités expédiées';
             FieldClass = FlowField;
-            CalcFormula = sum("Sales Line"."Qty. Shipped (Base)" where (TypeDocDuplique=field("Type document"),NumDocDuplique=field("No. document"),TypeDuplique=const(Item),Phase=field(Phase),"Eco Tax Furniture Line"=const(false)));
+            CalcFormula = sum("Sales Line"."Qty. Shipped (Base)" where(TypeDocDuplique = field("Type document"), NumDocDuplique = field("No. document"), TypeDuplique = const(Item), Phase = field(Phase), "Eco Tax Furniture Line" = const(false)));
             Editable = false;
             BlankZero = true;
-            DecimalPlaces = 0:5;
+            DecimalPlaces = 0 : 5;
         }
         field(34; "Quantites prises sur stock"; Decimal)
         {
             Caption = 'Quantités prises sur stock';
             FieldClass = FlowField;
-            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where (TypeDocDuplique=field("Type document"),NumDocDuplique=field("No. document"),TypeDuplique=const(Item),Phase=field(Phase),"Eco Tax Furniture Line"=const(false)));
+            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Type document"), NumDocDuplique = field("No. document"), TypeDuplique = const(Item), Phase = field(Phase), "Eco Tax Furniture Line" = const(false)));
             Editable = false;
             BlankZero = true;
-            DecimalPlaces = 0:5;
+            DecimalPlaces = 0 : 5;
         }
 
         field(50; "Date chargement"; Date)
@@ -154,10 +154,10 @@ table 50053 "Phases document"
                 UnJourAvantTxt: Label '<-%1D>', Comment = '%1 = Nombre de jours';
 
             begin
-                if rec."Type document" in ["Type document"::Quote, "Type document"::Order] then begin
+                if Rec."Type document" in ["Type document"::Quote, "Type document"::Order] then begin
                     EnteteDocumentVente.Get(Rec."Type document", Rec."No. document");
 
-                    if not pays.get(EnteteDocumentVente."Ship-to Country/Region Code") then
+                    if not Pays.get(EnteteDocumentVente."Ship-to Country/Region Code") then
                         Pays.Init();
 
                     Pays.TestField("Delai transit (jours)");
@@ -176,6 +176,10 @@ table 50053 "Phases document"
                     else
                         "Date semaine chargement" := 0D;
                     //KAN.FHA 28/04/2026 FIN
+
+                    //KAN.FHA 29/10/2026 DEBUT
+                    MAJInfosPhaseSurCdeAchat();
+                    //KAN.FHA 29/10/2026 FIN
                 end;
             end;
         }
@@ -203,6 +207,11 @@ table 50053 "Phases document"
                 LigneVente.SetRange(Phase, Rec.Phase);
                 LigneVente.ModifyAll("A acheter", Rec.Acheter);
             end;
+        }
+        field(82; "Remplir qte. a exp."; Boolean)
+        {
+            Caption = 'Remplir qté. à exp.';
+            Description = 'Sert sur la fiche expédition à remplir automatiquement la [Qté à expédier] des phases sélectionnées.';
         }
 
     }
@@ -253,6 +262,24 @@ table 50053 "Phases document"
         VerifStatutDocument();
     end;
 
+    procedure MAJInfosPhaseSurCdeAchat()
+    var
+        EnteteAchat: Record "Purchase Header";
+        InfoPhaseLbl: Label 'Phase %1 - %2 - Date chargement : %3', Comment = '%1 = Phase ; %2 = Nom phase ; %3 = Date chargement';
+    begin
+        EnteteAchat.Reset();
+        EnteteAchat.SetCurrentKey("Type doc. vente", "No. doc. vente", "Phase unique");
+        EnteteAchat.SetRange("Type doc. vente", Rec."Type document");
+        EnteteAchat.SetRange("No. doc. vente", Rec."No. document");
+        EnteteAchat.SetRange("Phase unique", Rec.Phase);
+        if EnteteAchat.FindSet(true) then
+            repeat
+                EnteteAchat."Date livraison chantier" := Rec."Date livraison demandee";
+                EnteteAchat."Info phases" := StrSubstNo(InfoPhaseLbl, Phase, Description, Format("Date chargement"));
+                EnteteAchat.Modify();
+            until EnteteAchat.Next() = 0;
+    end;
+
     procedure VerifStatutDocument()
     var
         EnteteVente: Record "Sales Header";
@@ -291,7 +318,7 @@ table 50053 "Phases document"
 
                 if AffectationsAchats.FindSet(false) then
                     repeat
-                        if (AffectationsAchats."No. document achat" <> '') and (AffectationsAchats."No. document achat" <> NumCde) then 
+                        if (AffectationsAchats."No. document achat" <> '') and (AffectationsAchats."No. document achat" <> NumCde) then
                             if StrPos(ListeCommandesAchatsTxt, AffectationsAchats."No. document achat") = 0 then begin
                                 NbCde := NbCde + 1;
                                 ListeCommandesAchatsTxt := copystr(ListeCommandesAchatsTxt + AffectationsAchats."No. document achat" + ' ', 1, 250);

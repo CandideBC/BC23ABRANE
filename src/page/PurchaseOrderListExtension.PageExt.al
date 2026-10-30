@@ -15,18 +15,21 @@ pageextension 50050 PurchaseOrderListExtension extends "Purchase Order List"
                 Caption = 'N° doc. vente lié';
                 ToolTip = 'N° document vente lié';
                 ApplicationArea = All;
+                Visible = not MasquerColonnesVentes; 
             }
             field("Date chargement doc. vente"; DateChargementTxt)
             {
                 Caption = 'Date chargement doc. vente';
                 ToolTip = 'Date chargement doc. vente';
                 ApplicationArea = All;
+                Visible = not MasquerColonnesVentes; 
             }
             field("Date liv. demandee doc. vente"; DateLivraisonDemandeeTxt)
             {
                 Caption = 'Date livraison demandée doc. vente';
                 ToolTip = 'Date livraison demandée doc. vente';
                 ApplicationArea = All;
+                Visible = not MasquerColonnesVentes; 
             }
             field("Achat pour stock"; Rec."Achat pour stock")
             {
@@ -228,9 +231,14 @@ pageextension 50050 PurchaseOrderListExtension extends "Purchase Order List"
             EnteteAchat.ObtenirInfosDocumentVenteLie(NoDocVenteTxt, DateChargementTxt, DateLivraisonDemandeeTxt, PhaseTxt);
     end;
 
+    procedure MasquerColonnesPourLogistique(pMasquerColonnesVentes: Boolean)
+    begin
+        MasquerColonnesVentes := pMasquerColonnesVentes;
+    end;
     var
         NoDocVenteTxt: Text;
         DateChargementTxt: Text;
         DateLivraisonDemandeeTxt: Text;
         PhaseTxt: Text;
+        MasquerColonnesVentes: Boolean;
 }

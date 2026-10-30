@@ -18,7 +18,7 @@ pageextension 50091 SalesQuoteSubformExtension extends "Sales Quote Subform"
 
         addbefore(Type)
         {
-            field("Do not print"; Rec."Do not print")
+            field("Ne pas imprimer";Rec."Ne pas imprimer")
             {
                 ToolTip = 'Ne pas imprimer';
                 ApplicationArea = All;

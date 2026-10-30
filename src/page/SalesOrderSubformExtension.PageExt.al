@@ -5,7 +5,7 @@ pageextension 50083 SalesOrderSubformExtension extends "Sales Order Subform"
     {
         addbefore(Type)
         {
-            field("Do not print"; Rec."Do not print")
+            field("Ne pas imprimer";Rec."Ne pas imprimer")
             {
                 ToolTip = 'Ne pas imprimer';
                 ApplicationArea = All;

@@ -1006,11 +1006,17 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             DataClassification = ToBeClassified;
         }
 
-        field(51290; "Quantité prise sur stock"; Decimal)
+        field(51285; "Filtre phase"; Integer)
         {
-            Caption = 'Colisages non validés';
+            Caption = 'Filtre phase';
+            TableRelation = "Phases document".Phase where ("Type document"=field("Document Type"),"No. document"=field("No."));
+            FieldClass = FlowFilter;
+        }
+        field(51290; "Quantite prise sur stock"; Decimal)
+        {
+            Caption = 'Quantité prise sur stock';
             FieldClass = FlowField;
-            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No.")));
+            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."),Phase=field("Filtre phase")));
             Editable = false;
             DecimalPlaces = 0 : 5;
         }
@@ -2907,7 +2913,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         else
                             Article.SetRange("Variant Filter");
 
-                        Article.CalcFields(Inventory, "Qty. on Sales Order", "Qty. on Purch. Order");
+                        Article.CalcFields(Inventory, "Qty. on Sales Order", "Qty. on Purch. Order","Assembly BOM");
                         QteDispo := Article.Inventory - Article."Qty. on Sales Order";
                         if QteDispo < 0 then
                             QteDispo := 0;
@@ -2931,14 +2937,14 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         TamponDetailDispoStock."No. article" := LigneVente."No.";
                         TamponDetailDispoStock."No. ligne" := NumLigne;
                         TamponDetailDispoStock."Quantite vendue" := LigneVente."Outstanding Qty. (Base)";
-                        if LigneVente."Pris sur stock" then
+                        if LigneVente."Pris sur stock" and not (Article."Assembly BOM") then
                             TamponDetailDispoStock."Quantite prise sur stock" := LigneVente."Outstanding Qty. (Base)"
                         else
                             if LigneVente."Quantite affectee" <> 0 then begin
                                 //REMPLACER CECI PAR LA QTE REELLEMENT ACHETEE (aller lire les affectation du coup !!)
                                 TamponDetailDispoStock."Quantite achetee" := LigneVente."Quantite affectee";
 
-                                if TamponDetailDispoStock."Quantite achetee" <= LigneVente."Outstanding Qty. (Base)" then
+                                if (TamponDetailDispoStock."Quantite achetee" <= LigneVente."Outstanding Qty. (Base)") and not (Article."Assembly BOM") then
                                     TamponDetailDispoStock."Quantite prise sur stock" := LigneVente."Outstanding Qty. (Base)" - TamponDetailDispoStock."Quantite achetee"
                                 else
                                     ;
@@ -3037,7 +3043,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                                 end;
                         end;
                         //KAN.FHA 23/09/2026 DEBUT
-                        if decQtePriseSurStockCetteLigne > 0 then
+                        if (decQtePriseSurStockCetteLigne > 0) and not (Article."Assembly BOM") then
                             LigneVente."Quantite prise sur stock" := decQtePriseSurStockCetteLigne
                         else
                             LigneVente."Quantite prise sur stock" := 0;
@@ -3635,10 +3641,19 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
     end;
 
     procedure RemplirQteAExpedierPhase(pPhase: Integer)
+    begin
+        //On commence par vider la qté à expédier de toutes les lignes
+        ViderQteAExpedierLignesArticles();
+
+        //On remplit ensuite la qté à expédier des lignes de la phase à livrer
+        AjouterQteAExpedierPhase(pPhase);
+    end;
+
+    //KAN.FHA 30/10/2026 DEBUT
+    local procedure ViderQteAExpedierLignesArticles()
     var
         LigneVente: Record "Sales Line";
     begin
-        //On commence par vider la qté à expédier de toutes les lignes
         LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, Phase);
         LigneVente.SetRange(TypeDocDuplique, Rec."Document Type");
         LigneVente.SetRange(NumDocDuplique, Rec."No.");
@@ -3648,8 +3663,17 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 LigneVente.Validate("Qty. to Ship", 0);
                 LigneVente.Modify();
             until LigneVente.Next() = 0;
+    end;
 
-        //On lit maintenant les lignes qui ont du phasage pour la phase à livrer et on remplit la qté à expédier de la ligne vente associee
+    local procedure AjouterQteAExpedierPhase(pPhase: Integer)
+    //Remplit la qté à expédier des lignes de la phase, SANS toucher aux lignes des autres phases
+    var
+        LigneVente: Record "Sales Line";
+    begin
+        LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, Phase);
+        LigneVente.SetRange(TypeDocDuplique, Rec."Document Type");
+        LigneVente.SetRange(NumDocDuplique, Rec."No.");
+        LigneVente.Setrange(Type, LigneVente.Type::Item);
         LigneVente.SetRange(Phase, pPhase);
         if LigneVente.FindSet(true) then
             repeat
@@ -3658,6 +3682,41 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 LigneVente.Modify();
             until LigneVente.Next() = 0;
     end;
+
+    procedure RemplirQteAExpedierPhasesCochees()
+    //Affiche la liste des phases du document. L'utilisateur coche [Remplir qté. à exp.] sur les phases voulues,
+    //puis la qté à expédier des lignes de ces phases est remplie (les autres lignes sont vidées).
+    var
+        PhasesDocVente: Record "Phases document";
+        PagePhases: Page "Liste phases document";
+        ChoisirAuMoinsUnePhaseErr: Label 'Vous devez au moins choisir une phase à expédier.';
+    begin
+        PhasesDocVente.SetRange("Type document", Rec."Document Type");
+        PhasesDocVente.SetRange("No. document", Rec."No.");
+
+        //On décoche tout avant d'afficher la liste (la case est stockée sur la phase)
+        PhasesDocVente.ModifyAll("Remplir qte. a exp.", false);
+        Commit();
+
+        Clear(PagePhases);
+        PagePhases.SetTableView(PhasesDocVente);
+        PagePhases.DefinirTypeAppel('Remplir Qté à expédier');
+        PagePhases.LookupMode(true);
+        if PagePhases.RunModal() <> Action::LookupOK then
+            exit;
+
+        PhasesDocVente.SetRange("Remplir qte. a exp.", true);
+        if PhasesDocVente.IsEmpty() then
+            Error(ChoisirAuMoinsUnePhaseErr);
+
+        //On vide UNE SEULE FOIS toutes les lignes, puis on remplit chaque phase cochée
+        ViderQteAExpedierLignesArticles();
+        if PhasesDocVente.FindSet() then
+            repeat
+                AjouterQteAExpedierPhase(PhasesDocVente.Phase);
+            until PhasesDocVente.Next() = 0;
+    end;
+    //KAN.FHA 30/10/2026 FIN
 
     procedure CompterPhasesActives(): Integer;
     var

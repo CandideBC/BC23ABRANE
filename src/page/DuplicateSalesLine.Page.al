@@ -22,7 +22,7 @@ page 50036 "Duplicate Sales Line"
             repeater(Control1)
             {
                 ShowCaption = false;
-                field("Duplicate Line"; Rec."Duplicate Line")
+                field("Dupliquer ligne";Rec."Dupliquer ligne")
                 {
                     Caption = 'Dupliquer ligne';
                     ToolTip = 'Dupliquer ligne';
@@ -171,7 +171,7 @@ page 50036 "Duplicate Sales Line"
                 LigneADupliquer.RESET();
                 LigneADupliquer.SETRANGE("Document Type", Rec."Document Type");
                 LigneADupliquer.SETRANGE("Document No.", Rec."Document No.");
-                LigneADupliquer.SETRANGE("Duplicate Line", true);
+                LigneADupliquer.SETRANGE("Dupliquer ligne", true);
                 if LigneADupliquer.FINDSET(false) then begin
                     NewSalesLine.SETRANGE("Document Type", Rec."Document Type");
                     NewSalesLine.SETRANGE("Document No.", Rec."Document No.");
@@ -244,7 +244,7 @@ page 50036 "Duplicate Sales Line"
                                     NouvelleLigneComposant.Description := LignesComposants.Description;
                                     NouvelleLigneComposant."BOM Item No." := LignesComposants."BOM Item No.";
                                     NouvelleLigneComposant."Prix bloque" := LignesComposants."Prix bloque";
-                                    NouvelleLigneComposant."Duplicate Line" := LignesComposants."Duplicate Line";
+                                    NouvelleLigneComposant."Dupliquer ligne" := LignesComposants."Dupliquer ligne";
                                     NouvelleLigneComposant."Composant de la ligne No." := NewSalesLine."Line No.";
                                     NouvelleLigneComposant.INSERT(true);
 
@@ -258,7 +258,7 @@ page 50036 "Duplicate Sales Line"
                     LigneADupliquer.RESET();
                     LigneADupliquer.SETRANGE("Document Type", Rec."Document Type");
                     LigneADupliquer.SETRANGE("Document No.", Rec."Document No.");
-                    LigneADupliquer.MODIFYALL("Duplicate Line", false);
+                    LigneADupliquer.MODIFYALL("Dupliquer ligne", false);
 
                 end;
             end else

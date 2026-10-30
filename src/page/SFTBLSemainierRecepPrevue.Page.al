@@ -85,20 +85,25 @@ page 50138 "SF TBL Semainier recep prevue"
                 end;
             }
         }
-
     }
 
     procedure AfficherCommandesAchat()
     var
         EnteteAchat: Record "Purchase Header";
-
+        PurchOrderListPage: page "Purchase Order List";
     begin
         EnteteAchat.SetCurrentKey("No. fournisseur", "Suivi container", "Suivi container OK", "Date intention chargement");
         EnteteAchat.SetRange("No. fournisseur", Rec."No. fournisseur");
         EnteteAchat.SetRange("Suivi container", true);
         EnteteAchat.SetRange("Suivi container OK", false);
         EnteteAchat.SetRange("Date intention chargement", Rec."Date debut semaine");
-        Page.Run(page::"Purchase Order List", EnteteAchat);
+        //KAN.FHA 30/10/2026 DEBUT
+        //Page.Run(page::"Purchase Order List", EnteteAchat);
+        Clear(PurchOrderListPage);
+        PurchOrderListPage.MasquerColonnesPourLogistique(true);
+        PurchOrderListPage.SetTableView(EnteteAchat);
+        PurchOrderListPage.Run();
+        //KAN.FHA 30/10/2026 FIN
 
     end;
 }

@@ -387,7 +387,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             Description = 'KAN.FHA 18/06/2020';
             OptionMembers = Mobilier,"Pose/Audit",Transport,"Bennes/Fenwick",SAV,"Indéfini";
         }
-        field(51000; "Do not print"; Boolean)
+        field(51000; "Ne pas imprimer"; Boolean)
         {
             Caption = 'Ne pas imprimer';
             DataClassification = ToBeClassified;
@@ -403,7 +403,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                         begin
                             if ("Composant de la ligne No." <> 0) or ("Eco Tax Furniture Line" = true) then
                                 Error(ABRATXT0001Err);
-                            if "Do not print" = true then
+                            if "Ne pas imprimer" = true then
                                 Validate("Qty. to Ship", 0)
                             else
                                 Validate("Qty. to Ship", "Outstanding Quantity");
@@ -412,8 +412,8 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                             SalesLine2.SetFilter("Composant de la ligne No.", '<>0&%1', "Line No.");
                             if SalesLine2.Find('-') then
                                 repeat
-                                    SalesLine2."Do not print" := "Do not print";
-                                    if "Do not print" = true then
+                                    SalesLine2."Ne pas imprimer" := "Ne pas imprimer";
+                                    if "Ne pas imprimer" = true then
                                         SalesLine2.Validate("Qty. to Ship", 0)
                                     else
                                         SalesLine2.Validate("Qty. to Ship", SalesLine2."Outstanding Quantity");
@@ -429,7 +429,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                             SalesLine2.SetFilter("Composant de la ligne No.", '<>0&%1', "Line No.");
                             if SalesLine2.Find('-') then
                                 repeat
-                                    SalesLine2."Do not print" := "Do not print";
+                                    SalesLine2."Ne pas imprimer" := "Ne pas imprimer";
                                     SalesLine2.Modify();
                                 until SalesLine2.Next() = 0;
                         end;
@@ -443,7 +443,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             DataClassification = ToBeClassified;
             TableRelation = "Country/Region";
         }
-        field(51100; "Duplicate Line"; Boolean)
+        field(51100; "Dupliquer ligne"; Boolean)
         {
             Caption = 'Dupliquer ligne';
             DataClassification = ToBeClassified;
@@ -759,26 +759,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             TableRelation = "UC Commande"."No. UC" where("No. commande" = field("Document No."));
             trigger OnValidate()
             var
-            //UC: Record "Unite colisage";
             begin
                 AjouterUC("No. UC");
-                /*
-                CalcFields("Nombre UC");
-                if "Nombre UC" > 1 then
-                    "No. UC" := 'Multiple';
-                */
             end;
         }
-        /*
-        field(51263; "Nombre UC"; Integer)
-        {
-            Caption = 'Nombre UC';
-            Editable = false;
-            BlankZero = true;
-            FieldClass = FlowField;
-            CalcFormula = Count("Prepa colisage" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No.")));
-        }
-        */
 
         field(51264; "Quantite prepa colisage"; Decimal)
         {
@@ -790,18 +774,6 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             CalcFormula = sum("Detail UC Commande"."Quantite dans UC" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No.")));
         }
 
-
-        /*
-        field(51265; "Quantite colisee"; Decimal)
-        {
-            Caption = 'Quantité colisée';
-            Editable = false;
-            BlankZero = true;
-            DecimalPlaces = 0 : 5;
-            FieldClass = FlowField;
-            CalcFormula = sum("Contenu colisage"."Quantite UC" where("Order No." = field("Document No."), "Order Line No." = field("Line No.")));
-        }
-        */
         field(51270; "SubTotal Amount"; Decimal)
         {
             AutoFormatExpression = "Currency Code";
@@ -902,6 +874,12 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             DecimalPlaces = 2 : 5;
             DataClassification = ToBeClassified;
         }
+        field(51335; "Article a coliser"; Boolean) //Vaut oui pour les articles non assemblés (il faut aussi avoir saisi une quantité)
+        {
+            Caption = 'Article à coliser';
+            BlankZero = true;
+            DataClassification = ToBeClassified;
+        }
         field(51330; "Quantite prise sur stock"; Decimal) //Calculé quand on demande le stock dispo, pas mis à jour sinon
         {
             Caption = 'Quantité prise sur stock';
@@ -948,7 +926,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         }
         key(MyKey10; TypeDocDuplique, NumDocDuplique, "Ligne deduction acompte", "Ligne deduction situation")
         {
-            SumIndexFields = "Montant restant HT (DS)","Quantite prise sur stock";
+            SumIndexFields = "Montant restant HT (DS)";
         }
         key(MyKey11; TypeDocDuplique, NumDocDuplique, "Ligne deduction situation")
         {
@@ -977,6 +955,11 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         key(MyKey17; "No. UC")
         {
             
+        }
+        key(MyKey18; TypeDocDuplique, NumDocDuplique, "Article a coliser",Phase)
+        
+        {
+            SumIndexFields = "Quantite prise sur stock";
         }
     }
 
@@ -1396,7 +1379,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         lSalesLine.SETRANGE("Document Type", "Document Type");
         lSalesLine.SETRANGE("Document No.", "Document No.");
         if lSalesLine.FINDFIRST() then
-            IsSelect := lSalesLine."Do not print";
+            IsSelect := lSalesLine."Ne pas imprimer";
 
         lSalesLine.RESET();
         lSalesLine.SETRANGE("Document Type", "Document Type");
@@ -1404,7 +1387,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         if lSalesLine.FINDSET(true) then
             repeat
                 if (lSalesLine."Composant de la ligne No." = 0) and (lSalesLine."Eco Tax Furniture Line" = false) then begin
-                    lSalesLine."Do not print" := not IsSelect;
+                    lSalesLine."Ne pas imprimer" := not IsSelect;
                     if lSalesLine."Document Type" = lSalesLine."Document Type"::Order then
                         if not IsSelect then
                             lSalesLine.VALIDATE("Qty. to Ship", 0)

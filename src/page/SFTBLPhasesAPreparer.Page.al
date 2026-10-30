@@ -42,7 +42,7 @@ page 50044 "SF TBL Phases a preparer"
                     //DecimalPlaces = 0 : 0;
                     Editable = false;
                 }
-                field("Quantité prise sur stock";EnteteVente."Quantité prise sur stock")
+                field("Quantite prise sur stock";EnteteVente."Quantite prise sur stock")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Quantité prise sur stock';
@@ -76,11 +76,11 @@ page 50044 "SF TBL Phases a preparer"
                     ToolTip = 'Nombre de phases';
                     Editable = false;
                 }
-                field("Date chargement"; EnteteVente."Date chargement")
+                field("Date chargement"; Rec."Date chargement")
                 {
                     ToolTip = 'Date de chargement';
                 }
-                field("Requested Delivery Date"; EnteteVente."Requested Delivery Date")
+                field("Requested Delivery Date"; Rec."Date livraison demandee")
                 {
                     Caption = 'Date livraison demandée';
                     ToolTip = 'Date de livraison demandée';
@@ -392,16 +392,20 @@ page 50044 "SF TBL Phases a preparer"
         FicheCommande.Run();
     end;
 
+
     trigger OnAfterGetRecord()
     begin
         if not EnteteVente.get(Rec."Type document", Rec."No. document") then
             EnteteVente.Init();
 
-        EnteteVente.CalcFields("Nombre phases","Quantité prise sur stock","No. of Archived Versions");
+        //KAN.FHA 29/10/2026 DEBUT
+        EnteteVente.SetRange("Filtre phase",Rec.Phase);
+        //KAN.FHA 29/10/2026 FIN
+        EnteteVente.CalcFields("Nombre phases","Quantite prise sur stock","No. of Archived Versions");
 
         VersionDocVente := EnteteVente."No. of Archived Versions";
 
-        rec.CalcFields("Quantites commandees", "Quantites expediees", "Quantites prises sur stock");
+        Rec.CalcFields("Quantites commandees", "Quantites expediees", "Quantites prises sur stock");
 
         if Rec."Quantites commandees" <> 0 then begin
             PctExpedie := round(Rec."Quantites expediees" / Rec."Quantites commandees" * 100, 1);
