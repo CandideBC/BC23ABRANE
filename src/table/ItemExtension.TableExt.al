@@ -280,7 +280,6 @@
                                                                   "Serial No." = field("Serial No. Filter")));
             Caption = 'Stock';
             DecimalPlaces = 0 : 5;
-            Description = 'KAN';
             Editable = false;
             FieldClass = FlowField;
         }

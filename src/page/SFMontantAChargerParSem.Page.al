@@ -136,7 +136,7 @@ page 50092 "SF Montant a charger par sem"
                     ToolTip = 'Informations concernant la phase du document de vente lié.';
                     Editable = false;
                 }
-                field("Date livraison chantier";Rec."Date livraison chantier")
+                field("Date livraison demandee";Rec."Date livraison demandee")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Date livraison chantier';

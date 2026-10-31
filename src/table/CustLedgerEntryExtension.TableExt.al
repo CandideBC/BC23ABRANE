@@ -13,37 +13,31 @@ tableextension 50005 CustLedgerEntryExtension extends "Cust. Ledger Entry"
         field(50020; "Code groupe"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(50030; "Nouveau Code enseigne"; Code[20])
         {
             Caption = 'Nouveau Code enseigne';
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Enseigne;
         }
         field(50040; "Code operation"; Code[20])
         {
             Caption = 'Code opération';
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Operations.Code where ("Code enseigne" = field ("Nouveau Code enseigne"));
         }
         field(50050; "Code chantier"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Chantier.Code where ("No. client" = field ("Sell-to Customer No."));
         }
         field(50060; "Facture acompte"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(50070; "Facture situation"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(50500; "Applied Cust. Ledger Entry No."; Integer)
         {

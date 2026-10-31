@@ -307,7 +307,6 @@ table 50041 "Ligne container"
         {
             BlankZero = true;
             Caption = 'Coût unitaire facture (papier)';
-            Description = 'KAN.FHA 01/03/2023';
 
             trigger OnValidate()
             begin
@@ -318,7 +317,6 @@ table 50041 "Ligne container"
         {
             BlankZero = true;
             Caption = 'Montant facture (papier)';
-            Description = 'KAN.FHA 01/03/2023';
         }
     }
 

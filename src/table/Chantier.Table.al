@@ -216,7 +216,6 @@ table 50027 Chantier
         }
         field(130; "Adr. facture=Adr. livraison"; Boolean)
         {
-            Description = 'KAN.FHA 26/10/2020';
         }
         field(140; "Chemin acces PDF Devis"; Text[250])
         {

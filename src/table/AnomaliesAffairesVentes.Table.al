@@ -76,17 +76,14 @@ table 50000 "Anomalies affaires ventes"
         }
         field(51190; "Code groupe"; Code[20])
         {
-            Description = 'KAN';
             TableRelation = "Groupe client";
         }
         field(51200; "Code enseigne"; Code[20])
         {
-            Description = 'KAN';
             TableRelation = Enseigne;
         }
         field(51220; "Code chantier"; Code[20])
         {
-            Description = 'KAN';
             TableRelation = Chantier.Code where ("Code enseigne" = field ("Code enseigne"));
 
             trigger OnValidate()

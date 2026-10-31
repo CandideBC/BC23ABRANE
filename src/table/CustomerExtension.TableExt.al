@@ -59,7 +59,6 @@ tableextension 50027 CustomerExtension extends Customer
         field(50565; "Code groupe"; Code[20])
         {
             CalcFormula = lookup(Enseigne."Code groupe" where(Code = field("Code enseigne")));
-            Description = 'KAN.FHA 19/02/2021';
             Editable = false;
             FieldClass = FlowField;
             TableRelation = "Groupe client";

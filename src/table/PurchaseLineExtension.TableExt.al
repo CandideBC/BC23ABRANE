@@ -225,7 +225,6 @@ tableextension 50020 PurchaseLineExtension extends "Purchase Line"
         field(50620; "Achat pour stock"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             Editable = false;
         }
 
@@ -243,18 +242,15 @@ tableextension 50020 PurchaseLineExtension extends "Purchase Line"
         field(51110; "Montant restant HT (DS)"; Decimal)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(51190; "Code groupe"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = "Groupe client";
         }
         field(51200; "Code enseigne"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Enseigne;
             trigger OnValidate()
             var
@@ -283,14 +279,12 @@ tableextension 50020 PurchaseLineExtension extends "Purchase Line"
         {
             Caption = 'Code opération';
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Operations.Code where("Code enseigne" = field("Code enseigne"));
         }
         field(51220; "Code chantier"; Code[20])
         {
             Caption = 'Code chantier';
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = if ("Code enseigne" = filter(<> '')) Chantier.Code where("Code enseigne" = field("Code enseigne"))
             else
             Chantier;
@@ -333,7 +327,6 @@ tableextension 50020 PurchaseLineExtension extends "Purchase Line"
                                                                   "No. document vente" = filter(<> ''),
                                                                   "Quantite affectee" = filter(<> 0)));
             Caption = 'Nb lignes ventes liées';
-            Description = 'KAN';
             Editable = false;
             FieldClass = FlowField;
         }
@@ -357,7 +350,6 @@ tableextension 50020 PurchaseLineExtension extends "Purchase Line"
         field(51250; "Article divers"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(51255; "Reference 102 B.E."; Code[20])
         {

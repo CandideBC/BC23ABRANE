@@ -1,5 +1,6 @@
 page 50098 "Ctrl. code douanier/Achat DIV"
 {
+    ApplicationArea = All;
     DeleteAllowed = false;
     InsertAllowed = false;
     PageType = List;
@@ -61,6 +62,7 @@ page 50098 "Ctrl. code douanier/Achat DIV"
             action(Fiche)
             {
                 Caption = 'Fiche';
+                ToolTip = 'Permet d''afficher la commande d''achat.';
                 Image = "Order";
                 Promoted = true;
                 PromotedCategory = Process;

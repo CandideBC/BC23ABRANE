@@ -186,20 +186,17 @@ table 50037 "Edit Sales Invoice"
         field(50300; "Montant deja verse TTC"; Decimal)
         {
             Caption = 'Montant déjà versé TTC';
-            Description = 'KAN.FHA 02/06/2021';
 
             trigger OnValidate()
             var
                 UserSetup: Record "User Setup";
                 ModifMontantVerseErr: Label 'Vous n''avez pas les autorisations pour modifier ce champ.';
             begin
-                //KAN.FHA 02/06/2021 DEBUT
                 if not UserSetup.Get(UserId) then
                     UserSetup.Init();
 
                 if not UserSetup."Saisir montant deja verse" then
                     Error(ModifMontantVerseErr);
-                //KAN.FHA 02/06/2021 FIN
             end;
         }
         field(76581; "Posted Sales Invoice Line No."; Integer)
@@ -239,7 +236,6 @@ table 50037 "Edit Sales Invoice"
         field(88860; "Concernee DEB"; Boolean)
         {
             Caption = 'Concernée DEB';
-            Description = 'KAN.FHA 16/02/2023';
         }
     }
 

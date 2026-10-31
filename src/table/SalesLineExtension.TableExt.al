@@ -499,13 +499,11 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         field(51190; "Code groupe"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = "Groupe client";
         }
         field(51200; "Code enseigne"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Enseigne;
 
             trigger OnValidate()
@@ -737,10 +735,8 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
                 if "Type ligne" <> "Type ligne"::"Fin total" then
                     "SubTotal Amount" := 0;
 
-                //KAN.FHA 06/04/2020 FIN
                 if "Type ligne" = "Type ligne"::"Fin total" then
                     Description := txtSousTotalTxt;
-                //KAN.FHA 06/04/2020 FIN
             end;
         }
         field(51260; "Packing in Progress"; Boolean)

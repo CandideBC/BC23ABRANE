@@ -30,29 +30,24 @@ tableextension 50009 LocationExtension extends Location
         field(50030; "Magasin de rebut"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(50040; "Afficher dans stock"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(50045; "Magasin de transit"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(50050; "Magasin obsolete"; Boolean)
         {
             Caption = 'Magasin obsolète';
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(50060; "Magasin bloque"; Boolean)
         {
             Caption = 'Magasin bloqué';
             DataClassification = ToBeClassified;
-            Description = 'KAN';
         }
         field(50070; "Montrer stock sur creer cde"; Boolean)
         {

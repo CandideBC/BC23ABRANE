@@ -109,19 +109,16 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
         {
             Caption = 'Commentaires prévision transport';
             DataClassification = ToBeClassified;
-            Description = 'KAN.FHA 16/06/2023';
         }
         field(50013; "Commentaires suivi production"; Text[250])
         {
             Caption = 'Commentaires suivi production';
             DataClassification = ToBeClassified;
-            Description = 'KAN.FHA 15/05/2024';
         }
 
         field(50016; "Commande transitaire container"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN.FHA 20/06/2023';
         }
         field(50020; "Frais transitaire eclates"; Boolean)
         {
@@ -218,7 +215,6 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
         field(50190; "Code groupe"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = "Groupe client";
 
             trigger OnValidate()
@@ -231,7 +227,6 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
         {
             Caption = 'Code enseigne';
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Enseigne;
 
             trigger OnValidate()
@@ -255,7 +250,6 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
         {
             Caption = 'Code opération';
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Operations.Code where("Code enseigne" = field("Code enseigne"));
 
             trigger OnValidate()
@@ -266,7 +260,6 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
         field(50220; "Code chantier"; Code[20])
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
             TableRelation = Chantier where("Chantier archive" = const(false));
 
             trigger OnValidate()
@@ -308,13 +301,13 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
 
         field(50228; "Phase unique"; Integer) // - 98 si multi-phase
         {
-            Caption = 'Date livraison chantier';
+            Caption = 'Phase unique';
             DataClassification = ToBeClassified;
             Editable = false;
         }
-        field(50229; "Date livraison chantier"; Date)
+        field(50229; "Date livraison demandee"; Date)
         {
-            Caption = 'Date livraison chantier';
+            Caption = 'Date livraison demandée';
             FieldClass = FlowField;
             CalcFormula = lookup("Phases document"."Date livraison demandee" where("Type document" = field("Type doc. vente"), "No. document" = field("No. doc. vente"), Phase = field("Phase unique")));
             Editable = false;
@@ -411,7 +404,6 @@ tableextension 50021 PurchaseHeaderExtension extends "Purchase Header"
         field(50620; "Achat pour stock"; Boolean)
         {
             DataClassification = ToBeClassified;
-            Description = 'KAN';
 
             trigger OnValidate()
             var

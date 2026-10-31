@@ -70,7 +70,7 @@ page 50109 "Liste phases document"
                     RemplirQteAExpVisible := false;
                 end;
             //KAN.FHA 30/10/2026 DEBUT
-            'Remplir Qté à expédier':
+            'RemplirQteAExpedier':
                 begin
                     AcheterVisible := false;
                     RemplirQteAExpVisible := true;

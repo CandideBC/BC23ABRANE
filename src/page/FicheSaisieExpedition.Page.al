@@ -21,20 +21,6 @@ page 50123 "Fiche saisie expedition"
                     ToolTip = 'N° commande';
                     Editable = false;
                 }
-                /*
-                field("Sell-to Customer No."; Rec."Sell-to Customer No.")
-                {
-                    ToolTip = 'N° du client qui a commandé.';
-                    Editable = false;
-
-                }
-                field("Sell-to Customer Name"; Rec."Sell-to Customer Name")
-                {
-                    ToolTip = 'Nom du destinataire 2';
-                    Editable = false;
-                }
-                */
-
                 group(AdrLivraison)
                 {
                     Caption = 'Adresse livraison';
@@ -267,6 +253,22 @@ page 50123 "Fiche saisie expedition"
                 begin
                     Rec.EtablirSuiviAchats();
                     Page.Run(Page::SuiviAchatsParDocVente);
+                end;
+            }
+            action(RemplirQteAExpedier)
+            {
+                ApplicationArea = All;
+                Caption = 'Remplir Qté. à expédier';
+                ToolTip = 'Affiche la liste des phases où vous pourrez cocher quels phases doivent être livrées.';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                Image = AutofillQtyToHandle;
+
+                trigger OnAction()
+                var
+                begin
+                    Rec.RemplirQteAExpedierPhasesCochees();
                 end;
             }
             action(Expedier)

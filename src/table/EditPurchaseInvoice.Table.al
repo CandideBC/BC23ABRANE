@@ -112,7 +112,6 @@ table 50050 "Edit Purchase Invoice"
         field(88860; "Concernee DEB"; Boolean)
         {
             Caption = 'Concernée DEB';
-            Description = 'KAN.FHA 16/02/2023';
         }
     }
 

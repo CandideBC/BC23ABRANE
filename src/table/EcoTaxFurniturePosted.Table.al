@@ -66,17 +66,14 @@ table 50009 "Eco Tax Furniture posted"
         }
         field(120; Description; Text[100])
         {
-            Description = 'KAN.FHA 28/10/2020';
         }
         field(130; "Document Line No."; Integer)
         {
             Caption = 'Document Line No.';
-            Description = 'KAN.FHA 08/04/2021';
         }
         field(140; "Salesperson Code"; Code[20])
         {
             Caption = 'Code vendeur';
-            Description = 'KAN.FHA 08/04/2021';
         }
     }
 

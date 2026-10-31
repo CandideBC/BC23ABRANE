@@ -22,7 +22,6 @@ table 50040 Container
         field(10; "No. Immat / Container"; Text[20])
         {
             Caption = 'N° Immat / Container';
-            Description = 'KAN.FHA 10/02/2022';
         }
         field(18; "Mode de transport"; Code[10])
         {

@@ -100,7 +100,7 @@ page 50138 "SF TBL Semainier recep prevue"
         //KAN.FHA 30/10/2026 DEBUT
         //Page.Run(page::"Purchase Order List", EnteteAchat);
         Clear(PurchOrderListPage);
-        PurchOrderListPage.MasquerColonnesPourLogistique(true);
+        PurchOrderListPage.AfficherColonnesPourLogistique(true);
         PurchOrderListPage.SetTableView(EnteteAchat);
         PurchOrderListPage.Run();
         //KAN.FHA 30/10/2026 FIN

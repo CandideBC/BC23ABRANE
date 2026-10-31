@@ -1,8 +1,9 @@
 codeunit 50017 ConsommerEventsCodeunits
 {
-    //Permissions = TableData "Sales Shipment Line" = rm;
     Permissions = tabledata "Sales Invoice Header" = rm,
-                TableData "Purch. Inv. Header" = rm;
+                tableData "Purch. Inv. Header" = rm,
+                tabledata "Sales Shipment Header" = rm,
+                tabledata "Sales Shipment Line" = rm;
 
     [EventSubscriber(ObjectType::Codeunit, 12, OnBeforeInsertDtldCustLedgEntry, '', false, false)]
     local procedure CU12_OnBeforeInsertDtldCustLedgEntry(var DtldCustLedgEntry: Record "Detailed Cust. Ledg. Entry"; GenJournalLine: Record "Gen. Journal Line")

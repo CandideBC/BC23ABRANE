@@ -1313,7 +1313,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         lTotal: Decimal;
 
     begin
-        //-NEG.NV06 DIAGONAL YCH 22/06/2010 SOUS TOTAL
         CLEAR(lTotal);
         lSalesLine.RESET();
         lSalesLine.SETRANGE("Document Type", pHeader."Document Type");
@@ -1331,7 +1330,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 end;
                 lTotal += lSalesLine."Line Amount";
             until lSalesLine.NEXT() = 0;
-        //+NEG.NV06 DIAGONAL YCH 22/06/2010 SOUS TOTAL
     end;
 
     /*
@@ -1406,7 +1404,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
     var
         SalesLine_l: Record "Sales Line";
     begin
-        //- DIA/BPE 17/11/14
         if "Document Type" <> "Document Type"::Quote then
             exit;
         SalesLine_l.SETRANGE("Document Type", "Document Type");
@@ -1416,7 +1413,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 SalesLine_l."Released Status" := (Status = Status::Released);
                 SalesLine_l.MODIFY();
             until SalesLine_l.NEXT() = 0;
-        //+ DIA/BPE 17/11/14
 
     end;
 
@@ -1538,11 +1534,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         lrecSalesLine.SETRANGE("Document Type", "Document Type");
         lrecSalesLine.SETRANGE("Document No.", "No.");
         lrecSalesLine.SETRANGE(Type, lrecSalesLine.Type::Item);
-        //KAN.FHA 28/01/2026 DEBUT
         if pAcheterQueCertainesPhases then
             lrecSalesLine.SetRange("A acheter", true);
 
-        //KAN.FHA 28/01/2026 FIN
         if lrecSalesLine.FINDSET(true) then
             repeat
                 lrecSalesLine."Creer cde achat" := false;
@@ -1577,22 +1571,12 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         ListeFournisseur."Creer nouvelle commande" := true;
                         ListeFournisseur.INSERT();
                     end;
-                    //KAN.FHA 22/04/2026 DEBUT
-                    //lrecSalesLine.CALCFIELDS("Nb affectations achats");
-                    //ListeFournisseur."Creer nouvelle commande" := (ListeFournisseur."Creer nouvelle commande") and (lrecSalesLine."Nb affectations achats" = 0) and (Fournisseur.GET(lrecSalesLine."Vendor No."));
-                    //Lignes remplacees par :
                     lrecSalesLine.CalcFields("Quantite affectee");
                     ListeFournisseur."Creer nouvelle commande" := (ListeFournisseur."Creer nouvelle commande") and (lrecSalesLine."Quantite affectee" = 0) and (Fournisseur.GET(lrecSalesLine."Vendor No."));
                     ListeFournisseur.MODIFY();
                     lrecSalesLine."Creer cde achat" := ListeFournisseur."Creer nouvelle commande";
                     if lrecSalesLine."Creer cde achat" then
                         lrecSalesLine."Ajouter à cde achat No." := '';
-                    //KAN.FHA 22/04/2026 DEBUT
-                    //if lrecSalesLine."Creer cde achat" and (lrecSalesLine."Nb affectations achats" = 0) then
-                    //    lrecSalesLine."Quantite a acheter" := lrecSalesLine."Outstanding Quantity"
-                    //else
-                    //    lrecSalesLine."Quantite a acheter" := 0;
-                    //Lignes remplacees par :
                     if lrecSalesLine."Creer cde achat" then begin
                         QteAAcheter := lrecSalesLine."Outstanding Quantity" - lrecSalesLine."Quantite affectee";
                         if QteAAcheter < 0 then
@@ -2324,7 +2308,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         if TableTamponVente."Fournisseur divers" then
             lrecPurchaseLine."Country/Region of Origin Code" := TableTamponVente."Code pays origine";
 
-        lrecPurchaseLine.MODIFY(true);
+        lrecPurchaseLine.Modify(true);
 
     end;
 
@@ -2873,7 +2857,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             until lLigneVente.NEXT() = 0;
     end;
 
-
     procedure CalculerStockDispo(pOuvrirPageDispo: Boolean)
     var
         LigneVente: Record "Sales Line";
@@ -3249,16 +3232,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                             LigneVente.Validate("Unit of Measure Code", TamponExtraireDocument."Code unite");
                         if TamponExtraireDocument.Description <> '' then
                             LigneVente.Validate(Description, TamponExtraireDocument.Description);
-
-                        //LigneVente."Shortcut Dimension 1 Code" := TamponExtraireDocument."Shortcut Dimension 1 Code";
-                        //LigneVente."Shortcut Dimension 2 Code" := TamponExtraireDocument."Shortcut Dimension 2 Code";
-
-                        //DimensionSetIDArr[1] := SalesLine."Dimension Set ID";
-                        //DimensionSetIDArr[2] := StdSalesLine."Dimension Set ID";
-
-                        //LigneVente."Dimension Set ID" :=
-                        //  DimensionManagement.GetCombinedDimensionSetID(
-                        //    DimensionSetIDArr, SalesLine."Shortcut Dimension 1 Code", SalesLine."Shortcut Dimension 2 Code");
 
                         LigneVente."Type ligne" := TamponExtraireDocument."Type ligne";
                         LigneVente."Line No." := GetNextLineNo(LigneVente);
@@ -3700,7 +3673,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
         Clear(PagePhases);
         PagePhases.SetTableView(PhasesDocVente);
-        PagePhases.DefinirTypeAppel('Remplir Qté à expédier');
+        PagePhases.DefinirTypeAppel('RemplirQteAExpedier');
         PagePhases.LookupMode(true);
         if PagePhases.RunModal() <> Action::LookupOK then
             exit;

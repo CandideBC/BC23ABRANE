@@ -97,6 +97,12 @@ table 50053 "Phases document"
         field(25; Description; Text[50])
         {
             Caption = 'Description phase';
+            trigger OnValidate()
+            begin
+                //KAN.FHA 30/10/2026 DEBUT
+                MAJInfosPhaseSurCdeAchat();
+                //KAN.FHA 30/10/2026 FIN
+            end;
         }
         field(30; "Nb lignes dans phase"; Integer)
         {
@@ -274,7 +280,7 @@ table 50053 "Phases document"
         EnteteAchat.SetRange("Phase unique", Rec.Phase);
         if EnteteAchat.FindSet(true) then
             repeat
-                EnteteAchat."Date livraison chantier" := Rec."Date livraison demandee";
+                EnteteAchat."Date livraison demandee" := Rec."Date livraison demandee";
                 EnteteAchat."Info phases" := StrSubstNo(InfoPhaseLbl, Phase, Description, Format("Date chargement"));
                 EnteteAchat.Modify();
             until EnteteAchat.Next() = 0;

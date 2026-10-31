@@ -31,30 +31,8 @@ pageextension 50005 GeneralLedgerEntriesExtension extends "General Ledger Entrie
                 RunObject = Page "Update Description Entry";
                 RunPageOnRec = true;
                 ToolTip = 'Modifier libellé écritures';
-
-
             }
         }
     }
-
-    var
-        
-
-        
-        EcranInterditErr: Label 'Vos autorisations ne vous permettant pas d''ouvrir cet écran.';
-
-        //Unsupported feature: Code Insertion on "OnOpenPage".
-        //trigger OnOpenPage()
-        //begin
-        /*
-        //KAN.FHA 06/07/2020 DEBUT
-        if not ParamUtil.Get(UserId) then
-          ParamUtil.Init;
-
-        if not ParamUtil."Voir ecritures comptables" then
-          Error(EcranInterditErr);
-        //KAN.FHA 06/07/2020 FIN
-        */
-        //end;
 }
 
