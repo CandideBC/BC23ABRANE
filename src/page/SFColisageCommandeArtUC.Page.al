@@ -127,12 +127,6 @@ page 50024 "SF colisage commande Art/UC"
 
     var
         fSplit: Page "Eclater detail UC commande";
-        Text0001Err: Label 'La description ne peut pas être modifiée';
-
-    procedure GetShipment()
-    begin
-        CODEUNIT.RUN(Codeunit::"Packing Management", Rec);
-    end;
 
     procedure UpdateForm(SetSaveRecord: Boolean)
     begin

@@ -85,15 +85,7 @@ page 50092 "SF Montant a charger par sem"
                     Editable = false;
                     ToolTip = 'Semaine chargement';
                 }
-                field("Date chargement confirmee"; Rec."Date chargement confirmee")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Date chargement confirmée';
-                    trigger OnValidate()
-                    begin
-                        CurrPage.SaveRecord();
-                    end;
-                }
+
                 field("Expected Receipt Date"; Rec."Expected Receipt Date")
                 {
                     Caption = 'Date réception prévue';
@@ -103,6 +95,15 @@ page 50092 "SF Montant a charger par sem"
                 field("Commentaires pour AIE"; Rec."Commentaires pour AIE")
                 {
                     ToolTip = 'Commentaires pour AIE';
+                    trigger OnValidate()
+                    begin
+                        CurrPage.SaveRecord();
+                    end;
+                }
+                field("Date chargement confirmee"; Rec."Date chargement confirmee")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Date chargement confirmée';
                     trigger OnValidate()
                     begin
                         CurrPage.SaveRecord();
@@ -130,18 +131,19 @@ page 50092 "SF Montant a charger par sem"
                     ToolTip = 'N° doc vente';
                     Editable = false;
                 }
-                field("Info phases";Rec."Info phases")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Informations concernant la phase du document de vente lié.';
-                    Editable = false;
-                }
                 field("Date livraison demandee";Rec."Date livraison demandee")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Date livraison chantier';
                     Editable = false;
                 }
+                field("Info phases";Rec."Info phases")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Informations concernant la phase du document de vente lié.';
+                    Editable = false;
+                }
+
                 
                 field(NumeroDossierBE; NumeroDossierBE)
                 {

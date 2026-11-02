@@ -138,6 +138,14 @@ table 50053 "Phases document"
             BlankZero = true;
             DecimalPlaces = 0 : 5;
         }
+        field(35; "Quantite commandee"; Decimal)
+        {
+            Caption = 'Quantité commandée';
+            FieldClass = FlowField;
+            CalcFormula = sum("Sales Line"."Quantite commandee" where(TypeDocDuplique = field("Type document"), NumDocDuplique = field("No. document"),Phase=field(Phase)));
+            Editable = false;
+            DecimalPlaces = 0 : 5;
+        }
 
         field(50; "Date chargement"; Date)
         {

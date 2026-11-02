@@ -298,11 +298,16 @@ page 50123 "Fiche saisie expedition"
                     //NbPhasesDocument: Integer;
                     NumLigne: integer;
                     DetailPalettesFourni: Boolean;
+                    ConfirmerExpedierQst: Label 'Voulez-vous générer le BL ?';
+                    AnnulationExpedierErr: Label 'Opération interrompue à la demande de l''utilisateur.';
                 //PhaseNonChoisieErr: Label 'Vous devez choisir une phase.';
                 //ExpedierQst: Label 'Souhaitez-vous expédier cette commande ?';
                 //OperationAnnuleeErr: Label 'Opération interrompue';
 
                 begin
+                    if not Confirm(ConfirmerExpedierQst,false) then
+                        Error(AnnulationExpedierErr);
+                        
                     Rec.CalcSubTotal(Rec);
                     Commit();
 

@@ -110,7 +110,7 @@ table 50052 "Ligne fiche BE"
 
             trigger OnValidate()
             var
-                Temps: Record Date;
+                recTemps: Record Date;
                 ParamUtil: Record "User Setup";
                 UtilNonAutoriseErr: Label 'Vous n''êtes pas autorisé à compléter ce champ.';
                 DateFin: date;
@@ -122,12 +122,12 @@ table 50052 "Ligne fiche BE"
                     error(UtilNonAutoriseErr);
 
                 DateFin := Calcdate('<+1Y>', today);
-                Temps.SetRange("Period Type", Temps."Period Type"::week);
-                Temps.Setrange("Period Start", today, DateFin);
-                Temps.SetFilter("Period No.", "Periode planification");
-                if Temps.Findfirst() then begin
-                    Rec."Semaine debut traitement BE" := Temps."Period No.";
-                    Rec."Date debut traitement BE" := Temps."Period Start";
+                recTemps.SetRange("Period Type", recTemps."Period Type"::week);
+                recTemps.Setrange("Period Start", today, DateFin);
+                recTemps.SetFilter("Period No.", "Periode planification");
+                if recTemps.Findfirst() then begin
+                    Rec."Semaine debut traitement BE" := recTemps."Period No.";
+                    Rec."Date debut traitement BE" := recTemps."Period Start";
                 end;
             end;
         }
@@ -193,6 +193,21 @@ table 50052 "Ligne fiche BE"
         {
             Caption = 'N° article B.E.';
             DataClassification = ToBeClassified;
+            //KAN.FHA 02/11/2026 DEBUT
+            trigger OnValidate()
+            var
+                LigneAchat: Record "Purchase Line";
+            begin
+                LigneAchat.Reset();
+                LigneAchat.SetCurrentKey("Reference Fiche BE");
+                LigneAchat.Setrange("Reference Fiche BE");
+                if LigneAchat.FindSet(true) then
+                    repeat  
+                        LigneAchat."Reference 102 B.E." := Rec."No. article B.E.";
+                        LigneAchat.Modify();
+                    until LigneAchat.Next() = 0;
+            end;
+            //KAN.FHA 02/11/2026 FIN
         }
 
         field(110; "Alerte decalage date"; Boolean)

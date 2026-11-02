@@ -870,12 +870,14 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             DecimalPlaces = 2 : 5;
             DataClassification = ToBeClassified;
         }
-        field(51335; "Article a coliser"; Boolean) //Vaut oui pour les articles non assemblés (il faut aussi avoir saisi une quantité)
+        field(51325; "Quantite commandee"; Decimal) //Uniquement pour les articles et vaut zéro pour les articles assemblés
         {
-            Caption = 'Article à coliser';
+            Caption = 'Quantité commandée';
             BlankZero = true;
+            DecimalPlaces = 0 : 5;
             DataClassification = ToBeClassified;
         }
+
         field(51330; "Quantite prise sur stock"; Decimal) //Calculé quand on demande le stock dispo, pas mis à jour sinon
         {
             Caption = 'Quantité prise sur stock';
@@ -883,6 +885,13 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             DecimalPlaces = 0 : 5;
             DataClassification = ToBeClassified;
         }
+        field(51335; "Article a coliser"; Boolean) //Vaut oui pour les articles non assemblés (il faut aussi avoir saisi une quantité)
+        {
+            Caption = 'Article à coliser';
+            BlankZero = true;
+            DataClassification = ToBeClassified;
+        }
+
     }
 
     keys
@@ -890,6 +899,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
 
         key(MyKey1; "Document Type", "Document No.", Type)
         {
+            
 
         }
         key(MyKey2; "Vendor No.")
@@ -930,7 +940,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         }
         key(MyKey12; TypeDocDuplique, NumDocDuplique, Phase)
         {
-            SumIndexFields = "Montant achats prevus (DS)";
+            SumIndexFields = "Montant achats prevus (DS)","Quantite commandee";
         }
         key(MyKey13; "Reference Fiche BE")
         {

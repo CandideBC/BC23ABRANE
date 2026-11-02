@@ -401,7 +401,7 @@ page 50044 "SF TBL Phases a preparer"
         //KAN.FHA 29/10/2026 DEBUT
         EnteteVente.SetRange("Filtre phase",Rec.Phase);
         //KAN.FHA 29/10/2026 FIN
-        EnteteVente.CalcFields("Nombre phases","Quantite prise sur stock","No. of Archived Versions");
+        EnteteVente.CalcFields("Nombre phases","No. of Archived Versions");
 
         VersionDocVente := EnteteVente."No. of Archived Versions";
 

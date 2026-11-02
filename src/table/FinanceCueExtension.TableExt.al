@@ -17,5 +17,12 @@ tableextension 50062 FinanceCueExtension extends "Finance Cue"
             CalcFormula = count("Sales Header" where ("Document Type"=const(Order),"Demander situ. a la compta"=const(true)));
             Editable = false;
         }
+        field(50150; "Dossiers facturables"; Integer)
+        {
+            Caption = 'Dossiers facturables';
+            FieldClass = FlowField;
+            CalcFormula = count("Sales Header" where ("Dossier facturable"=const(true)));
+            Editable = false;
+        }
     }
 }

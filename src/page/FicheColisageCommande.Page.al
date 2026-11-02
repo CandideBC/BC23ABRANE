@@ -34,16 +34,17 @@ page 50145 "Fiche colisage commande"
                 }
 
             }
-            part(LignesCommandes; "SF colisage commande : art")
-            {
-                ApplicationArea = All;
-                SubPageLink = "Document No." = field("No.");
-            }
             part(UC; "SF Colisage commande : UC")
             {
                 ApplicationArea = all;
                 SubPageLink = "No. commande" = field("No.");
             }
+            part(LignesCommandes; "SF colisage commande : art")
+            {
+                ApplicationArea = All;
+                SubPageLink = "Document No." = field("No.");
+            }
+
             part(ContenuUC; "SF colisage commande Art/UC")
             {
                 ApplicationArea = all;

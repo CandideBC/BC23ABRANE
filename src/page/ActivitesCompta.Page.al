@@ -23,7 +23,13 @@ page 50016 ActivitesCompta
                 field("Situations a creer"; Rec."Situations a creer")
                 {
                     ApplicationArea = Basic, Suite;
-                    ToolTip = 'Indique combien de factures de situaiton doivent être créées';
+                    ToolTip = 'Indique combien de factures de situation doivent être créées';
+                    DrillDownPageId = "Sales Order List";
+                }
+                field("Dossiers facturables";Rec."Dossiers facturables")
+                {
+                    ApplicationArea = Basic, Suite;
+                    ToolTip = 'Indique combien de commandes sont potentiellement facturables.';
                     DrillDownPageId = "Sales Order List";
                 }
             }

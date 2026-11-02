@@ -997,6 +997,7 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 end;
 
             }
+            /*
             action(Expedier)
             {
                 Caption = 'Expédier';
@@ -1056,6 +1057,7 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                     CU80.Run(Rec);
                 end;
             }
+            */
             action(Facturer)
             {
                 Caption = 'Facturer';

@@ -351,6 +351,12 @@ tableextension 50020 PurchaseLineExtension extends "Purchase Line"
         {
             DataClassification = ToBeClassified;
         }
+        //KAN.FHA 02/11/2026 DEBUT
+        field(51252; "Reference Fiche BE"; Code[10])
+        {
+            DataClassification = ToBeClassified;
+        }
+        //KAN.FHA 02/11/2026 FIN
         field(51255; "Reference 102 B.E."; Code[20])
         {
             Caption = 'Référence 102 B.E.';
@@ -468,6 +474,10 @@ tableextension 50020 PurchaseLineExtension extends "Purchase Line"
         key(MyKey12; "Document Type","Blanket Order No.","Blanket Order Line No.")
         {
             SumIndexFields = "Outstanding Qty. (Base)";
+        }
+        key(MyKey13; "Reference Fiche BE")
+        {
+            
         }
 
     }

@@ -121,6 +121,11 @@ table 50018 TamponTriLignesDocument
         {
             Caption = 'No. ligne doc. vente';
         }
+        //KAN.FHA 02/11/2026 DEBUT
+        field(260; "Reference Fiche BE"; Code[10])
+        {
+        }
+        //KAN.FHA 02/11/2026 FIN
         
 
     }

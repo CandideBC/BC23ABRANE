@@ -1012,6 +1012,15 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             TableRelation = "Phases document".Phase where ("Type document"=field("Document Type"),"No. document"=field("No."));
             FieldClass = FlowFilter;
         }
+        field(51288; "Quantite commandee"; Decimal)
+        {
+            Caption = 'Quantité commandée';
+            FieldClass = FlowField;
+            CalcFormula = sum("Sales Line"."Quantite commandee" where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."),Phase=field("Filtre phase")));
+            Editable = false;
+            DecimalPlaces = 0 : 5;
+        }
+
         field(51290; "Quantite prise sur stock"; Decimal)
         {
             Caption = 'Quantité prise sur stock';
@@ -1033,6 +1042,11 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Caption = 'Commande export';
             Editable = false;
             Description = 'Livraison vers pays ni vide ni FR.';
+        }
+        field(51320; "Dossier facturable"; Boolean) //Mis à jour par codeunit ... planifié une fois par jour
+        {
+            Caption = 'Dossier facturable';
+            Editable = false;
         }
     }
     keys
@@ -1065,6 +1079,11 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         {
 
         }
+        key(MyKey8; "Dossier facturable")
+        {
+            
+        }
+        
     }
     procedure ExtraireContenuCommande()
     begin
@@ -1728,8 +1747,12 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         TableTampon."Code pays origine" := ListeFournisseur."Code pays origine";
                         TableTampon."Nomenclature produits" := lrecSalesLine."Nomenclature produits";
                         TableTampon."Poids net" := lrecSalesLine."Net Weight";
-                        if lrecSalesLine."Article divers" then
+                        if lrecSalesLine."Article divers" then begin
                             TableTampon."Prix achat prevu" := lrecSalesLine."Prix achat prevu";
+                            //KAN.FHA 02/11/2026 DEBUT
+                            TableTampon."Reference Fiche BE" := lrecSalesLine."Reference Fiche BE";
+                            //KAN.FHA 02/11/2026 FIN
+                        end;
                         //KAN.FHA 21/09/2026 DEBUT
                         TableTampon."Achete pour phase (si unique)" := lrecSalesLine.Phase; //Phase brute de la ligne de vente (0 possible)
                         //KAN.FHA 21/09/2026 FIN
@@ -2263,10 +2286,11 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         end;
     end;
 
-    procedure CreerLigneCommandeAchat(Var EnteteAchat: Record "Purchase Header"; TableTamponVente: Record TamponTriLignesDocument; LineNo: Integer; QtyToOrder: Decimal; var TamponCadre: record "Tampon dispo cde cadre achat")
+    procedure CreerLigneCommandeAchat(var EnteteAchat: Record "Purchase Header"; TableTamponVente: Record TamponTriLignesDocument; LineNo: Integer; QtyToOrder: Decimal; var TamponCadre: record "Tampon dispo cde cadre achat")
     var
         lrecPurchaseLine: Record "Purchase Line";
         Article: Record Item;
+        LigneFicheBE: Record "Ligne fiche BE";
     begin
         if QtyToOrder = 0 then
             exit;
@@ -2276,7 +2300,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         lrecPurchaseLine.VALIDATE("Document No.", EnteteAchat."No.");
         lrecPurchaseLine."Line No." := LineNo;
         lrecPurchaseLine.INSERT(true); // On insère tôt pour que les VALIDATE suivants fonctionnent bien
-
         lrecPurchaseLine.VALIDATE(Type, lrecPurchaseLine.Type::Item);
         lrecPurchaseLine.VALIDATE("No.", TableTamponVente."No.");
         lrecPurchaseLine.VALIDATE("Variant Code", TableTamponVente."Code variante");
@@ -2307,6 +2330,16 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
         if TableTamponVente."Fournisseur divers" then
             lrecPurchaseLine."Country/Region of Origin Code" := TableTamponVente."Code pays origine";
+
+        //KAN.FHA 02/11/2026 DEBUT
+        lrecPurchaseLine."Reference Fiche BE" := TableTamponVente."Reference Fiche BE"; //La reference fiche BE est invariable et unique. Elle permet de faire la mise à jour de la reference article B.E
+        //KAN.FHA 02/11/2026 FIN    
+        if TableTamponVente."Reference Fiche BE" <> '' then begin
+            LigneFicheBE.SetCurrentKey(Reference);
+            LigneFicheBE.SetRange(Reference,TableTamponVente."Reference Fiche BE");
+            if LigneFicheBE.FindFirst() then
+                lrecPurchaseLine."Reference 102 B.E." := LigneFicheBE."No. article B.E.";
+        end;
 
         lrecPurchaseLine.Modify(true);
 

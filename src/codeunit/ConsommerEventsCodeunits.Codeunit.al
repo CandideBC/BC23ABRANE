@@ -1881,7 +1881,7 @@ codeunit 50017 ConsommerEventsCodeunits
         //DIAFTS 11/09/2015
 
         //KAN.FHA 20/06/2025 DEBUT
-        IF ((SalesHeader."Document Type" = SalesHeader."Document Type"::Quote) and (SalesHeader."Proba transformation" = SalesHeader."Proba transformation"::"100")) or
+        if ((SalesHeader."Document Type" = SalesHeader."Document Type"::Quote) and (SalesHeader."Proba transformation" = SalesHeader."Proba transformation"::"100")) or
             (SalesHeader."Document Type" = SalesHeader."Document Type"::Order)
         then
             SalesHeader.MAJDossierBE();

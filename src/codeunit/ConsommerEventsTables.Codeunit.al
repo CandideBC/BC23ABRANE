@@ -923,21 +923,27 @@ codeunit 50019 ConsommerEventsTables
 
         Rec.fctMajQuantiteComposant(Rec);
 
+
+
         //KAN.FHA 23/09/2026 DEBUT
         Rec.TypeDuplique := Rec.Type;
         //KAN.FHA 23/09/2026 FIN
 
         //KAN.FHA 29/10/2026 DEBUT
-        if (Rec.Type <> Rec.Type::Item) or (Rec.Quantity = 0) then
-            Rec."Article a coliser" := false
-        else begin
+        if (Rec.Type <> Rec.Type::Item) or (Rec.Quantity = 0) then begin
+            Rec."Article a coliser" := false;
+            Rec."Quantite commandee" := 0;
+        end else begin
             if not Article.Get(Rec."No.") then
                 Article.Init();
             Article.CalcFields("Assembly BOM");
-            if Article."Assembly BOM" then
-                Rec."Article a coliser" := false
-            else
+            
+            if Article."Assembly BOM" then begin 
+                Rec."Article a coliser" := false;
+                Rec."Quantite commandee" := 0;
+            end else
                 Rec."Article a coliser" := true;
+                Rec."Quantite commandee" := Rec."Quantity (Base)";
         end;
         //KAN.FHA 29/10/2026 FIN
     end;

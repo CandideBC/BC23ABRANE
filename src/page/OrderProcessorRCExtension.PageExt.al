@@ -233,6 +233,34 @@ pageextension 50126 OrderProcessorRCExtension extends "Order Processor Role Cent
             }
         }
         movebefore(PlanComptable; "Purchase Invoices", "Purchase Credit Memos", "Purchase Return Orders", "Sales Invoices", "Sales Return Orders", "Sales Credit Memos")
+        
+        addbefore("Purchase Invoices")
+        {
+            action(AcomptesACreer)
+            {
+                ApplicationArea = All;
+                Caption = 'Acomptes à créer';
+                ToolTip = 'Liste les commandes de ventes pour lesquelles un acompte doit être créé.';
+                RunObject = page "Sales Order List";
+                RunPageView = sorting("Acompte a creer") where("Acompte a creer" = const(true));
+            }
+            action(FacturesSituationACreer)
+            {
+                ApplicationArea = All;
+                Caption = 'Situations à créer';
+                ToolTip = 'Liste les commandes de ventes pour lesquelles une facture de situation doit être créée.';
+                RunObject = page "Sales Order List";
+                RunPageView = sorting("Demander situ. a la compta") where("Demander situ. a la compta" = const(true));
+            }
+            action(DossiersAFacturer)
+            {
+                ApplicationArea = All;
+                Caption = 'Dossiers à facturer';
+                ToolTip = 'Liste les commandes de ventes potentiellement facturables.';
+                RunObject = page "Sales Order List";
+                RunPageView = sorting("Dossier facturable") where("Dossier facturable" = const(true));
+            }
+        }
         moveafter(Comptabilite; "Posted Documents")
 
         modify(Action76) //Sales - Ventes
