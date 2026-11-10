@@ -1,6 +1,7 @@
 page 50063 "SF Cde achat : infos transit."
 {
     Caption = 'Infos fact. transitaire';
+    ApplicationArea = All;
     DelayedInsert = true;
     InsertAllowed = false;
     ModifyAllowed = false;

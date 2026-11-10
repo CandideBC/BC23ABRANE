@@ -7,6 +7,7 @@ pageextension 50082 AssemblyBOMExtension extends "Assembly BOM"
             field("Reference externe client";rec."Reference externe client")
             {
                 ToolTip = 'Référence externe client';
+                ApplicationArea = All;
             }
         }
     }
