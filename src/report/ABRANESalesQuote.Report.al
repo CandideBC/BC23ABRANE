@@ -43,7 +43,7 @@ report 50004 "ABRANE : Sales - Quote"
             {
 
             }
-            column(MentionsLegalesLbl; MentionsLegalesLbl)
+            column(MentionsLegalesLbl; MentionsLegalesLblTxt)
             {
                 
             }
@@ -119,7 +119,7 @@ report 50004 "ABRANE : Sales - Quote"
             column(ShipmentMethodDescriptionCaption; ShipmentMethodCaptionLbl)
             {
             }
-            column(PaymentCaption; PaymentCaptionLbl)
+            column(PaymentCaption; PaymentLblTxt)
             {
             }
             column(ShippingAgentCaption; ShippingAgentCaptionLbl)
@@ -195,7 +195,7 @@ report 50004 "ABRANE : Sales - Quote"
             column(DateChargementLbl; DateChargementLblTxt)
             {
             }
-            column(LabelEcoTax; EcoTaxLbl)
+            column(LabelEcoTax; EcoTaxLblTxt)
             {
             }
             column(LabelMontantRemisesLignes; MontantRemisesLignesLbl)
@@ -211,10 +211,10 @@ report 50004 "ABRANE : Sales - Quote"
             column(LabelDescription; DescriptionLbl)
             {
             }
-            column(LabelQuantite; QuantiteLbl)
+            column(LabelQuantite; QuantiteLblTxt)
             {
             }
-            column(LabelAgreement; AgreementLbl)
+            column(LabelAgreement; AgreementLblTxt)
             {
             }
             column(LabelPays; PaysLbl)
@@ -247,16 +247,16 @@ report 50004 "ABRANE : Sales - Quote"
             column(TotalGrossWeight; "Poids brut total")
             {
             }
-            column(QuoteValidityCaption; QuoteValidityCaptionLbl)
+            column(QuoteValidityCaption; QuoteValidityLblTxt)
             {
             }
-            column(QuoteAgreementLine1Caption; QuoteAgreementLine1CaptionLbl)
+            column(QuoteAgreementLine1Caption; QuoteAgreementLine1LblTxt)
             {
             }
             column(LabelUnitCaption; UnitCaptionLblTxt)
             {
             }
-            column(QuoteAgreementLine2Caption; QuoteAgreementLine2CaptionLbl)
+            column(QuoteAgreementLine2Caption; QuoteAgreementLine2LblTxt)
             {
             }
             column(TexteTVA; TexteTVA)
@@ -266,7 +266,7 @@ report 50004 "ABRANE : Sales - Quote"
             {
                 
             }
-            column(LabelEscompte; EscompteLbl)
+            column(LabelEscompte; EscompteLblTxt)
             {
             }
             column(LabelAcompteverse; AcompteVerseLbl)
@@ -275,19 +275,19 @@ report 50004 "ABRANE : Sales - Quote"
             column(LabelMontantDejaVerse; MontantDejaVerseLbl)
             {
             }
-            column(LabelResteAPayer; ResteAPayerLbl)
+            column(LabelResteAPayer; ResteAPayerLblTxt)
             {
             }
             column(labelVariant; VariantLblTxt)
             {
             }
-            column(AcompteLbl; AcompteLbl)
+            column(AcompteLbl; AcompteLblTxt)
             {
             }
-            column(SituationLbl; SituationLbl)
+            column(SituationLbl; SituationLblTxt)
             {
             }
-            column(SoldeLbl; SoldeLbl)
+            column(SoldeLbl; SoldeLblTxt)
             {
             }
             column(CondPaiementAcompteTxt; CondPaiementAcompteTxt)
@@ -775,7 +775,7 @@ report 50004 "ABRANE : Sales - Quote"
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(SubtotalCaption; SousTotalText)
+                        column(SubtotalCaption; SubTotalLblTxt)
                         {
                         }
                         column(PaymentDiscountVATCaption; PaymentDiscountVATCaptionLbl)
@@ -796,9 +796,11 @@ report 50004 "ABRANE : Sales - Quote"
                         column(VATIdentifier_SalesLineCaption; "Sales Line".FieldCaption("VAT Identifier"))
                         {
                         }
+                        /*
                         column(SalesLineQuantityCaption; SalesLineQuantityCaptionLblTxt)
                         {
                         }
+                        */
                         column(EcoMob; "Sales Line"."Eco Tax Furniture Line")
                         {
                         }
@@ -1199,7 +1201,6 @@ report 50004 "ABRANE : Sales - Quote"
                         }
 
                         trigger OnAfterGetRecord()
-                        var
 
                         begin
                             if Number = 1 then begin
@@ -1222,7 +1223,7 @@ report 50004 "ABRANE : Sales - Quote"
                     }
                     dataitem(PrepmtVATCounter; "Integer")
                     {
-                        DataItemTableView = SORTING(Number);
+                        DataItemTableView = sorting(Number);
                         column(PrepmtVATAmtLineVATAmt; TempPrepmtVATAmountLine."VAT Amount")
                         {
                             AutoFormatExpression = "Sales Header"."Currency Code";
@@ -1283,7 +1284,7 @@ report 50004 "ABRANE : Sales - Quote"
                 trigger OnAfterGetRecord()
                 var
                     TempSalesLineDisc: Record "Sales Line" temporary;
-                    TempSalesLine: Record "Sales Line" temporary;
+                    //TempSalesLine: Record "Sales Line" temporary;
                     TempPrepmtSalesLine: Record "Sales Line" temporary;
                     SalesPost: Codeunit "Sales-Post";
 
@@ -1392,40 +1393,74 @@ report 50004 "ABRANE : Sales - Quote"
 
                 //KAN.FHA 10/11/2026 DEBUT //TRADUCTIONS
                 if "Language Code" in ['FRA',''] then begin
-                    Text004txt := Text004LblFRA;
-                    Text000txt := Text000LblFRA;
-                    BilltoAddrCaptionTxt := BilltoAddrCaptionLblFRA;
-                    ShiptoAddrCaptionTxt := ShiptoAddrCaptionLblFRA;
+                    Text004txt := Text004FRALbl;
+                    Text000txt := Text000FRALbl;
+                    BilltoAddrCaptionTxt := BilltoAddrFRALbl;
+                    ShiptoAddrCaptionTxt := ShiptoAddrFRALbl;
                     ExternalDocNoLblTxt := ExternalDocNoLblFRA;
-                    NoLocationNameLblTxt := NoLocationNameLblFRA;
-                    InterlocuteurClientLblTxt := InterlocuteurClientLblFRA;
+                    NoLocationNameLblTxt := NoLocationNameFRALbl;
+                    InterlocuteurClientLblTxt := InterlocuteurClientFRALbl;
                     DateChargementLblTxt := DateChargementFRALbl;
                     RequestedDeliveryDateLblTxt := RequestedDeliveryDateFRALbl;
                     RefClientLblTxt := RefClientFRALbl;
-                    SalesLineQuantityCaptionLblTxt := SalesLineQuantityCaptionFRALbl;
+                    QuantiteLblTxt := QuantiteFRALbl;
+                    //SalesLineQuantityCaptionLblTxt := SalesLineQuantityCaptionFRALbl;
                     UnitCaptionLblTxt := UnitCaptionFRALbl;
                     VariantLblTxt := VariantFRALbl;
                     UnitPriceCaptionLblTxt := UnitPriceCaptionFRALbl;
                     DiscountPercentCaptionTxt := DiscountPercentCaptionFRALbl;
                     AmountCaptionLblTxt := AmountCaptionFRALbl; 
-                    //Sales
+                    QuoteValidityLblTxt := QuoteValidityFRALbl;
+                    QuoteAgreementLine1LblTxt := QuoteAgreementLine1FRALbl;
+                    QuoteAgreementLine2LblTxt := QuoteAgreementLine2FRALbl;
+                    SubtotalLblTxt := SubtotalFRALbl;
+                    EcoTaxLblTxt := EcoTaxFRALbl;
+                    Text002LblTxt := Text002FRALbl;
+                    ResteAPayerLblTxt := ResteAPayerFRALbl;
+                    TotalInclVATText := Text002FRALbl;
+                    TotalExclVATText := Text006FRALbl;
+                    PaymentLblTxt := PaymentFRALbl;
+                    AcompteLblTxt := AcompteFRALbl;
+                    AcceptationDevisTxt := AcceptationDevisFRATxt;
+                    SituationLblTxt := SituationFRALbl;
+                    SoldeLblTxt := SoldeFRALbl;
+                    MentionsLegalesLblTxt := MentionsLegalesFRALbl;
+                    EscompteLblTxt := EscompteFRALbl;
+                    AgreementLblTxt := AgreementFRALbl;
                 end else begin
-                    Text004txt := Text004LblENU;
-                    Text000txt := Text000LblENU;
-                    BilltoAddrCaptionTxt := BilltoAddrCaptionLblENU;
-                    ShiptoAddrCaptionTxt := ShiptoAddrCaptionLblENU;
+                    Text004txt := Text004ENULbl;
+                    Text000txt := Text000ENULbl;
+                    BilltoAddrCaptionTxt := BilltoAddrENULbl;
+                    ShiptoAddrCaptionTxt := ShiptoAddrENULbl;
                     ExternalDocNoLblTxt := ExternalDocNoLblENU;
-                    NoLocationNameLblTxt := NoLocationNameLblENU;
-                    InterlocuteurClientLblTxt := InterlocuteurClientLblENU;
+                    NoLocationNameLblTxt := NoLocationNameENULbl;
+                    InterlocuteurClientLblTxt := InterlocuteurClientENULbl;
                     DateChargementLblTxt := DateChargementENULbl;
                     RequestedDeliveryDateLblTxt := RequestedDeliveryDateENULbl;
                     RefClientLblTxt := RefClientENULbl;
-                    SalesLineQuantityCaptionLblTxt := SalesLineQuantityCaptionENULbl;
+                    QuantiteLblTxt := QuantiteENULbl;
                     UnitCaptionLblTxt := UnitCaptionENULbl;
                     VariantLblTxt := VariantENULbl;
                     UnitPriceCaptionLblTxt := UnitPriceCaptionENULbl;
                     DiscountPercentCaptionTxt := DiscountPercentCaptionENULbl;
                     AmountCaptionLblTxt := AmountCaptionENULbl;
+                    QuoteValidityLblTxt := QuoteValidityENULbl;
+                    QuoteAgreementLine1LblTxt := QuoteAgreementLine1ENULbl;
+                    QuoteAgreementLine2LblTxt := QuoteAgreementLine2ENULbl;
+                    SubtotalLblTxt := SubtotalENULbl;
+                    EcoTaxLblTxt := EcoTaxENULbl;
+                    Text002LblTxt := Text002ENULbl;
+                    ResteAPayerLblTxt := ResteAPayerENULbl;
+                    TotalInclVATText := Text002ENULbl;
+                    TotalExclVATText := Text006ENULbl;
+                    PaymentLblTxt := PaymentENULbl;
+                    AcompteLblTxt := AcompteENULbl;
+                    AcceptationDevisTxt := AcceptationDevisENUTxt;
+                    SituationLblTxt := SituationENULbl;
+                    SoldeLblTxt := SoldeENULbl;
+                    MentionsLegalesLblTxt := MentionsLegalesENULbl;
+                    EscompteLblTxt := EscompteENULbl;
+                    AgreementLblTxt := AgreementENULbl;
                 end;
                 //KAN.FHA 10/11/2026 FIN
 
@@ -1504,17 +1539,15 @@ report 50004 "ABRANE : Sales - Quote"
                 if "Currency Code" = '' then begin
                     GLSetup.TestField("LCY Code");
                     TotalText := StrSubstNo(Text001Lbl, GLSetup."LCY Code");
-                    TotalInclVATText := Text002Lbl;
-                    TotalExclVATText := Text006Lbl;
-                    SousTotalText := SubtotalCaptionLbl;
+                    //TotalInclVATText := Text002Lbl;
+                    //TotalExclVATText := Text006Lbl;
 
                     if "Montant eco-taxe" <> 0 then
                         MentionEcoContribution := MentionEcoContribution + ' ' + GLSetup."LCY Code" + MentionEcoContribution2Lbl;
                 end else begin
                     TotalText := StrSubstNo(Text001Lbl, "Currency Code");
-                    TotalInclVATText := Text002Lbl;
-                    TotalExclVATText := Text006Lbl;
-                    SousTotalText := SubtotalCaptionLbl;
+                    //TotalInclVATText := Text002Lbl;
+                    //TotalExclVATText := Text006Lbl;
                     if "Montant eco-taxe" <> 0 then
                         MentionEcoContribution := MentionEcoContribution + "Currency Code" + MentionEcoContribution2Lbl;
                 end;
@@ -1668,16 +1701,19 @@ report 50004 "ABRANE : Sales - Quote"
         DimMgt: Codeunit DimensionManagement;
         SalesCountPrinted: Codeunit "Sales-Printed";
         FormatAddr: Codeunit "Format Address";
-        Text000LblENU: Label 'Followed by :'; //Salesperson :
-        Text000LblFRA: Label 'Suivi par :'; //Salesperson :
+        Text000ENULbl: Label 'Followed by :'; //Salesperson :
+        Text000FRALbl: Label 'Suivi par :'; //Salesperson :
         Text000txt: Text[30];
         Text001Lbl: Label 'Total %1',Comment = '%1 = Total';
-        Text002Lbl: Label 'Total Incl. VAT'; //FRA = Total TTC
+        Text002ENULbl: Label 'Total Incl. VAT'; 
+        Text002FRALbl: Label 'Total TTC'; 
+        Text002LblTxt: Text[20];
         Text004txt:Text[30];
-        Text004LblENU: Label 'Quote No.';
-        Text004LblFRA: Label 'Devis N°';
+        Text004ENULbl: Label 'Quote No.';
+        Text004FRALbl: Label 'Devis N°';
         Text005Lbl: Label 'Page %1',Comment = '%1 = N° page';
-        Text006Lbl: Label 'Total'; //FRA = Total H.T.
+        Text006ENULbl: Label 'Total';
+        Text006FRALbl: Label 'Total H.T.'; 
         BankDetailsLbl: Label 'Bank Details :';
         CustAddr: array[8] of Text[50];
         BillToAddr: array[8] of Text[50];
@@ -1737,16 +1773,18 @@ report 50004 "ABRANE : Sales - Quote"
         DiscountPercentCaptionENULbl: Label 'Disc. %';
         DiscountPercentCaptionFRALbl: Label '% rem.';
         DiscountPercentCaptionTxt: Text[10];
-        SubtotalCaptionLbl: Label 'Subtotal'; //FRA : Sous-total H.T.
+        SubtotalENULbl: Label 'Subtotal'; 
+        SubtotalFRALbl: Label 'Sous-total H.T.';
+        SubtotalLblTxt: Text[20];
         PaymentDiscountVATCaptionLbl: Label 'Payment Discount on VAT';
 
         InvDiscBaseAmtCaptionLbl: Label 'Invoice Discount Base Amount';
         VATIdentifierCaptionLbl: Label 'VAT Identifier';
-        ShiptoAddrCaptionLblENU: Label 'Ship-to Address';
-        ShiptoAddrCaptionLblFRA: Label 'Adresse de livraison';
+        ShiptoAddrENULbl: Label 'Ship-to Address';
+        ShiptoAddrFRALbl: Label 'Adresse de livraison';
         ShiptoAddrCaptionTxt:Text[20];
-        BilltoAddrCaptionLblENU: Label 'Bill-To Address';
-        BilltoAddrCaptionLblFRA: Label 'Adresse de facturation';
+        BilltoAddrENULbl: Label 'Bill-To Address';
+        BilltoAddrFRALbl: Label 'Adresse de facturation';
         BilltoAddrCaptionTxt: Text[30];
         DescriptionCaptionLbl: Label 'Description';
         GLAccountNoCaptionLbl: Label 'G/L Account No.';
@@ -1768,7 +1806,9 @@ report 50004 "ABRANE : Sales - Quote"
         UnitPriceCaptionLblTxt: Text[20];
         PaymentTermsCaptionLbl: Label 'Payment Terms';
         ShipmentMethodCaptionLbl: Label 'Incoterm :';
-        PaymentCaptionLbl: Label 'Payment :';
+        PaymentENULbl: Label 'Payment :';
+        PaymentFRALbl: Label 'Règlement :';
+        PaymentLblTxt: Text[20];
         ShippingAgentCaptionLbl: Label 'Shipping Agent :';
         AllowInvDiscCaptionLbl: Label 'Allow Invoice Discount';
         CompanyInfoPhoneNoCaptionLbl: Label 'Phone No.';
@@ -1778,9 +1818,6 @@ report 50004 "ABRANE : Sales - Quote"
         CompanyInfoAPECodeCaptionLbl: Label 'NAF Code';
         CompanyInfoIBANCaptionLbl: Label 'IBAN';
         CompanyInfoSWIFTCodeCaptionLbl: Label 'SWIFT Code';
-        SalesLineQuantityCaptionENULbl: Label 'Qty';
-        SalesLineQuantityCaptionFRALbl: Label 'Qté';
-        SalesLineQuantityCaptionLblTxt : Text[10];
         UOM_SalesLineCaptionLbl: Label 'UOM';
         CompanyInfoNameCaptionLbl: Label 'Siège social';
         SelltoCustNoCaptionLbl: Label 'Customer No.';
@@ -1793,12 +1830,12 @@ report 50004 "ABRANE : Sales - Quote"
         JobName: Text[50];
         NNCSalesLineEcoAmt: Decimal;
         AffaireLbl: Label 'Job :';
-        NoLocationNameLblENU: Label 'No. and Location Name :';
-        NoLocationNameLblFRA: Label 'No. and Location Name :';
+        NoLocationNameENULbl: Label 'No. and Location Name :';
+        NoLocationNameFRALbl: Label 'N° et nom magasin :';
         NoLocationNameLblTxt: Text[30];
         NoRayonLbl: Label 'Range No. : ';
-        InterlocuteurClientLblENU: Label 'Contact Name :';
-        InterlocuteurClientLblFRA: Label 'Contact :';
+        InterlocuteurClientENULbl: Label 'Contact Name :';
+        InterlocuteurClientFRALbl: Label 'Contact :';
         InterlocuteurClientLblTxt: Text[20];
         CommentaireLbl: Label 'Comments : ';
         RequestedDeliveryDateENULbl: Label 'Delivery date:';
@@ -1807,21 +1844,34 @@ report 50004 "ABRANE : Sales - Quote"
         DateChargementENULbl: Label 'Shipment Date';
         DateChargementFRALbl: Label 'Date d''expédition';
         DateChargementLblTxt: Text[20];
-        EcoTaxLbl: Label 'Including Ecocontribution Amount';
+        EcoTaxENULbl: Label 'Including Ecocontribution Amount';
+        EcoTaxFRALbl: Label 'Dont éco-participation';
+        EcoTaxLblTxt: Text[50];
         MontantRemisesLignesLbl: Label 'Including line discounts';
         RefClientENULbl: Label 'Customer Ref.';
         RefClientFRALbl: Label 'Réf. client';
         RefClientLblTxt: Text[20];
         DescriptionLbl: Label 'Description';
-        QuantiteLbl: Label 'Qty';
+        QuantiteENULbl: Label 'Qty';
+        QuantiteFRALbl: Label 'Qté';
+        QuantiteLblTxt: Text[10];
         NNCVATEcoAMt: Decimal;
         MontantRemisesLignes: Decimal;
-        QuoteValidityCaptionLbl: Label 'Quote valid for two months.';
-        QuoteAgreementLine1CaptionLbl: Label 'Agreement';
-        QuoteAgreementLine2CaptionLbl: Label '(Date, signature and official stamp)';
+        QuoteValidityENULbl: Label 'Quote valid for two months.';
+        QuoteValidityFRALbl: Label 'Devis valable deux mois';
+        QuoteValidityLblTxt : Text[30];
+        QuoteAgreementLine1ENULbl: Label 'Agreement';
+        QuoteAgreementLine1FRALbl: Label 'Accord';
+        QuoteAgreementLine1LblTxt: Text[10];
+        QuoteAgreementLine2ENULbl: Label '(Date, signature and official stamp)';
+        QuoteAgreementLine2FRALbl: Label '(Date, signature et cachet)';
+        QuoteAgreementLine2LblTxt: Text[50];
+
         SiteLbl: Label 'Site :';
         SiteName: Text[50];
-        AgreementLbl: Label 'In                         , the';
+        AgreementENULbl: Label 'In                         , the';
+        AgreementFRALbl: Label 'A                         , le';
+        AgreementLblTxt: Text[50];
         UnitCaptionENULbl: Label 'Unit';
         UnitCaptionFRALbl: Label 'Unité';
         UnitCaptionLblTxt: Text[10];
@@ -1845,7 +1895,9 @@ report 50004 "ABRANE : Sales - Quote"
         PrepAmount: Decimal;
         AcompteverseLbl: Label 'Prepayment Amount';
         MontantDejaVerseLbl: Label 'Already Paid';
-        ResteAPayerLbl: Label 'Still to pay (€)';
+        ResteAPayerENULbl: Label 'Still to pay (€)';
+        ResteAPayerFRALbl: Label 'Reste à payer (€)';
+        ResteAPayerLblTxt: Text[20];
         VariantENULbl: Label 'Variant';
         VariantFRALbl: Label 'Variante';
         VariantLblTxt: Text[10];
@@ -1859,7 +1911,9 @@ report 50004 "ABRANE : Sales - Quote"
         MentionEcoContribution1Lbl: Label 'Ce document inclut une éco-participation de  ';
         MentionEcoContribution2Lbl: Label ' , reversée à un éco-organisme agréé conformément à la réglementation en vigueur.';
 
-        SoldeLbl: Label 'Remaining Amount:';
+        SoldeENULbl: Label 'Remaining Amount:';
+        SoldeFRALbl: Label 'Facture de solde :';
+        SoldeLblTxt: Text[20];
         txtSolde: Text[80];
         txtPaymentMethodDescription: Text;
         PaiementComptantLbl: Label 'pre-paid';
@@ -1868,19 +1922,29 @@ report 50004 "ABRANE : Sales - Quote"
         //PaiementCaptionLbl: Label 'Payment:';
         InfosPaiement2: Text[1024];
         
-        AcceptationDevisTxt: Label 'The signature of this offer implies the acceptance of the general conditions of sales (annexed).';
-        MentionsLegalesLbl: Label 'Legal notices:';
+        AcceptationDevisENUTxt: Label 'The signature of this offer implies the acceptance of the general conditions of sales (annexed).';
+        AcceptationDevisFRATxt: Label 'L''acceptation de cette offre implique acceptation de nos conditions générales de ventes (annexées)';
+        AcceptationDevisTxt: Text[100];
+        MentionsLegalesENULbl: Label 'Legal notices:';
+        MentionsLegalesFRALbl: Label 'Mentions légales :';
+        MentionsLegalesLblTxt: Text[20];
         PhaseLbl: Label 'Phase :';
         VersionLbl: Label 'Version ';
         DateDernArchive: Date;
         NoVersionDernArchive: Integer;
         MontantDernArchive: Decimal;
-        AcompteLbl: Label 'Prepayment :';
-        SituationLbl: Label 'Interim Invoice :';
-        CondPaiementSituationTxt: Text;
-        CondPaiementAcompteTxt: Text;
-        CondPaiementSoldeTxt: Text;
-        EscompteLbl: Label 'No prompt-payment discount granted in the case of payment before invoice due date.';
+        AcompteENULbl: Label 'Prepayment:';
+        AcompteFRALbl: Label 'Acompte :';
+        AcompteLblTxt: Text[20];
+        SituationENULbl: Label 'Interim Invoice:';
+        SituationFRALbl: Label 'Facture de situation :';
+        SituationLblTxt: Text[30];
+        CondPaiementSituationTxt: Text[50];
+        CondPaiementAcompteTxt: Text[50];
+        CondPaiementSoldeTxt: Text[50];
+        EscompteENULbl: Label 'No prompt-payment discount granted in the case of payment before invoice due date.';
+        EscompteFRALbl: Label 'Pas d''escompte en cas de règlement avant échéance.';
+        EscompteLblTxt: Text[100];
 
     procedure InitializeRequest(NoOfCopiesFrom: Integer; ShowInternalInfoFrom: Boolean; ArchiveDocumentFrom: Boolean; LogInteractionFrom: Boolean; PrintFrom: Boolean; DisplayAsmInfo: Boolean)
     begin
