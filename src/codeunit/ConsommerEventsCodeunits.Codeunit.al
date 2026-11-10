@@ -61,28 +61,6 @@ codeunit 50017 ConsommerEventsCodeunits
 
     end;
 
-    /*KAN.FHA 15/09/2025 On revient au standard : on doit saisir une date de compta !!
-    [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeValidatePostingAndDocumentDate, '', false, false)]
-    local procedure CU80_OnBeforeValidatePostingAndDocumentDate(var SalesHeader: Record "Sales Header")
-    var
-        MAJ_DateComptaQst: label 'Vous n''avez pas saisi de date de comptabilisation, souhaitez-vous valider en date du %1?', Comment = '%1 = Date de travail';
-        ProcessusInterrompuErr: label 'Opération annulée à la demande de l''utilisateur.';
-    begin
-        //<C05.01 DIAG.RGO 05/08/2014>
-        if SalesHeader."Posting Date" = 0D then
-            if Confirm(StrSubstNo(MAJ_DateComptaQst, WorkDate())) then begin
-                SalesHeader.VALIDATE("Posting Date", WORKDATE());
-
-                if SalesHeader."Document Date" = 0D then
-                    SalesHeader.VALIDATE("Document Date", SalesHeader."Posting Date");
-                SalesHeader.Modify();
-            end else
-                ERROR(ProcessusInterrompuErr);
-        //</C05.01 DIAG.RGO 05/08/2014>
-
-    end;
-    KAN.FHA 15/09/2025
-    */
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeCheckAndUpdate, '', false, false)]
     local procedure CU80_OnBeforeCheckAndUpdate(var SalesHeader: Record "Sales Header")
@@ -234,6 +212,7 @@ codeunit 50017 ConsommerEventsCodeunits
     begin
         SalesShptLine."Quantite commandee" := xSalesLine.Quantity;
         SalesShptLine."Quantite deja livree" := xSalesLine."Quantity Shipped";
+        
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeSalesShptLineInsert, '', false, false)]
@@ -241,7 +220,7 @@ codeunit 50017 ConsommerEventsCodeunits
     var
         DetailUCColisageExpedie: Record "Detail UC colisage expedie";
     begin
-        if SalesHeader."Utiliser colisage No." <> '' then 
+        if SalesHeader."Utiliser colisage No." <> '' then
             if (SalesShptLine.Type = SalesShptLine.Type::Item) and (SalesShptLine.Quantity <> 0) then begin
                 DetailUCColisageExpedie.Init();
                 DetailUCColisageExpedie."No. colisage" := SalesHeader."Utiliser colisage No.";
@@ -249,10 +228,10 @@ codeunit 50017 ConsommerEventsCodeunits
                 DetailUCColisageExpedie."Item No." := SalesShptLine."No.";
                 DetailUCColisageExpedie.Description := SalesShptLine.Description;
                 DetailUCColisageExpedie."Quantite dans UC" := SalesShptLine.Quantity;
-                DetailUCColisageExpedie."Poids net ligne" := round(SalesShptLine.Quantity * SalesShptLine."Net Weight",0.01);
+                DetailUCColisageExpedie."Poids net ligne" := round(SalesShptLine.Quantity * SalesShptLine."Net Weight", 0.01);
                 DetailUCColisageExpedie.Insert();
             end;
-        
+
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeSalesInvLineInsert, '', false, false)]
@@ -688,16 +667,17 @@ codeunit 50017 ConsommerEventsCodeunits
             exit;
 
         //KAN.FHA 19/01/2026 DEBUT
-        SalesHeader."Poids brut total" := 0;
         SalesHeader."Posting Date" := 0D;
-        SalesHeader."Nombre de colis" := 0;
-        SalesHeader."Nombre de palettes" := 0;
         //KAN.FHA 19/01/2026 FIN
 
         //KAN.FHA 19/10/2026 DEBUT
-        SalesHeader."Utiliser colisage No." := '';
-        SalesHeader."Nombre de colis" := 0;
-        SalesHeader."Nombre de palettes" := 0;
+        if SalesHeader.Ship then begin
+            SalesHeader."Poids brut total" := 0;
+            SalesHeader."Utiliser colisage No." := '';
+            SalesHeader."Nombre de colis" := 0;
+            SalesHeader."Nombre de palettes" := 0;
+            SalesHeader.Modify();
+        end;
         //KAN.FHA 19/10/2026 FIN
 
         InvSetup.Get();
@@ -880,6 +860,9 @@ codeunit 50017 ConsommerEventsCodeunits
         SalesQuoteHeader.CalcFields("Commentaires dossier BE", "Commentaires prepa");
         SalesOrderHeader."Commentaires dossier BE" := SalesQuoteHeader."Commentaires dossier BE";
         SalesOrderHeader."Commentaires prepa" := SalesQuoteHeader."Commentaires prepa";
+        //KAN.FHA 09/11/2026 DEBUT
+        SalesOrderHeader."Proba transformation" := SalesOrderHeader."Proba transformation"::" ";
+        //KAN.FHA 09/11/2026 FIN
         //KAN.FHA 20/05/2026 DEBUT
         EnteteAchat.SetCurrentKey("No. doc. vente");
         EnteteAchat.SetRange("No. doc. vente", SalesQuoteHeader."No.");
@@ -1859,7 +1842,7 @@ codeunit 50017 ConsommerEventsCodeunits
                         LigneVente.TESTFIELD("Net Weight");
                         Article.GET(LigneVente."No.");
                         Article.TESTFIELD("Tariff No.");
-                        Article.TESTFIELD(Article."Country/Region of Origin Code");
+                        Article.TESTFIELD("Country/Region of Origin Code");
                     end else begin //On est sur un divers, les champs doivent etre saisis à la ligne
                         Article.GET(LigneVente."No.");
                         if Article."Poids obligatoire" then begin
@@ -1870,15 +1853,13 @@ codeunit 50017 ConsommerEventsCodeunits
                     end
             until LigneVente.Next() = 0;
 
-        //DIAFTS 11/09/2015 - AT0665961 Probleme de validation de ligne composant valorise
         LigneVente.Reset();
         LigneVente.SETRANGE("Document Type", SalesHeader."Document Type");
         LigneVente.SETRANGE("Document No.", SalesHeader."No.");
-        LigneVente.SETFILTER("Composant de la ligne No.", '>%1', 0);                //DIAFTS 01/10/2015
+        LigneVente.SETFILTER("Composant de la ligne No.", '>%1', 0);        
         LigneVente.SETFILTER(Amount, '<>%1', 0);
         if not LigneVente.IsEmpty then
             ERROR(LigneComposantAvecMontantErr, LigneVente.Amount, LigneVente."Document Type", LigneVente."Document No.", LigneVente."Line No.");
-        //DIAFTS 11/09/2015
 
         //KAN.FHA 20/06/2025 DEBUT
         if ((SalesHeader."Document Type" = SalesHeader."Document Type"::Quote) and (SalesHeader."Proba transformation" = SalesHeader."Proba transformation"::"100")) or

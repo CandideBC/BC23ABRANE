@@ -491,44 +491,6 @@ table 50040 Container
 
     end;
 
-    procedure CalculerMontantChargeDS(): Decimal
-    var
-        EnteteAchat: Record "Purchase Header";
-        LigneAchat: Record "Purchase Line";
-        CurrExchRate: Record "Currency Exchange Rate";
-        LigneContainer: Record "Ligne container";
-        MontantLigne: Decimal;
-        MontantChargeDS: Decimal;
-
-        lValeur: Decimal;
-    begin
-        LigneContainer.SetRange("No. container", "No.");
-        LigneContainer.SetCurrentKey("No. container", "No. commande achat");
-        lValeur := 0;
-        MontantChargeDS := 0;
-
-        if LigneContainer.FindSet(false) then
-            repeat
-                if LigneAchat.Get(LigneAchat."Document Type"::Order, LigneContainer."No. commande achat", LigneContainer."No. ligne commande achat") then begin
-                    EnteteAchat.Get(EnteteAchat."Document Type"::Order, LigneContainer."No. commande achat");
-                    if LigneAchat.Quantity <> 0 then
-                        MontantLigne := Round(LigneContainer.Quantite / LigneAchat.Quantity * LigneAchat.Amount, 0.01)
-                    else
-                        MontantLigne := 0;
-
-                    if EnteteAchat."Currency Code" = '' then
-                        lValeur := MontantLigne
-                    else
-                        lValeur := CurrExchRate.ExchangeAmtFCYToLCY(Today, EnteteAchat."Currency Code", MontantLigne, EnteteAchat."Currency Factor");
-
-                    MontantChargeDS := MontantChargeDS + lValeur;
-
-                end;
-            until LigneContainer.Next() = 0;
-
-
-        exit(MontantChargeDS);
-    end;
 
     procedure AfficherStatsContainer()
 

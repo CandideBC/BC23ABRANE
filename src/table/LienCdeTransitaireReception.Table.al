@@ -247,6 +247,9 @@ table 50042 "Lien cde transitaire-reception"
                                     NouvelleLigneAchat."Line No." := NumLigne;
                                     NouvelleLigneAchat.Validate(Type, NouvelleLigneAchat.Type::"Charge (Item)");
                                     NouvelleLigneAchat.Validate("No.", LigneAchatActuelle."No.");
+                                    //KAN.FHA 09/11/2026 DEBUT
+                                    NouvelleLigneAchat.Description := LigneAchatActuelle.Description;
+                                    //KAN.FHA 09/11/2026 FIN
                                     NouvelleLigneAchat.Validate(Quantity, LigneAchatActuelle.Quantity);
                                     MontantTransitaireAffecteTotal := MontantTransitaireAffecteTotal + MontantTransitaireAffecteLigne;
                                     NouvelleLigneAchat.Validate("Direct Unit Cost", MontantTransitaireAffecteLigne);

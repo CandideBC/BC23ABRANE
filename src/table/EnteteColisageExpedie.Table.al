@@ -389,10 +389,10 @@ table 50014 "Entete colisage expedie"
         //DetailColisage: Record "UC colisage expedie";
         NoSeriesMgt: Codeunit NoSeriesManagement;
         Text001Lbl: Label 'Vous ne pouvez pas renommer l''enregistrement %1.', Comment = '%1 = Enregistrement';
-        //Text002Lbl: Label 'BL %1 Ligne %2 quantité %3 alors que la somme des qtés colisage est de %4', Comment = '%1 = N° BL ; %2 = N° ligne ; %3 = Quantité ; %4 = Somme des quantités';
-        //Text004Lbl: Label 'Manque le poids brut sur UC %1', Comment = '%1 = N° UC';
-        //Text005Lbl: Label 'Manque le poids net sur UC %1', Comment = '%1 = N° UC';
-        //Text009Lbl: Label 'Des lignes du colisage n''ont pas été livrées';
+    //Text002Lbl: Label 'BL %1 Ligne %2 quantité %3 alors que la somme des qtés colisage est de %4', Comment = '%1 = N° BL ; %2 = N° ligne ; %3 = Quantité ; %4 = Somme des quantités';
+    //Text004Lbl: Label 'Manque le poids brut sur UC %1', Comment = '%1 = N° UC';
+    //Text005Lbl: Label 'Manque le poids net sur UC %1', Comment = '%1 = N° UC';
+    //Text009Lbl: Label 'Des lignes du colisage n''ont pas été livrées';
 
     local procedure GetNoSeriesCode(): Code[20]
     begin
@@ -471,13 +471,12 @@ table 50014 "Entete colisage expedie"
                 ContenuColisage."Poids brut unitaire" := ROUND(ContenuColisage."Poids brut ligne" / ContenuColisage."Quantite dans UC", 0.01);
                 ContenuColisage.Modify();
             until ContenuColisage.Next() = 0;
-            if PoidsBrutDeReference <> PoidsBrutReparti then begin
-                ContenuColisage.get(Rec."No.", NumLignePlusGrosPoids);
-                ContenuColisage."Poids brut ligne" := ContenuColisage."Poids brut ligne" + ROUND(PoidsBrutDeReference - PoidsBrutReparti, 0.1);
-                ContenuColisage."Poids brut unitaire" := ROUND(ContenuColisage."Poids brut ligne" / ContenuColisage."Quantite dans UC", 0.01);
-                ContenuColisage.Modify();
-            end;
-
+            if PoidsBrutDeReference <> PoidsBrutReparti then 
+                if ContenuColisage.get(Rec."No.", NumLignePlusGrosPoids) then begin
+                    ContenuColisage."Poids brut ligne" := ContenuColisage."Poids brut ligne" + ROUND(PoidsBrutDeReference - PoidsBrutReparti, 0.1);
+                    ContenuColisage."Poids brut unitaire" := ROUND(ContenuColisage."Poids brut ligne" / ContenuColisage."Quantite dans UC", 0.01);
+                    ContenuColisage.Modify();
+                end;
         end;
     end;
 

@@ -5,7 +5,7 @@ page 50147 "SF colisage commande : art"
     MultipleNewLines = true;
     PageType = ListPart;
     SourceTable = "Sales Line";
-    SourceTableView = sorting(TypeDocDuplique, NumDocDuplique, "Article a coliser") where(TypeDocDuplique = filter(Order),"Article a coliser"=const(true));
+    SourceTableView = sorting(TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase, NumArtDuplique) where(TypeDocDuplique = filter(Order), "Article a coliser" = const(true));
     InsertAllowed = false;
     DeleteAllowed = false;
 
@@ -96,13 +96,13 @@ page 50147 "SF colisage commande : art"
                     ToolTip = 'Vous pouvez choisir une unité de colisage ou taper + pour en créer une nouvelle';
                 }
 
-                field("Quantite prepa colisage"; Rec."Quantite prepa colisage")
+                field("Quantite colisee"; Rec."Quantite colisee")
                 {
                     ApplicationArea = All;
                     ToolTip = 'Indique quelle quantité de la ligne est déjà en préparation.';
                 }
-                
-                
+
+
                 field("Quantity Shipped"; Rec."Quantity Shipped")
                 {
                     ApplicationArea = Basic, Suite;

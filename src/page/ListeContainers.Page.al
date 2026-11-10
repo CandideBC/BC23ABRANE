@@ -18,35 +18,10 @@ page 50090 "Liste containers"
                     Caption = 'N°';
                     ToolTip = 'N°';
                 }
-                field("No. Immat / Container"; Rec."No. Immat / Container")
-                {
-                    Caption = 'N° Immat / Container';
-                    ToolTip = 'N° Immat / Container';
-                }
                 field("Statut container"; Rec."Statut container")
                 {
                     Caption = 'Statut container';
                     ToolTip = 'Statut container';
-                }
-                field("Code transporteur"; Rec."Code transporteur")
-                {
-                    Caption = 'Code transporteur';
-                    ToolTip = 'Code transporteur';
-                }
-                field("Nom transporteur"; Rec."Nom transporteur")
-                {
-                    Caption = 'Nom transporteur';
-                    ToolTip = 'Nom transporteur';
-                }
-                field("Frais transport ventiles"; Rec."Frais transport ventiles")
-                {
-                    Caption = 'Frais transport ventilés';
-                    ToolTip = 'Frais transport ventilés';
-                }
-                field("No. fournisseur"; Rec."No. fournisseur")
-                {
-                    Caption = 'N° fournisseur';
-                    ToolTip = 'N° fournisseur';
                 }
                 field("Nom fournisseur"; Rec."Nom fournisseur")
                 {
@@ -58,15 +33,10 @@ page 50090 "Liste containers"
                     Caption = 'Date chargement fournisseur';
                     ToolTip = 'Date chargement fournisseur';
                 }
-                field("Mode de transport"; Rec."Mode de transport")
+                field("Nom transporteur"; Rec."Nom transporteur")
                 {
-                    Caption = 'Mode de transport';
-                    ToolTip = 'Mode de transport';
-                }
-                field("Description mode transport"; Rec."Description mode transport")
-                {
-                    Caption = 'Description mode transport';
-                    ToolTip = 'Description mode transport';
+                    Caption = 'Nom transporteur';
+                    ToolTip = 'Nom transporteur';
                 }
                 field("Date depart port"; Rec."Date depart port")
                 {
@@ -83,21 +53,26 @@ page 50090 "Liste containers"
                     Caption = 'Semaine réception prévue';
                     ToolTip = 'Semaine réception prévue';
                 }
-                field("Lieu Incoterm"; Rec."Lieu Incoterm")
+                field("No. Immat / Container"; Rec."No. Immat / Container")
                 {
-                    Caption = 'Lieu Incoterm';
-                    ToolTip = 'Lieu Incoterm';
-                }
-                field("Code magasin destination"; Rec."Code magasin destination")
-                {
-                    Visible = false;
-                    Caption = 'Code magasin destination';
-                    ToolTip = 'Code magasin destination';
+                    Caption = 'N° Immat / Container';
+                    ToolTip = 'N° Immat / Container';
                 }
                 field("Volume charge"; Rec."Volume charge")
                 {
                     Caption = 'Volume chargé';
                     ToolTip = 'Volume chargé';
+                }
+                field(Commentaire; Rec.Commentaire)
+                {
+                    Caption = 'Commentaire';
+                    ToolTip = 'Commentaire';
+                }
+
+                field("Description mode transport"; Rec."Description mode transport")
+                {
+                    Caption = 'Description mode transport';
+                    ToolTip = 'Description mode transport';
                 }
                 field("No. packing list / BL"; Rec."No. packing list / BL")
                 {
@@ -122,41 +97,23 @@ page 50090 "Liste containers"
                         Rec.AfficherFactureTransitaire();
                     end;
                 }
-                field(Commentaire; Rec.Commentaire)
+                field("Frais transport ventiles"; Rec."Frais transport ventiles")
                 {
-                    Caption = 'Commentaire';
-                    ToolTip = 'Commentaire';
+                    Caption = 'Frais transport ventilés';
+                    ToolTip = 'Frais transport ventilés';
                 }
-                field(decMontantCharge; decMontantCharge)
+                field("Montant facture (papier)"; Rec."Montant facture (papier)")
                 {
-                    Caption = 'Montant chargé DS';
-                    
-                    ToolTip = 'Montant chargé DS';
-                }
-                field(RecupMontantEncoursCdeTransitaire; Rec.RecupMontantEncoursCdeTransitaire())
-                {
-                    BlankZero = true;
-                    Caption = 'Montant transport en cours';
-                    Visible = false;
-                    
-                    ToolTip = 'Montant transport en cours';
-                     
-                }
-                field(RecupMontantFactureTransitaire; Rec.RecupMontantFactureTransitaire())
-                {
-                    BlankZero = true;
-                    Caption = 'Montant transport facturé';
-                    Visible = false;
-                    ToolTip = 'Montant transport facturé';
+                    ApplicationArea = All;
                 }
                 field(PctTransport; PctTransport)
                 {
-                    
+
                     AutoFormatExpression = '<precision, 0:1><standard format,0>%';
                     AutoFormatType = 10;
                     BlankZero = true;
                     Caption = 'Taux approche';
-                    
+
                     ToolTip = 'Taux approche';
                 }
             }
@@ -190,15 +147,22 @@ page 50090 "Liste containers"
                 PromotedCategory = Process;
                 PromotedIsBig = true;
                 RunObject = Page "Posted Purchase Receipts";
-                RunPageLink = "No. container" = field ("No.");
-                RunPageView = sorting ("No. container");
+                RunPageLink = "No. container" = field("No.");
+                RunPageView = sorting("No. container");
             }
         }
     }
 
     trigger OnAfterGetRecord()
     begin
-        decMontantCharge := Rec.CalculerMontantChargeDS();
+        //KAN.FHA 09/11/2026 DEBUT
+        Rec.CalcFields("Montant facture (papier)");
+        //KAN.FHA 09/11/2026 FIN
+        //KAN.FHA 09/11/2026 DEBUT
+        //decMontantCharge := Rec.CalculerMontantChargeDS();
+        //Remplace par :
+        decMontantCharge := Rec."Montant facture (papier)";
+        //KAN.FHA 09/11/2026 FIN
         decMontantTransport := Rec.RecupMontantEncoursCdeTransitaire() + Rec.RecupMontantFactureTransitaire();
         if decMontantCharge <> 0 then
             PctTransport := Round(decMontantTransport / decMontantCharge, 0.01)

@@ -47,7 +47,7 @@ tableextension 50012 AccountingPeriodExtension extends "Accounting Period"
         //L'utilisateur se positionne sur une période comptable non validée et peut demander à extraire les achats non encore déclarés.
         //Cela les rattachera à la période sélectionnée.
         //Cette fonction verifie uniquement que l'utilisateur ne s'est pas mis sur Mars 2023 alors que janvier 2023 n'a pas encore été validé (il doit donc se mettre sur janvier 2023)
-        PeriodeComptable.SetCurrentKey(PeriodeComptable."DEB Achats cloturee");
+        PeriodeComptable.SetCurrentKey("DEB Achats cloturee");
         PeriodeComptable.SetRange("DEB Achats cloturee", false);
         PeriodeComptable.FindFirst();
         if PeriodeComptable."Starting Date" <> pDateSelectionnee then
@@ -86,8 +86,6 @@ tableextension 50012 AccountingPeriodExtension extends "Accounting Period"
                                 EnteteFactVente.Modify();
                             end;
                     end;
-
-                
                 NumDoc := LigneDEB."No. document";
             until LigneDEB.Next() = 0;
         end;

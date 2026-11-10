@@ -538,6 +538,12 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
 
     actions
     {
+        //KAN.FHA 02/11/2026 DEBUT
+        modify(Post)
+        {
+            Visible = false; //Action présente sur la fiche expédition.
+        }
+        //KAN.FHA 02/11/2026 FIN
         modify(Release)
         {
             Enabled = (Rec.Status = Rec.Status::Open);

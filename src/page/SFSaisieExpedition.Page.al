@@ -5,7 +5,7 @@ page 50125 "SF Saisie expedition"
     MultipleNewLines = true;
     PageType = ListPart;
     SourceTable = "Sales Line";
-    SourceTableView = sorting("Document Type", "Document No.", Type, "No.", "System-Created Entry") where("Document Type" = filter(Order),Type=const(Item));
+    SourceTableView = sorting("Document Type", "Document No.", Type, "No.", "System-Created Entry") where("Document Type" = filter(Order), Type = const(Item));
     InsertAllowed = false;
     DeleteAllowed = false;
 
@@ -28,6 +28,7 @@ page 50125 "SF Saisie expedition"
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Indique le N° de compte ou d''article.';
                     Editable = false;
+                    StyleExpr = MonStyle;
                 }
 
                 field("Variant Code"; Rec."Variant Code")
@@ -43,6 +44,7 @@ page 50125 "SF Saisie expedition"
                     ApplicationArea = Basic, Suite;
                     ToolTip = 'Indique la désignation.';
                     Editable = false;
+                    StyleExpr = MonStyle;
                 }
                 field("Description 2"; Rec."Description 2")
                 {
@@ -89,13 +91,13 @@ page 50125 "SF Saisie expedition"
                 }
 
 
-                field("Quantite prepa colisage"; Rec."Quantite prepa colisage")
+                field("Quantite colisee"; Rec."Quantite colisee")
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Indique quelle quantité de la ligne est déjà en préparation.';
+                    ToolTip = 'Indique quelle quantité de la ligne est en préparation.';
                 }
-                
-                
+
+
                 field("Quantity Shipped"; Rec."Quantity Shipped")
                 {
                     ApplicationArea = Basic, Suite;
@@ -195,6 +197,38 @@ page 50125 "SF Saisie expedition"
             }
         }
     }
+    trigger OnAfterGetRecord()
+    begin
+        DefinirStyle();
+    end;
+
+    trigger OnAfterGetCurrRecord()
+    begin
+        DefinirStyle();
+    end;
+
+    procedure DefinirStyle()
+    var
+
+    begin
+        Rec.calcfields("Quantite colisee");
+        if Rec."Outstanding Qty. (Base)" = 0 then
+            MonStyle := 'Standard'
+        else
+            if Rec."Quantite colisee" > Rec."Outstanding Qty. (Base)" then
+                MonStyle := 'Unfavorable'
+            else
+                if Rec."Quantite colisee" = Rec."Outstanding Quantity" then
+                    MonStyle := 'Favorable'
+                else
+                    if Rec."Quantite colisee" <> 0 then
+                        MonStyle := 'AttentionAccent';
+
+
+    end;
+
+    var
+        MonStyle: Text;
 }
 
 

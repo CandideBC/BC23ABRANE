@@ -680,7 +680,7 @@ codeunit 50019 ConsommerEventsTables
         end;
     end;
 
-    
+
     [EventSubscriber(ObjectType::Table, 37, OnBeforeDeleteEvent, '', false, false)]
     local procedure SalesLineOnBeforeDeleteEvent(var Rec: Record "Sales Line")
     var
@@ -781,12 +781,22 @@ codeunit 50019 ConsommerEventsTables
         Text50000Err: Label 'Vous ne pouvez pas modifier le champ suivant pour une ligne "Composant". : ';
         ErrorTxt: Text;
     begin
-        //DIA.ABRA.BOM SCH 17/03/2015 DEBUT
         if (CurrentFieldNo = SalesLine.FIELDNO("No.")) and (SalesLine."Composant de la ligne No." <> 0) then begin
             ErrorTxt := Text50000Err + ' ' + SalesLine.FIELDCAPTION("No.");
             ERROR(ErrorTxt);
         end;
-        //DIA.ABRA.BOM SCH 17/03/2015 FIN
+    end;
+
+    [EventSubscriber(ObjectType::Table, 37, OnAfterValidateEvent, "No.", false, false)]
+    local procedure SalesLineOnAfterValidateNo(var Rec: Record "Sales Line")
+    var
+    begin
+        //KAN.FHA 09/11/2026 DEBUT
+        if Rec.Type = Rec.Type::Item then
+            Rec.NumArtDuplique := Rec."No."
+        else
+            Rec.NumArtDuplique := '';
+        //KAN.FHA 09/11/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Table, 37, OnValidateNoOnAfterInitHeaderDefaults, '', false, false)]
@@ -830,13 +840,13 @@ codeunit 50019 ConsommerEventsTables
     var
         Matiere: Record Matiere;
     begin
-        if item."Poids obligatoire" then begin
+        if Item."Poids obligatoire" then begin
             Item.TestField("Code matiere");
             Item.TestField("Tariff No.");
             Item.TestField("Country/Region of Origin Code");
         end;
 
-        If Matiere.get(Item."Code matiere") then
+        if Matiere.get(Item."Code matiere") then
             if Matiere."Code eco-taxe obligatoire" then
                 Item.TestField("Eco Tax Furniture Code");
 
@@ -937,13 +947,13 @@ codeunit 50019 ConsommerEventsTables
             if not Article.Get(Rec."No.") then
                 Article.Init();
             Article.CalcFields("Assembly BOM");
-            
-            if Article."Assembly BOM" then begin 
+
+            if Article."Assembly BOM" then begin
                 Rec."Article a coliser" := false;
                 Rec."Quantite commandee" := 0;
             end else
                 Rec."Article a coliser" := true;
-                Rec."Quantite commandee" := Rec."Quantity (Base)";
+            Rec."Quantite commandee" := Rec."Quantity (Base)";
         end;
         //KAN.FHA 29/10/2026 FIN
     end;
@@ -963,8 +973,10 @@ codeunit 50019 ConsommerEventsTables
                     CurrExchRate.ExchangeAmtFCYToLCY(
                         SalesHeader."Document Date", SalesHeader."Currency Code", SalesLine.Amount * SalesLine."Outstanding Quantity" / SalesLine.Quantity, SalesHeader."Currency Factor");
         //KAN.FHA 23/09/2026 DEBUT
-        SalesLine.QuantiteBaseDuplique := SalesLine."Quantity (Base)";
-        SalesLine.QuantiteExpedieeBaseDuplique := SalesLine."Qty. Shipped (Base)";
+        if SalesLine."Article a coliser" then begin //Exclut les articles assemblés
+            SalesLine.QuantiteBaseDuplique := SalesLine."Quantity (Base)";
+            SalesLine.QuantiteExpedieeBaseDuplique := SalesLine."Qty. Shipped (Base)";
+        end;
         //KAN.FHA 23/09/2026 FIN
     end;
 
@@ -1069,9 +1081,12 @@ codeunit 50019 ConsommerEventsTables
     local procedure SalesLineOnAfterValidateDescription(var Rec: Record "Sales Line"; CurrFieldNo: Integer)
     var
         LigneFicheBE: Record "Ligne fiche BE";
-    //PrixBloqueErr: Label 'Le prix unitaire de cet article est bloqué. Vous pouvez utiliser la fonction " Débloquer prix article " si vous souhaitez forcer le prix.';
     begin
-        if CurrFieldNo = Rec.FIELDNO(Description) then
+        if CurrFieldNo = Rec.FIELDNO(Description) then begin
+            //KAN.FHA 10/11/2026 DEBUT
+            if (Rec.Type = Rec.Type::Item) and (Rec."No." = '') then
+                Rec.Type := Rec.Type::" ";
+            //KAN.FHA 10/11/2026 FIN
             if Rec."Reference Fiche BE" <> '' then begin
                 LigneFicheBE.SetCurrentKey(Reference);
                 LigneFicheBE.SetRange(Reference, Rec."Reference Fiche BE");
@@ -1080,6 +1095,7 @@ codeunit 50019 ConsommerEventsTables
                     LigneFicheBE.Modify();
                 end;
             end;
+        end;
     end;
 
     [EventSubscriber(ObjectType::Table, 37, OnBeforeValidateUnitCostLCY, '', false, false)]
@@ -1204,7 +1220,6 @@ codeunit 50019 ConsommerEventsTables
                         Rec."Livre non facture HT (DS)", EnteteVente."Currency Factor"),
                         Currency2."Amount Rounding Precision")
         end;
-        //rec.Modify();
         //KAN.FHA 22/03/2020 FIN
 
     end;

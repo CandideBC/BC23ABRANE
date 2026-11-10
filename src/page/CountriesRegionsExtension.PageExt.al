@@ -3,6 +3,43 @@ pageextension 50000 CountriesRegionsExtension extends "Countries/Regions"
     
     layout
     {
+        modify("SEPA Allowed")
+        {
+            Visible = false;
+        }
+        modify("ISO Code")
+        {
+            Visible = false;
+        }
+        modify("ISO Numeric Code")
+        {
+            Visible = false;
+        }
+        modify("EU Country/Region Code")
+        {
+            Visible = false;
+        }
+        modify("Contact Address Format")
+        {
+            Visible = false;
+        }
+        modify("VAT Scheme")
+        {
+            Visible = false;
+        }
+        modify("Intrastat Code")
+        {
+            Visible = false;
+        }
+        modify("Address Format")
+        {
+            Visible = false;
+        }
+        modify("County Name")
+        {
+            Visible = false;
+        }
+        
         addafter("VAT Scheme")
         {
             field("Pays Codifab"; Rec."Pays Codifab")
@@ -15,6 +52,7 @@ pageextension 50000 CountriesRegionsExtension extends "Countries/Regions"
                 ApplicationArea = All;
                 ToolTip = 'Code langue';
             }
+            
             field("Soumis eco-contribution"; Rec."Soumis eco-contribution")
             {
                 ApplicationArea = All;

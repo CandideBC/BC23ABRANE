@@ -19,6 +19,11 @@ page 50089 "Fiche container"
                     ToolTip = 'N°';
                     Importance = Promoted;
                 }
+                field("Statut container"; Rec."Statut container")
+                {
+                    Caption = 'Statut container';
+                    ToolTip = 'Statut container';
+                }
                 field("No. Immat / Container"; Rec."No. Immat / Container")
                 {
                     Caption = 'N° Immat / Container';
@@ -130,11 +135,7 @@ page 50089 "Fiche container"
                         Rec.AfficherFactureTransitaire();
                     end;
                 }
-                field("Statut container"; Rec."Statut container")
-                {
-                    Caption = 'Statut container';
-                    ToolTip = 'Statut container';
-                }
+
             }
             part(Lignes; "SF Container")
             {
@@ -233,6 +234,9 @@ page 50089 "Fiche container"
                 trigger OnAction()
                 begin
                     Rec.Receptionner();
+                    //KAN.FHA 10/11/2026 DEBUT
+                    CurrPage.Close();
+                    //KAN.FHA 10/11/2026 FIN
                 end;
             }
             action("Créer retour(s)")

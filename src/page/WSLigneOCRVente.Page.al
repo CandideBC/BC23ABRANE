@@ -2,13 +2,15 @@ page 50151 WS_LigneOCRVente
 {
     DelayedInsert = true;
     PageType = API;
-    APIPublisher = 'sanipousse';
-    APIGroup = 'shop';
+    APIPublisher = 'abrane';
+    APIGroup = 'ocr';
     APIVersion = 'v1.0';
-    EntityName = 'wsLigneocrvente';
-    EntitySetName = 'wsLigneocrventes';
-    ;
+    EntityName = 'ligneOcrVente';
+    EntitySetName = 'lignesOcrVente';
     SourceTable = "Ligne OCR vente";
+    InsertAllowed = true;
+    ModifyAllowed = false;
+    DeleteAllowed = false;
 
     layout
     {
@@ -16,128 +18,121 @@ page 50151 WS_LigneOCRVente
         {
             repeater("Général")
             {
-                field(id; Rec.SystemId) 
+
+
+                field(idDocumentOCR; Rec."ID document OCR")
                 {
                 }
-                field(systemModifiedAt;Rec.SystemModifiedAt)
+                field(noCommandeClient; Rec."No. commande client")
+                {
+                }
+                field(dateCommandeOCR; Rec."Date commande OCR")
+                {
+                }
+                field(demandeur; Rec.Demandeur)
+                {
+                    ApplicationArea = All;
+                }
+                field(codeChantier; Rec."Code chantier")
+                {
+                    ApplicationArea = All;
+                }
+
+
+                field(nomFacturationOCR; Rec."Nom facturation OCR")
+                {
+                }
+                field(nomFacturation2OCR; Rec."Nom facturation 2 OCR")
+                {
+                }
+                field(adresseFacturationOCR; Rec."Adresse facturation OCR")
+                {
+                }
+                field(adresseFacturation2OCR; Rec."Adresse facturation 2 OCR")
+                {
+                }
+                field(cpFacturationOCR; Rec."CP facturation OCR")
+                {
+                }
+                field(villeFacturationOCR; Rec."Ville facturation OCR")
+                {
+                }
+                field(paysFacturationOCR; Rec."Pays facturation OCR")
+                {
+                }
+                field(emailFacturation; Rec."Email facturation")
                 {
                 }
 
-                field(noDocumentOCR; Rec."No. document OCR")
+
+                field(nomLivraisonOCR; Rec."Nom livraison OCR")
                 {
                 }
-                field(dateDocumentOCR; Rec."Date document OCR")
+                field(nomLivraison2OCR; Rec."Nom livraison 2 OCR")
                 {
                 }
-                field(emailExpediteur; Rec."Email expediteur")
+                field(adresseLivraisonOCR; Rec."Adresse livraison OCR")
                 {
                 }
-                field(noDocumentClient; Rec."No. document client")
+                field(adresseLivraison2OCR; Rec."Adresse livraison 2 OCR")
                 {
                 }
-                field(urlDocument; Rec."URL document")
+                field(cpLivraisonOCR; Rec."CP livraison OCR")
                 {
                 }
-                field(guidSociete; Rec."GUID Societe")
+                field(villeLivraisonOCR; Rec."Ville livraison OCR")
                 {
                 }
-                field(noTvaSocieteOCR; Rec."No. TVA Societe OCR")
+                field(paysLivraisonOCR; Rec."Pays livraison OCR")
                 {
                 }
-                field(nomClientOCR; Rec."Nom client OCR")
-                {
-                }
-                field(nomClient2OCR; Rec."Nom client 2 OCR")
-                {
-                }
-                field(adresseClientOCR; Rec."Adresse client OCR")
-                {
-                }
-                field(adresseClient2OCR; Rec."Adresse client 2 OCR")
-                {
-                }
-                field(codePostalClientOCR; Rec."Code postal client OCR")
-                {
-                }
-                field(villeClientOCR; Rec."Ville client OCR")
-                {
-                }
-                field(codePaysClientOCR; Rec."Code pays client OCR")
-                {
-                }
-                field(guidPersonne; Rec."GUID Personne")
-                {
-                }
-                field(guidDestinataire; Rec."GUID Destinataire")
-                {
-                }
-                field(nomDestinataireOCR; Rec."Nom destinataire OCR")
-                {
-                }
-                field(nomDestinataire2OCR; Rec."Nom destinataire 2 OCR")
-                {
-                }
-                field(adresseDestinataireOCR; Rec."Adresse destinataire OCR")
-                {
-                }
-                field(adresseDestinataire2OCR; Rec."Adresse destinataire 2 OCR")
-                {
-                }
-                field(codePostalDestinataireOCR; Rec."Code postal destinataire OCR")
-                {
-                }
-                field(villeDestinataireOCR; Rec."Ville destinataire OCR")
-                {
-                }
-                field(codePaysDestinataireOCR; Rec."Code pays destinataire OCR")
-                {
-                }
-                field(noTelephoneDestinataireOCR; Rec."No. telephone destinataire OCR")
-                {
-                }
-                field(emailLivraison; Rec."EMail livraison")
-                {
-                }
-                field(commentaireValideur; Rec."Commentaire valideur")
+                field(noTelephoneLivraisonOCR; Rec."No. telephone livraison OCR")
                 {
                 }
                 field(montantHTOCR; Rec."Montant HT OCR")
                 {
                 }
-                field(montantPortHTOCR; Rec."Montant port HT OCR")
+                field(rayon; Rec.Rayon)
+                {
+                    ApplicationArea = All;
+                }
+
+                field(idLigneDocumentOCR; Rec."ID ligne document OCR")
                 {
                 }
-                field(montantTvaOCR; Rec."Montant TVA OCR")
+                field(noArticle; Rec."Reference article client")
                 {
                 }
-                field(totalTtcOCR; Rec."Total TTC OCR")
-                {
-                }
-                field(noLigne; Rec."No. ligne")
-                {
-                }
-                field(noArticle; Rec."No. article")
-                {
-                }
+                /*
                 field(codeVariante; Rec."Code variante")
                 {
                 }
+                */
                 field(designationArticleOCR; Rec."Designation article OCR")
-                {
-                }
-                field(quantite; Rec.Quantite)
-                {
-                }
-                field(codeUnite; Rec."Code unite")
                 {
                 }
                 field(prixUnitaireOCR; Rec."Prix unitaire OCR")
                 {
                 }
-                field(pourcentageRemiseLigne; Rec."% remise ligne")
+                field(uniteOCR; Rec.Unite)
+                {
+                }
+                field(quantite; Rec.Quantite)
                 {
                 }
                 field(montantLigneHTOCR; Rec."Montant ligne HT (OCR)")
+                {
+                }
+                field(dateLivraisonDemandee; Rec."Date livraison demandee")
+                {
+                    ApplicationArea = All;
+                }
+
+                field(id; Rec.SystemId)
+                {
+                    Editable = false;
+                }
+                field(systemModifiedAt; Rec.SystemModifiedAt)
                 {
                 }
             }

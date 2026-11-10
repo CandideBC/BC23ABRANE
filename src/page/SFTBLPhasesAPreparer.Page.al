@@ -284,14 +284,14 @@ page 50044 "SF TBL Phases a preparer"
                 Image = Track;
                 trigger OnAction()
                 var
-                    UCCommande: Record "UC Commande";
-                    PageUCCommande: page "UC Commande";
+                    EnteteVente: Record "Sales Header";
+                    PageFicheColisage: page "Fiche colisage commande";
                 begin
-                    Clear(PageUCCommande);
-
-                    UCCommande.setrange("No. commande", Rec."No. document");
-                    PageUCCommande.SetTableView(UCCommande);
-                    PageUCCommande.Run();
+                    Clear(PageFicheColisage);
+                    EnteteVente.SetRange("Document Type",EnteteVente."Document Type"::Order);
+                    EnteteVente.setrange("No.", Rec."No. document");
+                    PageFicheColisage.SetTableView(EnteteVente);
+                    PageFicheColisage.Run();
                 end;
             }
             action(SuiviAchats)

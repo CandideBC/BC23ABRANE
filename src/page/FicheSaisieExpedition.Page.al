@@ -305,9 +305,9 @@ page 50123 "Fiche saisie expedition"
                 //OperationAnnuleeErr: Label 'Opération interrompue';
 
                 begin
-                    if not Confirm(ConfirmerExpedierQst,false) then
+                    if not Confirm(ConfirmerExpedierQst, false) then
                         Error(AnnulationExpedierErr);
-                        
+
                     Rec.CalcSubTotal(Rec);
                     Commit();
 
@@ -380,8 +380,8 @@ page 50123 "Fiche saisie expedition"
                     UCCommande.SetRange("No. commande", Rec."No.");
                     UCCommande.SetRange("Statut UC", UCCommande."Statut UC"::" ", UCCommande."Statut UC"::"Reçue");
                     if DetailPalettesFourni then
-                        UCCommande.SetRange("A expedier",true);
-                    if UCCommande.FindSet(true) then 
+                        UCCommande.SetRange("A expedier", true);
+                    if UCCommande.FindSet(true) then
                         repeat
                             UCColisageExpedie.Init();
                             UCColisageExpedie."No. colisage" := EnteteColisageExpedie."No.";
@@ -396,27 +396,33 @@ page 50123 "Fiche saisie expedition"
                                 DetailUCCommande.SetCurrentKey("No. commande", "No. UC");
                                 DetailUCCommande.SetRange("No. commande", UCCommande."No. commande");
                                 DetailUCCommande.Setrange("No. UC", UCCommande."No. UC");
-                                if DetailUCCommande.FindSet(false) then
+                                if DetailUCCommande.FindSet(true) then
                                     repeat
-                                        DetailColisageExpedie.Init();
-                                        DetailColisageExpedie."No. colisage" := EnteteColisageExpedie."No.";
-                                        DetailColisageExpedie."No. ligne" := NumLigne;
-                                        NumLigne := NumLigne + 1;
-                                        DetailColisageExpedie."Item No." := DetailUCCommande."No. article";
-                                        DetailColisageExpedie.Description := DetailUCCommande.Designation;
-                                        DetailColisageExpedie."Description 2" := DetailUCCommande."Designation 2";
-                                        DetailColisageExpedie."Quantite dans UC" := DetailUCCommande."Quantite dans UC";
-                                        DetailColisageExpedie.Insert();
+                                        if not DetailUCCommande.Expediee then begin
+                                            DetailColisageExpedie.Init();
+                                            DetailColisageExpedie."No. colisage" := EnteteColisageExpedie."No.";
+                                            DetailColisageExpedie."No. ligne" := NumLigne;
+                                            NumLigne := NumLigne + 1;
+                                            DetailColisageExpedie."Item No." := DetailUCCommande."No. article";
+                                            DetailColisageExpedie.Description := DetailUCCommande.Designation;
+                                            DetailColisageExpedie."Description 2" := DetailUCCommande."Designation 2";
+                                            DetailColisageExpedie."Quantite dans UC" := DetailUCCommande."Quantite dans UC";
+                                            DetailColisageExpedie.Insert();
+                                            //KAN.FHA 03/11/2026 DEBUT
+                                            DetailUCCommande.Expediee := true;
+                                            DetailUCCommande.Modify();
+                                            //KAN.FHA 03/11/2026 FIN
+                                        end;
                                     until DetailUCCommande.Next() = 0;
                             end;
-                            UCCommandeMAJ.Get(UCCommande."No. commande",UCCommande."No. UC");
+                            UCCommandeMAJ.Get(UCCommande."No. commande", UCCommande."No. UC");
                             UCCommandeMAJ."Statut UC" := UCCommande."Statut UC"::"Expédiée";
                             UCCommandeMAJ.Modify();
                             UC.Get(UCCommande."No. UC");
                             UC."Statut UC" := UC."Statut UC"::"Expédiée";
                             UC.Modify();
                         until UCCommande.Next() = 0;
-                    
+
                     EnteteColisageExpedie.MAJPoidsSurContenuColisage();
 
                     //On valide le BL

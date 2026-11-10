@@ -67,6 +67,10 @@ tableextension 50031 VendorExtension extends Vendor
         {
             
         }
+        key(MyKey4; "Suivi container")
+        {
+            
+        }
     }
 }
 

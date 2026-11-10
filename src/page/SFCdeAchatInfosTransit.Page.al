@@ -84,7 +84,6 @@ page 50063 "SF Cde achat : infos transit."
             {
                 Caption = 'Eclater lignes';
                 Image = Splitlines;
-                //Promoted = true;
 
                 trigger OnAction()
                 begin

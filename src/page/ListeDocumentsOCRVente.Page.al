@@ -1,6 +1,6 @@
 page 50148 "Liste documents OCR Vente"
 {
-    CardPageID = "Fiche document OCR Vente";
+    CardPageID = "Fiche commande OCR Vente";
     Editable = false;
     PageType = List;
     SourceTable = "Entete OCR vente";
@@ -13,7 +13,7 @@ page 50148 "Liste documents OCR Vente"
         {
             repeater("Général")
             {
-                field("No."; Rec."No.")
+                field("No. commande client";Rec."No. commande client")
                 {
                     ToolTip = 'N°';
                 }
@@ -29,66 +29,45 @@ page 50148 "Liste documents OCR Vente"
                 {
                     ToolTip = 'Indique la date à laquelle le document a été OCRisé';
                 }
-                field("Date document"; Rec."Date document")
+                field("Date commande";Rec."Date commande")
                 {
                     ToolTip = 'Indique la date sur le document';
                 }
-                field("No. document client"; Rec."No. document client")
-                {
-                    ToolTip = 'Indique le N° identifiant le document chez le client.';
-                }
+
                 field("No. donneur ordre"; Rec."No. donneur ordre")
                 {
                     ToolTip = 'Indique quel N° client (BC) a envoyé le document.';
                 }
-                field("No. contact societe"; Rec."No. contact societe")
-                {
-                    ToolTip = 'Indique le N° contact société correspondant au client';
-                }
-                field("No. contact personne"; Rec."No. contact personne")
-                {
-                    ToolTip = 'Indique quelle personne a envoyé le document';
-                }
-                field("Nom client OCR"; Rec."Nom client OCR")
+
+
+                field("Nom facturation OCR";Rec."Nom facturation OCR")
                 {
                     ToolTip = 'Indique le nom de client détecté sur le document OCRisé, potentiellement différent de la valeur se trouvant dans BC.';
                 }
-                field("Nom client 2 OCR"; Rec."Nom client 2 OCR")
+                field("Nom facturation 2 OCR";Rec."Nom facturation 2 OCR")
                 {
                     ToolTip = 'Indique le complément de nom de client détecté sur le document OCRisé, potentiellement différent de la valeur se trouvant dans BC.';
                 }
-                field("Adresse client OCR"; Rec."Adresse client OCR")
+                field("Adresse facturation OCR";Rec."Adresse facturation OCR")
                 {
                     ToolTip = 'Indique l''adresse détectée sur le document OCRisé, potentiellement différente de la valeur se trouvant dans BC.';
                 }
-                field("Adresse client 2 OCR"; Rec."Adresse client 2 OCR")
+                field("Adresse facturation 2 OCR";Rec."Adresse facturation 2 OCR")
                 {
-                    Caption = 'Adresse client 2 OCR';
-                    ToolTip = 'Indique le complément de nom de client détecté sur le document OCRisé, potentiellement différent de la valeur se trouvant dans BC.';
+                    Caption = 'Adresse facturation 2 OCR';
+                    ToolTip = 'Indique le complément d''adresse de facturation détecté sur le document OCRisé, potentiellement différent de la valeur se trouvant dans BC.';
                 }
-                field("Code postal client OCR"; Rec."Code postal client OCR")
+                field("CP facturation OCR";Rec."CP facturation OCR")
                 {
                     ToolTip = 'Indique le code postal du client détecté sur le document OCRisé, potentiellement différent de la valeur se trouvant dans BC.';
                 }
-                field("Ville client OCR"; Rec."Ville client OCR")
+                field("Ville facturation OCR";Rec."Ville facturation OCR")
                 {
                     ToolTip = 'Indique la ville du client détectée sur le document OCRisé, potentiellement différente de la valeur se trouvant dans BC.';
                 }
                 field("Montant HT OCR"; Rec."Montant HT OCR")
                 {
                     ToolTip = 'Indique le montant HT tel que lu par l''ORC. Potentiellement différent de la valeur calculée par BC.';
-                }
-                field("Montant port HT OCR"; Rec."Montant port HT OCR")
-                {
-                    ToolTip = 'Indique le montant du port détecté par l''OCR';
-                }
-                field("Montant TVA OCR"; Rec."Montant TVA OCR")
-                {
-                    ToolTip = 'Indique le montant de TVA détecté sur le document OCRisé, potentiellement différent de la valeur calculée par BC.';
-                }
-                field("Total TTC OCR"; Rec."Total TTC OCR")
-                {
-                    ToolTip = 'Indique le total TTC détecté sur le document OCRisé, potentiellement différent de la valeur calculée par BC.';
                 }
             }
         }
@@ -100,12 +79,10 @@ page 50148 "Liste documents OCR Vente"
 
     trigger OnAfterGetRecord()
     begin
-        Rec.CalcFields("Montant HT NAV (hors port)");
+        //Rec.CalcFields("Montant HT BC");
         //MontantHTCalculeNAV := "Montant HT NAV (hors port)" + "Montant port HT";
     end;
 
     var
-        MontantHTCalculeNAV: Decimal;
-        TexteLigne: Text[30];
 }
 

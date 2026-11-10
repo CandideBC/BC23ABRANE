@@ -37,6 +37,13 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
                 ApplicationArea = All;
                 ToolTip = 'Nombre de phases';
             }
+            field(PctExpedie; PctExpedie)
+            {
+                ApplicationArea = All;
+                Caption = '% expédié';
+                ToolTip = 'Pourcentage d''expédition (Quantités expédiées / Quantités commandées';
+            }
+            
             field(PctAvancementBE; PctAvancementBE)
             {
                 ApplicationArea = All;
@@ -56,14 +63,17 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
             field("Montant CA"; Rec."Montant CA")
             {
                 ApplicationArea = All;
+                ToolTip = 'Montant CA';
             }
             field("Montant fact. acompte"; Rec."Montant fact. acompte")
             {
                 ApplicationArea = All;
+                ToolTip = 'Montant facture acompte';
             }
             field("Montant fact. situation"; Rec."Montant fact. situation")
             {
                 ApplicationArea = All;
+                ToolTip = 'Montant facture situation';
             }
         }
         addafter(Amount)
@@ -71,6 +81,7 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
             field("Montant deja verse TTC"; Rec."Montant deja verse TTC")
             {
                 ApplicationArea = All;
+                ToolTip = 'Montant déjà versé (TTC)';
             }
 
         }
@@ -87,6 +98,7 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
             field("Date chargement"; Rec."Date chargement")
             {
                 ApplicationArea = All;
+                ToolTip = 'Date de chargement';
             }
         }
         moveafter("Montant deja verse TTC"; "Salesperson Code", "External Document No.")
@@ -95,10 +107,12 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
             field("Facturation en compta (O/N)"; Rec."Facturation en compta (O/N)")
             {
                 ApplicationArea = All;
+                ToolTip = 'Facturation en compta (O/N)';
             }
             field("Nb affectations achats"; Rec."Nb affectations achats")
             {
                 ApplicationArea = All;
+                ToolTip = 'Nb affectations achats';
             }
             field("Code chantier"; Rec."Code chantier")
             {
@@ -113,6 +127,7 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
             field("Annee commande"; Rec."Annee commande")
             {
                 ApplicationArea = All;
+                ToolTip = 'Année commande';
             }
         }
         moveafter("Code enseigne"; "Shipment Method Code")
@@ -294,14 +309,23 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
     }
     var
         PctAvancementBE: Decimal;
+        PctExpedie: Decimal;
 
     trigger OnAfterGetRecord()
     var
         DossierBE: Record "Dossier BE";
+        
     begin
         PctAvancementBE := 0;
         if Rec."No. dossier BE" <> '' then
             if DossierBE.get(Rec."No. dossier BE") then
                 PctAvancementBE := DossierBE.CalcAvancement();
+
+        //KAN.FHA 09/11/2026 DEBUT
+        Rec.CalcFields("Quantite commandee","Quantite expediee");
+        PctExpedie := 0;
+        if Rec."Quantite commandee" <> 0 then
+            PctExpedie := round(Rec."Quantite expediee" / Rec."Quantite commandee" * 100,1);
+        //KAN.FHA 09/11/2026 FIN
     end;
 }

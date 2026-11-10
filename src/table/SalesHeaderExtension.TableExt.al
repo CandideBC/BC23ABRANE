@@ -180,6 +180,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             var
                 UCCommande: Record "UC Commande";
                 DetailUCCommande: Record "Detail UC Commande";
+                LigneVente: Record "Sales Line";
                 NbUC: Integer;
                 NbLignes: Integer;
                 MiseAJourManuelleNecessaireMsg: Label 'Vous avez réduit le nombre de palettes, le système ne va pas décider tout seul quelles lignes de colis il doit supprimer.';
@@ -209,6 +210,19 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                 end else
                     if "Nombre de palettes" < NbUC then
                         Message(MiseAJourManuelleNecessaireMsg);
+
+                if (rec."Nombre de palettes" <> 0) and (xrec."Nombre de palettes" = 0) then begin
+                    LigneVente.SetRange("Document Type",Rec."Document Type");
+                    LigneVente.SetRange("Document No.",Rec."No.");
+                    LigneVente.Setrange(Type,LigneVente.Type::Item);
+                    if LigneVente.FindSet(true) then 
+                        repeat
+                            if (LigneVente."Outstanding Qty. (Base)" <> 0) and (LigneVente."No. UC" <> '') then begin
+                                LigneVente."No. UC" := '';
+                                LigneVente.Modify();
+                            end;
+                        until LigneVente.Next() = 0;
+                end;
             end;
 
         }
@@ -1020,6 +1034,14 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             Editable = false;
             DecimalPlaces = 0 : 5;
         }
+        field(51289; "Quantite expediee"; Decimal)
+        {
+            Caption = 'Quantité expédiée';
+            FieldClass = FlowField;
+            CalcFormula = sum("Sales Line".QuantiteExpedieeBaseDuplique where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."),Phase=field("Filtre phase")));
+            Editable = false;
+            DecimalPlaces = 0 : 5;
+        }
 
         field(51290; "Quantite prise sur stock"; Decimal)
         {
@@ -1075,7 +1097,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         {
 
         }
-        key(MyKey7; "Commande export")
+        key(MyKey7; "Commande export","Proba transformation")
         {
 
         }

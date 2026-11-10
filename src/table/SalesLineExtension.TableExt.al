@@ -45,6 +45,11 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             DataClassification = ToBeClassified;
             Description = 'KAN.FHA 17/11/2022 Pour pouvoir filtrer le montant des cdes en cours par année sur les enseignes, groupes clients et chantiers';
         }
+        field(50009; NumArtDuplique; Code[20])
+        {
+            Caption = 'NumDuplique';
+            DataClassification = ToBeClassified;
+        }
         field(50010; "Released Status"; Boolean)
         {
             Caption = 'Statut Lancé';
@@ -458,6 +463,13 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             DataClassification = ToBeClassified;
             Description = 'KAN';
         }
+        field(50112; "Quantite expediee"; Decimal)
+        {
+            DataClassification = ToBeClassified;
+            Editable = false;
+            DecimalPlaces = 0:5;
+            BlankZero = true;
+        }
         field(51115; "Livre non facture HT (DS)"; Decimal)
         {
             Caption = 'Livré non facturé HT (DS)';
@@ -760,14 +772,14 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             end;
         }
 
-        field(51264; "Quantite prepa colisage"; Decimal)
+        field(51264; "Quantite colisee"; Decimal)
         {
             Caption = 'Quantité colisée';
             Editable = false;
             BlankZero = true;
             DecimalPlaces = 0 : 5;
             FieldClass = FlowField;
-            CalcFormula = sum("Detail UC Commande"."Quantite dans UC" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No.")));
+            CalcFormula = sum("Detail UC Commande"."Quantite dans UC" where("No. commande" = field("Document No."), "No. ligne commande" = field("Line No."), Expediee = const(false)));
         }
 
         field(51270; "SubTotal Amount"; Decimal)
@@ -899,7 +911,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
 
         key(MyKey1; "Document Type", "Document No.", Type)
         {
-            
+
 
         }
         key(MyKey2; "Vendor No.")
@@ -940,7 +952,7 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         }
         key(MyKey12; TypeDocDuplique, NumDocDuplique, Phase)
         {
-            SumIndexFields = "Montant achats prevus (DS)","Quantite commandee";
+            SumIndexFields = "Montant achats prevus (DS)", "Quantite commandee";
         }
         key(MyKey13; "Reference Fiche BE")
         {
@@ -960,10 +972,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         }
         key(MyKey17; "No. UC")
         {
-            
+
         }
-        key(MyKey18; TypeDocDuplique, NumDocDuplique, "Article a coliser",Phase)
-        
+        key(MyKey18; TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase,NumArtDuplique)
+
         {
             SumIndexFields = "Quantite prise sur stock";
         }
@@ -998,8 +1010,8 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             UCCommande.Insert();
         end;
 
-        CalcFields("Quantite prepa colisage");
-        QteNonPreparee := Rec."Outstanding Qty. (Base)" - "Quantite prepa colisage";
+        CalcFields("Quantite colisee");
+        QteNonPreparee := Rec."Outstanding Qty. (Base)" - "Quantite colisee";
 
         //if QteNonPreparee <= 0 then
         //    error(QuantiteEntierementPrepareeErr);

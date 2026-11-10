@@ -86,6 +86,12 @@ pageextension 50126 OrderProcessorRCExtension extends "Order Processor Role Cent
             group(ImportExport)
             {
                 Caption = 'Import/Export';
+                action(DevisExport)
+                {
+                    Caption = 'Devis export';
+                    Tooltip = 'Devis export';
+                    RunObject = page "Liste devis export"; //Ne montre que les devis dont la probabalité de transformation est de 100%
+                }
                 action(CommandesExport)
                 {
                     Caption = 'Commandes export';
@@ -133,20 +139,26 @@ pageextension 50126 OrderProcessorRCExtension extends "Order Processor Role Cent
                     RunPageView = sorting("Statut container") where("statut container" = const(Archivé));
                     ToolTip = 'Containers archivés';
                 }
-
+                //KAN.FHA 09/11/2026 DEBUT
+                /*
                 action(ResteAAffecterContainer)
                 {
                     Caption = 'Reste à affecter à container';
                     RunObject = page "Reste à affecter container";
                     ToolTip = 'Reste à affecter à container';
                 }
-
+                */
+                //KAN.FHA 09/11/2026 FIN
+                //KAN.FHA 09/11/2026 DEBUT
+                /*
                 action(ControleCodeDouanier)
                 {
                     Caption = 'Contrôle code douanier';
                     RunObject = page "Ctrl. code douanier/Achat DIV";
                     ToolTip = 'Contrôle code douanier';
                 }
+                */
+                //KAN.FHA 09/11/2026 FIN
 
                 action(SuiviSAVFournisseur)
                 {

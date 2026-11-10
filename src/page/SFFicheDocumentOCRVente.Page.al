@@ -9,33 +9,40 @@ page 50150 "Sous-form document OCR Vente"
         {
             repeater(Group)
             {
-                field("No. ligne"; Rec."No. ligne")
+                field("ID ligne document OCR";Rec."ID ligne document OCR")
                 {
                 }
-                field("No. article"; Rec."No. article")
+                field("Reference article client"; Rec."Reference article client")
                 {
+                    ApplicationArea = All;
                 }
+                field("No. article BC"; Rec."No. article BC")
+                {
+                    ApplicationArea = All;
+                }
+                
+                
+                /*
                 field("Code variante"; Rec."Code variante")
                 {
                 }
+                */
                 field("Designation article OCR"; Rec."Designation article OCR")
                 {
                 }
-                field("Designation article NAV"; Rec."Designation article NAV")
+                field("Designation article BC"; Rec."Designation article BC")
                 {
                 }
+                /*
                 field("Designation variante NAV"; Rec."Designation variante NAV")
                 {
                 }
+                */
                 field(Quantite; Rec.Quantite)
                 {
                 }
-                field("Code unite"; Rec."Code unite")
+                field(Unite;Rec.Unite)
                 {
-                }
-                field("Unite inconnue"; Rec."Unite inconnue")
-                {
-                    Editable = false;
                 }
                 field("Article bloque"; Rec."Article bloque")
                 {

@@ -21,6 +21,12 @@ table 50067 "Detail UC Commande"
                                                            "Document No." = field("No. commande"),
                                                            Type = const(Item));
         }
+        field(16; Expediee; Boolean)
+        {
+            Caption = 'Expédiée';
+            DataClassification = ToBeClassified;
+        }
+
         field(18; "Statut UC"; Option) //Champ mis à jour automatiquement par le système 
         {
             Caption = 'Statut UC';
@@ -130,6 +136,10 @@ table 50067 "Detail UC Commande"
         key(MyKey3; "No. commande", "Statut UC")
         {
 
+        }
+        key(MyKey4; "No. commande", "No. ligne commande", Expediee)
+        {
+            SumIndexFields = "Quantite dans UC";
         }
     }
 
