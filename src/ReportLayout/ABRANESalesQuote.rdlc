@@ -808,7 +808,7 @@
                                         <Paragraph>
                                           <TextRuns>
                                             <TextRun>
-                                              <Value>Informations</Value>
+                                              <Value>General Informations</Value>
                                               <Style>
                                                 <FontSize>9pt</FontSize>
                                                 <FontWeight>Bold</FontWeight>
@@ -822,7 +822,7 @@
                                       <Top>0.08121cm</Top>
                                       <Left>0.2238cm</Left>
                                       <Height>0.6cm</Height>
-                                      <Width>2.90548cm</Width>
+                                      <Width>4.16751cm</Width>
                                       <Style>
                                         <Border>
                                           <Style>None</Style>
@@ -837,7 +837,7 @@
                                       <Top>0.75529cm</Top>
                                       <Left>9.87494cm</Left>
                                       <Height>0cm</Height>
-                                      <Width>-9.65114cm</Width>
+                                      <Width>-9.84426cm</Width>
                                       <ZIndex>1</ZIndex>
                                       <Style>
                                         <Border>

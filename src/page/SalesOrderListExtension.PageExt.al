@@ -37,23 +37,28 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
                 ApplicationArea = All;
                 ToolTip = 'Nombre de phases';
             }
-            field(PctExpedie; PctExpedie)
-            {
-                ApplicationArea = All;
-                Caption = '% expédié';
-                ToolTip = 'Pourcentage d''expédition (Quantités expédiées / Quantités commandées';
-            }
-            
             field(PctAvancementBE; PctAvancementBE)
             {
                 ApplicationArea = All;
                 Caption = '% avancement BE';
                 ToolTip = '% avancement BE';
                 BlankZero = true;
+                DecimalPlaces = 0:0;
             }
-            
+            field(PctExpedie; PctExpedie)
+            {
+                ApplicationArea = All;
+                Caption = '% expédié';
+                DecimalPlaces = 0:0;
+                BlankZero = true;
+                ToolTip = 'Pourcentage d''expédition (Quantités expédiées / Quantités commandées';
+            }
         }
-        moveafter(PctAvancementBE; "Completely Shipped", Amount)
+        modify("Completely Shipped")
+        {
+            Visible = false;
+        }
+        moveafter(PctAvancementBE; Amount)
         modify(Amount)
         {
             Caption = 'Montant dû';

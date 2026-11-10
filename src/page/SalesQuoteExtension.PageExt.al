@@ -753,6 +753,28 @@ pageextension 50087 SalesQuoteExtension extends "Sales Quote"
         }
         addlast(Action59)
         {
+            action(ImprimerProforma)
+            {
+                ApplicationArea = All;
+                Caption = 'Proforma';
+                Promoted = true;
+                PromotedCategory = Category9;
+                Image = Print;
+                ToolTip = 'Imprimer facture proforma';
+
+                trigger OnAction()
+                var
+                    EnteteVente: Record "Sales Header";
+                    DevisProforma: Report "ABRANE : Sales - Quote";
+                begin
+                    EnteteVente.SETRANGE("Document Type", Rec."Document Type");
+                    EnteteVente.SETRANGE("No.", Rec."No.");
+                    DevisProforma.SetTableView(EnteteVente);
+                    DevisProforma.DefinirImpressionProforma(true);
+                    DevisProforma.RunModal();
+                    Clear(DevisProforma);
+                end;
+            }
             action(ImprimerBP)
             {
                 ApplicationArea = All;
@@ -830,16 +852,16 @@ pageextension 50087 SalesQuoteExtension extends "Sales Quote"
                             AcheterQueCertainesPhases := true;
                         end else
                             error(OperationInterrompueErr);
-                    /*
-                    end else begin
-                        //KAN.FHA 22/04/2026 DEBUT
-                        LigneVente.SetRange("Document Type", Rec."Document Type");
-                        LigneVente.SetRange("Document No.", Rec."No.");
-                        LigneVente.ModifyAll("A acheter", true);
-                        //KAN.FHA 22/04/2026 FIN
-                    */
+                        /*
+                        end else begin
+                            //KAN.FHA 22/04/2026 DEBUT
+                            LigneVente.SetRange("Document Type", Rec."Document Type");
+                            LigneVente.SetRange("Document No.", Rec."No.");
+                            LigneVente.ModifyAll("A acheter", true);
+                            //KAN.FHA 22/04/2026 FIN
+                        */
                     end;
-                    
+
 
                     PurchOrderNo := '';
                     CodeFournisseurIndefini := '_INDEFINI';
