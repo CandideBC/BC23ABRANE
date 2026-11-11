@@ -1392,7 +1392,6 @@ report 50004 "ABRANE : Sales - Quote"
                 CurrReport.Language := LanguageMgt.GetLanguageID("Language Code");
 
                 //KAN.FHA 10/11/2026 DEBUT //TRADUCTIONS
-                Message(Format(ImpressionProforma));
                 if "Language Code" in ['FRA', ''] then begin
                     if ImpressionProforma then
                         Text004txt := Text004ProformaFRALbl
@@ -1964,7 +1963,6 @@ report 50004 "ABRANE : Sales - Quote"
     procedure DefinirImpressionProforma(pImpProforma: Boolean)
     begin
         ImpressionProforma := pImpProforma;
-        Message(Format(ImpressionProforma));
     end;
 
     procedure GetUnitOfMeasureDescr(UOMCode: Code[10]): Text[50]

@@ -123,7 +123,7 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
         {
             Visible = true;
         }
-        movebefore(ass; "Quote No.",Status)
+        movebefore(ass; "Quote No.", Status)
 
         movebefore("Sell-to Address"; "Sell-to Customer No.", "Sell-to Customer Name")
         moveafter("Sell-to Country/Region Code"; "Sell-to Contact")
@@ -529,11 +529,6 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
         {
             Visible = false;
         }
-
-
-
-
-
     }
 
     actions
@@ -605,11 +600,6 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
         {
             Visible = false;
         }
-        modify("Print Confirmation")
-        {
-            Promoted = true;
-            PromotedIsBig = true;
-        }
         modify(Plan)
         {
             Visible = false;
@@ -622,8 +612,6 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 Caption = 'Extraire devis type';
                 Ellipsis = true;
                 Image = CustomerCode;
-                Promoted = true;
-                PromotedCategory = Process;
                 ToolTip = 'Extraire un devis type lié au client puis sélectionner les lignes qu''on souhaite ajouter.';
 
                 trigger OnAction()
@@ -637,22 +625,48 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
         {
             Visible = false;
         }
-        addafter("Print Confirmation")
+
+
+        addafter(ProformaInvoice)
         {
-            action("Facture Proforma2")
+            action(ImprimerProforma)
             {
-                ToolTip = 'Facture Proforma';
+                ApplicationArea = All;
+                Caption = 'Proforma';
                 Image = Print;
+                ToolTip = 'Imprimer facture proforma';
 
                 trigger OnAction()
                 var
-                    RecSalesHeader: Record "Sales Header";
+                    EnteteVente: Record "Sales Header";
+                    CommandeProforma: Report "ABRANE : Sales - Order";
                 begin
-                    Rec.CalcSubTotal(Rec);
-                    COMMIT();
+                    EnteteVente.SETRANGE("Document Type", Rec."Document Type");
+                    EnteteVente.SETRANGE("No.", Rec."No.");
+                    CommandeProforma.SetTableView(EnteteVente);
+                    CommandeProforma.DefinirImpressionProforma(true);
+                    CommandeProforma.RunModal();
+                    Clear(CommandeProforma);
+                end;
+            }
+            action(ImprimerBP)
+            {
+                ApplicationArea = All;
+                Caption = 'Bon de prépa';
+                Image = Print;
+                ToolTip = 'Imprimer bon de préparation';
 
-                    CurrPage.SETSELECTIONFILTER(RecSalesHeader);
-                    REPORT.RUN(Report::"ABRANE : Sales Proforma Inv.", true, false, RecSalesHeader);
+                trigger OnAction()
+                var
+                    EnteteVente: Record "Sales Header";
+                    BReport: Report "Pick Instruction"; //A remplacer par le bon état
+                begin
+                    EnteteVente.SETRANGE("Document Type", Rec."Document Type");
+                    EnteteVente.SETRANGE("No.", Rec."No.");
+                    BReport.SetTableView(EnteteVente);
+                    //CommandeProforma.DefinirImpressionProforma(true);
+                    BReport.RunModal();
+                    Clear(BReport);
                 end;
             }
             action("Packing List")
@@ -673,6 +687,10 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
             }
 
         }
+        modify(ProformaInvoice)
+        {
+            Visible = false;
+        }
 
         addafter(AssemblyOrders)
         {
@@ -685,19 +703,13 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 RunPageView = sorting("Type document vente", "No. document vente", "No. ligne document vente")
                                   where("Type document vente" = const(Commande));
                 RunPageLink = "No. document vente" = field("No.");
-                //Promoted = true;
-                //PromotedIsBig = true;
                 Image = LinkAccount;
-                //PromotedCategory = Process;
             }
             action(Interlocuteurs)
             {
                 Caption = 'Interlocuteurs';
                 ToolTip = 'Interlocuteurs';
                 Image = Employee;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 RunObject = Page InterlocuteursChantier;
                 RunPageLink = "Code chantier" = field("Code chantier");
             }
@@ -720,9 +732,7 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
             action("Calculer Poids total")
             {
                 ToolTip = 'Calculer poids net total';
-                Promoted = true;
                 Image = SuggestNumber;
-                PromotedCategory = Process;
 
                 trigger OnAction()
                 begin
@@ -734,9 +744,6 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 ApplicationArea = All;
                 Caption = 'Comparer versions';
                 ToolTip = 'Comparer deux versions';
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 Image = CompareCost;
 
                 trigger OnAction()
@@ -777,10 +784,7 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
             action("Créer cde d'achat")
             {
                 ToolTip = 'Créer commande(s) d''achat';
-                Promoted = true;
-                PromotedIsBig = true;
                 Image = NewWarehouseReceipt;
-                PromotedCategory = Process;
 
                 trigger OnAction()
                 var
@@ -813,14 +817,7 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                     if NbPhasesAvecArticles > 1 then begin
                         PhasesDocVente.SetRange("Type document", Rec."Document Type");
                         PhasesDocVente.SetRange("No. document", Rec."No.");
-                        //KAN.FHA 22/04/2026 DEBUT
-                        PhasesDocVente.ModifyAll(Acheter,true);
-                        //KAN.FHA 27/04/2026 DEBUT
-                        //LigneVente.SetRange("Document Type", Rec."Document Type");
-                        //LigneVente.SetRange("Document No.", Rec."No.");
-                        //LigneVente.SetRange(Phase, Rec.Phase);
-                        //LigneVente.ModifyAll("A acheter", true);
-                        //KAN.FHA 27/04/2026 FIN
+                        PhasesDocVente.ModifyAll(Acheter, true);
                         Commit();
                         //KAN.FHA 22/04/2026 DEBUT
                         PagePhases.SetTableView(PhasesDocVente);
@@ -834,20 +831,10 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                         end else
                             error(OperationInterrompueErr);
                     end;
-                    /*
-                    else begin
-                        //KAN.FHA 22/04/2026 DEBUT
-                        LigneVente.SetRange("Document Type", Rec."Document Type");
-                        LigneVente.SetRange("Document No.", Rec."No.");
-                        //LigneVente.SetRange(Phase, Rec.Phase);
-                        LigneVente.ModifyAll("A acheter", true);
-                        //KAN.FHA 22/04/2026 FIN
-                    end;
-                    */
 
                     PurchOrderNo := '';
                     CodeFournisseurIndefini := '_INDEFINI';
-                    if Rec.CreerCommandesAchats(PurchOrderNo, CodeFournisseurIndefini, NbCdesCreees, NbCdesCompletees,NbLignesAjoutees, AcheterQueCertainesPhases) then begin
+                    if Rec.CreerCommandesAchats(PurchOrderNo, CodeFournisseurIndefini, NbCdesCreees, NbCdesCompletees, NbLignesAjoutees, AcheterQueCertainesPhases) then begin
                         if PurchOrderNo <> '' then //Only one purch order created => ask if open it
                             if CONFIRM(OpenPurchOrderQst, true, PurchOrderNo) then begin
                                 CreatedPurchHeader.GET(CreatedPurchHeader."Document Type"::Order, PurchOrderNo);
@@ -890,9 +877,6 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 ApplicationArea = All;
                 Caption = 'Suivi achats';
                 ToolTip = 'Affiche la liste des commandes achats passées pour ce document.';
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 Image = OrderTracking;
 
                 trigger OnAction()
@@ -907,10 +891,10 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
             action("Créer facture acompte")
             {
                 ToolTip = 'Créer facture acompte';
-                Promoted = true;
-                PromotedIsBig = true;
+                //Promoted = true;
+                //PromotedIsBig = true;
                 Image = PrepaymentPost;
-                PromotedCategory = Process;
+                //PromotedCategory = Process;
                 trigger OnAction()
                 begin
                     Rec.CreerFactureAcompte();
@@ -932,29 +916,13 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
             }
             */
 
-            /*FHA 08/09/2025 Action plus utilise suite à la mise en place du phasage
-            action("Remplir qté expédier / phase")
-            {
-                ToolTip = 'Remplir qté expédier / phase';
-                Promoted = true;
-                PromotedIsBig = true;
-                Image = AutofillQtyToHandle;
-                PromotedCategory = Process;
 
-                trigger OnAction()
-                begin
-                    Rec.RemplirQteExpedierPhase();
-                end;
-            }
-            */
             action(VueSimplifiee)
             {
                 ApplicationArea = All;
                 ToolTip = 'Vue simplifiée';
                 Caption = 'Vue simplifiée';
                 ShortcutKey = 'Ctrl+M';
-                Promoted = true;
-                PromotedCategory = Process;
                 Image = ViewJob;
 
                 trigger OnAction()
@@ -967,10 +935,7 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 ApplicationArea = All;
                 Caption = 'Phases';
                 ToolTip = 'Affiche les phases du document ainsi que les articles rattachés à chaque phase.';
-                Promoted = true;
-                PromotedIsBig = true;
                 Image = JobTimeSheet;
-                PromotedCategory = Process;
                 trigger OnAction()
                 var
                     PhasesDocument: Record "Phases document";
@@ -988,9 +953,6 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
             {
                 ApplicationArea = All;
                 Caption = 'Fiche expédition';
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
                 Image = PickWorksheet;
                 ToolTip = 'Fiche expédition';
 
@@ -1003,75 +965,15 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 end;
 
             }
-            /*
-            action(Expedier)
-            {
-                Caption = 'Expédier';
-                ToolTip = 'Si vous aves plusieurs phases dans la commande, vous pourrez sélectionner quelle phase vous souhaitez livrer.';
-                Image = PostOrder;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                trigger OnAction()
-                var
-                    PhasesDocVente: Record "Phases document";
-                    CU80: codeunit "Sales-Post";
-                    PagePhases: Page "Phases document vente";
-                    NbPhasesDocument: Integer;
-                    PhaseNonChoisieErr: Label 'Vous devez choisir une phase.';
-                    ExpedierQst: Label 'Souhaitez-vous expédier cette commande ?';
-                    OperationAnnuleeErr: Label 'Opération interrompue';
-                begin
-                    Rec.CalcSubTotal(Rec);
-                    PhasesDocVente.SetRange("Type document", PhasesDocVente."Type document"::Order);
-                    PhasesDocVente.SetRange("No. document", Rec."No.");
-                    NbPhasesDocument := PhasesDocVente.Count;
-                    if NbPhasesDocument in [0, 1] then
-                        if not Confirm(ExpedierQst, false) then
-                            Error(OperationAnnuleeErr);
-                    if NbPhasesDocument >= 1 then
-                        if NbPhasesDocument = 1 then begin
-                            PhasesDocVente.FindFirst();
-                            Rec."Phase a expedier" := PhasesDocVente.Phase;
-                            Rec."Libelle phase a expedier" := PhasesDocVente.Description;
-                            Rec.Status := Rec.Status::Open;
-                            Rec.Modify();
-                            Commit();
-                        end else begin //Plus d'une phase, on va demander quelle phase on souhaite expédier
-                            Commit();
-                            Clear(PagePhases);
-                            PagePhases.DefinirConditionsAppel(true);
-                            PagePhases.SetTableView(PhasesDocVente);
-                            PagePhases.LookupMode(true);
-                            if PagePhases.RunModal() = Action::LookupOK then begin
-                                PagePhases.GetRecord(PhasesDocVente);
-                                Rec."Phase a expedier" := PhasesDocVente.Phase;
-                                Rec."Libelle phase a expedier" := PhasesDocVente.Description;
-                                Rec.Status := Rec.Status::Open;
-                                if PhasesDocVente."Date comptabilisation" <> 0D then
-                                    Rec.Validate("Posting Date", PhasesDocVente."Date comptabilisation");
 
-                                Rec.Modify();
-                                Commit();
-                                Rec.ViderQteAExpedierAutresPhases(PhasesDocVente.Phase);
-                            end else
-                                error(PhaseNonChoisieErr);
-                        end;
-
-                    Rec.Ship := true;
-                    Rec.Invoice := false;
-                    CU80.Run(Rec);
-                end;
-            }
-            */
             action(Facturer)
             {
                 Caption = 'Facturer';
                 ToolTip = 'Vous permet de facturer les quantités livrées et non facturées.';
                 Image = Invoice;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
+                //Promoted = true;
+                //PromotedCategory = Process;
+                //PromotedIsBig = true;
                 trigger OnAction()
                 var
                     CU80: codeunit "Sales-Post";
@@ -1099,6 +1001,53 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 end;
             }
         }
+
+        addbefore("Archive Document_Promoted")   
+        {
+            actionref(ExtraireDevisType_Promoted; ExtraireDevisTypePartiel)
+            {
+
+            }
+            actionref(Interlocuteurs_Promoted; Interlocuteurs)
+            {
+
+            }
+            actionref(ComparerVersions_Promoted; ComparerVersions)
+            {
+                
+            }
+            actionref(CreerCdeAchat_Promoted; "Créer cde d'achat") { }
+            actionref(SuiviAchats_Promoted; SuiviAchats) { }
+            actionref(PhasesDocument_Promoted; PhasesDocument) { }
+            actionref(SaisiePrepa_Promoted; SaisiePrepa) { }
+            actionref(Facturer_Promoted; Facturer) { }
+            actionref(CalculerPoidsTotal_Promoted; "Calculer Poids total") { }
+            actionref(VueSimplifiee_Promoted; VueSimplifiee) { }
+        }
+        moveafter(Facturer_Promoted;PostAndSend_Promoted)
+        modify(PreviewPosting_Promoted)
+        {
+            Visible = false;
+        }
+        modify(PostAndNew_Promoted)
+        {
+            Visible = false;
+        }
+        addafter("Print Confirmation_Promoted")
+        {
+            actionref(ImprimerProforma_Promoted; ImprimerProforma)
+            {
+            }
+            actionref(ImprimerBP_Promoted;ImprimerBP) 
+            {
+
+            }
+        }
+        modify("Pick Instruction_Promoted")
+        {
+            Visible = false;
+        }
+
     }
     procedure CalculerPoidsNet();
     var
