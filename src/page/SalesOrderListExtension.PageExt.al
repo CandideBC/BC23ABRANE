@@ -54,11 +54,12 @@ pageextension 50049 SalesOrderListExtension extends "Sales Order List"
                 ToolTip = 'Pourcentage d''expédition (Quantités expédiées / Quantités commandées';
             }
         }
+        moveafter(PctExpedie; Amount)
         modify("Completely Shipped")
         {
             Visible = false;
         }
-        moveafter(PctAvancementBE; Amount)
+
         modify(Amount)
         {
             Caption = 'Montant dû';

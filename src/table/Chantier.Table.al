@@ -466,6 +466,58 @@ table 50027 Chantier
             Editable = false;
             FieldClass = FlowField;
         }
+        field(1100; "Commandes achat"; Integer)
+        {
+            Caption = 'Commandes achat';
+            FieldClass = FlowField;
+            CalcFormula = count("Documents chantier" where("Code chantier" = Field(Code),"Type document"=const("Commande achat")));
+            Editable = false;
+        }
+        field(1110; "Factures achat"; Integer)
+        {
+            Caption = 'Factures achat';
+            FieldClass = FlowField;
+            CalcFormula = count("Documents chantier" where("Code chantier" = field(Code), "Type document" = const("Facture achat")));
+            Editable = false;
+        }
+        field(1120; "Avoirs achat"; Integer)
+        {
+            Caption = 'Avoirs achat';
+            FieldClass = FlowField;
+            CalcFormula = count("Documents chantier" where("Code chantier" = field(Code), "Type document" = const("Avoir achat")));
+            Editable = false;
+        }
+        field(1130; "Devis vente"; Integer)
+        {
+            Caption = 'Devis vente';
+            FieldClass = FlowField;
+            CalcFormula = count("Documents chantier" where("Code chantier" = field(Code), "Type document" = const("Devis vente")));
+            Editable = false;
+        }
+        field(1140; "Commandes vente"; Integer)
+        {
+            Caption = 'Commandes vente';
+            FieldClass = FlowField;
+            CalcFormula = count("Documents chantier" where("Code chantier" = field(Code), "Type document" = const("Commande vente")));
+            Editable = false;
+        }
+        field(1150; "Factures vente"; Integer)
+        {
+            Caption = 'Factures vente';
+            FieldClass = FlowField;
+            CalcFormula = count("Documents chantier" where("Code chantier" = field(Code), "Type document" = const("Facture vente")));
+            Editable = false;
+        }
+        field(1160; "Avoirs vente"; Integer)
+        {
+            Caption = 'Avoirs vente';
+            FieldClass = FlowField;
+            CalcFormula = count("Documents chantier" where("Code chantier" = field(Code), "Type document" = const("Avoir vente")));
+            Editable = false;
+        }
+        
+        //"Commande achat","Facture achat","Avoir achat","Devis vente","Commande vente","Facture vente","Avoir vente";
+
         field(2000; "CA Total"; Decimal)
         {
             BlankZero = true;

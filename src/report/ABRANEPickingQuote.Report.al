@@ -1335,7 +1335,7 @@ report 50012 "ABRANE : picking Quote"
                 //-DIA
                 CompanyInfo.CalcFields(Picture);
                 //+DIA
-                CurrReport.Language := LanguageMgt.GetLanguageID("Language Code");
+                //CurrReport.Language := LanguageMgt.GetLanguageID("Language Code");
 
                 if RespCenter.Get("Responsibility Center") then begin
                     FormatAddr.RespCenter(CompanyAddr, RespCenter);
@@ -1538,7 +1538,7 @@ report 50012 "ABRANE : picking Quote"
         FormatAddr: Codeunit "Format Address";
         SalesPostPrepmt: Codeunit "Sales-Post Prepayments";
         DimMgt: Codeunit DimensionManagement;
-        LanguageMgt: Codeunit Language;
+        //LanguageMgt: Codeunit Language;
         CustAddr: array[8] of Text[50];
         BillToAddr: array[8] of Text[50];
         ShipToAddr: array[8] of Text[50];

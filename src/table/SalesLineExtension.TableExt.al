@@ -979,6 +979,10 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         {
             SumIndexFields = "Quantite prise sur stock";
         }
+        key(MyKey19; TypeDocDuplique,"Code chantier")
+        {
+            
+        }
     }
 
     procedure AjouterUC(pNumUC: Code[20])

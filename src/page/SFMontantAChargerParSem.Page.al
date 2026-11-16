@@ -261,8 +261,6 @@ page 50092 "SF Montant a charger par sem"
     trigger OnAfterGetRecord()
     begin
         Rec.CalcValeursResteACharger(MontantACharger, PoidsNetACharger, LignesSansCout, NbDIVSansHSCode, NbLignesSansPoids);
-        //if Rec."Info phases" = 'Multiple' then
-        //    DateLivDemandeeTxt := '';
 
         NumeroDossierBE := '';
         
@@ -274,7 +272,6 @@ page 50092 "SF Montant a charger par sem"
     var
         EnteteVente: Record "Sales Header";
         NumeroDossierBE: Text[80];
-        //DateLivDemandeeTxt: Text[20];
         MontantACharger: Decimal;
         PoidsNetACharger: Decimal;
         LignesSansCout: Integer;

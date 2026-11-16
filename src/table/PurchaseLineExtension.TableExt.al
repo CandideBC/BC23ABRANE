@@ -479,6 +479,10 @@ tableextension 50020 PurchaseLineExtension extends "Purchase Line"
         {
             
         }
+        key(MyKey14; TypeDoc,"Code chantier")
+        {
+            
+        }
 
     }
 

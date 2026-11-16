@@ -1108,11 +1108,10 @@ report 50015 "ABRANE : Purchase Order"
 
             trigger OnAfterGetRecord()
             begin
-                CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
+                //CurrReport.Language := LanguageMgt.GetLanguageIdOrDefault("Language Code");
 
                 CompanyInfo.Get();
                 CompanyInfo.CalcFields(Picture);
-
 
                 "Purchase Header".RecupInfosDerniereArchive(MontantArchive, VersionNo, VersionDate);
 
@@ -1303,7 +1302,7 @@ report 50015 "ABRANE : Purchase Order"
         Fournisseur: Record Vendor;
         CurrExchRate: Record "Currency Exchange Rate";
         PurchSetup: Record "Purchases & Payables Setup";
-        LanguageMgt: Codeunit Language;
+        //LanguageMgt: Codeunit Language;
         FormatAddr: Codeunit "Format Address";
         PurchPost: Codeunit "Purch.-Post";
         PurchPostPrepmt: Codeunit "Purchase-Post Prepayments";

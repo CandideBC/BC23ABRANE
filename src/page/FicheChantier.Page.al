@@ -381,6 +381,14 @@ page 50084 "Fiche chantier"
                 }
             }
         }
+        area(FactBoxes)
+        {
+            part(DocumentsFactBox; "Factbox chantier : documents")
+            {
+                ApplicationArea = All;
+                SubPageLink = Code = field(Code);
+            }
+        }
     }
 
     actions

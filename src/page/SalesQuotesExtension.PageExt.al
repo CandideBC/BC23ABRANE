@@ -81,6 +81,7 @@ pageextension 50045 SalesQuotesExtension extends "Sales Quotes"
                 ApplicationArea = All;
                 Caption = '% avancement BE';
                 ToolTip = '% avancement BE';
+                DecimalPlaces = 0:0;
                 BlankZero = true;
             }
             

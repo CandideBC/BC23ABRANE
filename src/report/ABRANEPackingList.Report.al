@@ -1276,7 +1276,7 @@ report 50009 "ABRANE : Packing List"
             begin
                 CompanyInfo.Get();
                 CompanyInfo.CalcFields(Picture);
-                CurrReport.Language := LanguageMgt.GetLanguageID("Language Code");
+                //CurrReport.Language := LanguageMgtCodeunit.GetLanguageID("Language Code");
 
                 if RespCenter.Get("Responsibility Center") then begin
                     FormatAddr.RespCenter(CompanyAddr, RespCenter);
@@ -1518,7 +1518,7 @@ report 50009 "ABRANE : Packing List"
         RecDimSetEntry: Record "Dimension Set Entry";
         Country: Record "Country/Region";
         SalesCompLine: Record "Sales Line";
-        LanguageMgt: Codeunit Language;
+        //LanguageMgtCodeunit: Codeunit Language;
         SalesCountPrinted: Codeunit "Sales-Printed";
         FormatAddr: Codeunit "Format Address";
         SegManagement: Codeunit SegManagement;
