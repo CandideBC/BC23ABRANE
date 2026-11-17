@@ -84,6 +84,7 @@ codeunit 50017 ConsommerEventsCodeunits
     local procedure CU80_OnInsertInvoiceHeaderOnAfterSalesInvHeaderTransferFields(var SalesInvoiceHeader: Record "Sales Invoice Header"; var SalesHeader: Record "Sales Header")
     var
         Pays: Record "Country/Region";
+        DocumentChantier: Record "Documents chantier";
 
     begin
         if not Pays.GET(SalesInvoiceHeader."Bill-to Country/Region Code") then
@@ -92,12 +93,24 @@ codeunit 50017 ConsommerEventsCodeunits
         if (SalesInvoiceHeader."Bill-to Country/Region Code" <> 'FR') and (SalesInvoiceHeader."Bill-to Country/Region Code" <> '') then
             SalesInvoiceHeader."Concernee DEB" := (Pays."Intrastat Code" <> '') and not SalesHeader."Facture acompte" and not SalesHeader."Facture situation" and SalesInvoiceHeader.ASS;
 
+        //KAN.FHA 17/11/2026 DEBUT
+        if SalesInvoiceHeader."Code chantier" <> '' then
+            if not DocumentChantier.Get(SalesInvoiceHeader."Code chantier",DocumentChantier."Type document"::"Facture vente",SalesInvoiceHeader."No.") then begin
+                DocumentChantier.Init();
+                DocumentChantier."Code chantier" := SalesInvoiceHeader."Code chantier";
+                DocumentChantier."Type document" := DocumentChantier."Type document"::"Facture vente";
+                DocumentChantier."No. document" := SalesInvoiceHeader."No.";
+                DocumentChantier.Commentaires := SalesInvoiceHeader.Commentaire;
+                DocumentChantier.Insert();
+            end;
+        //KAN.FHA 17/11/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnInsertCrMemoHeaderOnAfterSalesCrMemoHeaderTransferFields, '', false, false)]
     local procedure CU80_OnInsertCrMemoHeaderOnAfterSalesCrMemoHeaderTransferFields(var SalesCrMemoHeader: Record "Sales Cr.Memo Header"; var SalesHeader: Record "Sales Header")
     var
         Pays: Record "Country/Region";
+        DocumentChantier: Record "Documents chantier";
     begin
         if not Pays.GET(SalesCrMemoHeader."Bill-to Country/Region Code") then
             Pays.INIT();
@@ -106,6 +119,17 @@ codeunit 50017 ConsommerEventsCodeunits
             SalesCrMemoHeader."Concerne DEB" := (Pays."Intrastat Code" <> '') and not SalesHeader."Facture acompte";
             SalesCrMemoHeader.Modify();
         end;
+        //KAN.FHA 17/11/2026 DEBUT
+        if SalesCrMemoHeader."Code chantier" <> '' then
+            if not DocumentChantier.Get(SalesCrMemoHeader."Code chantier",DocumentChantier."Type document"::"Facture vente",SalesCrMemoHeader."No.") then begin
+                DocumentChantier.Init();
+                DocumentChantier."Code chantier" := SalesCrMemoHeader."Code chantier";
+                DocumentChantier."Type document" := DocumentChantier."Type document"::"Avoir vente";
+                DocumentChantier."No. document" := SalesCrMemoHeader."No.";
+                DocumentChantier.Commentaires := SalesCrMemoHeader.Commentaire;
+                DocumentChantier.Insert();
+            end;
+        //KAN.FHA 17/11/2026 FIN
 
     end;
 
@@ -212,7 +236,7 @@ codeunit 50017 ConsommerEventsCodeunits
     begin
         SalesShptLine."Quantite commandee" := xSalesLine.Quantity;
         SalesShptLine."Quantite deja livree" := xSalesLine."Quantity Shipped";
-        
+
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 80, OnBeforeSalesShptLineInsert, '', false, false)]
@@ -882,6 +906,7 @@ codeunit 50017 ConsommerEventsCodeunits
         FactureAcompte: Record "Sales Header";
         Chantier: Record Chantier;
         DossierBE: Record "Dossier BE";
+        DocumentsChantier: Record "Documents chantier";
 
     begin
         SalesOrderHeader."Annee commande" := SalesQuoteHeader."Annee commande";
@@ -916,12 +941,26 @@ codeunit 50017 ConsommerEventsCodeunits
         end;
         //KAN.FHA 12/06/2020 FIN
         //KAN.FHA 23/06/2025 DEBUT
-        If SalesQuoteHeader."No. dossier BE" <> '' then begin
+        if SalesQuoteHeader."No. dossier BE" <> '' then begin
             DossierBE.Get(SalesQuoteHeader."No. dossier BE");
             DossierBE."Type document" := DossierBE."Type document"::Commande;
             DossierBE."No. document" := SalesOrderHeader."No.";
             DossierBE.Modify();
         end;
+
+        //KAN.FHA 16/11/2026 DEBUT
+        if SalesQuoteHeader."Code chantier" <> '' then begin
+            if DocumentsChantier.Get(SalesQuoteHeader."Code chantier", 4, SalesQuoteHeader."No.") then
+                DocumentsChantier.Delete();
+
+            DocumentsChantier.Init();
+            DocumentsChantier."Code chantier" := SalesQuoteHeader."Code chantier";
+            DocumentsChantier."Type document" := 5;
+            DocumentsChantier."No. document" := SalesOrderHeader."No.";
+            DocumentsChantier.Commentaires := SalesOrderHeader.Commentaire;
+            DocumentsChantier.Insert();
+        end;
+        //KAN.FHA 16/11/2026 FIN
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 86, OnBeforeInsertSalesOrderLine, '', false, false)]
@@ -1091,7 +1130,7 @@ codeunit 50017 ConsommerEventsCodeunits
     local procedure CU90_OnBeforePurchInvHeaderInsert(var PurchInvHeader: Record "Purch. Inv. Header")
     var
         Pays: Record "Country/Region";
-
+        DocumentChantier: Record "Documents chantier";
     begin
         //KAN.FHA 16/02/2023 DEBUT
         if not Pays.GET(PurchInvHeader."Pay-to Country/Region Code") then
@@ -1100,12 +1139,26 @@ codeunit 50017 ConsommerEventsCodeunits
         if (PurchInvHeader."Pay-to Country/Region Code" <> 'FR') and (PurchInvHeader."Pay-to Country/Region Code" <> '') then
             PurchInvHeader."Concernee DEB" := (Pays."Intrastat Code" <> '');
         //KAN.FHA 16/02/2023 FIN
+
+        //KAN.FHA 17/11/2026 DEBUT
+        if PurchInvHeader."Code chantier" <> '' then
+            if not DocumentChantier.Get(PurchInvHeader."Code chantier",DocumentChantier."Type document"::"Facture achat",PurchInvHeader."No.") then begin
+                DocumentChantier.Init();
+                DocumentChantier."Code chantier" := PurchInvHeader."Code chantier";
+                DocumentChantier."Type document" := DocumentChantier."Type document"::"Facture achat";
+                DocumentChantier."No. document" := PurchInvHeader."No.";
+                DocumentChantier.Commentaires := PurchInvHeader.Comments;
+                DocumentChantier.Insert();
+            end;
+        //KAN.FHA 17/11/2026 FIN
+  
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 90, OnBeforePurchCrMemoHeaderInsert, '', false, false)]
     local procedure CU90_OnBeforePurchCrMemoHeaderInsert(var PurchCrMemoHdr: Record "Purch. Cr. Memo Hdr.")
     var
         Pays: Record "Country/Region";
+        DocumentChantier: Record "Documents chantier";
     begin
         //KAN.FHA 16/02/2023 DEBUT
         if not Pays.GET(PurchCrMemoHdr."Pay-to Country/Region Code") then
@@ -1114,6 +1167,18 @@ codeunit 50017 ConsommerEventsCodeunits
         if (PurchCrMemoHdr."Pay-to Country/Region Code" <> 'FR') and (PurchCrMemoHdr."Pay-to Country/Region Code" <> '') then
             PurchCrMemoHdr."Concerne DEB" := (Pays."Intrastat Code" <> '');
         //KAN.FHA 16/02/2023 FIN
+
+                //KAN.FHA 17/11/2026 DEBUT
+        if PurchCrMemoHdr."Code chantier" <> '' then
+            if not DocumentChantier.Get(PurchCrMemoHdr."Code chantier",DocumentChantier."Type document"::"Avoir achat",PurchCrMemoHdr."No.") then begin
+                DocumentChantier.Init();
+                DocumentChantier."Code chantier" := PurchCrMemoHdr."Code chantier";
+                DocumentChantier."Type document" := DocumentChantier."Type document"::"Avoir achat";
+                DocumentChantier."No. document" := PurchCrMemoHdr."No.";
+                DocumentChantier.Commentaires := PurchCrMemoHdr.Comments;
+                DocumentChantier.Insert();
+            end;
+        //KAN.FHA 17/11/2026 FIN
 
     end;
 
@@ -1856,7 +1921,7 @@ codeunit 50017 ConsommerEventsCodeunits
         LigneVente.Reset();
         LigneVente.SETRANGE("Document Type", SalesHeader."Document Type");
         LigneVente.SETRANGE("Document No.", SalesHeader."No.");
-        LigneVente.SETFILTER("Composant de la ligne No.", '>%1', 0);        
+        LigneVente.SETFILTER("Composant de la ligne No.", '>%1', 0);
         LigneVente.SETFILTER(Amount, '<>%1', 0);
         if not LigneVente.IsEmpty then
             ERROR(LigneComposantAvecMontantErr, LigneVente.Amount, LigneVente."Document Type", LigneVente."Document No.", LigneVente."Line No.");
@@ -1872,9 +1937,12 @@ codeunit 50017 ConsommerEventsCodeunits
     [EventSubscriber(ObjectType::Codeunit, 414, OnAfterReleaseSalesDoc, '', false, false)]
     local procedure CU414_OnAfterReleaseSalesDoc(var SalesHeader: Record "Sales Header")
     var
+        DocumentsChantier: Record "Documents chantier";
         pctAcompteActuel: Decimal;
         NouveauPctAcompte: Decimal;
         ConditionsAcompteModifieesMsg: Label 'Pour votre information, le % d''acompte demandé a évolué.';
+        TypeDocChantier: Integer;
+
     begin
         //- DIA/BPE 17/11/14
         SalesHeader.UpdateFieldReleaseStatus_T();
@@ -1897,6 +1965,26 @@ codeunit 50017 ConsommerEventsCodeunits
         //KAN.FHA 23/09/2026 DEBUT
         SalesHeader.CalculerStockDispo(false);
         //KAN.FHA 23/09/2026 FIN
+
+        //KAN.FHA 16/11/2026 DEBUT
+        if SalesHeader."Document Type" in [SalesHeader."Document Type"::Quote, SalesHeader."Document Type"::Order] then begin
+            if SalesHeader."Document Type" = SalesHeader."Document Type"::Quote then
+                TypeDocChantier := 4 //Devis vente
+            else
+                TypeDocChantier := 5; //Commande vente
+            if SalesHeader."Code chantier" <> '' then begin
+                if not DocumentsChantier.Get(SalesHeader."Code chantier", TypeDocChantier, SalesHeader."No.") then begin
+                    DocumentsChantier.Init();
+                    DocumentsChantier."Code chantier" := SalesHeader."Code chantier";
+                    DocumentsChantier."Type document" := TypeDocChantier;
+                    DocumentsChantier."No. document" := SalesHeader."No.";
+                    DocumentsChantier.Insert();
+                end;
+                DocumentsChantier.Commentaires := SalesHeader.Commentaire;
+                DocumentsChantier.Modify();
+            end;
+            //KAN.FHA 16/11/2026 FIN
+        end;
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 414, OnAfterReopenSalesDoc, '', false, false)]
@@ -2009,8 +2097,9 @@ codeunit 50017 ConsommerEventsCodeunits
     local procedure CU415_OnAfterReleasePurchaseDoc(var PurchaseHeader: Record "Purchase Header")
     var
         AffectationsAchatsVente: Record "Affectations achat vente";
+        DocumentsChantier: Record "Documents chantier";
+        LigneAchat: Record "Purchase Line";
     begin
-        //KAN.FHA 16/04/2020 DEBUT
         if PurchaseHeader."Document Type" = PurchaseHeader."Document Type"::Order then begin
             AffectationsAchatsVente.RESET();
             AffectationsAchatsVente.SETRANGE("No. document achat", PurchaseHeader."No.");
@@ -2022,10 +2111,30 @@ codeunit 50017 ConsommerEventsCodeunits
                     end;
 
                 until AffectationsAchatsVente.NEXT() = 0;
-        end;
-        //KAN.FHA 16/04/2020 FIN
 
+            //KAN.FHA 16/11/2026 DEBUT
+            LigneAchat.Reset();
+            LigneAchat.SetRange("Document Type", PurchaseHeader."Document Type");
+            LigneAchat.SetRange("Document No.", PurchaseHeader."No.");
+            if LigneAchat.FindSet(false) then
+                repeat
+                    if LigneAchat."Code chantier" <> '' then begin
+                        if not DocumentsChantier.Get(LigneAchat."Code chantier", 1, PurchaseHeader."No.") then begin
+                            DocumentsChantier.Init();
+                            DocumentsChantier."Code chantier" := LigneAchat."Code chantier";
+                            DocumentsChantier."Type document" := 1;
+                            DocumentsChantier."No. document" := PurchaseHeader."No.";
+                            DocumentsChantier.Insert();
+                        end;
+                        DocumentsChantier.Commentaires := PurchaseHeader.Commentaires;
+                        DocumentsChantier.Modify();
+                    end;
+
+                until LigneAchat.Next() = 0;
+            //KAN.FHA 16/11/2026 FIN
+        end;
     end;
+
 
     [EventSubscriber(ObjectType::Codeunit, 415, OnAfterReopenPurchaseDoc, '', false, false)]
     local procedure CU415_OnAfterReopenPurchaseDoc(var PurchaseHeader: Record "Purchase Header")
