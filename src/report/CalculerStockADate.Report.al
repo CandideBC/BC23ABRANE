@@ -368,7 +368,7 @@ report 50061 "Calculer stock a date"
         EcritureArticle: Record "Item Ledger Entry";
         LigneFactAchat: Record "Purch. Inv. Line";
         EcrArt2: Record "Item Ledger Entry";
-        DetailValeurStock: Record "Détail valeur stock à date";
+        DetailValeurStock: Record "Detail valeur stock a date";
         PeriodeComptable: Record "Accounting Period";
         HistoriquePMP: Record "Historique PMP article";
         EnteteFactAchat: Record "Purch. Inv. Header";

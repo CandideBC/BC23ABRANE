@@ -200,7 +200,7 @@ page 50069 Stock
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                RunObject = Page "Détail valeur stock PMP";
+                RunObject = Page "Detail valeur stock PMP";
                 RunPageLink = "No. article" = field ("No. article");
             }
         }

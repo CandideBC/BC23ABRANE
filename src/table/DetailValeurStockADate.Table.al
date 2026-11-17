@@ -1,7 +1,5 @@
-table 50034 "Détail valeur stock à date"
+table 50034 "Detail valeur stock a date"
 {
-    DrillDownPageID = "Achats Divers sans affectation";
-
     fields
     {
         field(10; "No. article"; Code[20])

@@ -1,7 +1,7 @@
-page 50066 "Détail valeur stock PMP"
+page 50066 "Detail valeur stock PMP"
 {
     PageType = List;
-    SourceTable = "Détail valeur stock à date";
+    SourceTable = "Detail valeur stock a date";
 
     layout
     {
