@@ -50,7 +50,7 @@ report 50006 "ABRANE : Sales - Invoice"
             column(LabelNoLocationName; NoLocationNameLblTxt)
             {
             }
-            column(LabelCommentraire; LabelCommentraireLbl)
+            column(LabelCommentraire; CommentaireLblTxt)
             {
             }
             column(Comments_SalesInvHeader; Commentaire)
@@ -92,6 +92,19 @@ report 50006 "ABRANE : Sales - Invoice"
             column(LabelAcompte; LabelAcompteLbl)
             {
             }
+            column(TexteTVA; TexteTVA)
+            {
+            }
+            column(TextePenalitesRetard; TextePenalitesRetard)
+            {
+
+            }
+            column(LabelEscompte; EscompteLblTxt)
+            {
+            }
+            column(ClientFrancais; ClientFrancais)
+            {
+            }
             column(LabelDevis; DevisLblTxt)
             {
             }
@@ -106,6 +119,13 @@ report 50006 "ABRANE : Sales - Invoice"
             }
             column(LabelRefClient; CustOrderNoLblTxt)
             {
+            }
+            column(InfosPaiement2; InfosPaiement2)
+            {
+            }
+            column(MentionsLegalesLbl; MentionsLegalesLblTxt)
+            {
+
             }
             column(VATLegalMention; VATLegalMention)
             {
@@ -1143,7 +1163,6 @@ report 50006 "ABRANE : Sales - Invoice"
                 end else
                     FormatAddr.Company(CompanyAddr, CompanyInfo);
 
-
                 DimSetEntry1.SetRange("Dimension Set ID", "Dimension Set ID");
 
                 if "Order No." = '' then
@@ -1173,10 +1192,28 @@ report 50006 "ABRANE : Sales - Invoice"
 
                 VATNoText := copystr(FieldCaption("VAT Registration No."), 1, 80);
 
+                ClientFrancais := ("Sell-to Country/Region Code" = '') OR ("Sell-to Country/Region Code" = CompanyInfo."Country/Region Code");
+
+
                 if ("Sales Invoice Header"."Bill-to Country/Region Code" = '') or ("Sales Invoice Header"."Bill-to Country/Region Code" = CompanyInfo."Country/Region Code") then
                     MentionVAT := VATMentionDebitLbl
                 else
                     MentionVAT := VATMentionDebitExportLbl;
+
+                TexteTVA := '';
+                if "Bill-to Country/Region Code" = CompanyInfo."Country/Region Code" then begin
+                    TexteTVA := MentionTVAFRLbl;
+                    TextePenalitesRetard := PenalitesRetardFRLbl;
+                end else begin
+                    TextePenalitesRetard := PenalitesRetardENULbl;
+                    if not Pays.Get("Bill-to Country/Region Code") then
+                        Pays.init();
+                    if Pays."Intrastat Code" <> '' then
+                        TexteTVA := MentionTVAUELbl
+                    else
+                        TexteTVA := MentionTVAExportLbl;
+                end;
+
                 GLSetup.Get();
                 SiteName := '';
                 if "Code chantier" <> '' then begin
@@ -1249,11 +1286,18 @@ report 50006 "ABRANE : Sales - Invoice"
                     else
                         VATLegalMention := '';
                 end;
+                /*
                 if "Factor Code" <> '' then begin
                     FactorTable.Get("Factor Code");
                     PiedTxt1 := FactorTable."Text 1" + ' ' + FactorTable."Text 2" + '<br>' + FactorTable."Text 3" + '</br>';
                 end else
                     PiedTxt1 := CompanyInfo."Bank Name" + ' - IBAN ' + CompanyInfo.IBAN + ' - BIC ' + CompanyInfo."SWIFT Code";
+                */
+                if "Factor Code" <> '' then begin
+                    FactorTable.Get("Factor Code");
+                    InfosPaiement2 := FactorTable."Text 2" + FactorTable."Text 3";
+                end else
+                    InfosPaiement2 := 'IBAN ' + CompanyInfo.IBAN + ' - BIC ' + CompanyInfo."SWIFT Code";
 
                 //KAN.FHA 16/11/2026 DEBUT //TRADUCTIONS
                 if "Language Code" in ['FRA', ''] then begin
@@ -1261,7 +1305,10 @@ report 50006 "ABRANE : Sales - Invoice"
                     BilltoAddrLblTxt := BilltoAddrFRALbl;
                     ShiptoAddrLblTxt := ShiptoAddrFRALbl;
                     VATRegNoLblTxt := VATRegNoFRALbl;
+                    MentionsLegalesLblTxt := MentionsLegalesFRALbl;
                     NoLocationNameLblTxt := NoLocationNameFRALbl;
+                    InterlocuteurClientLblTxt := InterlocuteurClientFRALbl;
+                    CommentaireLblTxt := CommentaireFRALbl;
                     DevisLblTxt := DevisFRALbl;
                     OrderNoLblTxt := OrderNoFRALbl;
                     NoRayonLblTxt := NoRayonFRALbl;
@@ -1282,13 +1329,17 @@ report 50006 "ABRANE : Sales - Invoice"
                     TotalNetWeightLblTxt := TotalNetWeightFRALbl;
                     TotalGrossWeightLblTxt := TotalGrossWeightFRALbl;
                     PaletteLblTxt := PaletteFRALbl;
-                    ColisLblTxt := PaletteFRALbl;
+                    ColisLblTxt := ColisFRALbl;
+                    EscompteLblTxt := EscompteFRALbl;
                 end else begin
                     Text004Lbltxt := Text004ENULbl;
                     BilltoAddrLblTxt := BilltoAddrENULbl;
                     ShiptoAddrLblTxt := ShiptoAddrENULbl;
                     VATRegNoLblTxt := VATRegNoENULbl;
+                    MentionsLegalesLblTxt := MentionsLegalesENULbl;
                     NoLocationNameLblTxt := NoLocationNameENULbl;
+                    InterlocuteurClientLblTxt := InterlocuteurClientENULbl;
+                    CommentaireLblTxt := CommentaireENULbl;
                     DevisLblTxt := DevisENULbl;
                     OrderNoLblTxt := OrderNoENULbl;
                     NoRayonLblTxt := NoRayonENULbl;
@@ -1305,11 +1356,12 @@ report 50006 "ABRANE : Sales - Invoice"
                     MontantDejaVerseLblTxt := MontantDejaVerseENULbl;
                     ResteAPayerLblTxt := ResteAPayerENULbl;
                     DueDateLblTxt := DueDateENULbl;
-                    PaymentLblTxt := PaymentFRALbl;
+                    PaymentLblTxt := PaymentENULbl;
                     TotalNetWeightLblTxt := TotalNetWeightENULbl;
                     TotalGrossWeightLblTxt := TotalGrossWeightENULbl;
                     PaletteLblTxt := PaletteENULbl;
                     ColisLblTxt := ColisENULbl;
+                    EscompteLblTxt := EscompteENULbl;
                     
                 end;
                 //KAN.FHA 10/11/2026 FIN
@@ -1366,16 +1418,7 @@ report 50006 "ABRANE : Sales - Invoice"
         end;
     }
 
-    labels
-    {
-        FooterTextLine1 = 'TVA acquittée sur les débits - Exonération de TVA, art 262 ter-1 du CGI - TVA non applicable art 293B du CGI.';
-        FooterTextLine2 = 'En cas de retard de paiement, le taux ne peut en aucun cas être inférieur à 1,5 fois le taux légal Art L 441-6 du code du commerce. Les pénalités de retard sont';
-        FooterTextLine3 = 'exigibles sans rappel préalable. Le montant de l''indemnité forfaitaire pour frais de recouvrement due au créancier en cas de retard de paiement, conformément';
-        FooterTextLine4 = 'à l''article 121-II de la loi n° 2012-387 du 22 mars 2012 est fixée à 40 € par le décret n° 2012-115 du 2 octobre 2012.';
-        FooterTextLine5 = 'Réserve de propriété : nous nous réservons la propriété des marchandises jusqu''au paiement du prix complet par l''acheteur. Notre revendication porte aussi bien sur';
-        FooterTextLine6 = 'les marchandises que sur leur prix si elles ont déjà été revendues (loi du 12 mai 1980).';
-        FooterTextLine7 = 'Le client est réputé accepter nos conditions de vente disponibles sur simple demande.';
-    }
+
 
     trigger OnInitReport()
     begin
@@ -1393,6 +1436,7 @@ report 50006 "ABRANE : Sales - Invoice"
 
     var
         GLSetup: Record "General Ledger Setup";
+        Pays: Record "Country/Region";
         ShipmentMethod: Record "Shipment Method";
         PaymentTerms: Record "Payment Terms";
         SalesPurchPerson: Record "Salesperson/Purchaser";
@@ -1417,8 +1461,8 @@ report 50006 "ABRANE : Sales - Invoice"
         Chantier: Record Chantier;
         LanguageMgt: codeunit Language;
         FormatAddr: Codeunit "Format Address";
-        Text000ENULbl: Label 'Salesperson';
-        Text000FRALbl: Label 'Vendeur :';
+        Text000ENULbl: Label 'Followed by:';
+        Text000FRALbl: Label 'Suivi par :';
         Text001ENULbl: Label 'Total %1', Comment = '%1 = Devise';
         Text001FRALbl: Label 'Total %1', Comment = '%1 = Devise';
         Text002ENULbl: Label 'Total %1 Incl. VAT', Comment = '%1 = Devise';
@@ -1431,6 +1475,10 @@ report 50006 "ABRANE : Sales - Invoice"
         Text006ENULbl: Label 'Total %1 Excl. VAT', Comment = '%1 = Devise';
         Text006FRALbl: Label 'Total %1 H.T.', Comment = '%1 = Devise';
         Text006LblTxt: Text[20];
+        EscompteENULbl: Label 'No prompt-payment discount granted in the case of payment before invoice due date.';
+        EscompteFRALbl: Label 'Pas d''escompte en cas de règlement avant échéance.';
+        EscompteLblTxt: Text[100];
+
         PostedShipmentDate: Date;
         CustAddr: array[8] of Text[50];
         ShipToAddr: array[8] of Text[50];
@@ -1525,6 +1573,10 @@ report 50006 "ABRANE : Sales - Invoice"
         CompanyInfoFaxNoCaptionLbl: Label 'Fax No.';
         CompanyInfoVATRegNoENULbl: Label 'VAT Registration No.:';
         CompanyInfoVATRegNoFRALbl: Label 'N° ident. intracom. :';
+        TextePenalitesRetard: Text[1024];
+        PenalitesRetardFRLbl: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardENULbl: Label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+
         CompanyInfoVATRegNoLblTxt: Text[30];
         ContactCaptionLbl: Label 'For the attention of ';
         CompanyInfoStockCapitalCaptionLbl: Label 'with a capital of';
@@ -1534,7 +1586,7 @@ report 50006 "ABRANE : Sales - Invoice"
         SalesLineQuantityENULbl: Label 'Qty';
         SalesLineQuantityFRALbl: Label 'Qté';
         SalesLineQuantityLblTxt: Text[10];
-        UnitofMeasure_SalesInvLineENULbl: Label 'UOM';
+        UnitofMeasure_SalesInvLineENULbl: Label 'Unit';
         UnitofMeasure_SalesInvLineFRALbl: Label 'Unité';
         UnitofMeasure_SalesInvLineLblTxt: Text[10];
         SelltoCustNoCaptionLbl: Label 'Customer No.';
@@ -1552,7 +1604,9 @@ report 50006 "ABRANE : Sales - Invoice"
         NoLocationNameENULbl: Label 'No. and Location Name:';
         NoLocationNameFRALbl: Label 'N° et nom magasin :';
         NoLocationNameLblTxt: Text[30];
-        LabelCommentraireLbl: Label 'Comments : ';
+        CommentaireENULbl: Label 'Comments : ';
+        CommentaireFRALbl: Label 'Comments : ';
+        CommentaireLblTxt: Text[20];
         TotalNetWeightENULbl: Label 'Total Net Weight:';
         TotalNetWeightFRALbl: Label 'Poids net total :';
         TotalNetWeightLblTxt: Text[20];
@@ -1599,7 +1653,7 @@ report 50006 "ABRANE : Sales - Invoice"
         PiedTxt2: Text[1024];
         VATMentionDebitExportLbl: Label '* No discount granted';
         RefArticleENULbl: Label 'Item Reference';
-        RefArticleFRALbl: Label 'N° article';
+        RefArticleFRALbl: Label 'Référence article';
         RefArticleLblTxt: Text[20];
 
         codNoImprime: Code[50];
@@ -1615,12 +1669,22 @@ report 50006 "ABRANE : Sales - Invoice"
         MontantDejaVerseENULbl: Label 'Amount Already Paid:';
         MontantDejaVerseFRALbl: Label 'Montant déjà versé :';
         MontantDejaVerseLblTxt: Text[30];
+        InfosPaiement2: Text[1024];
         ResteAPayerENULbl: Label 'Remaining Amount to Pay:';
         ResteAPayerFRALbl: Label 'Reste à payer :';
         ResteAPayerLblTxt: Text[30];
         DescriptionENULbl: Label 'Description';
         DescriptionFRALbl: Label 'Désignation';
+        MentionsLegalesENULbl: Label 'Legal notices:';
+        MentionsLegalesFRALbl: Label 'Mentions légales :';
+        MentionTVAFRLbl: Label 'TVA sur les débits';
+        MentionTVAUELbl: Label 'Intra-Community Supply : VAT Exemption under Article 262 ter I of the French General Tax Code';
+        MentionTVAExportLbl: Label 'VAT exempt under Article 262 I of the French General Tax Code (CGI)';
+
+        TexteTVA: Text[1024];
+        MentionsLegalesLblTxt: Text[20];
         DescriptionLblTxt: Text[20];
+        ClientFrancais: Boolean;
 
 
     procedure FindPostedShipmentDate(): Date

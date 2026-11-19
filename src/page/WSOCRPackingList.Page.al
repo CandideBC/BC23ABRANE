@@ -41,6 +41,11 @@ page 50153 "WS OCR Packing List"
                 {
                     Caption = 'Date packing list';
                 }
+                field(noCommandeAchat; Rec."No. commande achat")
+                {
+                    ApplicationArea = All;
+                }
+                
                 field(referenceArticle; Rec."Reference article")
                 {
                     Caption = 'Reference article';

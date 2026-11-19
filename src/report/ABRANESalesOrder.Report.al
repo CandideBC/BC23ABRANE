@@ -526,6 +526,9 @@ report 50005 "ABRANE : Sales - Order"
                     column(BilltoAddrCaption; BilltoAddrCaptionTxt)
                     {
                     }
+                    column(SalesHeaderQuoteNoLblTxt; SalesHeaderQuoteNoLblTxt)
+                    {
+                    }
                     column(BillToAddr1; BillToAddr[1])
                     {
                     }
@@ -1398,6 +1401,7 @@ report 50005 "ABRANE : Sales - Order"
                     Text000txt := Text000FRALbl;
                     BilltoAddrCaptionTxt := BilltoAddrFRALbl;
                     ShiptoAddrCaptionTxt := ShiptoAddrFRALbl;
+                    SalesHeaderQuoteNoLblTxt := SalesHeaderQuoteNoFRALbl;
                     ExternalDocNoLblTxt := ExternalDocNoFRALbl;
                     NoLocationNameLblTxt := NoLocationNameFRALbl;
                     InterlocuteurClientLblTxt := InterlocuteurClientFRALbl;
@@ -1437,6 +1441,7 @@ report 50005 "ABRANE : Sales - Order"
                     Text000txt := Text000ENULbl;
                     BilltoAddrCaptionTxt := BilltoAddrENULbl;
                     ShiptoAddrCaptionTxt := ShiptoAddrENULbl;
+                    SalesHeaderQuoteNoLblTxt := SalesHeaderQuoteNoENULbl;
                     ExternalDocNoLblTxt := ExternalDocNoENULbl;
                     NoLocationNameLblTxt := NoLocationNameENULbl;
                     InterlocuteurClientLblTxt := InterlocuteurClientENULbl;
@@ -1833,8 +1838,9 @@ report 50005 "ABRANE : Sales - Order"
         SelltoCustNoCaptionLbl: Label 'Customer No.';
         ThankYouCaptionLbl: Label 'Thank you for your order. We are pleased to confirm following conditions :';
         DearSirMadamCaptionLbl: Label 'Dear Sir/Madam,';
-        SalesHeaderQuoteNoCaptionLbl: Label 'Quote No.';
-
+        SalesHeaderQuoteNoENULbl: Label 'Quote No.';
+        SalesHeaderQuoteNoFRALbl: Label 'N° devis';
+        SalesHeaderQuoteNoLblTxt: Text[20];
         SalesHeaderOrderDateCaptionLbl: Label 'Date :';
         SalesPersonMailCaptionLbl: Label 'E-mail';
         JobName: Text[50];

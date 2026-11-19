@@ -23,7 +23,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>4.16776cm</Height>
+                  <Height>4.28989cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -330,6 +330,75 @@
                                     </TablixCells>
                                   </TablixRow>
                                   <TablixRow>
+                                    <Height>0.6cm</Height>
+                                    <TablixCells>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox34">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!SalesHeaderQuoteNoLblTxt.Value</Value>
+                                                    <Style>
+                                                      <FontStyle>Normal</FontStyle>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>9pt</FontSize>
+                                                      <TextDecoration>Underline</TextDecoration>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox34</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <VerticalAlign>Middle</VerticalAlign>
+                                              <PaddingLeft>3pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                          <rd:Selected>true</rd:Selected>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox61">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!QuoteNo_SalesHeader.Value</Value>
+                                                    <Style>
+                                                      <FontStyle>Normal</FontStyle>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>9pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style />
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox61</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>None</Style>
+                                              </Border>
+                                              <VerticalAlign>Middle</VerticalAlign>
+                                              <PaddingLeft>3pt</PaddingLeft>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                    </TablixCells>
+                                  </TablixRow>
+                                  <TablixRow>
                                     <Height>0.52413cm</Height>
                                     <TablixCells>
                                       <TablixCell>
@@ -449,7 +518,6 @@
                                                       <FontStyle>Normal</FontStyle>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>9pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
                                                       <TextDecoration>None</TextDecoration>
                                                     </Style>
                                                   </TextRun>
@@ -690,6 +758,7 @@
                                 <TablixMembers>
                                   <TablixMember />
                                   <TablixMember />
+                                  <TablixMember />
                                   <TablixMember>
                                     <Visibility>
                                       <Hidden>=iif(Fields!Range_SalesHeader.Value = "", true,false)</Hidden>
@@ -700,9 +769,9 @@
                                   <TablixMember />
                                 </TablixMembers>
                               </TablixRowHierarchy>
-                              <Top>0.79537cm</Top>
+                              <Top>0.3175cm</Top>
                               <Left>0.25623cm</Left>
-                              <Height>3.37239cm</Height>
+                              <Height>3.97239cm</Height>
                               <Width>8.82977cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
@@ -5056,8 +5125,8 @@ Cstr(Fields!CompanyAddr4.Value) + Chr(177) +
 Cstr(Fields!CompanyAddr5.Value) + Chr(177) +
 Cstr(Fields!CompanyAddr6.Value) + Chr(177) +
 Cstr(Fields!SalesCopyText.Value) + Chr(177) +
-Cstr(Fields!CompanyInfoPhoneNo.Value) + 
-Chr(177) +Cstr(Fields!CompanyInfoHomePage.Value) + Chr(177) +
+Cstr(Fields!CompanyInfoPhoneNo.Value) + Chr(177) +
+Cstr(Fields!CompanyInfoHomePage.Value) + Chr(177) +
 Cstr(Fields!CompanyInfoEmail.Value) + Chr(177) +
 Cstr(Fields!CompanyInfoVATRegNo.Value) + Chr(177) + 
 Cstr(Fields!CompanyInfoRegNo.Value) + Chr(177) +
@@ -5114,7 +5183,7 @@ Cstr(Fields!BillToAddr6.Value) + Chr(177) +
 Cstr(Fields!BillToAddr7.Value) + Chr(177) +
 Cstr(Fields!BillToAddr8.Value) + Chr(177) +
 Cstr(Fields!BilltoAddrCaption.Value) + Chr(177) +
-"" + Chr(177) +
+Cstr(Fields!SalesHeaderQuoteNoLblTxt.Value) + Chr(177) +
 Cstr(Fields!QuoteNo_SalesHeader.Value) + Chr(177) +
 Cstr(Fields!SalesHeaderOrderDateCaption.Value) + Chr(177) +
 Cstr(Fields!SellToContact_SalesHeader.Value) + Chr(177) +
@@ -5882,7 +5951,7 @@ Cstr(Fields!VersionDate_SalesHeader.Value),1)</Hidden>
             </PageBreak>
             <Top>0.01342in</Top>
             <Left>0.02442cm</Left>
-            <Height>17.33429cm</Height>
+            <Height>17.45642cm</Height>
             <Width>19.80305cm</Width>
             <Style>
               <FontFamily>Segoe UI</FontFamily>
@@ -5890,7 +5959,7 @@ Cstr(Fields!VersionDate_SalesHeader.Value),1)</Hidden>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>17.4213cm</Height>
+        <Height>17.49051cm</Height>
         <Style>
           <FontFamily>Segoe UI</FontFamily>
           <FontSize>8pt</FontSize>
@@ -5955,7 +6024,7 @@ Cstr(Fields!VersionDate_SalesHeader.Value),1)</Hidden>
                   <rd:DefaultName>Textbox38</rd:DefaultName>
                   <Top>1.08471cm</Top>
                   <Left>0.25013cm</Left>
-                  <Height>0.6cm</Height>
+                  <Height>0.88191cm</Height>
                   <Width>8.19476cm</Width>
                   <ZIndex>1</ZIndex>
                   <Style>
@@ -6849,6 +6918,9 @@ End Function
         </Field>
         <Field Name="BilltoAddrCaption">
           <DataField>BilltoAddrCaption</DataField>
+        </Field>
+        <Field Name="SalesHeaderQuoteNoLblTxt">
+          <DataField>SalesHeaderQuoteNoLblTxt</DataField>
         </Field>
         <Field Name="BillToAddr1">
           <DataField>BillToAddr1</DataField>

@@ -271,6 +271,24 @@ page 50123 "Fiche saisie expedition"
                     Rec.RemplirQteAExpedierPhasesCochees();
                 end;
             }
+            action(ImprimerBP)
+            {
+                ApplicationArea = All;
+                Caption = 'Bon de prépa';
+                Promoted = true;
+                PromotedCategory = Category9;
+                Image = Print;
+                ToolTip = 'Bon de préparation';
+
+                trigger OnAction()
+                var
+                    EnteteVente: Record "Sales Header";
+
+                begin
+                    if EnteteVente.Get(Rec."Document Type",Rec."No.") then
+                        EnteteVente.ImprimerBP();
+                end;
+            }
             action(Expedier)
             {
                 Caption = 'Expédier';

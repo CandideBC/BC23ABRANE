@@ -29,6 +29,11 @@ table 50075 "OCR Packing List"
         {
             Caption = 'Date packing list';
         }
+        field(45; "No. commande achat"; Code[20])
+        {
+            Caption = 'N° commande achat';
+        }
+        
         field(50; "Reference article"; Text[20])
         {
             Caption = 'Reference article';

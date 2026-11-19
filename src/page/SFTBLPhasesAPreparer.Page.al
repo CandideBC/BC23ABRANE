@@ -267,16 +267,20 @@ page 50044 "SF TBL Phases a preparer"
 
             action(ImprimerBP)
             {
-                Caption = 'Imprimer BP';
-                ToolTip = 'Imprimer le bon de préparation';
-                Image = Print;
                 ApplicationArea = All;
+                Caption = 'Bon de prépa';
+                Image = Print;
+                ToolTip = 'Bon de préparation';
+
                 trigger OnAction()
+                var
+                    EnteteVente: Record "Sales Header";
+
                 begin
-                    Message('Ceci est le bouton qui ne fait rien, vous l''avez trouvé, bravo !');
+                    EnteteVente.Get(Rec."Type document",Rec."No. document");
+                    EnteteVente.ImprimerBP();
                 end;
             }
-
             action(AfficherUC)
             {
                 Caption = 'Palettes/Colis';

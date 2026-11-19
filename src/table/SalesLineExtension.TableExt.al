@@ -23,6 +23,12 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             DataClassification = ToBeClassified;
             Editable = false;
         }
+        field(50004; DescriptionDuplique; Text[100])
+        {
+            Caption = 'DescriptionDuplique';
+            DataClassification = ToBeClassified;
+            Editable = false;
+        }
         field(50005; SAV; Boolean)
         {
             DataClassification = ToBeClassified;
@@ -980,6 +986,14 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
             SumIndexFields = "Quantite prise sur stock";
         }
         key(MyKey19; TypeDocDuplique,"Code chantier")
+        {
+            
+        }
+        key(MyKey20; TypeDocDuplique, NumDocDuplique, "Article a coliser", NumArtDuplique)
+        {
+            
+        }
+        key(MyKey21; TypeDocDuplique, NumDocDuplique, "Article a coliser", DescriptionDuplique)
         {
             
         }

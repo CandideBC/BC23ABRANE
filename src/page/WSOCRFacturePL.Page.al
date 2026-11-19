@@ -55,13 +55,13 @@ page 50154 "WS OCR Facture PL"
                 }
                 field(prixUnitaire; Rec."Prix unitaire")
                 {
-                    Caption = 'Prinx unitaire';
+                    Caption = 'Prix unitaire';
                 }
                 field(prixTotal; Rec."Prix total")
                 {
                     Caption = 'Prix total';
                 }
-                field(Incoterm; Rec.Incoterm)
+                field(incoterm; Rec.Incoterm)
                 {
                     ApplicationArea = All;
                 }

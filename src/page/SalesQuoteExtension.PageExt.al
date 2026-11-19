@@ -785,14 +785,9 @@ pageextension 50087 SalesQuoteExtension extends "Sales Quote"
                 ToolTip = 'Bon de préparation';
 
                 trigger OnAction()
-                var
-                    EnteteVente: Record "Sales Header";
 
                 begin
-                    EnteteVente.SETRANGE("Document Type", Rec."Document Type");
-                    EnteteVente.SETRANGE("No.", Rec."No.");
-                    if EnteteVente.FINDSET() then
-                        REPORT.RUN(Report::"ABRANE : picking Quote", true, true, EnteteVente);
+                    Rec.ImprimerBP();
                 end;
             }
         }

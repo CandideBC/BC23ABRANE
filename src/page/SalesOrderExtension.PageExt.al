@@ -654,19 +654,11 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 ApplicationArea = All;
                 Caption = 'Bon de prépa';
                 Image = Print;
-                ToolTip = 'Imprimer bon de préparation';
+                ToolTip = 'Bon de préparation';
 
                 trigger OnAction()
-                var
-                    EnteteVente: Record "Sales Header";
-                    BReport: Report "Pick Instruction"; //A remplacer par le bon état
                 begin
-                    EnteteVente.SETRANGE("Document Type", Rec."Document Type");
-                    EnteteVente.SETRANGE("No.", Rec."No.");
-                    BReport.SetTableView(EnteteVente);
-                    //CommandeProforma.DefinirImpressionProforma(true);
-                    BReport.RunModal();
-                    Clear(BReport);
+                    Rec.ImprimerBP();
                 end;
             }
             action("Packing List")

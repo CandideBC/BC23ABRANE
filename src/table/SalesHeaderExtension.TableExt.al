@@ -212,10 +212,10 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         Message(MiseAJourManuelleNecessaireMsg);
 
                 if (rec."Nombre de palettes" <> 0) and (xrec."Nombre de palettes" = 0) then begin
-                    LigneVente.SetRange("Document Type",Rec."Document Type");
-                    LigneVente.SetRange("Document No.",Rec."No.");
-                    LigneVente.Setrange(Type,LigneVente.Type::Item);
-                    if LigneVente.FindSet(true) then 
+                    LigneVente.SetRange("Document Type", Rec."Document Type");
+                    LigneVente.SetRange("Document No.", Rec."No.");
+                    LigneVente.Setrange(Type, LigneVente.Type::Item);
+                    if LigneVente.FindSet(true) then
                         repeat
                             if (LigneVente."Outstanding Qty. (Base)" <> 0) and (LigneVente."No. UC" <> '') then begin
                                 LigneVente."No. UC" := '';
@@ -1023,14 +1023,14 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         field(51285; "Filtre phase"; Integer)
         {
             Caption = 'Filtre phase';
-            TableRelation = "Phases document".Phase where ("Type document"=field("Document Type"),"No. document"=field("No."));
+            TableRelation = "Phases document".Phase where("Type document" = field("Document Type"), "No. document" = field("No."));
             FieldClass = FlowFilter;
         }
         field(51288; "Quantite commandee"; Decimal)
         {
             Caption = 'Quantité commandée';
             FieldClass = FlowField;
-            CalcFormula = sum("Sales Line"."Quantite commandee" where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."),Phase=field("Filtre phase")));
+            CalcFormula = sum("Sales Line"."Quantite commandee" where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."), Phase = field("Filtre phase")));
             Editable = false;
             DecimalPlaces = 0 : 5;
         }
@@ -1038,7 +1038,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         {
             Caption = 'Quantité expédiée';
             FieldClass = FlowField;
-            CalcFormula = sum("Sales Line".QuantiteExpedieeBaseDuplique where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."),Phase=field("Filtre phase")));
+            CalcFormula = sum("Sales Line".QuantiteExpedieeBaseDuplique where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."), Phase = field("Filtre phase")));
             Editable = false;
             DecimalPlaces = 0 : 5;
         }
@@ -1047,7 +1047,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         {
             Caption = 'Quantité prise sur stock';
             FieldClass = FlowField;
-            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."),Phase=field("Filtre phase")));
+            CalcFormula = sum("Sales Line"."Quantite prise sur stock" where(TypeDocDuplique = field("Document Type"), NumDocDuplique = field("No."), Phase = field("Filtre phase")));
             Editable = false;
             DecimalPlaces = 0 : 5;
         }
@@ -1097,15 +1097,15 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         {
 
         }
-        key(MyKey7; "Commande export","Proba transformation")
+        key(MyKey7; "Commande export", "Proba transformation")
         {
 
         }
         key(MyKey8; "Dossier facturable")
         {
-            
+
         }
-        
+
     }
     procedure ExtraireContenuCommande()
     begin
@@ -1373,29 +1373,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             until lSalesLine.NEXT() = 0;
     end;
 
-    /*
-    local procedure RecupSoucheSAV(): Code[20]
-    var
-        ParamVente: Record "Sales & Receivables Setup";
-    begin
-        ParamVente.GET();
-        case "Document Type" of
-            "Document Type"::Quote:
-                exit(ParamVente."Quote Nos.");
-            "Document Type"::Order:
-                exit(ParamVente."ASS Order Nos.");
-            "Document Type"::Invoice:
-                exit(ParamVente."ASS Invoice Nos.");
-            "Document Type"::"Return Order":
-                exit(ParamVente."Return Order Nos.");
-            "Document Type"::"Credit Memo":
-                exit(ParamVente."ASS Credit Memo Nos.");
-            "Document Type"::"Blanket Order":
-                exit(ParamVente."Blanket Order Nos.");
-        end;
-    end;
-    */
-
     procedure CalcPctExpedie(): Decimal
     begin
         //RESTE A CALCULER + CHAMP A AJOUTER (ONAFTERGETRECORD DE LA PAGE 50124 LISTE SAISIE EXPEDITIONS)
@@ -1410,36 +1387,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
     begin
         //RESTE A CALCULER + CHAMP A AJOUTER (ONAFTERGETRECORD DE LA PAGE 50124 LISTE SAISIE EXPEDITIONS)
     end;
-
-    /*
-    local procedure TestSoucheSAV(): Code[20]
-    var
-        ParamVente: Record "Sales & Receivables Setup";
-
-    begin
-        ParamVente.GET();
-        case "Document Type" of
-            "Document Type"::Quote:
-                ParamVente.TESTFIELD("Quote Nos.");
-            "Document Type"::Order:
-                ParamVente.TESTFIELD("ASS Order Nos.");
-            "Document Type"::Invoice:
-                begin
-                    ParamVente.TESTFIELD("ASS Invoice Nos.");
-                    ParamVente.TESTFIELD("ASS Posted Invoice Nos.");
-                end;
-            "Document Type"::"Return Order":
-                ParamVente.TESTFIELD("Return Order Nos.");
-            "Document Type"::"Credit Memo":
-                begin
-                    ParamVente.TESTFIELD("ASS Credit Memo Nos.");
-                    ParamVente.TESTFIELD("ASS Posted Credit Memo Nos.");
-                end;
-            "Document Type"::"Blanket Order":
-                ParamVente.TESTFIELD("Blanket Order Nos.");
-        end;
-    end;
-    */
 
     procedure UpdateFieldReleaseStatus_T()
     var
@@ -1561,7 +1508,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         ListeMagasin.SETRANGE("Code utilisateur", CodeUtil);
         ListeMagasin.DELETEALL();
 
-        TableTampon.SetRange("Code utilisateur", CodeUtil);
+        TableTampon.SetRange("Code utilisateur", CodeUtil); //AGARAGAR
         TableTampon.DELETEALL();
 
         TamponDispoSurCdeCadre.SetRange("Code utilisateur", CodeUtil);
@@ -2358,7 +2305,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         //KAN.FHA 02/11/2026 FIN    
         if TableTamponVente."Reference Fiche BE" <> '' then begin
             LigneFicheBE.SetCurrentKey(Reference);
-            LigneFicheBE.SetRange(Reference,TableTamponVente."Reference Fiche BE");
+            LigneFicheBE.SetRange(Reference, TableTamponVente."Reference Fiche BE");
             if LigneFicheBE.FindFirst() then
                 lrecPurchaseLine."Reference 102 B.E." := LigneFicheBE."No. article B.E.";
         end;
@@ -2951,7 +2898,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         else
                             Article.SetRange("Variant Filter");
 
-                        Article.CalcFields(Inventory, "Qty. on Sales Order", "Qty. on Purch. Order","Assembly BOM");
+                        Article.CalcFields(Inventory, "Qty. on Sales Order", "Qty. on Purch. Order", "Assembly BOM");
                         QteDispo := Article.Inventory - Article."Qty. on Sales Order";
                         if QteDispo < 0 then
                             QteDispo := 0;
@@ -3799,118 +3746,6 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         end;
     end;
 
-    /*
-    procedure OuvrirOuCreerColisage(pOuvrirFiche: Boolean)
-    var
-        EnteteColisage: Record "Entete colisage";
-        ContenuColisage: Record "Contenu colisage";
-        LigneCommande: Record "Sales Line";
-        PhasesDocVente: Record "Phases document";
-        FicheColisage: page "Fiche colisage";
-        PagePhases: Page "Liste phases document";
-        NbPhasesActives: Integer;
-        PhaseAColiser: Integer;
-        NumColisage: Code[20];
-        PrecisionArrondi: Decimal;
-        OuvrirColisageDejaEnCoursQst: Label 'Un colisage est déjà en cours pour cette commande.\Voulez-vous l''ouvrir ?';
-        OperationInterrompueErr: Label 'Opération interrompue à la demande de l''utilisateur.';
-    begin
-        PhaseAColiser := 0;
-        NbPhasesActives := rec.CompterPhasesActives();
-        PhasesDocVente.SetRange("Type document", Rec."Document Type");
-        PhasesDocVente.SetRange("No. document", Rec."No.");
-
-        if NbPhasesActives = 1 then begin
-            PhasesDocVente.FindFirst();
-            PhaseAColiser := PhasesDocVente.Phase;
-        end else
-            if NbPhasesActives > 1 then begin
-                commit();
-                PagePhases.SetTableView(PhasesDocVente);
-                PagePhases.DefinirTypeAppel('Coliser');
-                PagePhases.LookupMode(true);
-                if PagePhases.RunModal() = Action::LookupOK then begin
-                    PagePhases.GetRecord(PhasesDocVente);
-                    PhaseAColiser := PhasesDocVente.Phase;
-                end;
-            end;
-
-        EnteteColisage.SetCurrentKey(Expedie, "No. commande", "No. expedition enregistree");
-        EnteteColisage.SetRange(Expedie, false);
-        EnteteColisage.SetRange("No. commande", Rec."No.");
-        EnteteColisage.SetRange(Phase, PhaseAColiser);
-        EnteteColisage.SetRange("No. expedition enregistree", '');
-        if not EnteteColisage.IsEmpty then
-            if Confirm(OuvrirColisageDejaEnCoursQst, true) then begin
-                Clear(FicheColisage);
-                if EnteteColisage.FindFirst() then begin
-                    FicheColisage.SetTableView(EnteteColisage);
-                    FicheColisage.Run();
-                    exit;
-                end else
-                    error(OperationInterrompueErr);
-            end else
-                exit;
-
-        EnteteColisage.Reset();
-        EnteteColisage.Init();
-        EnteteColisage."No." := '';
-        EnteteColisage.Insert(true);
-        NumColisage := EnteteColisage."No.";
-        EnteteColisage."Sell-to Customer No." := Rec."Sell-to Customer No.";
-        EnteteColisage.Validate("No. commande", Rec."No.");
-        EnteteColisage."Poids brut non colise" := Rec."Poids brut total";
-        EnteteColisage.Phase := PhaseAColiser;
-        if PhasesDocVente.get(Rec."Document Type", Rec."No.", PhaseAColiser) then
-            EnteteColisage."Description phase" := PhasesDocVente.Description;
-        EnteteColisage.Modify();
-
-        LigneCommande.SetCurrentKey(TypeDocDuplique, NumDocDuplique, Phase);
-        LigneCommande.SetRange(TypeDocDuplique, Rec."Document Type");
-        LigneCommande.SetRange(NumDocDuplique, Rec."No.");
-        LigneCommande.SetRange(Phase, PhaseAColiser);
-        LigneCommande.SetRange(Type, LigneCommande.Type::Item);
-        if LigneCommande.FindSet(false) then
-            repeat
-                if LigneCommande."Outstanding Quantity" <> 0 then begin
-                    ContenuColisage.Init();
-                    ContenuColisage."No. colisage" := EnteteColisage."No.";
-                    ContenuColisage."No. ligne" := LigneCommande."Line No.";
-                    ContenuColisage.Type := ContenuColisage.Type::Item;
-                    ContenuColisage."Item No." := LigneCommande."No.";
-                    ContenuColisage."Quantite UC" := LigneCommande."Outstanding Quantity";
-                    ContenuColisage.Description := LigneCommande.Description;
-                    ContenuColisage."Order No." := Rec."No.";
-                    ContenuColisage."Order Line No." := LigneCommande."Line No.";
-                    if LigneCommande."Composant de la ligne No." <> 0 then begin
-                        ContenuColisage."Type produit" := ContenuColisage."Type produit"::Composant;
-                        ContenuColisage."No. ligne regroupement" := LigneCommande."Composant de la ligne No.";
-                    end else begin
-                        ContenuColisage."Type produit" := ContenuColisage."Type produit"::"Produit fini";
-                        ContenuColisage."No. ligne regroupement" := ContenuColisage."No. ligne";
-                    end;
-                    ContenuColisage."Poids net unitaire" := LigneCommande."Net Weight";
-                    PrecisionArrondi := 0;
-                    if ContenuColisage."Poids net unitaire" < 1 then
-                        PrecisionArrondi := 0.001
-                    else
-                        PrecisionArrondi := 0.01;
-                    ContenuColisage."Poids net ligne" := ROUND(ContenuColisage."Quantite UC" * ContenuColisage."Poids net unitaire", PrecisionArrondi);
-                    ContenuColisage.Insert();
-                end;
-            until LigneCommande.Next() = 0;
-
-        if pOuvrirFiche then begin
-            Clear(FicheColisage);
-            EnteteColisage.Setrange("No.", NumColisage);
-            if EnteteColisage.FindFirst() then begin
-                FicheColisage.SetTableView(EnteteColisage);
-                FicheColisage.Run();
-            end;
-        end;
-    end;
-    */
-
     procedure ComparerVersionsArchives(pVersion1: Integer; pVersion2: Integer)
     var
         Comparaison: Record ComparaisonVersionsDocument;
@@ -3971,5 +3806,72 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             until LigneVenteArchive.Next() = 0;
     end;
 
+    procedure ChoisirTri(): Integer
+    var
+        ChoixTriLbl: Label 'Phase puis N° article,N° article,Désignation,', Comment = 'Choix du tri du bon de préparation, séparés par des virgules';
+        InstructionTriLbl: Label 'Trier les lignes par :';
+        Choix: Integer;
+    begin
+        Choix := StrMenu(ChoixTriLbl, 1, InstructionTriLbl);
+        // 0 = annulation (Echap ou Annuler), sinon 1, 2, 3... selon l'ordre des options
+        exit(Choix);
+    end;
+
+    procedure ImprimerBP()
+    var
+        EnteteVente: Record "Sales Header";
+        Tri: Integer;
+    begin
+        Tri := ChoisirTri();
+        Rec.RemplirLignesBonPrepa(Tri);
+        Commit();
+        EnteteVente.SETRANGE("Document Type", Rec."Document Type");
+        EnteteVente.SETRANGE("No.", Rec."No.");
+        if EnteteVente.FINDSET() then
+            REPORT.RUN(Report::"ABRANE : bon de preparation", true, true, EnteteVente);
+
+    end;
+
+    procedure RemplirLignesBonPrepa(pTri: Integer)
+    var
+        TableTampon: Record TamponTriLignesDocument;
+        LigneVente: Record "Sales Line";
+        NumLigne: Integer;
+        CodeUtil: Text[50];
+    begin
+        CodeUtil := CopyStr(UserId, 1, 50);
+        TableTampon.SetRange("Code utilisateur", CodeUtil);
+        TableTampon.DELETEALL();
+        case pTri of //Tri par Phase et par N° article 
+            1: LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase, NumArtDuplique);
+            2: LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", NumArtDuplique);
+            3: LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Description);
+            else
+                exit;
+        end;
+
+        LigneVente.SetRange(TypeDocDuplique, Rec."Document Type");
+        LigneVente.SetRange(NumDocDuplique, Rec."No.");
+        LigneVente.SetRange("Article a coliser", true);
+        if LigneVente.FindSet(false) then begin
+            NumLigne := 10000;
+            repeat
+                if (LigneVente.Type = LigneVente.Type::Item) and (LigneVente."Qty. to Ship" <> 0) then begin
+                    TableTampon.Init();
+                    TableTampon."Code utilisateur" := CodeUtil;
+                    TableTampon."Type document" := Format(Rec."Document Type");
+                    TableTampon."No. document" := Rec."No.";
+                    TableTampon."No. ligne" := NumLigne;
+                    TableTampon."No. ligne document" := LigneVente."Line No.";
+                    TableTampon."No." := LigneVente."No.";
+                    TableTampon.Description := LigneVente.Description;
+                    TableTampon.Quantite := LigneVente."Qty. to Ship";
+                    TableTampon.Phase := LigneVente.Phase;
+                    TableTampon.Insert();
+                    NumLigne := NumLigne + 10000;
+                end;
+            until LigneVente.Next() = 0;
+        end;
+    end;
 }
 

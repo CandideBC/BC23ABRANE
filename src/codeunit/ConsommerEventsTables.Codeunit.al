@@ -854,6 +854,12 @@ codeunit 50019 ConsommerEventsTables
             Item.TestField("Net Weight");
     end;
 
+    [EventSubscriber(ObjectType::Table, 37, OnAfterCopyFromItem, '', false, false)]
+    local procedure SalesLine_OnAfterCopyFromItem(var SalesLine: Record "Sales Line")
+    begin
+        SalesLine.DescriptionDuplique := SalesLine.Description;
+    end;
+
     [EventSubscriber(ObjectType::Table, 37, OnCopyFromItemOnAfterCheck, '', false, false)]
     local procedure SalesLineOnCopyFromItemOnAfterCheck(var SalesLine: Record "Sales Line"; Item: Record Item)
     var
@@ -920,6 +926,13 @@ codeunit 50019 ConsommerEventsTables
         end;
     end;
 
+    [EventSubscriber(ObjectType::Table, 37, OnAfterValidateEvent, Description, false, false)]
+    local procedure SalesLine_OnAfterValidateDescription(var Rec: Record "Sales Line")
+    begin
+        if Rec.Type = Rec.Type::Item then
+            Rec.DescriptionDuplique := Rec.Description;
+    end;
+
     [EventSubscriber(ObjectType::Table, 37, OnAfterValidateEvent, Quantity, false, false)]
     local procedure SalesLineOnAfterValidateQuantity(var Rec: Record "Sales Line")
     var
@@ -932,8 +945,6 @@ codeunit 50019 ConsommerEventsTables
         Rec.Validate("Prix achat prevu");
 
         Rec.fctMajQuantiteComposant(Rec);
-
-
 
         //KAN.FHA 23/09/2026 DEBUT
         Rec.TypeDuplique := Rec.Type;

@@ -87,6 +87,10 @@ table 50018 TamponTriLignesDocument
         {
             Caption = 'Code variante';
         }
+        field(116; Phase; Integer) //Champ rempli pour les bons de préparation uniquement
+        {
+            Caption = 'Code variante';
+        }
         field(120; Quantite; Decimal)
         {
             Caption = 'Quantite';
@@ -146,6 +150,9 @@ table 50018 TamponTriLignesDocument
         key(MyKey3; "Code utilisateur","Creer nouvelle commande","Ajouter a la cde No.",Type,"No.","Code variante")
         {
             
+        }
+        key(MyKey4; "Code utilisateur", "Type document", "No. document", "No. ligne")
+        {
         }
 
     }
