@@ -179,6 +179,13 @@ pageextension 50126 OrderProcessorRCExtension extends "Order Processor Role Cent
                     RunObject = page "Countries/Regions";
                     ToolTip = 'Pays';
                 }
+                action(Colisages)
+                {
+                    Caption = 'Colisages expédiés';
+                    RunObject = page "Liste colisages expedies";
+                    RunPageView = order(descending);
+                    Tooltip = 'Liste des colisages expédiés';
+                }
 
             }
 
@@ -204,22 +211,13 @@ pageextension 50126 OrderProcessorRCExtension extends "Order Processor Role Cent
                     RunObject = page "Liste saisie expedition";
                     Tooltip = 'Commandes à préparer';
                 }
+                */
                 action(UnitesColisage)
                 {
                     Caption = 'Unités de colisages';
                     RunObject = page "Liste unites colisage";
                     Tooltip = 'Liste des unités de colisage';
                 }
-                */
-
-                action(Colisages)
-                {
-                    Caption = 'Colisages expédiés';
-                    RunObject = page "Liste colisages expedies";
-                    RunPageView = order(descending);
-                    Tooltip = 'Liste des colisages expédiés';
-                }
-
             }
             group(Comptabilite)
             {

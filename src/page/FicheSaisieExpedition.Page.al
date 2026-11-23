@@ -158,6 +158,12 @@ page 50123 "Fiche saisie expedition"
                         ToolTip = 'Commentaire factu.';
                         //Editable = false;
                     }
+                    field("Palettisation en cours";Rec."Palettisation en cours")
+                    {
+                        ApplicationArea = All;
+                        ToolTip = 'Indique si vous avez commencé à détailler le contenu des palettes.';
+                    }
+                    
                     field("Facturation en compta (O/N)"; Rec."Facturation en compta (O/N)")
                     {
                         ApplicationArea = All;
@@ -311,20 +317,17 @@ page 50123 "Fiche saisie expedition"
                     DetailUCCommande: Record "Detail UC Commande";
                     CU80: codeunit "Sales-Post";
                     ListeUCCommande: Page "UC Commande a expedier";
-                    //PagePhases: Page "Phases document vente";
-                    //PrecisionArrondi: Decimal;
-                    //NbPhasesDocument: Integer;
+                    ChoixLivraison: page "Choix Livraison";
+                    SelonColisage: Boolean;
+                    DateCompta: Date;
                     NumLigne: integer;
                     DetailPalettesFourni: Boolean;
                     ConfirmerExpedierQst: Label 'Voulez-vous générer le BL ?';
                     AnnulationExpedierErr: Label 'Opération interrompue à la demande de l''utilisateur.';
-                //PhaseNonChoisieErr: Label 'Vous devez choisir une phase.';
-                //ExpedierQst: Label 'Souhaitez-vous expédier cette commande ?';
-                //OperationAnnuleeErr: Label 'Opération interrompue';
 
                 begin
-                    if not Confirm(ConfirmerExpedierQst, false) then
-                        Error(AnnulationExpedierErr);
+                    //if not Confirm(ConfirmerExpedierQst, false) then
+                    //    Error(AnnulationExpedierErr);
 
                     Rec.CalcSubTotal(Rec);
                     Commit();
@@ -336,9 +339,20 @@ page 50123 "Fiche saisie expedition"
                     //   ce sont les quantités à expédier de chaque ligne qui doivent être remplies.
                     rec.CalcFields("Palettisation en cours");
 
-                    DetailPalettesFourni := rec."Palettisation en cours";
+                    DetailPalettesFourni := Rec."Palettisation en cours";
+                    
+                    ChoixLivraison.Init(DetailPalettesFourni, Rec."Posting Date");
+                    if ChoixLivraison.RunModal() <> Action::OK then
+                        exit;
 
-                    if DetailPalettesFourni then begin
+                    ChoixLivraison.GetResult(SelonColisage, DateCompta);
+
+                    if SelonColisage then
+                        Message('Livraison selon colisage\Date : %1', DateCompta)
+                    else
+                        Message('Livraison selon quantités à expédier\Date : %1', DateCompta);
+
+                    if SelonColisage then begin
                         //On liste les palettes liées à la commande pour que l'utilisateur puisse choisir lesquelles il va expédier
                         Clear(ListeUCCommande);
                         UCCommande.SetCurrentKey("No. commande", "Statut UC");

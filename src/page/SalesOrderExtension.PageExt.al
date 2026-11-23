@@ -969,12 +969,19 @@ pageextension 50086 SalesOrderExtension extends "Sales Order"
                 trigger OnAction()
                 var
                     CU80: codeunit "Sales-Post";
-
+                    AlerteFactureAlorsQueNonLivreQst: Label 'Pour information, cette commande n''a pas été entièrement livrée. Voulez-vous malgré tout facturer ?';
+                    OperationInterrompueErr: Label 'Opération interrompue à la demande de l''utilisateur.';
                 begin
                     Rec.CalcSubTotal(Rec);
                     Rec.Status := Rec.Status::Open;
                     Rec.Modify();
                     Commit();
+                    //KAN.FHA 23/11/2026 DEBUT
+                    Rec.CalcFields("Completely Shipped");
+                    if not Rec."Completely Shipped" then   
+                        if not Confirm(AlerteFactureAlorsQueNonLivreQst) then
+                            error(OperationInterrompueErr);
+                    //KAN.FHA 23/11/2026 FIN
                     Rec.Ship := false;
                     Rec.Invoice := true;
                     CU80.Run(Rec);
