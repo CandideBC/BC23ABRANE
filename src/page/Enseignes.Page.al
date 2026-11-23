@@ -119,7 +119,7 @@ page 50080 "Enseignes"
                 ToolTip = 'Phases';
                 Image = JobLines;
                 Promoted = true;
-                PromotedCategory = Category4;
+                PromotedCategory = Process;
                 PromotedIsBig = true;
                 RunObject = Page "Phases enseigne";
                 RunPageLink = "Code enseigne" = field(Code);

@@ -2434,6 +2434,7 @@
                                                 <Style>
                                                   <FontFamily>Segoe UI</FontFamily>
                                                   <FontSize>8pt</FontSize>
+                                                  <TextAlign>Center</TextAlign>
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>

@@ -18,7 +18,7 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>19.66552cm</Width>
+                  <Width>20.31208cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -33,7 +33,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>19.45656cm</Width>
+                                    <Width>20.10312cm</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -48,7 +48,7 @@
                                                 <TablixBody>
                                                   <TablixColumns>
                                                     <TablixColumn>
-                                                      <Width>19.23091cm</Width>
+                                                      <Width>19.90696cm</Width>
                                                     </TablixColumn>
                                                   </TablixColumns>
                                                   <TablixRows>
@@ -79,10 +79,10 @@
                                                                           </Style>
                                                                         </Paragraph>
                                                                       </Paragraphs>
-                                                                      <Top>2.31045cm</Top>
+                                                                      <Top>2.2152cm</Top>
                                                                       <Left>0.37796cm</Left>
                                                                       <Height>12pt</Height>
-                                                                      <Width>231.62418pt</Width>
+                                                                      <Width>224.55213pt</Width>
                                                                       <Style>
                                                                         <VerticalAlign>Middle</VerticalAlign>
                                                                         <PaddingLeft>3pt</PaddingLeft>
@@ -249,7 +249,7 @@
                                                                   <Top>0.64666cm</Top>
                                                                   <Left>10.64958cm</Left>
                                                                   <Height>2.82439cm</Height>
-                                                                  <Width>8.58133cm</Width>
+                                                                  <Width>9.06855cm</Width>
                                                                   <Style>
                                                                     <Border>
                                                                       <Style>Solid</Style>
@@ -777,7 +777,6 @@
                                                                           <Style />
                                                                         </Paragraph>
                                                                       </Paragraphs>
-                                                                      <Top>0.80424cm</Top>
                                                                       <Left>0.49399cm</Left>
                                                                       <Height>12pt</Height>
                                                                       <Width>227.74888pt</Width>
@@ -803,10 +802,10 @@
                                                                           <Style />
                                                                         </Paragraph>
                                                                       </Paragraphs>
-                                                                      <Top>1.26285cm</Top>
+                                                                      <Top>0.45861cm</Top>
                                                                       <Left>0.49399cm</Left>
                                                                       <Height>12pt</Height>
-                                                                      <Width>227.74888pt</Width>
+                                                                      <Width>229.24743pt</Width>
                                                                       <ZIndex>1</ZIndex>
                                                                       <Style>
                                                                         <VerticalAlign>Middle</VerticalAlign>
@@ -830,7 +829,7 @@
                                                                           <Style />
                                                                         </Paragraph>
                                                                       </Paragraphs>
-                                                                      <Top>1.72146cm</Top>
+                                                                      <Top>0.91722cm</Top>
                                                                       <Left>0.49399cm</Left>
                                                                       <Height>12pt</Height>
                                                                       <Width>227.74888pt</Width>
@@ -857,7 +856,7 @@
                                                                           <Style />
                                                                         </Paragraph>
                                                                       </Paragraphs>
-                                                                      <Top>2.14479cm</Top>
+                                                                      <Top>1.34055cm</Top>
                                                                       <Left>0.49399cm</Left>
                                                                       <Height>12pt</Height>
                                                                       <Width>227.74888pt</Width>
@@ -884,7 +883,7 @@
                                                                           <Style />
                                                                         </Paragraph>
                                                                       </Paragraphs>
-                                                                      <Top>2.56812cm</Top>
+                                                                      <Top>1.76388cm</Top>
                                                                       <Left>0.49399cm</Left>
                                                                       <Height>12pt</Height>
                                                                       <Width>227.74888pt</Width>
@@ -913,7 +912,7 @@
                                                                         </Paragraph>
                                                                       </Paragraphs>
                                                                       <rd:DefaultName>Textbox17</rd:DefaultName>
-                                                                      <Top>2.99145cm</Top>
+                                                                      <Top>2.18721cm</Top>
                                                                       <Left>0.49399cm</Left>
                                                                       <Height>12pt</Height>
                                                                       <Width>8.03448cm</Width>
@@ -926,54 +925,12 @@
                                                                         <PaddingLeft>3pt</PaddingLeft>
                                                                       </Style>
                                                                     </Textbox>
-                                                                    <Line Name="Line5">
-                                                                      <Top>0.81138cm</Top>
-                                                                      <Left>0.0329cm</Left>
-                                                                      <Height>0cm</Height>
-                                                                      <Width>8.54843cm</Width>
-                                                                      <ZIndex>6</ZIndex>
-                                                                      <Style>
-                                                                        <Border>
-                                                                          <Style>Solid</Style>
-                                                                        </Border>
-                                                                      </Style>
-                                                                    </Line>
-                                                                    <Textbox Name="CustAddr76">
-                                                                      <KeepTogether>true</KeepTogether>
-                                                                      <Paragraphs>
-                                                                        <Paragraph>
-                                                                          <TextRuns>
-                                                                            <TextRun>
-                                                                              <Value>=Fields!ShiptoAddrCaption.Value</Value>
-                                                                              <Style>
-                                                                                <FontStyle>Normal</FontStyle>
-                                                                                <FontFamily>Segoe UI</FontFamily>
-                                                                                <FontSize>9pt</FontSize>
-                                                                                <FontWeight>Bold</FontWeight>
-                                                                              </Style>
-                                                                            </TextRun>
-                                                                          </TextRuns>
-                                                                          <Style>
-                                                                            <TextAlign>Left</TextAlign>
-                                                                          </Style>
-                                                                        </Paragraph>
-                                                                      </Paragraphs>
-                                                                      <Top>0.06313cm</Top>
-                                                                      <Left>0.5167cm</Left>
-                                                                      <Height>0.6cm</Height>
-                                                                      <Width>227.69139pt</Width>
-                                                                      <ZIndex>7</ZIndex>
-                                                                      <Style>
-                                                                        <VerticalAlign>Middle</VerticalAlign>
-                                                                        <PaddingLeft>3pt</PaddingLeft>
-                                                                      </Style>
-                                                                    </Textbox>
                                                                   </ReportItems>
                                                                   <KeepTogether>true</KeepTogether>
-                                                                  <Top>0.07027cm</Top>
+                                                                  <Top>0.87451cm</Top>
                                                                   <Left>10.64958cm</Left>
-                                                                  <Height>3.41478cm</Height>
-                                                                  <Width>8.58133cm</Width>
+                                                                  <Height>2.61054cm</Height>
+                                                                  <Width>9.06855cm</Width>
                                                                   <Style>
                                                                     <Border>
                                                                       <Style>Solid</Style>
@@ -1330,11 +1287,8 @@
                                                                         </Textbox>
                                                                       </ReportItems>
                                                                       <KeepTogether>true</KeepTogether>
-                                                                      <Top>0cm</Top>
-                                                                      <Left>0cm</Left>
                                                                       <Height>3.44039cm</Height>
                                                                       <Width>9.87494cm</Width>
-                                                                      <ZIndex>1</ZIndex>
                                                                       <Visibility>
                                                                         <Hidden>=iif(Fields!ClientFrancais.Value, True, False)</Hidden>
                                                                       </Visibility>
@@ -1355,6 +1309,69 @@
                                                                     <Border>
                                                                       <Style>None</Style>
                                                                     </Border>
+                                                                  </Style>
+                                                                </Rectangle>
+                                                                <Textbox Name="CustAddr76">
+                                                                  <KeepTogether>true</KeepTogether>
+                                                                  <Paragraphs>
+                                                                    <Paragraph>
+                                                                      <TextRuns>
+                                                                        <TextRun>
+                                                                          <Value>=Fields!ShiptoAddrCaption.Value</Value>
+                                                                          <Style>
+                                                                            <FontStyle>Normal</FontStyle>
+                                                                            <FontFamily>Segoe UI</FontFamily>
+                                                                            <FontSize>9pt</FontSize>
+                                                                            <FontWeight>Bold</FontWeight>
+                                                                          </Style>
+                                                                        </TextRun>
+                                                                      </TextRuns>
+                                                                      <Style>
+                                                                        <TextAlign>Left</TextAlign>
+                                                                      </Style>
+                                                                    </Paragraph>
+                                                                  </Paragraphs>
+                                                                  <Top>0.1334cm</Top>
+                                                                  <Left>11.1429cm</Left>
+                                                                  <Height>0.6cm</Height>
+                                                                  <Width>227.69139pt</Width>
+                                                                  <ZIndex>2</ZIndex>
+                                                                  <Style>
+                                                                    <VerticalAlign>Middle</VerticalAlign>
+                                                                    <PaddingLeft>3pt</PaddingLeft>
+                                                                  </Style>
+                                                                </Textbox>
+                                                                <Rectangle Name="Rectangle14">
+                                                                  <KeepTogether>true</KeepTogether>
+                                                                  <Top>0.09642cm</Top>
+                                                                  <Left>10.64958cm</Left>
+                                                                  <Height>0.77809cm</Height>
+                                                                  <Width>9.06855cm</Width>
+                                                                  <ZIndex>3</ZIndex>
+                                                                  <Style>
+                                                                    <Border>
+                                                                      <Style>Solid</Style>
+                                                                    </Border>
+                                                                    <TopBorder>
+                                                                      <Color>Black</Color>
+                                                                      <Style>Solid</Style>
+                                                                      <Width>1pt</Width>
+                                                                    </TopBorder>
+                                                                    <BottomBorder>
+                                                                      <Color>Black</Color>
+                                                                      <Style>Solid</Style>
+                                                                      <Width>1pt</Width>
+                                                                    </BottomBorder>
+                                                                    <LeftBorder>
+                                                                      <Color>Black</Color>
+                                                                      <Style>Solid</Style>
+                                                                      <Width>1pt</Width>
+                                                                    </LeftBorder>
+                                                                    <RightBorder>
+                                                                      <Color>Black</Color>
+                                                                      <Style>Solid</Style>
+                                                                      <Width>1pt</Width>
+                                                                    </RightBorder>
                                                                   </Style>
                                                                 </Rectangle>
                                                               </ReportItems>
@@ -1470,28 +1487,28 @@
                                                                   <TablixBody>
                                                                     <TablixColumns>
                                                                       <TablixColumn>
-                                                                        <Width>3.5cm</Width>
+                                                                        <Width>3.83751cm</Width>
                                                                       </TablixColumn>
                                                                       <TablixColumn>
-                                                                        <Width>8cm</Width>
+                                                                        <Width>7.54646cm</Width>
                                                                       </TablixColumn>
                                                                       <TablixColumn>
                                                                         <Width>1.18256cm</Width>
                                                                       </TablixColumn>
                                                                       <TablixColumn>
-                                                                        <Width>0.94708cm</Width>
+                                                                        <Width>1cm</Width>
                                                                       </TablixColumn>
                                                                       <TablixColumn>
                                                                         <Width>1.5cm</Width>
                                                                       </TablixColumn>
                                                                       <TablixColumn>
-                                                                        <Width>1.58063cm</Width>
+                                                                        <Width>1.7368cm</Width>
                                                                       </TablixColumn>
                                                                       <TablixColumn>
-                                                                        <Width>0.70083cm</Width>
+                                                                        <Width>0.97691cm</Width>
                                                                       </TablixColumn>
                                                                       <TablixColumn>
-                                                                        <Width>1.76635cm</Width>
+                                                                        <Width>2.09664cm</Width>
                                                                       </TablixColumn>
                                                                     </TablixColumns>
                                                                     <TablixRows>
@@ -1584,7 +1601,7 @@
                                                                                         <Style>
                                                                                           <FontStyle>Normal</FontStyle>
                                                                                           <FontFamily>Segoe UI</FontFamily>
-                                                                                          <FontSize>7pt</FontSize>
+                                                                                          <FontSize>8pt</FontSize>
                                                                                           <FontWeight>Bold</FontWeight>
                                                                                         </Style>
                                                                                       </TextRun>
@@ -1621,7 +1638,7 @@
                                                                                         <Style>
                                                                                           <FontStyle>Normal</FontStyle>
                                                                                           <FontFamily>Segoe UI</FontFamily>
-                                                                                          <FontSize>6pt</FontSize>
+                                                                                          <FontSize>8pt</FontSize>
                                                                                           <FontWeight>Bold</FontWeight>
                                                                                         </Style>
                                                                                       </TextRun>
@@ -4218,7 +4235,7 @@
                                                                   <Top>0.3175cm</Top>
                                                                   <Left>0.03008cm</Left>
                                                                   <Height>3.42317cm</Height>
-                                                                  <Width>19.17745cm</Width>
+                                                                  <Width>19.87688cm</Width>
                                                                   <Style />
                                                                 </Tablix>
                                                               </ReportItems>
@@ -4275,7 +4292,7 @@
                                                 <Top>0.10859cm</Top>
                                                 <Left>0.19616cm</Left>
                                                 <Height>11.26966cm</Height>
-                                                <Width>19.23091cm</Width>
+                                                <Width>19.90696cm</Width>
                                                 <Style>
                                                   <FontSize>9pt</FontSize>
                                                 </Style>
@@ -5224,7 +5241,7 @@
                                                       </TablixCells>
                                                     </TablixRow>
                                                     <TablixRow>
-                                                      <Height>0.6cm</Height>
+                                                      <Height>0.18221cm</Height>
                                                       <TablixCells>
                                                         <TablixCell>
                                                           <CellContents>
@@ -5590,7 +5607,7 @@
                                                 </Filters>
                                                 <Top>11.36778cm</Top>
                                                 <Left>11.72624cm</Left>
-                                                <Height>4.63431cm</Height>
+                                                <Height>4.21652cm</Height>
                                                 <Width>7.70083cm</Width>
                                                 <ZIndex>1</ZIndex>
                                                 <Style>
@@ -5638,7 +5655,7 @@
                                                 <Top>0.10859cm</Top>
                                                 <Left>10.84574cm</Left>
                                                 <Height>0.66077cm</Height>
-                                                <Width>8.61082cm</Width>
+                                                <Width>9.06855cm</Width>
                                                 <ZIndex>2</ZIndex>
                                                 <Style>
                                                   <Border>
@@ -5778,7 +5795,7 @@ Cstr(Fields!Range_SalesInvHdr.value),1)</Value>
                                                   </Paragraph>
                                                 </Paragraphs>
                                                 <Top>11.48408cm</Top>
-                                                <Left>10.63935cm</Left>
+                                                <Left>10.00435cm</Left>
                                                 <Height>0.3175cm</Height>
                                                 <Width>1.2135cm</Width>
                                                 <ZIndex>3</ZIndex>
@@ -5949,10 +5966,13 @@ Cstr(Fields!Range_SalesInvHdr.value),1)</Value>
                                                                         <FontFamily>Segoe UI</FontFamily>
                                                                         <FontSize>9pt</FontSize>
                                                                         <FontWeight>Bold</FontWeight>
+                                                                        <Format>d</Format>
                                                                       </Style>
                                                                     </TextRun>
                                                                   </TextRuns>
-                                                                  <Style />
+                                                                  <Style>
+                                                                    <TextAlign>Left</TextAlign>
+                                                                  </Style>
                                                                 </Paragraph>
                                                               </Paragraphs>
                                                               <rd:DefaultName>Textbox54</rd:DefaultName>
@@ -6252,7 +6272,7 @@ Cstr(Fields!Range_SalesInvHdr.value),1)</Value>
                               <Top>0.42538cm</Top>
                               <Left>0.20896cm</Left>
                               <Height>16.14737cm</Height>
-                              <Width>19.45656cm</Width>
+                              <Width>20.10312cm</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -6333,17 +6353,15 @@ Cstr(Fields!Range_SalesInvHdr.value),1)</Value>
                                             <Visibility>
                                               <Hidden>=Code.SetData(
 Cstr(Fields!VATLegalMention.value)+ Chr(177) +
-
-
 Cstr(Fields!TexteFacto1.value)+ Chr(177) +
 Cstr(Fields!TexteFacto2.value)+ Chr(177) +
 Cstr(Fields!TexteFacto3.value)+ Chr(177) +
-
 Cstr(Fields!CompanyInfoBankName.value)+ Chr(177) +
-
 Cstr(Fields!CompanyInfoIBAN.value)+ Chr(177) +
-
-Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr(177) +Cstr(Fields!PiedTxt1.value)+ Chr(177) +Cstr(Fields!PiedTxt2.value),2)</Hidden>
+Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +
+Cstr(Fields!Facto.value)+ Chr(177) +
+""+ Chr(177) +
+""</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border />
@@ -6488,7 +6506,7 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
             <Top>0.17584cm</Top>
             <Left>0.10686cm</Left>
             <Height>16.67858cm</Height>
-            <Width>19.66552cm</Width>
+            <Width>20.31208cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -6499,7 +6517,7 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
         <Height>16.90734cm</Height>
         <Style />
       </Body>
-      <Width>19.77238cm</Width>
+      <Width>20.41894cm</Width>
       <Page>
         <PageHeader>
           <Height>5.46016cm</Height>
@@ -6572,7 +6590,8 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
                 </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Left>11.22053cm</Left>
+              <Top>0.07938cm</Top>
+              <Left>11.67826cm</Left>
               <Height>2.38819cm</Height>
               <Width>8.55185cm</Width>
               <Style>
@@ -6601,8 +6620,8 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>2.66375cm</Top>
-              <Left>11.41908cm</Left>
+              <Top>2.74312cm</Top>
+              <Left>11.87681cm</Left>
               <Height>12pt</Height>
               <Width>2.70784cm</Width>
               <ZIndex>1</ZIndex>
@@ -6630,8 +6649,8 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>2.66375cm</Top>
-              <Left>14.19829cm</Left>
+              <Top>2.74312cm</Top>
+              <Left>14.65602cm</Left>
               <Height>12pt</Height>
               <Width>5.52122cm</Width>
               <ZIndex>2</ZIndex>
@@ -6657,8 +6676,8 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
                   <Style />
                 </Paragraph>
               </Paragraphs>
-              <Top>3.15764cm</Top>
-              <Left>11.41908cm</Left>
+              <Top>3.23702cm</Top>
+              <Left>11.87681cm</Left>
               <Height>13.75499pt</Height>
               <Width>8.30044cm</Width>
               <ZIndex>3</ZIndex>
@@ -6692,144 +6711,10 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>2.67845cm</Height>
+          <Height>1.7577cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Rectangle Name="Rectangle5">
-              <ReportItems>
-                <Textbox Name="Textbox409">
-                  <CanGrow>true</CanGrow>
-                  <KeepTogether>true</KeepTogether>
-                  <Paragraphs>
-                    <Paragraph>
-                      <TextRuns>
-                        <TextRun>
-                          <Value>=Code.Getdata(1,2)</Value>
-                          <Style>
-                            <FontFamily>Segoe UI</FontFamily>
-                            <FontSize>9pt</FontSize>
-                          </Style>
-                        </TextRun>
-                      </TextRuns>
-                      <Style>
-                        <TextAlign>Center</TextAlign>
-                      </Style>
-                    </Paragraph>
-                  </Paragraphs>
-                  <Top>0.73025cm</Top>
-                  <Left>0.01752cm</Left>
-                  <Height>0.61941cm</Height>
-                  <Width>19.17805cm</Width>
-                  <Style>
-                    <Border>
-                      <Style>None</Style>
-                    </Border>
-                    <VerticalAlign>Middle</VerticalAlign>
-                    <PaddingLeft>3pt</PaddingLeft>
-                  </Style>
-                </Textbox>
-                <Textbox Name="Textbox411">
-                  <CanGrow>true</CanGrow>
-                  <CanShrink>true</CanShrink>
-                  <KeepTogether>true</KeepTogether>
-                  <Paragraphs>
-                    <Paragraph>
-                      <TextRuns>
-                        <TextRun>
-                          <Value>=Code.Getdata(9,2)</Value>
-                          <MarkupType>HTML</MarkupType>
-                          <Style>
-                            <FontFamily>Segoe UI</FontFamily>
-                            <FontSize>9pt</FontSize>
-                          </Style>
-                        </TextRun>
-                      </TextRuns>
-                      <Style>
-                        <TextAlign>Center</TextAlign>
-                      </Style>
-                    </Paragraph>
-                  </Paragraphs>
-                  <Top>1.41316cm</Top>
-                  <Height>0.61941cm</Height>
-                  <Width>19.19557cm</Width>
-                  <ZIndex>1</ZIndex>
-                  <Style>
-                    <Border>
-                      <Style>Solid</Style>
-                    </Border>
-                    <TopBorder>
-                      <Color>Black</Color>
-                      <Style>Solid</Style>
-                      <Width>1pt</Width>
-                    </TopBorder>
-                    <BottomBorder>
-                      <Color>Black</Color>
-                      <Style>Solid</Style>
-                      <Width>1pt</Width>
-                    </BottomBorder>
-                    <LeftBorder>
-                      <Color>Black</Color>
-                      <Style>Solid</Style>
-                      <Width>1pt</Width>
-                    </LeftBorder>
-                    <RightBorder>
-                      <Color>Black</Color>
-                      <Style>Solid</Style>
-                      <Width>1pt</Width>
-                    </RightBorder>
-                    <VerticalAlign>Middle</VerticalAlign>
-                    <PaddingLeft>3pt</PaddingLeft>
-                  </Style>
-                </Textbox>
-              </ReportItems>
-              <KeepTogether>true</KeepTogether>
-              <Top>0.17639cm</Top>
-              <Left>0.49446cm</Left>
-              <Height>2.19132cm</Height>
-              <Width>19.19557cm</Width>
-              <Visibility>
-                <Hidden>=IIF(Code.GetGroupPageNumber(ReportItems!NewPage.Value,Globals!PageNumber)&lt;&gt;Globals!TotalPages,TRUE,FALSE)</Hidden>
-              </Visibility>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-              </Style>
-            </Rectangle>
-            <Textbox Name="Footer3">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <Format>d</Format>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                    <LineHeight>6pt</LineHeight>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>2.32567cm</Top>
-              <Left>0.49446cm</Left>
-              <Height>10pt</Height>
-              <Width>2.84456cm</Width>
-              <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <VerticalAlign>Top</VerticalAlign>
-              </Style>
-            </Textbox>
             <Textbox Name="PageNumberTextBox">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -6849,11 +6734,10 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>2.25512cm</Top>
-              <Left>15.91395cm</Left>
+              <Top>1.33437cm</Top>
+              <Left>16.48545cm</Left>
               <Height>12pt</Height>
               <Width>3.80556cm</Width>
-              <ZIndex>2</ZIndex>
               <Style>
                 <Border />
                 <VerticalAlign>Middle</VerticalAlign>
@@ -6881,39 +6765,54 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
               </Paragraphs>
               <rd:DefaultName>Textbox72</rd:DefaultName>
               <Top>0.23608cm</Top>
-              <Left>0.49446cm</Left>
+              <Left>0.31582cm</Left>
               <Height>0.6cm</Height>
-              <Width>19.19287cm</Width>
-              <ZIndex>3</ZIndex>
+              <Width>19.97519cm</Width>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
-                  <Style>Solid</Style>
+                  <Style>None</Style>
                 </Border>
-                <TopBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </TopBorder>
-                <BottomBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </BottomBorder>
-                <LeftBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </LeftBorder>
-                <RightBorder>
-                  <Color>Black</Color>
-                  <Style>Solid</Style>
-                  <Width>1pt</Width>
-                </RightBorder>
                 <VerticalAlign>Middle</VerticalAlign>
                 <PaddingLeft>2pt</PaddingLeft>
                 <PaddingRight>2pt</PaddingRight>
                 <PaddingTop>2pt</PaddingTop>
                 <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Footer8">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=First(Fields!TextePenalitesRetard.Value, "DataSet_Result")</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>8pt</FontSize>
+                        <Format>d</Format>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                    <LineHeight>6pt</LineHeight>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>0.89032cm</Top>
+              <Left>0.31582cm</Left>
+              <Height>12.85008pt</Height>
+              <Width>19.97519cm</Width>
+              <ZIndex>2</ZIndex>
+              <Visibility>
+                <Hidden>=iif(Globals!PageNumber=Globals!TotalPages,false,true)</Hidden>
+              </Visibility>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Middle</VerticalAlign>
               </Style>
             </Textbox>
           </ReportItems>
@@ -6928,7 +6827,7 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
         <InteractiveHeight>29.7cm</InteractiveHeight>
         <InteractiveWidth>21cm</InteractiveWidth>
         <LeftMargin>0.7cm</LeftMargin>
-        <RightMargin>0.5cm</RightMargin>
+        <RightMargin>0cm</RightMargin>
         <TopMargin>0.5cm</TopMargin>
         <BottomMargin>0.5cm</BottomMargin>
         <Style />
@@ -7189,9 +7088,6 @@ End Function</Code>
         <Field Name="LabelCustOrder">
           <DataField>LabelCustOrder</DataField>
         </Field>
-        <Field Name="VATMentionDebit">
-          <DataField>VATMentionDebit</DataField>
-        </Field>
         <Field Name="TotalGrossWeight">
           <DataField>TotalGrossWeight</DataField>
         </Field>
@@ -7200,12 +7096,6 @@ End Function</Code>
         </Field>
         <Field Name="LabelTotalGrossWeight">
           <DataField>LabelTotalGrossWeight</DataField>
-        </Field>
-        <Field Name="PiedTxt1">
-          <DataField>PiedTxt1</DataField>
-        </Field>
-        <Field Name="PiedTxt2">
-          <DataField>PiedTxt2</DataField>
         </Field>
         <Field Name="LabelRefArticle">
           <DataField>LabelRefArticle</DataField>

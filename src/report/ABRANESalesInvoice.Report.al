@@ -59,7 +59,7 @@ report 50006 "ABRANE : Sales - Invoice"
             column(LabellTotalWeight; TotalNetWeightLblTxt)
             {
             }
-            column(LabelPalette; LabelPaletteLbl)
+            column(LabelPalette; PaletteLblTxt)
             {
             }
             column(LabelColis; ColisLblTxt)
@@ -139,19 +139,10 @@ report 50006 "ABRANE : Sales - Invoice"
             column(LabelCustOrder; CustOrderNoLblTxt)
             {
             }
-            column(VATMentionDebit; MentionVAT)
-            {
-            }
             column(TotalGrossWeight; "Sales Invoice Header"."Total Gross Weight")
             {
             }
             column(LabelTotalGrossWeight; TotalGrossWeightLblTxt)
-            {
-            }
-            column(PiedTxt1; PiedTxt1)
-            {
-            }
-            column(PiedTxt2; PiedTxt2)
             {
             }
             column(LabelRefArticle; RefArticleLblTxt)
@@ -1194,18 +1185,17 @@ report 50006 "ABRANE : Sales - Invoice"
 
                 ClientFrancais := ("Sell-to Country/Region Code" = '') OR ("Sell-to Country/Region Code" = CompanyInfo."Country/Region Code");
 
-
+                /*
                 if ("Sales Invoice Header"."Bill-to Country/Region Code" = '') or ("Sales Invoice Header"."Bill-to Country/Region Code" = CompanyInfo."Country/Region Code") then
                     MentionVAT := VATMentionDebitLbl
                 else
                     MentionVAT := VATMentionDebitExportLbl;
+                */
 
                 TexteTVA := '';
-                if "Bill-to Country/Region Code" = CompanyInfo."Country/Region Code" then begin
-                    TexteTVA := MentionTVAFRLbl;
-                    TextePenalitesRetard := PenalitesRetardFRLbl;
-                end else begin
-                    TextePenalitesRetard := PenalitesRetardENULbl;
+                if "Bill-to Country/Region Code" = CompanyInfo."Country/Region Code" then 
+                    TexteTVA := MentionTVAFRLbl
+                else begin
                     if not Pays.Get("Bill-to Country/Region Code") then
                         Pays.init();
                     if Pays."Intrastat Code" <> '' then
@@ -1305,6 +1295,7 @@ report 50006 "ABRANE : Sales - Invoice"
                     BilltoAddrLblTxt := BilltoAddrFRALbl;
                     ShiptoAddrLblTxt := ShiptoAddrFRALbl;
                     VATRegNoLblTxt := VATRegNoFRALbl;
+                    TextePenalitesRetard := PenalitesRetardFRALbl;
                     MentionsLegalesLblTxt := MentionsLegalesFRALbl;
                     NoLocationNameLblTxt := NoLocationNameFRALbl;
                     InterlocuteurClientLblTxt := InterlocuteurClientFRALbl;
@@ -1337,6 +1328,7 @@ report 50006 "ABRANE : Sales - Invoice"
                     ShiptoAddrLblTxt := ShiptoAddrENULbl;
                     VATRegNoLblTxt := VATRegNoENULbl;
                     MentionsLegalesLblTxt := MentionsLegalesENULbl;
+                    TextePenalitesRetard := PenalitesRetardENULbl;
                     NoLocationNameLblTxt := NoLocationNameENULbl;
                     InterlocuteurClientLblTxt := InterlocuteurClientENULbl;
                     CommentaireLblTxt := CommentaireENULbl;
@@ -1533,8 +1525,8 @@ report 50006 "ABRANE : Sales - Invoice"
         GiroNoCaptionLbl: Label 'Giro No.';
         BankNameCaptionLbl: Label 'Bank';
         BankAccNoCaptionLbl: Label 'Account No.';
-        DueDateENULbl: Label 'Due Date';
-        DueDateFRALbl: Label 'Date échéance';
+        DueDateENULbl: Label 'Due Date:';
+        DueDateFRALbl: Label 'Date échéance :';
         DueDateLblTxt: Text[20];
         InvoiceNoCaptionLbl: Label 'Invoice No.';
         PostingDateCaptionLbl: Label 'Date :';
@@ -1571,11 +1563,11 @@ report 50006 "ABRANE : Sales - Invoice"
         HomePageCaptionLbl: Label 'Home Page';
         EMailCaptionLbl: Label 'E-Mail';
         CompanyInfoFaxNoCaptionLbl: Label 'Fax No.';
-        CompanyInfoVATRegNoENULbl: Label 'VAT Registration No.:';
-        CompanyInfoVATRegNoFRALbl: Label 'N° ident. intracom. :';
+        //CompanyInfoVATRegNoENULbl: Label 'VAT Registration No.:';
+        //CompanyInfoVATRegNoFRALbl: Label 'N° ident. intracom. :';
         TextePenalitesRetard: Text[1024];
-        PenalitesRetardFRLbl: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
-        PenalitesRetardENULbl: Label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardFRALbl: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardENULbl: Label 'Late payment penalty: 3 times the legal interest rate in force + a fixed recovery cost indemnity of €40 (Art. L. 441-10 of the French Commercial Code)';
 
         CompanyInfoVATRegNoLblTxt: Text[30];
         ContactCaptionLbl: Label 'For the attention of ';
@@ -1605,29 +1597,25 @@ report 50006 "ABRANE : Sales - Invoice"
         NoLocationNameFRALbl: Label 'N° et nom magasin :';
         NoLocationNameLblTxt: Text[30];
         CommentaireENULbl: Label 'Comments : ';
-        CommentaireFRALbl: Label 'Comments : ';
+        CommentaireFRALbl: Label 'Commentaires : ';
         CommentaireLblTxt: Text[20];
         TotalNetWeightENULbl: Label 'Total Net Weight:';
         TotalNetWeightFRALbl: Label 'Poids net total :';
         TotalNetWeightLblTxt: Text[20];
-        PaletteENULbl: Label 'Palette''s Number';
+        PaletteENULbl: Label 'Number of pallets:';
         PaletteFRALbl: Label 'Nb palette';
         PaletteLblTxt: Text[20];
-        LabelPaletteLbl: Label 'Palette''s Number';
-        ColisENULbl: Label 'Package''s Number';
-        ColisFRALbl: Label 'N° colis';
+        ColisENULbl: Label 'Number of packages:';
+        ColisFRALbl: Label 'Nombre de colis';
         ColisLblTxt: Text[20];
         LabelNetaPayerLbl: Label 'Net Cash';
         NNCSalesLineEcoAmt: Decimal;
         NNCVATEcoAMt: Decimal;
         TotalWeight: Decimal;
         LabelAcompteLbl: Label 'Prepayment';
-
         VATLegalMention: Text;
-
         LabelSiteLbl: Label 'Site :';
         SiteName: Text[50];
-
         EcoTaxLbl: Label 'Eco Tax Furniture';
         EcoTaxTextLbl: Label 'Eco Tax VAT';
         DevisENULbl: Label 'Quote No.:';
@@ -1642,17 +1630,13 @@ report 50006 "ABRANE : Sales - Invoice"
         OrderNoENULbl: Label 'Order No.:';
         OrderNoFRALbl: Label 'N° commande :';
         OrderNoLblTxt: Text[20];
-        CustOrderNoENULbl: Label 'Customer Order No.:';
-        CustOrderNoFRALbl: Label 'N° commande client :';
+        CustOrderNoENULbl: Label 'External Doc. No.:';
+        CustOrderNoFRALbl: Label 'N° doc. externe :';
         CustOrderNoLblTxt: Text[30];
-        TotalGrossWeightENULbl: Label 'Total Gross Weight:';
+        TotalGrossWeightENULbl: Label 'Total Gross Weight (kg):';
         TotalGrossWeightFRALbl: Label 'Poids brut total :';
-        TotalGrossWeightLblTxt: Text[20];
-        VATMentionDebitLbl: Label '* VAT paid on debits - No discount granted';
-        PiedTxt1: Text[1024];
-        PiedTxt2: Text[1024];
-        VATMentionDebitExportLbl: Label '* No discount granted';
-        RefArticleENULbl: Label 'Item Reference';
+        TotalGrossWeightLblTxt: Text[30];
+        RefArticleENULbl: Label 'Item Ref.';
         RefArticleFRALbl: Label 'Référence article';
         RefArticleLblTxt: Text[20];
 
@@ -1663,7 +1647,6 @@ report 50006 "ABRANE : Sales - Invoice"
         VariantENULbl: Label 'Variant';
         VariantFRALbl: Label 'Variante';
         VariantLblTxt: Text[20];
-        MentionVAT: Text;
         txtOrderNo: Code[20];
 
         MontantDejaVerseENULbl: Label 'Amount Already Paid:';

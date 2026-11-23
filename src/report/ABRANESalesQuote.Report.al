@@ -1428,6 +1428,7 @@ report 50004 "ABRANE : Sales - Quote"
                     SituationLblTxt := SituationFRALbl;
                     SoldeLblTxt := SoldeFRALbl;
                     MentionsLegalesLblTxt := MentionsLegalesFRALbl;
+                    TextePenalitesRetard := PenalitesRetardFRALbl;
                     EscompteLblTxt := EscompteFRALbl;
                     AgreementLblTxt := AgreementFRALbl;
                     CommentaireLblTxt := CommentaireFRALbl;
@@ -1467,6 +1468,7 @@ report 50004 "ABRANE : Sales - Quote"
                     SituationLblTxt := SituationENULbl;
                     SoldeLblTxt := SoldeENULbl;
                     MentionsLegalesLblTxt := MentionsLegalesENULbl;
+                    TextePenalitesRetard := PenalitesRetardENULbl;
                     EscompteLblTxt := EscompteENULbl;
                     AgreementLblTxt := AgreementENULbl;
                     CommentaireLblTxt := CommentaireENULbl;
@@ -1499,7 +1501,7 @@ report 50004 "ABRANE : Sales - Quote"
                 VATNoText := FieldCaption("VAT Registration No.");
                 //+DIA@FHA 09/04/2014
 
-                ClientFrancais := ("Sell-to Country/Region Code" = '') OR ("Sell-to Country/Region Code" = CompanyInfo."Country/Region Code");
+                ClientFrancais := ("Sell-to Country/Region Code" = '') or ("Sell-to Country/Region Code" = CompanyInfo."Country/Region Code");
 
                 CondPaiementAcompteTxt := '';
                 if "% acompte demande" > 0 then
@@ -1509,7 +1511,6 @@ report 50004 "ABRANE : Sales - Quote"
 
                         txtPaymentMethodDescription := txtPaymentMethodDescription + ' 100% ' + PaiementComptantLbl;
                     end else begin
-                        //txtSolde := SoldeLbl;
                         CondPaiementAcompteTxt := format("% acompte demande") + ' %';
                         if PaymentTerms.Get("Code cond. paiement acomptes") then begin
                             PaymentTerms.TranslateDescription(PaymentTerms, "Language Code");
@@ -1549,15 +1550,11 @@ report 50004 "ABRANE : Sales - Quote"
                 if "Currency Code" = '' then begin
                     GLSetup.TestField("LCY Code");
                     TotalText := StrSubstNo(Text001Lbl, GLSetup."LCY Code");
-                    //TotalInclVATText := Text002Lbl;
-                    //TotalExclVATText := Text006Lbl;
 
                     if "Montant eco-taxe" <> 0 then
                         MentionEcoContribution := MentionEcoContribution + ' ' + GLSetup."LCY Code" + MentionEcoContribution2Lbl;
                 end else begin
                     TotalText := StrSubstNo(Text001Lbl, "Currency Code");
-                    //TotalInclVATText := Text002Lbl;
-                    //TotalExclVATText := Text006Lbl;
                     if "Montant eco-taxe" <> 0 then
                         MentionEcoContribution := MentionEcoContribution + "Currency Code" + MentionEcoContribution2Lbl;
                 end;
@@ -1600,15 +1597,12 @@ report 50004 "ABRANE : Sales - Quote"
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Language Code");
                 end;
 
-
                 FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, "Sales Header");
 
                 TexteTVA := '';
-                if "Bill-to Country/Region Code" = CompanyInfo."Country/Region Code" then begin
-                    TexteTVA := MentionTVAFRLbl;
-                    TextePenalitesRetard := PenalitesRetardFRLbl;
-                end else begin
-                    TextePenalitesRetard := PenalitesRetardENULbl;
+                if "Bill-to Country/Region Code" = CompanyInfo."Country/Region Code" then
+                    TexteTVA := MentionTVAFRLbl
+                else begin
                     if not Pays.Get("Bill-to Country/Region Code") then
                         Pays.init();
                     if Pays."Intrastat Code" <> '' then
@@ -1893,7 +1887,7 @@ report 50004 "ABRANE : Sales - Quote"
         UnitCaptionFRALbl: Label 'Unité';
         UnitCaptionLblTxt: Text[10];
         MarchandiseLbl: Label 'Product Information';
-        PaletteLbl: Label 'Number of Pallets';
+        PaletteLbl: Label 'Number of Pallets:';
         OrgMseLbl: Label 'Origine marchandise';
         PaysLbl: Label 'Pays exportateur';
         CurrencyLbl: Label 'Currency :';
@@ -1907,8 +1901,8 @@ report 50004 "ABRANE : Sales - Quote"
         MentionTVAUELbl: Label 'Intra-Community Supply : VAT Exemption under Article 262 ter I of the French General Tax Code';
         MentionTVAExportLbl: Label 'VAT exempt under Article 262 I of the French General Tax Code (CGI)';
         TextePenalitesRetard: Text[1024];
-        PenalitesRetardFRLbl: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
-        PenalitesRetardENULbl: Label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardFRALbl: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardENULbl: Label 'Late payment penalty: 3 times the legal interest rate in force + a fixed recovery cost indemnity of €40 (Art. L. 441-10 of the French Commercial Code)';
         PrepAmount: Decimal;
         AcompteverseLbl: Label 'Prepayment Amount';
         MontantDejaVerseLbl: Label 'Already Paid';

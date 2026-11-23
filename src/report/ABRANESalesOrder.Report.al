@@ -1429,6 +1429,7 @@ report 50005 "ABRANE : Sales - Order"
                     SituationLblTxt := SituationFRALbl;
                     SoldeLblTxt := SoldeFRALbl;
                     MentionsLegalesLblTxt := MentionsLegalesFRALbl;
+                    TextePenalitesRetard := PenalitesRetardFRALbl;
                     EscompteLblTxt := EscompteFRALbl;
                     AgreementLblTxt := AgreementFRALbl;
                     CommentaireLblTxt := CommentaireFRALbl;
@@ -1469,6 +1470,7 @@ report 50005 "ABRANE : Sales - Order"
                     SituationLblTxt := SituationENULbl;
                     SoldeLblTxt := SoldeENULbl;
                     MentionsLegalesLblTxt := MentionsLegalesENULbl;
+                    TextePenalitesRetard := PenalitesRetardENULbl;
                     EscompteLblTxt := EscompteENULbl;
                     AgreementLblTxt := AgreementENULbl;
                     CommentaireLblTxt := CommentaireENULbl;
@@ -1606,11 +1608,9 @@ report 50005 "ABRANE : Sales - Order"
                 FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, "Sales Header");
 
                 TexteTVA := '';
-                if "Bill-to Country/Region Code" = CompanyInfo."Country/Region Code" then begin
-                    TexteTVA := MentionTVAFRLbl;
-                    TextePenalitesRetard := PenalitesRetardFRLbl;
-                end else begin
-                    TextePenalitesRetard := PenalitesRetardENULbl;
+                if "Bill-to Country/Region Code" = CompanyInfo."Country/Region Code" then
+                    TexteTVA := MentionTVAFRLbl
+                else begin
                     if not Pays.Get("Bill-to Country/Region Code") then
                         Pays.init();
                     if Pays."Intrastat Code" <> '' then
@@ -1910,8 +1910,8 @@ report 50005 "ABRANE : Sales - Order"
         MentionTVAUELbl: Label 'Intra-Community Supply : VAT Exemption under Article 262 ter I of the French General Tax Code';
         MentionTVAExportLbl: Label 'VAT exempt under Article 262 I of the French General Tax Code (CGI)';
         TextePenalitesRetard: Text[1024];
-        PenalitesRetardFRLbl: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
-        PenalitesRetardENULbl: Label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardFRALbl: label 'Pénalité de retard : 3 fois le taux d''intérêt légal en vigueur + indemnité forfaitaire de frais de recouvrement de 40 € (Art. L. 441-6 du Code du Commerce)';
+        PenalitesRetardENULbl: Label 'Late payment penalty: 3 times the legal interest rate in force + a fixed recovery cost indemnity of €40 (Art. L. 441-10 of the French Commercial Code)';
         PrepAmount: Decimal;
         AcompteverseLbl: Label 'Prepayment Amount';
         MontantDejaVerseLbl: Label 'Already Paid';

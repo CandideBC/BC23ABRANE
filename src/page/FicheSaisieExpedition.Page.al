@@ -282,7 +282,7 @@ page 50123 "Fiche saisie expedition"
                 ApplicationArea = All;
                 Caption = 'Bon de prépa';
                 Promoted = true;
-                PromotedCategory = Category9;
+                PromotedCategory = Process;
                 Image = Print;
                 ToolTip = 'Bon de préparation';
 
@@ -322,8 +322,6 @@ page 50123 "Fiche saisie expedition"
                     DateCompta: Date;
                     NumLigne: integer;
                     DetailPalettesFourni: Boolean;
-                    ConfirmerExpedierQst: Label 'Voulez-vous générer le BL ?';
-                    AnnulationExpedierErr: Label 'Opération interrompue à la demande de l''utilisateur.';
 
                 begin
                     //if not Confirm(ConfirmerExpedierQst, false) then

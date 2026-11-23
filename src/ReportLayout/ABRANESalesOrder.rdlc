@@ -362,7 +362,6 @@
                                               <PaddingLeft>3pt</PaddingLeft>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
@@ -2473,6 +2472,7 @@
                                                 <Style>
                                                   <FontFamily>Segoe UI</FontFamily>
                                                   <FontSize>8pt</FontSize>
+                                                  <TextAlign>Center</TextAlign>
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
@@ -2494,6 +2494,7 @@
                                               <PaddingRight>6pt</PaddingRight>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>
