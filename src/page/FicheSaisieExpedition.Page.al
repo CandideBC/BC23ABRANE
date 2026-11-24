@@ -295,6 +295,44 @@ page 50123 "Fiche saisie expedition"
                         EnteteVente.ImprimerBP();
                 end;
             }
+            action(InfosPalette)
+            {
+                ApplicationArea = All;
+                Caption = 'Infos palette';
+                Promoted = true;
+                PromotedCategory = Process;
+                Image = Print;
+                ToolTip = 'Imprime la feuille Infos palette vente';
+
+                trigger OnAction()
+                var
+                    EnteteVente: Record "Sales Header";
+                begin
+                    EnteteVente.SetRange("Document Type", Rec."Document Type");
+                    EnteteVente.SetRange("No.", Rec."No.");
+                    if EnteteVente.FindFirst() then
+                        Report.Run(Report::"ABRANE : infos palette vente", true, true, EnteteVente);
+                end;
+            }
+            action(InfosAchat)
+            {
+                ApplicationArea = All;
+                Caption = 'Infos achat';
+                Promoted = true;
+                PromotedCategory = Process;
+                Image = PrintReport;
+                ToolTip = 'Imprime la feuille Récap achats vente';
+
+                trigger OnAction()
+                var
+                    EnteteVente: Record "Sales Header";
+                begin
+                    EnteteVente.SetRange("Document Type", Rec."Document Type");
+                    EnteteVente.SetRange("No.", Rec."No.");
+                    if EnteteVente.FindFirst() then
+                        Report.Run(Report::"ABRANE : recap achats vente", true, true, EnteteVente);
+                end;
+            }
             action(Expedier)
             {
                 Caption = 'Expédier';

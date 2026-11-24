@@ -1,8 +1,5 @@
 report 50009 "ABRANE : Packing List"
 {
-    // DIA@NDE 05/02/15  Archivage non systématique
-    // DIA@NDE 19/02/15  Modification gestion Total Poids net avec champ en-tête de commande vente
-    // DIA@NDE 25/02/15  Qté mentionnée= Qté à expédier et non qté commandée
     DefaultLayout = RDLC;
     RDLCLayout = './src/ReportLayout/ABRANEPackingList.rdlc';
 

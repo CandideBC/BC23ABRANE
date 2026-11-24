@@ -19,51 +19,25 @@ report 50012 "ABRANE : bon de preparation"
             column(No_SalesHeader; "No.")
             {
             }
+            column(Version; "No. of Archived Versions")
+            {
+                
+            }
 
-            column(SelltoCustNo_SalesHeader; "Sell-to Customer No.")
-            {
-            }
-            column(BilltoCustNo_SalesHeader; "Bill-to Customer No.")
-            {
-            }
+
+
             column(DocDate_SalesHeader; "Order Date")
             {
             }
-            column(ExternalDocumentNo_SalesHeader; "External Document No.")
-            {
-            }
-            column(SellToContact_SalesHeader; "Sell-to Contact")
-            {
-            }
-            column(ExitPoint_SalesHeader; "Exit Point")
-            {
-            }
-            column(QuoteNo_SalesHeader; "Quote No.")
-            {
-            }
-            column(VATRegNo_SalesHeader; "VAT Registration No.")
-            {
-            }
-            column(ShipmentMethodDescriptionCaption; ShipmentMethodCaptionLbl)
-            {
-            }
-            column(OrderDate_SalesHeader; "Order Date")
+
+            column(ShipToContact_SalesHeader; "Ship-to Contact")
             {
             }
 
-            column(JobName_SalesHeader; JobName)
-            {
-            }
-
-            column(ShipmentDate; "Date chargement")
-            {
-            }
             column(Comments_SalesHeader; Commentaire)
             {
             }
-            column(Range_SalesHeader; "Range No.")
-            {
-            }
+
             column(LabelNoLocationName_SalesHeader; LabelNoLocationNameLbl)
             {
             }
@@ -73,36 +47,11 @@ report 50012 "ABRANE : bon de preparation"
             column(LabelCommentaire; CommentaireLbl)
             {
             }
-            column(LabelShipmentDate; DateChargementLbl)
-            {
-            }
+
             column(LabellTotalWeight; TotalWeightLbl)
             {
             }
-            column(LabelTotalGrossWeight; TotalGrossWeightLbl)
-            {
-            }
 
-
-            column(LabelPalette; PaletteLbl)
-            {
-            }
-
-            column(PackageNumber; "Nombre de colis")
-            {
-            }
-            column(PalletNumber; "Nombre de palettes")
-            {
-            }
-            column(TotalNetWeight; "Total Net Weight")
-            {
-            }
-            column(TotalGrossWeight; "Poids brut total")
-            {
-            }
-            column(LabelPackage; PackageLbl)
-            {
-            }
             column(LabelPrepNoArticle; NoArticleLbl)
             {
             }
@@ -124,6 +73,9 @@ report 50012 "ABRANE : bon de preparation"
             column(LabelPrepManquants; ManquantsLbl)
             {
             }
+            column(ColonneCommentaireLbl; ColonneCommentaireLbl)
+            {
+            }
             dataitem(CopyLoop; "Integer")
             {
                 DataItemTableView = sorting(Number);
@@ -140,120 +92,29 @@ report 50012 "ABRANE : bon de preparation"
                     {
 
                     }
-                    column(CustAddr1; CustAddr[1])
-                    {
-                    }
-                    column(CustAddr2; CustAddr[2])
-                    {
-                    }
-                    column(CustAddr3; CustAddr[3])
-                    {
-                    }
-                    column(CustAddr4; CustAddr[4])
-                    {
-                    }
-                    column(CustAddr5; CustAddr[5])
-                    {
-                    }
-                    column(CustAddr6; CustAddr[6])
-                    {
-                    }
-                    column(CustAddr7; CustAddr[7])
-                    {
-                    }
-                    column(CustAddr8; CustAddr[8])
-                    {
-                    }
-                    column(CompanyAddr1; CompanyAddr[1])
-                    {
-                    }
-                    column(CompanyAddr2; CompanyAddr[2])
-                    {
-                    }
-                    column(CompanyAddr3; CompanyAddr[3])
-                    {
-                    }
-                    column(CompanyAddr4; CompanyAddr[4])
-                    {
-                    }
-                    column(CompanyAddr5; CompanyAddr[5])
-                    {
-                    }
-                    column(CompanyAddr6; CompanyAddr[6])
-                    {
-                    }
-                    column(CompanyInfoName; CompanyInfo.Name)
-                    {
-                    }
+
+
+
+  
                     column(CompanyInfoAddress; CompanyInfo.Address)
                     {
                     }
                     column(CompanyInfoPostCode; CompanyInfo."Post Code")
                     {
                     }
-                    column(CompanyInfoCity; CompanyInfo.City)
-                    {
-                    }
-                    column(CompanyInfoPhoneNo; CompanyInfo."Phone No.")
-                    {
-                    }
-                    column(CompanyInfoFaxNo; CompanyInfo."Fax No.")
-                    {
-                    }
-                    column(CompanyInfoVATRegNo; CompanyInfo."VAT Registration No.")
-                    {
-                    }
-                    column(CompanyInfoRegNo; CompanyInfo."Registration No.")
-                    {
-                    }
-                    column(CompanyInfoGiroNo; CompanyInfo."Giro No.")
-                    {
-                    }
-                    column(CompanyInfoBankName; CompanyInfo."Bank Name")
-                    {
-                    }
-                    column(CompanyInfoHomePage; CompanyInfo."Home Page")
-                    {
-                    }
-                    column(CompanyInfoEmail; CompanyInfo."E-Mail")
-                    {
-                    }
-                    column(CompanyInfoBankAccountNo; CompanyInfo."Bank Account No.")
-                    {
-                    }
+
+
                     column(CompanyInfoTradeRegister; CompanyInfo."Trade Register")
                     {
                     }
-                    column(CompanyInfoLegalForm; CompanyInfo."Legal Form")
-                    {
-                    }
-                    column(CompanyInfoStockCapital; CompanyInfo."Stock Capital")
-                    {
-                    }
-                    column(CompanyInfoAPECode; CompanyInfo."APE Code")
-                    {
-                    }
-                    column(CompanyInfoIBAN; CompanyInfo.IBAN)
-                    {
-                    }
-                    column(CompanyInfoSWIFTCode; CompanyInfo."SWIFT Code")
-                    {
-                    }
-                    column(CompanyInfoCountryCode; CompanyInfo."Country/Region Code")
-                    {
-                    }
-                    column(VATNoText; VATNoText)
-                    {
-                    }
+
                     column(SalesPersonText; SalesPersonText)
                     {
                     }
                     column(SalesPurchPersonName; SalesPurchPerson.Name)
                     {
                     }
-                    column(SalesPurchPersonEMail; SalesPurchPerson_PhoneNoEmail())
-                    {
-                    }
+
 
                     column(ReferenceText; ReferenceText)
                     {
@@ -265,40 +126,13 @@ report 50012 "ABRANE : bon de preparation"
                     column(PageCaption; PageCaptionLbl)
                     {
                     }
-                    column(PaymentTermsDescription; PaymentTerms.Description)
-                    {
-                    }
 
-                    column(ShipmentMethodDescription; ShipmentMethod.Description)
-                    {
-                    }
-                    column(ShippingAgentName; ShippingAgent.Name)
-                    {
-                    }
 
-                    column(DateChargement; "Sales Header"."Date chargement")
-                    {
-                    }
-
-                    column(CompanyInfoVATRegNoCaption; VATRegNoCaptionLbl)
-                    {
-                    }
                     column(SalesHeaderNoCaption; SalesHeaderNoCaptionLbl)
                     {
                     }
 
 
-                    column(CompanyInfoEmailCaption; EmailCaptionLbl)
-                    {
-                    }
-
-
-                    column(BilltoCustNo_SalesHeaderCaption; "Sales Header".FieldCaption("Bill-to Customer No."))
-                    {
-                    }
-                    column(PricesInclVAT_SalesHeaderCaption; "Sales Header".FieldCaption("Prices Including VAT"))
-                    {
-                    }
                     column(ShiptoAddrCaption; ShiptoAddrCaptionLbl)
                     {
                     }
@@ -326,33 +160,8 @@ report 50012 "ABRANE : bon de preparation"
                     column(ShipToAddr8; ShipToAddr[8])
                     {
                     }
-                    column(BilltoAddrCaption; BilltoAddrCaptionLbl)
-                    {
-                    }
-                    column(BillToAddr1; BillToAddr[1])
-                    {
-                    }
-                    column(BillToAddr2; BillToAddr[2])
-                    {
-                    }
-                    column(BillToAddr3; BillToAddr[3])
-                    {
-                    }
-                    column(BillToAddr4; BillToAddr[4])
-                    {
-                    }
-                    column(BillToAddr5; BillToAddr[5])
-                    {
-                    }
-                    column(BillToAddr6; BillToAddr[6])
-                    {
-                    }
-                    column(BillToAddr7; BillToAddr[7])
-                    {
-                    }
-                    column(BillToAddr8; BillToAddr[8])
-                    {
-                    }
+
+
                     dataitem(Lignes; TamponTriLignesDocument)
                     {
                         DataItemTableView = sorting("Code utilisateur", "Type document", "No. document", "No. ligne");
@@ -422,7 +231,7 @@ report 50012 "ABRANE : bon de preparation"
                 CompanyInfo.Get();
                 CompanyInfo.CalcFields(Picture);
 
-                FormatAddr.Company(CompanyAddr, CompanyInfo);
+                //FormatAddr.Company(CompanyAddr, CompanyInfo);
 
                 if "Salesperson Code" = '' then begin
                     Clear(SalesPurchPerson);
@@ -436,9 +245,9 @@ report 50012 "ABRANE : bon de preparation"
 
                 VATNoText := copystr(FieldCaption("VAT Registration No."), 1, 80);
 
-                FormatAddr.SalesHeaderSellTo(CustAddr, "Sales Header");
+                //FormatAddr.SalesHeaderSellTo(CustAddr, "Sales Header");
 
-                FormatAddr.SalesHeaderBillTo(BillToAddr, "Sales Header");
+                //FormatAddr.SalesHeaderBillTo(BillToAddr, "Sales Header");
 
                 if not ShippingAgent.Get("Sales Header"."Shipping Agent Code") then
                     ShippingAgent.Init();
@@ -456,7 +265,6 @@ report 50012 "ABRANE : bon de preparation"
                     ShipmentMethod.Get("Shipment Method Code");
                     ShipmentMethod.TranslateDescription(ShipmentMethod, "Language Code");
                 end;
-
 
                 FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, "Sales Header");
 
@@ -498,6 +306,12 @@ report 50012 "ABRANE : bon de preparation"
         SalesSetup.Get();
     end;
 
+    trigger OnPostReport()
+    begin
+        // Hors aperçu : l'appelant imprimera aussi les feuilles complémentaires (Infos palette vente, Récap achats vente).
+        ImprimerSuite := not CurrReport.Preview;
+    end;
+
     var
         ShipmentMethod: Record "Shipment Method";
         PaymentTerms: Record "Payment Terms";
@@ -506,10 +320,9 @@ report 50012 "ABRANE : bon de preparation"
         SalesSetup: Record "Sales & Receivables Setup";
         ShippingAgent: Record "Shipping Agent";
         FormatAddr: Codeunit "Format Address";
-        CustAddr: array[8] of Text[50];
-        BillToAddr: array[8] of Text[50];
-        ShipToAddr: array[8] of Text[50];
-        CompanyAddr: array[8] of Text[50];
+        //CustAddr: array[8] of Text[50];
+        ShipToAddr: array[8] of Text[100];
+        CustAddr: array[8] of Text[100];
         SalesPersonText: Text[30];
         VATNoText: Text[80];
         ReferenceText: Text[80];
@@ -517,34 +330,31 @@ report 50012 "ABRANE : bon de preparation"
         NoOfLoops: Integer;
         CopyText: Text[30];
         OutputNo: Integer;
-        JobName: Text[50];
-        Text000Lbl: Label 'Vendeur';
+        ImprimerSuite: Boolean;
+        Text000Lbl: Label 'Suivi par';
         TitreDocumentFRALbl: Label 'Bon de préparation';
         PageCaptionLbl: Label 'Page';
-        VATRegNoCaptionLbl: Label 'VAT Registration No.';
         SalesHeaderNoCaptionLbl: Label 'No.';
-        EmailCaptionLbl: Label 'E-Mail';
         ShiptoAddrCaptionLbl: Label 'Adresse de livraison';
-        BilltoAddrCaptionLbl: Label 'Commandé par';
-        ShipmentMethodCaptionLbl: Label 'Shipment Method:';
         LabelNoLocationNameLbl: Label 'Magasin :';
         CommentaireLbl: Label 'Commentaires : ';
         TotalWeightLbl: Label 'Poids net total';
         //MarchandiseLbl: Label 'Product Information';
-        PaletteLbl: Label 'Nb palettes : ';
-        DateChargementLbl: Label 'Date chargement :';
-        TotalGrossWeightLbl: Label 'Poids brut total :';
-        CustOrderNoLbl: Label 'N° commande client';
-        PackageLbl: Label 'Nombre colis : ';
         SalesCopyTextTxt: Text[100];
         NoCdeFournisseur: Text[100];
         NoArticleLbl: Label 'N° article';
         DesignationLbl: Label 'Désignation';
         QuantiteLigneLbl: Label 'Quantité';
         PhaseLbl: Label 'Phase';
-        NoCdeFournLbl: Label 'N° commande fournisseur';
-        NoPaletteLbl: Label 'N° palette';
-        ManquantsLbl: Label 'Manquants';
+        NoCdeFournLbl: Label 'Infos pour prépa';
+        NoPaletteLbl: Label 'Palettisation';
+        ManquantsLbl: Label 'Reliquats';
+        ColonneCommentaireLbl: Label 'Commentaires';
+
+    procedure GetImprimerSuite(): Boolean
+    begin
+        exit(ImprimerSuite);
+    end;
 
     procedure SalesPurchPerson_PhoneNoEmail() PhoneNoEmail: Text[1024]
     begin

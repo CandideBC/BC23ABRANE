@@ -989,11 +989,8 @@ tableextension 50011 SalesLineExtension extends "Sales Line"
         {
             
         }
-        key(MyKey20; TypeDocDuplique, NumDocDuplique, "Article a coliser", NumArtDuplique)
-        {
-            
-        }
-        key(MyKey21; TypeDocDuplique, NumDocDuplique, "Article a coliser", DescriptionDuplique)
+
+        key(MyKey20; TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase, DescriptionDuplique)
         {
             
         }

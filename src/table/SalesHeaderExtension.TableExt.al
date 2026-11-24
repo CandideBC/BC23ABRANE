@@ -3808,7 +3808,8 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
     procedure ChoisirTri(): Integer
     var
-        ChoixTriLbl: Label 'Phase puis N° article,N° article,Désignation,', Comment = 'Choix du tri du bon de préparation, séparés par des virgules';
+        //ChoixTriLbl: Label 'Phase puis N° article,N° article,Désignation,', Comment = 'Choix du tri du bon de préparation, séparés par des virgules';
+        ChoixTriLbl: Label 'Phase puis N° article,Phase puis Désignation', Comment = 'Choix du tri du bon de préparation, séparés par des virgules';
         InstructionTriLbl: Label 'Trier les lignes par :';
         Choix: Integer;
     begin
@@ -3820,6 +3821,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
     procedure ImprimerBP()
     var
         EnteteVente: Record "Sales Header";
+        BonPrep: Report "ABRANE : bon de preparation";
+        InfosPalette: Report "ABRANE : infos palette vente";
+        RecapAchats: Report "ABRANE : recap achats vente";
         Tri: Integer;
     begin
         Tri := ChoisirTri();
@@ -3827,8 +3831,18 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         Commit();
         EnteteVente.SETRANGE("Document Type", Rec."Document Type");
         EnteteVente.SETRANGE("No.", Rec."No.");
-        if EnteteVente.FINDSET() then
-            REPORT.RUN(Report::"ABRANE : bon de preparation", true, true, EnteteVente);
+        if EnteteVente.FINDSET() then begin
+            BonPrep.SetTableView(EnteteVente);
+            BonPrep.RunModal();
+            // Hors aperçu : chaque feuille complémentaire ouvre sa propre request page (Imprimer / Annuler).
+            // Sans request page, le client web télécharge le PDF au lieu de l'imprimer.
+            if BonPrep.GetImprimerSuite() then begin
+                InfosPalette.SetTableView(EnteteVente);
+                InfosPalette.RunModal();
+                RecapAchats.SetTableView(EnteteVente);
+                RecapAchats.RunModal();
+            end;
+        end;
 
     end;
 
@@ -3837,15 +3851,20 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         TableTampon: Record TamponTriLignesDocument;
         LigneVente: Record "Sales Line";
         NumLigne: Integer;
+        NumLigneDocCumul: Integer;
         CodeUtil: Text[50];
+        LignesCumulees: Dictionary of [Text, Integer];
+        CleCumul: Text;
     begin
         CodeUtil := CopyStr(UserId, 1, 50);
         TableTampon.SetRange("Code utilisateur", CodeUtil);
         TableTampon.DELETEALL();
-        case pTri of //Tri par Phase et par N° article 
-            1: LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase, NumArtDuplique);
-            2: LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", NumArtDuplique);
-            3: LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Description);
+        case pTri of 
+            1:
+                LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase, NumArtDuplique);
+            2:
+                LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase, DescriptionDuplique);
+            //3: LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Description);
             else
                 exit;
         end;
@@ -3857,18 +3876,30 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
             NumLigne := 10000;
             repeat
                 if (LigneVente.Type = LigneVente.Type::Item) and (LigneVente."Qty. to Ship" <> 0) then begin
-                    TableTampon.Init();
-                    TableTampon."Code utilisateur" := CodeUtil;
-                    TableTampon."Type document" := Format(Rec."Document Type");
-                    TableTampon."No. document" := Rec."No.";
-                    TableTampon."No. ligne" := NumLigne;
-                    TableTampon."No. ligne document" := LigneVente."Line No.";
-                    TableTampon."No." := LigneVente."No.";
-                    TableTampon.Description := LigneVente.Description;
-                    TableTampon.Quantite := LigneVente."Qty. to Ship";
-                    TableTampon.Phase := LigneVente.Phase;
-                    TableTampon.Insert();
-                    NumLigne := NumLigne + 10000;
+                    // Article non divers : on cumule les quantités des lignes de même article et de même phase
+                    // (une seule ligne dans la table de travail, au rang de la 1ère occurrence dans l'ordre demandé).
+                    // Article divers : une ligne dans la table de travail par ligne de vente.
+                    CleCumul := LigneVente."No." + '|' + Format(LigneVente.Phase);
+                    if (not LigneVente."Article divers") and LignesCumulees.Get(CleCumul, NumLigneDocCumul) then begin
+                        TableTampon.Get(CodeUtil, Format(Rec."Document Type"), Rec."No.", NumLigneDocCumul);
+                        TableTampon.Quantite += LigneVente."Qty. to Ship";
+                        TableTampon.Modify();
+                    end else begin
+                        TableTampon.Init();
+                        TableTampon."Code utilisateur" := CodeUtil;
+                        TableTampon."Type document" := Format(Rec."Document Type");
+                        TableTampon."No. document" := Rec."No.";
+                        TableTampon."No. ligne" := NumLigne;
+                        TableTampon."No. ligne document" := LigneVente."Line No.";
+                        TableTampon."No." := LigneVente."No.";
+                        TableTampon.Description := LigneVente.Description;
+                        TableTampon.Quantite := LigneVente."Qty. to Ship";
+                        TableTampon.Phase := LigneVente.Phase;
+                        TableTampon.Insert();
+                        if not LigneVente."Article divers" then
+                            LignesCumulees.Add(CleCumul, LigneVente."Line No.");
+                        NumLigne := NumLigne + 10000;
+                    end;
                 end;
             until LigneVente.Next() = 0;
         end;
