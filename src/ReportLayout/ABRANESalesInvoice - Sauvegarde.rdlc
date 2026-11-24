@@ -7160,71 +7160,6 @@ Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +Cstr(Fields!Facto.value)+ Chr
       </Page>
     </ReportSection>
   </ReportSections>
-  <ReportParameters>
-    <ReportParameter Name="FooterTextLine1">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>FooterTextLine1</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>FooterTextLine1</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="FooterTextLine2">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>FooterTextLine2</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>FooterTextLine2</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="FooterTextLine3">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>FooterTextLine3</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>FooterTextLine3</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="FooterTextLine4">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>FooterTextLine4</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>FooterTextLine4</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="FooterTextLine5">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>FooterTextLine5</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>FooterTextLine5</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="FooterTextLine6">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>FooterTextLine6</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>FooterTextLine6</Prompt>
-    </ReportParameter>
-    <ReportParameter Name="FooterTextLine7">
-      <DataType>String</DataType>
-      <DefaultValue>
-        <Values>
-          <Value>FooterTextLine7</Value>
-        </Values>
-      </DefaultValue>
-      <Prompt>FooterTextLine7</Prompt>
-    </ReportParameter>
-  </ReportParameters>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -7428,6 +7363,18 @@ End Function</Code>
         <Field Name="LabelAcompte">
           <DataField>LabelAcompte</DataField>
         </Field>
+        <Field Name="TexteTVA">
+          <DataField>TexteTVA</DataField>
+        </Field>
+        <Field Name="TextePenalitesRetard">
+          <DataField>TextePenalitesRetard</DataField>
+        </Field>
+        <Field Name="LabelEscompte">
+          <DataField>LabelEscompte</DataField>
+        </Field>
+        <Field Name="ClientFrancais">
+          <DataField>ClientFrancais</DataField>
+        </Field>
         <Field Name="LabelDevis">
           <DataField>LabelDevis</DataField>
         </Field>
@@ -7442,6 +7389,12 @@ End Function</Code>
         </Field>
         <Field Name="LabelRefClient">
           <DataField>LabelRefClient</DataField>
+        </Field>
+        <Field Name="InfosPaiement2">
+          <DataField>InfosPaiement2</DataField>
+        </Field>
+        <Field Name="MentionsLegalesLbl">
+          <DataField>MentionsLegalesLbl</DataField>
         </Field>
         <Field Name="VATLegalMention">
           <DataField>VATLegalMention</DataField>
@@ -7461,9 +7414,6 @@ End Function</Code>
         <Field Name="LabelCustOrder">
           <DataField>LabelCustOrder</DataField>
         </Field>
-        <Field Name="VATMentionDebit">
-          <DataField>VATMentionDebit</DataField>
-        </Field>
         <Field Name="TotalGrossWeight">
           <DataField>TotalGrossWeight</DataField>
         </Field>
@@ -7472,12 +7422,6 @@ End Function</Code>
         </Field>
         <Field Name="LabelTotalGrossWeight">
           <DataField>LabelTotalGrossWeight</DataField>
-        </Field>
-        <Field Name="PiedTxt1">
-          <DataField>PiedTxt1</DataField>
-        </Field>
-        <Field Name="PiedTxt2">
-          <DataField>PiedTxt2</DataField>
         </Field>
         <Field Name="LabelRefArticle">
           <DataField>LabelRefArticle</DataField>

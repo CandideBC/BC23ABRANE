@@ -225,7 +225,7 @@
                                     <Paragraph>
                                       <TextRuns>
                                         <TextRun>
-                                          <Value>=Code.GetData(44,1) &amp; " " &amp; Code.GetData(23,1)</Value>
+                                          <Value>=Fields!CompanyInfoVATRegNoCaption.Value &amp; " " &amp; Fields!VATRegNo_SalesHeader.Value</Value>
                                           <Style>
                                             <FontFamily>Segoe UI</FontFamily>
                                             <FontSize>9pt</FontSize>

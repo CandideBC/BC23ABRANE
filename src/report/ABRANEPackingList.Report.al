@@ -689,7 +689,7 @@ report 50009 "ABRANE : Packing List"
                             AutoFormatExpression = "Sales Header"."Currency Code";
                             AutoFormatType = 1;
                         }
-                        column(SubtotalCaption; SubtotalCaptionLbl)
+                        column(SubtotalCaption; SubtotalLblTxt)
                         {
                         }
                         column(PaymentDiscountVATCaption; PaymentDiscountVATCaptionLbl)
@@ -1595,7 +1595,9 @@ report 50009 "ABRANE : Packing List"
         EmailCaptionLbl: Label 'E-Mail';
         HeaderDimCaptionLbl: Label 'Header Dimensions';
         DiscountPercentCaptionLbl: Label 'Disc. %';
-        SubtotalCaptionLbl: Label 'Subtotal';
+        SubtotalENULbl: Label 'Subtotal';
+        SubtotalFRALbl: Label 'Sous-total';
+        SubtotalLblTxt: Text[20];
         PaymentDiscountVATCaptionLbl: Label 'Payment Discount on VAT';
         LineDimCaptionLbl: Label 'Line Dimensions';
         InvDiscBaseAmtCaptionLbl: Label 'Invoice Discount Base Amount';

@@ -144,7 +144,7 @@
                                   </Paragraphs>
                                   <rd:DefaultName>Textbox3</rd:DefaultName>
                                   <Top>1.44638cm</Top>
-                                  <Left>0.31974cm</Left>
+                                  <Left>0.33753cm</Left>
                                   <Height>12pt</Height>
                                   <Width>7.93949cm</Width>
                                   <ZIndex>3</ZIndex>
@@ -175,7 +175,7 @@
                                   </Paragraphs>
                                   <rd:DefaultName>Textbox3</rd:DefaultName>
                                   <Top>1.86972cm</Top>
-                                  <Left>0.31974cm</Left>
+                                  <Left>0.33753cm</Left>
                                   <Height>12pt</Height>
                                   <Width>7.93949cm</Width>
                                   <ZIndex>4</ZIndex>
@@ -206,10 +206,41 @@
                                   </Paragraphs>
                                   <rd:DefaultName>Textbox3</rd:DefaultName>
                                   <Top>2.29305cm</Top>
-                                  <Left>0.30195cm</Left>
+                                  <Left>0.33753cm</Left>
                                   <Height>12pt</Height>
                                   <Width>7.93949cm</Width>
                                   <ZIndex>5</ZIndex>
+                                  <Style>
+                                    <Border>
+                                      <Style>None</Style>
+                                    </Border>
+                                    <VerticalAlign>Middle</VerticalAlign>
+                                    <PaddingLeft>3pt</PaddingLeft>
+                                  </Style>
+                                </Textbox>
+                                <Textbox Name="Textbox36">
+                                  <CanGrow>true</CanGrow>
+                                  <KeepTogether>true</KeepTogether>
+                                  <Paragraphs>
+                                    <Paragraph>
+                                      <TextRuns>
+                                        <TextRun>
+                                          <Value>=Fields!CompanyInfoVATRegNoCaption.Value &amp; " " &amp; Fields!VATRegNo_SalesHeader.Value</Value>
+                                          <Style>
+                                            <FontFamily>Segoe UI</FontFamily>
+                                            <FontSize>9pt</FontSize>
+                                          </Style>
+                                        </TextRun>
+                                      </TextRuns>
+                                      <Style />
+                                    </Paragraph>
+                                  </Paragraphs>
+                                  <rd:DefaultName>Textbox3</rd:DefaultName>
+                                  <Top>2.71638cm</Top>
+                                  <Left>0.33753cm</Left>
+                                  <Height>12pt</Height>
+                                  <Width>7.93949cm</Width>
+                                  <ZIndex>6</ZIndex>
                                   <Style>
                                     <Border>
                                       <Style>None</Style>
@@ -222,7 +253,7 @@
                               <KeepTogether>true</KeepTogether>
                               <Top>0.83093cm</Top>
                               <Left>10.97733cm</Left>
-                              <Height>2.80683cm</Height>
+                              <Height>3.3884cm</Height>
                               <Width>8.54843cm</Width>
                               <Style>
                                 <Border>
@@ -2494,7 +2525,6 @@
                                               <PaddingRight>6pt</PaddingRight>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                       <TablixCell>

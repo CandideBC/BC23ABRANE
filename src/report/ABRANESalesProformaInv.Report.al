@@ -1530,7 +1530,6 @@ report 50008 "ABRANE : Sales Proforma Inv."
                     TotalText := StrSubstNo(Text001, GLSetup."LCY Code");
                     TotalInclVATText := Text002;
                     TotalExclVATText := Text006;
-                    SousTotalText := SubtotalCaptionLbl;
 
                     if "Montant eco-taxe" <> 0 then
                         MentionEcoContribution := MentionEcoContribution + ' ' + GLSetup."LCY Code" + MentionEcoContribution2Lbl;
@@ -1538,7 +1537,6 @@ report 50008 "ABRANE : Sales Proforma Inv."
                     TotalText := StrSubstNo(Text001, "Currency Code");
                     TotalInclVATText := Text002;
                     TotalExclVATText := Text006;
-                    SousTotalText := SubtotalCaptionLbl;
                     if "Montant eco-taxe" <> 0 then
                         MentionEcoContribution := MentionEcoContribution + "Currency Code" + MentionEcoContribution2Lbl;
                 end;
@@ -1755,7 +1753,7 @@ report 50008 "ABRANE : Sales Proforma Inv."
         EmailCaptionLbl: Label 'E-Mail';
         HeaderDimCaptionLbl: Label 'Header Dimensions';
         DiscountPercentCaptionLbl: Label 'Disc. %';
-        SubtotalCaptionLbl: Label 'Subtotal'; //FRA : Sous-total H.T.
+
         PaymentDiscountVATCaptionLbl: Label 'Payment Discount on VAT';
 
         InvDiscBaseAmtCaptionLbl: Label 'Invoice Discount Base Amount';

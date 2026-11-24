@@ -23,7 +23,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>16.67858cm</Height>
+                  <Height>16.25525cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -38,7 +38,7 @@
                                 </TablixColumns>
                                 <TablixRows>
                                   <TablixRow>
-                                    <Height>16.14737cm</Height>
+                                    <Height>15.7505cm</Height>
                                     <TablixCells>
                                       <TablixCell>
                                         <CellContents>
@@ -71,6 +71,7 @@
                                                                               <Style>
                                                                                 <FontStyle>Normal</FontStyle>
                                                                                 <FontFamily>Segoe UI</FontFamily>
+                                                                                <FontSize>9pt</FontSize>
                                                                               </Style>
                                                                             </TextRun>
                                                                           </TextRuns>
@@ -79,7 +80,7 @@
                                                                           </Style>
                                                                         </Paragraph>
                                                                       </Paragraphs>
-                                                                      <Top>2.2152cm</Top>
+                                                                      <Top>2.11995cm</Top>
                                                                       <Left>0.37796cm</Left>
                                                                       <Height>12pt</Height>
                                                                       <Width>224.55213pt</Width>
@@ -139,7 +140,7 @@
                                                                         </Paragraph>
                                                                       </Paragraphs>
                                                                       <rd:DefaultName>Textbox3</rd:DefaultName>
-                                                                      <Top>1.81328cm</Top>
+                                                                      <Top>1.68628cm</Top>
                                                                       <Left>0.37796cm</Left>
                                                                       <Height>9.75pt</Height>
                                                                       <Width>7.93949cm</Width>
@@ -170,7 +171,7 @@
                                                                         </Paragraph>
                                                                       </Paragraphs>
                                                                       <rd:DefaultName>Textbox3</rd:DefaultName>
-                                                                      <Top>0.508cm</Top>
+                                                                      <Top>0.47625cm</Top>
                                                                       <Left>0.39575cm</Left>
                                                                       <Height>9.75pt</Height>
                                                                       <Width>7.93949cm</Width>
@@ -200,7 +201,7 @@
                                                                         </Paragraph>
                                                                       </Paragraphs>
                                                                       <rd:DefaultName>Textbox3</rd:DefaultName>
-                                                                      <Top>0.96661cm</Top>
+                                                                      <Top>0.87136cm</Top>
                                                                       <Left>0.39575cm</Left>
                                                                       <Height>9.75pt</Height>
                                                                       <Width>7.93949cm</Width>
@@ -231,7 +232,7 @@
                                                                         </Paragraph>
                                                                       </Paragraphs>
                                                                       <rd:DefaultName>Textbox3</rd:DefaultName>
-                                                                      <Top>1.38994cm</Top>
+                                                                      <Top>1.29469cm</Top>
                                                                       <Left>0.37796cm</Left>
                                                                       <Height>9.75pt</Height>
                                                                       <Width>7.93949cm</Width>
@@ -737,6 +738,72 @@
                                                                     </Border>
                                                                   </Style>
                                                                 </Tablix>
+                                                                <Rectangle Name="Rectangle13">
+                                                                  <ReportItems>
+                                                                    <Textbox Name="Textbox91">
+                                                                      <CanGrow>true</CanGrow>
+                                                                      <KeepTogether>true</KeepTogether>
+                                                                      <Paragraphs>
+                                                                        <Paragraph>
+                                                                          <TextRuns>
+                                                                            <TextRun>
+                                                                              <Value>=Fields!SelltoAddrCaption.Value</Value>
+                                                                              <Style>
+                                                                                <FontStyle>Normal</FontStyle>
+                                                                                <FontFamily>Segoe UI</FontFamily>
+                                                                                <FontSize>9pt</FontSize>
+                                                                                <FontWeight>Bold</FontWeight>
+                                                                              </Style>
+                                                                            </TextRun>
+                                                                          </TextRuns>
+                                                                          <Style />
+                                                                        </Paragraph>
+                                                                      </Paragraphs>
+                                                                      <rd:DefaultName>Textbox16</rd:DefaultName>
+                                                                      <Top>0.01138cm</Top>
+                                                                      <Left>0.37796cm</Left>
+                                                                      <Height>0.6cm</Height>
+                                                                      <Width>7.9217cm</Width>
+                                                                      <Style>
+                                                                        <Border>
+                                                                          <Style>None</Style>
+                                                                        </Border>
+                                                                        <VerticalAlign>Middle</VerticalAlign>
+                                                                        <PaddingLeft>3pt</PaddingLeft>
+                                                                      </Style>
+                                                                    </Textbox>
+                                                                  </ReportItems>
+                                                                  <KeepTogether>true</KeepTogether>
+                                                                  <Left>10.64958cm</Left>
+                                                                  <Height>0.64cm</Height>
+                                                                  <Width>9.06855cm</Width>
+                                                                  <ZIndex>2</ZIndex>
+                                                                  <Style>
+                                                                    <Border>
+                                                                      <Style>Solid</Style>
+                                                                    </Border>
+                                                                    <TopBorder>
+                                                                      <Color>Black</Color>
+                                                                      <Style>Solid</Style>
+                                                                      <Width>1pt</Width>
+                                                                    </TopBorder>
+                                                                    <BottomBorder>
+                                                                      <Color>Black</Color>
+                                                                      <Style>Solid</Style>
+                                                                      <Width>1pt</Width>
+                                                                    </BottomBorder>
+                                                                    <LeftBorder>
+                                                                      <Color>Black</Color>
+                                                                      <Style>Solid</Style>
+                                                                      <Width>1pt</Width>
+                                                                    </LeftBorder>
+                                                                    <RightBorder>
+                                                                      <Color>Black</Color>
+                                                                      <Style>Solid</Style>
+                                                                      <Width>1pt</Width>
+                                                                    </RightBorder>
+                                                                  </Style>
+                                                                </Rectangle>
                                                               </ReportItems>
                                                               <KeepTogether>true</KeepTogether>
                                                               <ZIndex>10</ZIndex>
@@ -1477,7 +1544,7 @@
                                                       </TablixCells>
                                                     </TablixRow>
                                                     <TablixRow>
-                                                      <Height>3.74067cm</Height>
+                                                      <Height>3.47609cm</Height>
                                                       <TablixCells>
                                                         <TablixCell>
                                                           <CellContents>
@@ -1508,12 +1575,12 @@
                                                                         <Width>0.97691cm</Width>
                                                                       </TablixColumn>
                                                                       <TablixColumn>
-                                                                        <Width>2.09664cm</Width>
+                                                                        <Width>1.90781cm</Width>
                                                                       </TablixColumn>
                                                                     </TablixColumns>
                                                                     <TablixRows>
                                                                       <TablixRow>
-                                                                        <Height>1.19148cm</Height>
+                                                                        <Height>0.70917cm</Height>
                                                                         <TablixCells>
                                                                           <TablixCell>
                                                                             <CellContents>
@@ -4234,8 +4301,8 @@
                                                                   </Filters>
                                                                   <Top>0.3175cm</Top>
                                                                   <Left>0.03008cm</Left>
-                                                                  <Height>3.42317cm</Height>
-                                                                  <Width>19.87688cm</Width>
+                                                                  <Height>2.94086cm</Height>
+                                                                  <Width>19.68805cm</Width>
                                                                   <Style />
                                                                 </Tablix>
                                                               </ReportItems>
@@ -4291,7 +4358,7 @@
                                                 <DataSetName>DataSet_Result</DataSetName>
                                                 <Top>0.10859cm</Top>
                                                 <Left>0.19616cm</Left>
-                                                <Height>11.26966cm</Height>
+                                                <Height>11.00508cm</Height>
                                                 <Width>19.90696cm</Width>
                                                 <Style>
                                                   <FontSize>9pt</FontSize>
@@ -5605,8 +5672,8 @@
                                                     </FilterValues>
                                                   </Filter>
                                                 </Filters>
-                                                <Top>11.36778cm</Top>
-                                                <Left>11.72624cm</Left>
+                                                <Top>11.30455cm</Top>
+                                                <Left>12.27436cm</Left>
                                                 <Height>4.21652cm</Height>
                                                 <Width>7.70083cm</Width>
                                                 <ZIndex>1</ZIndex>
@@ -5616,73 +5683,6 @@
                                                   </Border>
                                                 </Style>
                                               </Tablix>
-                                              <Rectangle Name="Rectangle13">
-                                                <ReportItems>
-                                                  <Textbox Name="Textbox91">
-                                                    <CanGrow>true</CanGrow>
-                                                    <KeepTogether>true</KeepTogether>
-                                                    <Paragraphs>
-                                                      <Paragraph>
-                                                        <TextRuns>
-                                                          <TextRun>
-                                                            <Value>=Fields!SelltoAddrCaption.Value</Value>
-                                                            <Style>
-                                                              <FontStyle>Normal</FontStyle>
-                                                              <FontFamily>Segoe UI</FontFamily>
-                                                              <FontSize>9pt</FontSize>
-                                                              <FontWeight>Bold</FontWeight>
-                                                            </Style>
-                                                          </TextRun>
-                                                        </TextRuns>
-                                                        <Style />
-                                                      </Paragraph>
-                                                    </Paragraphs>
-                                                    <rd:DefaultName>Textbox16</rd:DefaultName>
-                                                    <Top>0.01138cm</Top>
-                                                    <Left>0.37796cm</Left>
-                                                    <Height>0.6cm</Height>
-                                                    <Width>7.9217cm</Width>
-                                                    <Style>
-                                                      <Border>
-                                                        <Style>None</Style>
-                                                      </Border>
-                                                      <VerticalAlign>Middle</VerticalAlign>
-                                                      <PaddingLeft>3pt</PaddingLeft>
-                                                    </Style>
-                                                  </Textbox>
-                                                </ReportItems>
-                                                <KeepTogether>true</KeepTogether>
-                                                <Top>0.10859cm</Top>
-                                                <Left>10.84574cm</Left>
-                                                <Height>0.66077cm</Height>
-                                                <Width>9.06855cm</Width>
-                                                <ZIndex>2</ZIndex>
-                                                <Style>
-                                                  <Border>
-                                                    <Style>Solid</Style>
-                                                  </Border>
-                                                  <TopBorder>
-                                                    <Color>Black</Color>
-                                                    <Style>Solid</Style>
-                                                    <Width>1pt</Width>
-                                                  </TopBorder>
-                                                  <BottomBorder>
-                                                    <Color>Black</Color>
-                                                    <Style>Solid</Style>
-                                                    <Width>1pt</Width>
-                                                  </BottomBorder>
-                                                  <LeftBorder>
-                                                    <Color>Black</Color>
-                                                    <Style>Solid</Style>
-                                                    <Width>1pt</Width>
-                                                  </LeftBorder>
-                                                  <RightBorder>
-                                                    <Color>Black</Color>
-                                                    <Style>Solid</Style>
-                                                    <Width>1pt</Width>
-                                                  </RightBorder>
-                                                </Style>
-                                              </Rectangle>
                                               <Textbox Name="CustAddr2">
                                                 <KeepTogether>true</KeepTogether>
                                                 <Paragraphs>
@@ -5798,7 +5798,7 @@ Cstr(Fields!Range_SalesInvHdr.value),1)</Value>
                                                 <Left>10.00435cm</Left>
                                                 <Height>0.3175cm</Height>
                                                 <Width>1.2135cm</Width>
-                                                <ZIndex>3</ZIndex>
+                                                <ZIndex>2</ZIndex>
                                                 <Visibility>
                                                   <Hidden>true</Hidden>
                                                 </Visibility>
@@ -6210,11 +6210,11 @@ Cstr(Fields!Range_SalesInvHdr.value),1)</Value>
                                                     </FilterValues>
                                                   </Filter>
                                                 </Filters>
-                                                <Top>11.49505cm</Top>
+                                                <Top>11.3998cm</Top>
                                                 <Left>0.24664cm</Left>
                                                 <Height>3.59508cm</Height>
                                                 <Width>3.73613in</Width>
-                                                <ZIndex>4</ZIndex>
+                                                <ZIndex>3</ZIndex>
                                                 <Style>
                                                   <FontFamily>Segoe UI</FontFamily>
                                                   <FontSize>8pt</FontSize>
@@ -6271,7 +6271,7 @@ Cstr(Fields!Range_SalesInvHdr.value),1)</Value>
                               </Filters>
                               <Top>0.42538cm</Top>
                               <Left>0.20896cm</Left>
-                              <Height>16.14737cm</Height>
+                              <Height>15.7505cm</Height>
                               <Width>20.10312cm</Width>
                               <Style>
                                 <Border>
@@ -6361,7 +6361,7 @@ Cstr(Fields!CompanyInfoIBAN.value)+ Chr(177) +
 Cstr(Fields!CompanyInfoSWIFTCode.value)+ Chr(177) +
 Cstr(Fields!Facto.value)+ Chr(177) +
 ""+ Chr(177) +
-""</Hidden>
+"",2)</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border />
@@ -6505,7 +6505,7 @@ Cstr(Fields!Facto.value)+ Chr(177) +
             </Filters>
             <Top>0.17584cm</Top>
             <Left>0.10686cm</Left>
-            <Height>16.67858cm</Height>
+            <Height>16.25525cm</Height>
             <Width>20.31208cm</Width>
             <Style>
               <Border>
@@ -6514,7 +6514,7 @@ Cstr(Fields!Facto.value)+ Chr(177) +
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>16.90734cm</Height>
+        <Height>16.43109cm</Height>
         <Style />
       </Body>
       <Width>20.41894cm</Width>
@@ -6764,7 +6764,7 @@ Cstr(Fields!Facto.value)+ Chr(177) +
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox72</rd:DefaultName>
-              <Top>0.23608cm</Top>
+              <Top>0.17258cm</Top>
               <Left>0.31582cm</Left>
               <Height>0.6cm</Height>
               <Width>19.97519cm</Width>
@@ -6826,7 +6826,7 @@ Cstr(Fields!Facto.value)+ Chr(177) +
         <PageWidth>21cm</PageWidth>
         <InteractiveHeight>29.7cm</InteractiveHeight>
         <InteractiveWidth>21cm</InteractiveWidth>
-        <LeftMargin>0.7cm</LeftMargin>
+        <LeftMargin>0.5cm</LeftMargin>
         <RightMargin>0cm</RightMargin>
         <TopMargin>0.5cm</TopMargin>
         <BottomMargin>0.5cm</BottomMargin>
@@ -7024,9 +7024,6 @@ End Function</Code>
         </Field>
         <Field Name="LabelNetaPayer">
           <DataField>LabelNetaPayer</DataField>
-        </Field>
-        <Field Name="LabelEcoTaxText">
-          <DataField>LabelEcoTaxText</DataField>
         </Field>
         <Field Name="NoLocationName_SalesInvHeader">
           <DataField>NoLocationName_SalesInvHeader</DataField>

@@ -83,7 +83,7 @@ report 50005 "ABRANE : Sales - Order"
             column(VATRegNo_SalesHeader; "VAT Registration No.")
             {
             }
-            column(InvDiscAmtCaption; InvDiscAmtCaptionLbl)
+            column(InvDiscAmtCaption; InvDiscAmtCaption1LblTxt)
             {
             }
             column(PhoneNoCaption; PhoneNoCaptionLbl)
@@ -453,7 +453,7 @@ report 50005 "ABRANE : Sales - Order"
                     column(PricesInclVAT_SalesHeader; "Sales Header"."Prices Including VAT")
                     {
                     }
-                    column(CompanyInfoVATRegNoCaption; VATRegNoCaptionLbl)
+                    column(CompanyInfoVATRegNoCaption; VATRegNoCaptionLblTxt)
                     {
                     }
                     column(SalesHeaderNoCaption; SalesHeaderNoCaptionLbl)
@@ -1434,6 +1434,7 @@ report 50005 "ABRANE : Sales - Order"
                     AgreementLblTxt := AgreementFRALbl;
                     CommentaireLblTxt := CommentaireFRALbl;
                     DescriptionLblTxt := DescriptionFRALbl;
+                    InvDiscAmtCaption1LblTxt := InvDiscAmtCaptionFRALbl;
                 end else begin
                     if ImpressionProforma then
                         Text004txt := Text004ProformaENULbl
@@ -1475,6 +1476,7 @@ report 50005 "ABRANE : Sales - Order"
                     AgreementLblTxt := AgreementENULbl;
                     CommentaireLblTxt := CommentaireENULbl;
                     DescriptionLblTxt := DescriptionENULbl;
+                    InvDiscAmtCaption1LblTxt := InvDiscAmtCaptionENULbl;
                 end;
                 //KAN.FHA 10/11/2026 FIN
 
@@ -1779,8 +1781,12 @@ report 50005 "ABRANE : Sales - Order"
         Print: Boolean;
         DisplayAssemblyInformation: Boolean;
         AsmInfoExistsForLine: Boolean;
-        InvDiscAmtCaptionLbl: Label 'Invoice Discount Amount';
-        VATRegNoCaptionLbl: Label 'VAT Registration No.';
+        InvDiscAmtCaptionENULbl: Label 'Invoice Discount Amount';
+        InvDiscAmtCaptionFRALbl: Label 'Montant remise facture';
+        InvDiscAmtCaption1LblTxt: Text[30];
+        VATRegNoCaptionENULbl: Label 'VAT Registration No.';
+        VATRegNoCaptionFRALbl: Label 'N° TVA';
+        VATRegNoCaptionLblTxt: Text[30];
         SalesHeaderNoCaptionLbl: Label 'No.';
         HomePageCaptionLbl: Label 'Home Page';
         EmailCaptionLbl: Label 'E-Mail';
