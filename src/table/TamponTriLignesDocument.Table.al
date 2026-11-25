@@ -81,7 +81,7 @@ table 50018 TamponTriLignesDocument
         }
         field(110; "No."; Code[20])
         {
-            Caption = 'No.';
+            Caption = 'N°';
         }
         field(115; "Code variante"; Code[10])
         {

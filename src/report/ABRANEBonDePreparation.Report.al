@@ -21,23 +21,19 @@ report 50012 "ABRANE : bon de preparation"
             }
             column(Version; "No. of Archived Versions")
             {
-                
             }
-
-
-
             column(DocDate_SalesHeader; "Order Date")
             {
             }
-
             column(ShipToContact_SalesHeader; "Ship-to Contact")
             {
             }
-
             column(Comments_SalesHeader; Commentaire)
             {
             }
-
+            column(CommentairesPrepaTxt; CommentairesPrepaTxt)
+            {
+            }
             column(LabelNoLocationName_SalesHeader; LabelNoLocationNameLbl)
             {
             }
@@ -47,11 +43,9 @@ report 50012 "ABRANE : bon de preparation"
             column(LabelCommentaire; CommentaireLbl)
             {
             }
-
             column(LabellTotalWeight; TotalWeightLbl)
             {
             }
-
             column(LabelPrepNoArticle; NoArticleLbl)
             {
             }
@@ -76,6 +70,47 @@ report 50012 "ABRANE : bon de preparation"
             column(ColonneCommentaireLbl; ColonneCommentaireLbl)
             {
             }
+            column(Phase1Txt; Phase1Txt)
+            {
+                
+            }
+            column(Phase2Txt; Phase2Txt)
+            {
+                
+            }
+            column(Phase3Txt; Phase3Txt)
+            {
+                
+            }
+            column(DateChargementPhase1; DateChargementPhase1)
+            {
+
+            }
+            column(DateChargementPhase2; DateChargementPhase2)
+            {
+
+            }
+            column(DateChargementPhase3; DateChargementPhase3)
+            {
+
+            }
+            column(DateLivraisonPhase1; DateLivraisonPhase1)
+            {
+
+            }
+            column(DateLivraisonPhase2; DateLivraisonPhase2)
+            {
+
+            }
+            column(DateLivraisonPhase3; DateLivraisonPhase3)
+            {
+
+            }
+            column(AutresPhasesTxt; AutresPhasesTxt)
+            {
+
+            }
+
             dataitem(CopyLoop; "Integer")
             {
                 DataItemTableView = sorting(Number);
@@ -94,28 +129,12 @@ report 50012 "ABRANE : bon de preparation"
                     }
 
 
-
-  
-                    column(CompanyInfoAddress; CompanyInfo.Address)
-                    {
-                    }
-                    column(CompanyInfoPostCode; CompanyInfo."Post Code")
-                    {
-                    }
-
-
-                    column(CompanyInfoTradeRegister; CompanyInfo."Trade Register")
-                    {
-                    }
-
                     column(SalesPersonText; SalesPersonText)
                     {
                     }
                     column(SalesPurchPersonName; SalesPurchPerson.Name)
                     {
                     }
-
-
                     column(ReferenceText; ReferenceText)
                     {
                     }
@@ -210,8 +229,6 @@ report 50012 "ABRANE : bon de preparation"
                         OutputNo += 1;
                 end;
 
-
-
                 trigger OnPreDataItem()
                 begin
                     NoOfLoops := Abs(NoOfCopies) + 1;
@@ -231,6 +248,8 @@ report 50012 "ABRANE : bon de preparation"
                 CompanyInfo.Get();
                 CompanyInfo.CalcFields(Picture);
 
+                CommentairesPrepaTxt := GetCommentairesPrepa();
+
                 //FormatAddr.Company(CompanyAddr, CompanyInfo);
 
                 if "Salesperson Code" = '' then begin
@@ -243,33 +262,32 @@ report 50012 "ABRANE : bon de preparation"
 
                 ReferenceText := copystr(FieldCaption("Your Reference"), 1, 80);
 
-                VATNoText := copystr(FieldCaption("VAT Registration No."), 1, 80);
-
-                //FormatAddr.SalesHeaderSellTo(CustAddr, "Sales Header");
-
-                //FormatAddr.SalesHeaderBillTo(BillToAddr, "Sales Header");
-
-                if not ShippingAgent.Get("Sales Header"."Shipping Agent Code") then
-                    ShippingAgent.Init();
-
-                if "Payment Terms Code" = '' then
-                    PaymentTerms.Init()
-                else begin
-                    PaymentTerms.Get("Payment Terms Code");
-                    PaymentTerms.TranslateDescription(PaymentTerms, "Language Code");
-                end;
-
-                if "Shipment Method Code" = '' then
-                    ShipmentMethod.Init()
-                else begin
-                    ShipmentMethod.Get("Shipment Method Code");
-                    ShipmentMethod.TranslateDescription(ShipmentMethod, "Language Code");
-                end;
-
                 FormatAddr.SalesHeaderShipTo(ShipToAddr, CustAddr, "Sales Header");
 
+                NbPhases := 1;
+                AutresPhasesTxt := '';
+                PhasesDocument.SetRange("Type document", "Sales Header"."Document Type");
+                PhasesDocument.SetRange("No. document", "Sales Header"."No.");
+                if PhasesDocument.FindSet(false) then begin
+                    repeat
+                        TableauPhases[NbPhases] := 'Phase ' + format(PhasesDocument.Phase);
+                        TableauDatesChargement[NbPhases] := PhasesDocument."Date chargement";
+                        TableauDatesLivraison[NbPhases] := PhasesDocument."Date livraison demandee";
+                        NbPhases := NbPhases + 1;
+                    until (PhasesDocument.Next() = 0) or (NbPhases = 4);
+                    Phase1Txt := TableauPhases[1];
+                    Phase2Txt := TableauPhases[2];
+                    Phase3Txt := TableauPhases[3];
+                    DateChargementPhase1 := TableauDatesChargement[1];
+                    DateChargementPhase2 := TableauDatesChargement[2];
+                    DateChargementPhase3 := TableauDatesChargement[3];
+                    DateLivraisonPhase1 := TableauDatesLivraison[1];
+                    DateLivraisonPhase2 := TableauDatesLivraison[2];
+                    DateLivraisonPhase3 := TableauDatesLivraison[3];
+                    if PhasesDocument.Count > 3 then
+                        AutresPhasesTxt := AutresPhasesLbl;
+                end;
             end;
-
         }
     }
 
@@ -313,18 +331,14 @@ report 50012 "ABRANE : bon de preparation"
     end;
 
     var
-        ShipmentMethod: Record "Shipment Method";
-        PaymentTerms: Record "Payment Terms";
         SalesPurchPerson: Record "Salesperson/Purchaser";
         CompanyInfo: Record "Company Information";
         SalesSetup: Record "Sales & Receivables Setup";
-        ShippingAgent: Record "Shipping Agent";
+        PhasesDocument: Record "Phases document";
         FormatAddr: Codeunit "Format Address";
-        //CustAddr: array[8] of Text[50];
         ShipToAddr: array[8] of Text[100];
         CustAddr: array[8] of Text[100];
         SalesPersonText: Text[30];
-        VATNoText: Text[80];
         ReferenceText: Text[80];
         NoOfCopies: Integer;
         NoOfLoops: Integer;
@@ -350,6 +364,23 @@ report 50012 "ABRANE : bon de preparation"
         NoPaletteLbl: Label 'Palettisation';
         ManquantsLbl: Label 'Reliquats';
         ColonneCommentaireLbl: Label 'Commentaires';
+        Phase1Txt: Text[10];
+        Phase2Txt: Text[10];
+        Phase3Txt: Text[10];
+        DateChargementPhase1: date;
+        DateChargementPhase2: date;
+        DateChargementPhase3: date;
+        DateLivraisonPhase1: date;
+        DateLivraisonPhase2: date;
+        DateLivraisonPhase3: date;
+        TableauPhases: array[3] of Text[10];
+        TableauDatesChargement: array[3] of Date;
+        TableauDatesLivraison: array[3] of Date;
+        NbPhases: Integer;
+        AutresPhasesLbl: Label 'Autres phases : voir récap infos achat';
+        AutresPhasesTxt: Text[80];
+        CommentairesPrepaTxt: Text;
+
 
     procedure GetImprimerSuite(): Boolean
     begin
