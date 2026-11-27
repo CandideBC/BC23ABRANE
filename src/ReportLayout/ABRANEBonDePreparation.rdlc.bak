@@ -10,6 +10,178 @@
       <rd:DataSourceID>4465c6a7-2b0e-4668-ba38-a5cf10dcfef8</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet_Result">
+      <Query>
+        <DataSourceName>DataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="DocType_SalesHeader">
+          <DataField>DocType_SalesHeader</DataField>
+        </Field>
+        <Field Name="No_SalesHeader">
+          <DataField>No_SalesHeader</DataField>
+        </Field>
+        <Field Name="Version">
+          <DataField>Version</DataField>
+        </Field>
+        <Field Name="DateVersion">
+          <DataField>DateVersion</DataField>
+        </Field>
+        <Field Name="DocDate_SalesHeader">
+          <DataField>DocDate_SalesHeader</DataField>
+        </Field>
+        <Field Name="ShipToContact_SalesHeader">
+          <DataField>ShipToContact_SalesHeader</DataField>
+        </Field>
+        <Field Name="Comments_SalesHeader">
+          <DataField>Comments_SalesHeader</DataField>
+        </Field>
+        <Field Name="CommentairesPrepaTxt">
+          <DataField>CommentairesPrepaTxt</DataField>
+        </Field>
+        <Field Name="LabelNoLocationName_SalesHeader">
+          <DataField>LabelNoLocationName_SalesHeader</DataField>
+        </Field>
+        <Field Name="NoLocationName_SalesHeader">
+          <DataField>NoLocationName_SalesHeader</DataField>
+        </Field>
+        <Field Name="LabelCommentaire">
+          <DataField>LabelCommentaire</DataField>
+        </Field>
+        <Field Name="LabellTotalWeight">
+          <DataField>LabellTotalWeight</DataField>
+        </Field>
+        <Field Name="LabelPrepNoArticle">
+          <DataField>LabelPrepNoArticle</DataField>
+        </Field>
+        <Field Name="LabelPrepDesignation">
+          <DataField>LabelPrepDesignation</DataField>
+        </Field>
+        <Field Name="LabelPrepQuantite">
+          <DataField>LabelPrepQuantite</DataField>
+        </Field>
+        <Field Name="LabelPrepPhase">
+          <DataField>LabelPrepPhase</DataField>
+        </Field>
+        <Field Name="LabelPrepNoCdeFourn">
+          <DataField>LabelPrepNoCdeFourn</DataField>
+        </Field>
+        <Field Name="LabelPrepNoPalette">
+          <DataField>LabelPrepNoPalette</DataField>
+        </Field>
+        <Field Name="LabelPrepManquants">
+          <DataField>LabelPrepManquants</DataField>
+        </Field>
+        <Field Name="ColonneCommentaireLbl">
+          <DataField>ColonneCommentaireLbl</DataField>
+        </Field>
+        <Field Name="Phase1Txt">
+          <DataField>Phase1Txt</DataField>
+        </Field>
+        <Field Name="Phase2Txt">
+          <DataField>Phase2Txt</DataField>
+        </Field>
+        <Field Name="Phase3Txt">
+          <DataField>Phase3Txt</DataField>
+        </Field>
+        <Field Name="DateChargementPhase1">
+          <DataField>DateChargementPhase1</DataField>
+        </Field>
+        <Field Name="DateChargementPhase2">
+          <DataField>DateChargementPhase2</DataField>
+        </Field>
+        <Field Name="DateChargementPhase3">
+          <DataField>DateChargementPhase3</DataField>
+        </Field>
+        <Field Name="DateLivraisonPhase1">
+          <DataField>DateLivraisonPhase1</DataField>
+        </Field>
+        <Field Name="DateLivraisonPhase2">
+          <DataField>DateLivraisonPhase2</DataField>
+        </Field>
+        <Field Name="DateLivraisonPhase3">
+          <DataField>DateLivraisonPhase3</DataField>
+        </Field>
+        <Field Name="AutresPhasesTxt">
+          <DataField>AutresPhasesTxt</DataField>
+        </Field>
+        <Field Name="SalesCopyText">
+          <DataField>SalesCopyText</DataField>
+        </Field>
+        <Field Name="TitreDocumentFRALbl">
+          <DataField>TitreDocumentFRALbl</DataField>
+        </Field>
+        <Field Name="SalesPersonText">
+          <DataField>SalesPersonText</DataField>
+        </Field>
+        <Field Name="SalesPurchPersonName">
+          <DataField>SalesPurchPersonName</DataField>
+        </Field>
+        <Field Name="ReferenceText">
+          <DataField>ReferenceText</DataField>
+        </Field>
+        <Field Name="OutputNo">
+          <DataField>OutputNo</DataField>
+        </Field>
+        <Field Name="PageCaption">
+          <DataField>PageCaption</DataField>
+        </Field>
+        <Field Name="SalesHeaderNoCaption">
+          <DataField>SalesHeaderNoCaption</DataField>
+        </Field>
+        <Field Name="ShiptoAddrCaption">
+          <DataField>ShiptoAddrCaption</DataField>
+        </Field>
+        <Field Name="ShipToAddr1">
+          <DataField>ShipToAddr1</DataField>
+        </Field>
+        <Field Name="ShipToAddr2">
+          <DataField>ShipToAddr2</DataField>
+        </Field>
+        <Field Name="ShipToAddr3">
+          <DataField>ShipToAddr3</DataField>
+        </Field>
+        <Field Name="ShipToAddr4">
+          <DataField>ShipToAddr4</DataField>
+        </Field>
+        <Field Name="ShipToAddr5">
+          <DataField>ShipToAddr5</DataField>
+        </Field>
+        <Field Name="ShipToAddr6">
+          <DataField>ShipToAddr6</DataField>
+        </Field>
+        <Field Name="ShipToAddr7">
+          <DataField>ShipToAddr7</DataField>
+        </Field>
+        <Field Name="ShipToAddr8">
+          <DataField>ShipToAddr8</DataField>
+        </Field>
+        <Field Name="Lig_NoLigne">
+          <DataField>Lig_NoLigne</DataField>
+        </Field>
+        <Field Name="Lig_NoArticle">
+          <DataField>Lig_NoArticle</DataField>
+        </Field>
+        <Field Name="Lig_Designation">
+          <DataField>Lig_Designation</DataField>
+        </Field>
+        <Field Name="Lig_Quantite">
+          <DataField>Lig_Quantite</DataField>
+        </Field>
+        <Field Name="Lig_QuantiteFormat">
+          <DataField>Lig_QuantiteFormat</DataField>
+        </Field>
+        <Field Name="Lig_Phase">
+          <DataField>Lig_Phase</DataField>
+        </Field>
+        <Field Name="Lig_NoCdeFournisseur">
+          <DataField>Lig_NoCdeFournisseur</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -18,627 +190,16 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>19.40594cm</Width>
+                  <Width>28.55107cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>3.86495cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Rectangle Name="Rectangle13">
-                          <ReportItems>
-                            <Tablix Name="Tablix1">
-                              <TablixBody>
-                                <TablixColumns>
-                                  <TablixColumn>
-                                    <Width>3.94303cm</Width>
-                                  </TablixColumn>
-                                  <TablixColumn>
-                                    <Width>4.88674cm</Width>
-                                  </TablixColumn>
-                                </TablixColumns>
-                                <TablixRows>
-                                  <TablixRow>
-                                    <Height>0.47788cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox22">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!LabelNoLocationName_SalesHeader.Value</Value>
-                                                    <Style>
-                                                      <FontStyle>Normal</FontStyle>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                      <TextDecoration>Underline</TextDecoration>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox19</rd:DefaultName>
-                                            <ZIndex>1</ZIndex>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>3pt</PaddingLeft>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox30">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>="A DEFINIR"</Value>
-                                                    <Style>
-                                                      <FontStyle>Normal</FontStyle>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style />
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox18</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>3pt</PaddingLeft>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                </TablixRows>
-                              </TablixBody>
-                              <TablixColumnHierarchy>
-                                <TablixMembers>
-                                  <TablixMember />
-                                  <TablixMember />
-                                </TablixMembers>
-                              </TablixColumnHierarchy>
-                              <TablixRowHierarchy>
-                                <TablixMembers>
-                                  <TablixMember />
-                                </TablixMembers>
-                              </TablixRowHierarchy>
-                              <Top>0.07433cm</Top>
-                              <Left>0.22065cm</Left>
-                              <Height>0.47788cm</Height>
-                              <Width>8.82977cm</Width>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                              </Style>
-                            </Tablix>
-                          </ReportItems>
-                          <KeepTogether>true</KeepTogether>
-                          <ZIndex>10</ZIndex>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Rectangle>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>3.80255cm</Height>
+                  <Height>0.07938cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Rectangle Name="Rectangle8">
-                          <ReportItems>
-                            <Rectangle Name="Rectangle11">
-                              <ReportItems>
-                                <Textbox Name="CustAddr35">
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!ShipToAddr1.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                            <FontWeight>Bold</FontWeight>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <Top>0.80424cm</Top>
-                                  <Left>0.30195cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>231.68172pt</Width>
-                                  <Style>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="CustAddr45">
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!ShipToAddr2.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <Top>1.26285cm</Top>
-                                  <Left>0.30195cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>231.68172pt</Width>
-                                  <ZIndex>1</ZIndex>
-                                  <Style>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="CustAddr55">
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!ShipToAddr3.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <Top>1.72146cm</Top>
-                                  <Left>0.30195cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>231.68172pt</Width>
-                                  <ZIndex>2</ZIndex>
-                                  <Style>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="CustAddr65">
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!ShipToAddr4.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <Top>2.14479cm</Top>
-                                  <Left>0.30195cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>231.68172pt</Width>
-                                  <ZIndex>3</ZIndex>
-                                  <Style>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="CustAddr76">
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!ShipToAddr5.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <Top>2.56812cm</Top>
-                                  <Left>0.30195cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>231.68172pt</Width>
-                                  <ZIndex>4</ZIndex>
-                                  <Style>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="Textbox86">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!ShipToAddr6.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox17</rd:DefaultName>
-                                  <Top>2.99145cm</Top>
-                                  <Left>0.30195cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>8.17322cm</Width>
-                                  <ZIndex>5</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Line Name="Line5">
-                                  <Top>0.81138cm</Top>
-                                  <Height>0cm</Height>
-                                  <Width>8.54843cm</Width>
-                                  <ZIndex>6</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>Solid</Style>
-                                    </Border>
-                                  </Style>
-                                </Line>
-                                <Textbox Name="CustAddr77">
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!ShiptoAddrCaption.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                            <FontWeight>Bold</FontWeight>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style>
-                                        <TextAlign>Left</TextAlign>
-                                      </Style>
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <Top>0.06313cm</Top>
-                                  <Left>0.32466cm</Left>
-                                  <Height>0.6cm</Height>
-                                  <Width>231.62423pt</Width>
-                                  <ZIndex>7</ZIndex>
-                                  <Style>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                              </ReportItems>
-                              <KeepTogether>true</KeepTogether>
-                              <Top>0.07027cm</Top>
-                              <Left>10.74442cm</Left>
-                              <Height>3.41478cm</Height>
-                              <Width>8.54876cm</Width>
-                              <Style>
-                                <Border>
-                                  <Style>Solid</Style>
-                                </Border>
-                              </Style>
-                            </Rectangle>
-                            <Rectangle Name="Rectangle12">
-                              <ReportItems>
-                                <Textbox Name="Textbox28">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!CustAddr1.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                            <FontWeight>Bold</FontWeight>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox3</rd:DefaultName>
-                                  <Top>0.83951cm</Top>
-                                  <Left>0.25623cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>7.93949cm</Width>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="Textbox90">
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!CustAddr2.Value</Value>
-                                          <Style>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox3</rd:DefaultName>
-                                  <Top>1.26284cm</Top>
-                                  <Left>0.25623cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>7.93949cm</Width>
-                                  <ZIndex>1</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="Textbox91">
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!CustAddr3.Value</Value>
-                                          <Style>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox3</rd:DefaultName>
-                                  <Top>1.72145cm</Top>
-                                  <Left>0.25623cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>7.93949cm</Width>
-                                  <ZIndex>2</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="Textbox92">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!CustAddr4.Value</Value>
-                                          <Style>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox3</rd:DefaultName>
-                                  <Top>2.14478cm</Top>
-                                  <Left>0.23844cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>7.93949cm</Width>
-                                  <ZIndex>3</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="Textbox93">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!CustAddr5.Value</Value>
-                                          <Style>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox3</rd:DefaultName>
-                                  <Top>2.56812cm</Top>
-                                  <Left>0.23844cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>7.93949cm</Width>
-                                  <ZIndex>4</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Textbox Name="Textbox94">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!CustAddr6.Value</Value>
-                                          <Style>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox3</rd:DefaultName>
-                                  <Top>2.99145cm</Top>
-                                  <Left>0.22065cm</Left>
-                                  <Height>12pt</Height>
-                                  <Width>7.93949cm</Width>
-                                  <ZIndex>5</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                                <Line Name="Line6">
-                                  <Top>0.74111cm</Top>
-                                  <Height>0cm</Height>
-                                  <Width>8.79712cm</Width>
-                                  <ZIndex>6</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>Solid</Style>
-                                    </Border>
-                                  </Style>
-                                </Line>
-                                <Textbox Name="Textbox95">
-                                  <CanGrow>true</CanGrow>
-                                  <KeepTogether>true</KeepTogether>
-                                  <Paragraphs>
-                                    <Paragraph>
-                                      <TextRuns>
-                                        <TextRun>
-                                          <Value>=Fields!BilltoAddrCaption.Value</Value>
-                                          <Style>
-                                            <FontStyle>Normal</FontStyle>
-                                            <FontFamily>Segoe UI</FontFamily>
-                                            <FontSize>9pt</FontSize>
-                                            <FontWeight>Bold</FontWeight>
-                                          </Style>
-                                        </TextRun>
-                                      </TextRuns>
-                                      <Style />
-                                    </Paragraph>
-                                  </Paragraphs>
-                                  <rd:DefaultName>Textbox16</rd:DefaultName>
-                                  <Top>0.03528cm</Top>
-                                  <Left>0.25623cm</Left>
-                                  <Height>0.6cm</Height>
-                                  <Width>7.9217cm</Width>
-                                  <ZIndex>7</ZIndex>
-                                  <Style>
-                                    <Border>
-                                      <Style>None</Style>
-                                    </Border>
-                                    <VerticalAlign>Middle</VerticalAlign>
-                                    <PaddingLeft>3pt</PaddingLeft>
-                                  </Style>
-                                </Textbox>
-                              </ReportItems>
-                              <KeepTogether>true</KeepTogether>
-                              <Top>0.07027cm</Top>
-                              <Height>3.41478cm</Height>
-                              <Width>8.79712cm</Width>
-                              <ZIndex>1</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>Solid</Style>
-                                </Border>
-                                <TopBorder>
-                                  <Color>Black</Color>
-                                  <Style>Solid</Style>
-                                  <Width>1pt</Width>
-                                </TopBorder>
-                                <BottomBorder>
-                                  <Color>Black</Color>
-                                  <Style>Solid</Style>
-                                  <Width>1pt</Width>
-                                </BottomBorder>
-                                <LeftBorder>
-                                  <Color>Black</Color>
-                                  <Style>Solid</Style>
-                                  <Width>1pt</Width>
-                                </LeftBorder>
-                                <RightBorder>
-                                  <Color>Black</Color>
-                                  <Style>Solid</Style>
-                                  <Width>1pt</Width>
-                                </RightBorder>
-                              </Style>
-                            </Rectangle>
-                          </ReportItems>
                           <KeepTogether>true</KeepTogether>
                           <ZIndex>14</ZIndex>
                           <Style>
@@ -731,7 +292,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>6.83499cm</Height>
+                  <Height>2.15187cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -775,8 +336,105 @@
                                             </Paragraphs>
                                             <ZIndex>8</ZIndex>
                                             <Visibility>
-                                              <Hidden>=Code.SetData(Cstr(Fields!CustAddr1.Value) + Chr(177) +Cstr(Fields!CustAddr2.Value) + Chr(177) +Cstr(Fields!CustAddr3.Value) + Chr(177) +Cstr(Fields!CustAddr4.Value) + Chr(177) +Cstr(Fields!CustAddr5.Value) + Chr(177) +Cstr(Fields!CustAddr6.Value) + Chr(177) +Cstr(Fields!CustAddr7.Value) + Chr(177) +Cstr(Fields!CustAddr8.Value) + Chr(177) +Cstr(Fields!CompanyAddr1.Value) + Chr(177) +Cstr(Fields!CompanyAddr2.Value) + Chr(177) +Cstr(Fields!CompanyAddr3.Value) + Chr(177) +Cstr(Fields!CompanyAddr4.Value) + Chr(177) +Cstr(Fields!CompanyAddr5.Value) + Chr(177) +Cstr(Fields!CompanyAddr6.Value) + Chr(177) +Cstr(Fields!SalesCopyText.Value) + Chr(177) +Cstr(Fields!CompanyInfoPhoneNo.Value) + Chr(177) +Cstr(Fields!CompanyInfoHomePage.Value) + Chr(177) +Cstr(Fields!CompanyInfoEmail.Value) + Chr(177) +Cstr(Fields!CompanyInfoVATRegNo.Value) + Chr(177) + Cstr(Fields!CompanyInfoRegNo.Value) + Chr(177) +Cstr(Fields!SelltoCustNo_SalesHeader.Value) + Chr(177) +Cstr(Fields!BilltoCustNo_SalesHeader.Value) + Chr(177) +Cstr(Fields!VATRegNo_SalesHeader.Value) + Chr(177) +Cstr(Fields!SalesPurchPersonName.Value) + Chr(177) +Cstr(Fields!ExternalDocumentNo_SalesHeader.Value) + Chr(177) +Cstr(Fields!SalesPurchPersonEMail.Value) + Chr(177) + 
-Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Value) + Chr(177) + "" + Chr(177) +Cstr(Fields!CompanyInfoBankName.Value) + Chr(177) +Cstr(Fields!PricesInclVAT_SalesHeaderCaption.Value) + Chr(177) +Cstr(Fields!SalesHeaderNoCaption.Value) + Chr(177) + "" + Chr(177) +Cstr(Fields!BilltoCustNo_SalesHeaderCaption.Value) + Chr(177) + "" + Chr(177) + "" + Chr(177) + "" + Chr(177) + "" + Chr(177) + "" + Chr(177) + "" + Chr(177) +Cstr(Fields!ReferenceText.Value) + Chr(177) +Cstr(Fields!SalesPersonText.Value) + Chr(177) +Cstr(Fields!VATNoText.Value) + Chr(177) + Cstr(Fields!PageCaption.Value) + Chr(177) + "" + Chr(177) + "" + Chr(177) + "" + Chr(177) + Cstr(Fields!ShipmentMethodDescriptionCaption.Value) + Chr(177) +Cstr(Fields!PaymentTermsDescription.Value) + Chr(177) +Cstr(Fields!ShipmentMethodDescription.Value) + Chr(177) + "" + Chr(177) + "" + Chr(177) +Cstr(Fields!CompanyInfoFaxNo.Value) + Chr(177) +Cstr(Fields!ShipToAddr1.Value) + Chr(177) +Cstr(Fields!ShipToAddr2.Value) + Chr(177) +Cstr(Fields!ShipToAddr3.Value) + Chr(177) +Cstr(Fields!ShipToAddr4.Value) + Chr(177) +Cstr(Fields!ShipToAddr5.Value) + Chr(177) +Cstr(Fields!ShipToAddr6.Value) + Chr(177) +Cstr(Fields!ShipToAddr7.Value) + Chr(177) +Cstr(Fields!ShipToAddr8.Value) + Chr(177) +Cstr(Fields!ShiptoAddrCaption.Value) + Chr(177) +Cstr(Fields!OrderDate_SalesHeader.Value) + Chr(177) +Cstr(Fields!BillToAddr1.Value) + Chr(177) +Cstr(Fields!BillToAddr2.Value) + Chr(177) +Cstr(Fields!BillToAddr3.Value) + Chr(177) +Cstr(Fields!BillToAddr4.Value) + Chr(177) +Cstr(Fields!BillToAddr5.Value) + Chr(177) +Cstr(Fields!BillToAddr6.Value) + Chr(177) +Cstr(Fields!BillToAddr7.Value) + Chr(177) +Cstr(Fields!BillToAddr8.Value) + Chr(177) +Cstr(Fields!BilltoAddrCaption.Value) + Chr(177) + "" + Chr(177) +Cstr(Fields!QuoteNo_SalesHeader.Value) + Chr(177) + "" + Chr(177) +Cstr(Fields!SellToContact_SalesHeader.Value) + Chr(177) + "" + Chr(177) + Cstr(Fields!JobName_SalesHeader.value) + Chr(177) + "" + Chr(177) + Cstr(Fields!NoLocationName_SalesHeader.Value)+ Chr(177) +Cstr(Fields!Range_SalesHeader.value)+ Chr(177) +Cstr(Fields!Comments_SalesHeader.value)+ Chr(177) + "" + Chr(177) +Cstr(Fields!LabelNoLocationName_SalesHeader.value)+ Chr(177) + "" + Chr(177) + "" + Chr(177) +Cstr(Fields!LabelCommentaire.value)+ Chr(177) +Cstr(Fields!LabelShipmentDate.value)+ Chr(177) + "" + Chr(177) + "" + Chr(177) +Cstr(Fields!ShipmentDate.value) + Chr(177) +Cstr(Fields!ShippingAgentName.value) + Chr(177) + "" + Chr(177) + "" + Chr(177) + "" + Chr(177) + Cstr(Fields!NoLocationName_SalesHeader.Value)+ Chr(177) +Cstr(Fields!Range_SalesHeader.Value)+ Chr(177) + "" + Chr(177) +Cstr(Fields!ExternalDocumentNo_SalesHeader.Value),1)</Hidden>
+                                              <Hidden>=Code.SetData(Cstr(Fields!DateChargementPhase1.Value) + Chr(177) +
+Cstr(Fields!DateChargementPhase2.Value) + Chr(177) +
+Cstr(Fields!DateChargementPhase3.Value) + Chr(177) +
+Cstr(Fields!DateLivraisonPhase1.Value) + Chr(177) +
+Cstr(Fields!DateLivraisonPhase2.Value) + Chr(177) +
+Cstr(Fields!DateLivraisonPhase3.Value) + Chr(177) +
+Cstr(Fields!AutresPhasesTxt.Value) + Chr(177) +
+Cstr(Fields!Phase1Txt.Value) + Chr(177) +
+Cstr(Fields!Phase2Txt.Value) + Chr(177) +
+Cstr(Fields!Phase3Txt.Value) + Chr(177) +
+Cstr(Fields!CommentairesPrepaTxt.Value) + Chr(177) +
+Cstr(Fields!Version.Value) + Chr(177) +
+Cstr(Fields!DateVersion.Value) + Chr(177) +
+Cstr(Fields!ShipToContact_SalesHeader.Value) + Chr(177) +
+Cstr(Fields!SalesCopyText.Value) + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+Cstr(Fields!SalesPurchPersonName.Value) + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) + 
+Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +
+Cstr(Fields!No_SalesHeader.Value) + Chr(177) + 
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+Cstr(Fields!SalesHeaderNoCaption.Value) + Chr(177) + 
+"" + Chr(177) +
+"" + Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) +
+Cstr(Fields!ReferenceText.Value) + Chr(177) +
+Cstr(Fields!SalesPersonText.Value) + Chr(177) +
+"" + Chr(177) + 
+Cstr(Fields!PageCaption.Value) + Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) + 
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+Cstr(Fields!ShipToAddr1.Value) + Chr(177) +
+Cstr(Fields!ShipToAddr2.Value) + Chr(177) +
+Cstr(Fields!ShipToAddr3.Value) + Chr(177) +
+Cstr(Fields!ShipToAddr4.Value) + Chr(177) +
+Cstr(Fields!ShipToAddr5.Value) + Chr(177) +
+Cstr(Fields!ShipToAddr6.Value) + Chr(177) +
+Cstr(Fields!ShipToAddr7.Value) + Chr(177) +
+Cstr(Fields!ShipToAddr8.Value) + Chr(177) +
+Cstr(Fields!ShiptoAddrCaption.Value) + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) + 
+Cstr(Fields!NoLocationName_SalesHeader.Value)+ Chr(177) +
+""+ Chr(177) +
+Cstr(Fields!Comments_SalesHeader.value)+ Chr(177) + 
+"" + Chr(177) +
+Cstr(Fields!LabelNoLocationName_SalesHeader.value)+ Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) +
+Cstr(Fields!LabelCommentaire.value)+ Chr(177) +
+""+ Chr(177) + 
+"" + Chr(177) + 
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+"" + Chr(177) +
+Cstr(Fields!NoLocationName_SalesHeader.Value)+ Chr(177) +
+""+ Chr(177) + 
+"" + Chr(177) +
+"",1)</Hidden>
                                             </Visibility>
                                             <Style>
                                               <Border>
@@ -852,447 +510,6 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </Tablix>
-                            <Tablix Name="TableLines5">
-                              <TablixBody>
-                                <TablixColumns>
-                                  <TablixColumn>
-                                    <Width>1.98761in</Width>
-                                  </TablixColumn>
-                                  <TablixColumn>
-                                    <Width>2.66208in</Width>
-                                  </TablixColumn>
-                                </TablixColumns>
-                                <TablixRows>
-                                  <TablixRow>
-                                    <Height>0.67745cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox2270">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=""</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                      <FontWeight>Bold</FontWeight>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox2268</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <TopBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </TopBorder>
-                                              <LeftBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </LeftBorder>
-                                              <RightBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </RightBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                          <ColSpan>2</ColSpan>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell />
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.6cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox87">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!LabellTotalWeight.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox59</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <LeftBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </LeftBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox105">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=First(Fields!TotalNetWeight.Value) &amp; " kg"</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox93</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <RightBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </RightBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.6cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox88">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!LabelTotalGrossWeight.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox59</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <LeftBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </LeftBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox89">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!TotalGrossWeight.Value &amp; " kg"</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox50</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <RightBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </RightBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.57983cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox59">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!LabelPalette.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox58</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <LeftBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </LeftBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox19">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!PalletNumber.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox8</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <RightBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </RightBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                  <TablixRow>
-                                    <Height>0.55147cm</Height>
-                                    <TablixCells>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox60">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!LabelPackage.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox59</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <BottomBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </BottomBorder>
-                                              <LeftBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </LeftBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                      <TablixCell>
-                                        <CellContents>
-                                          <Textbox Name="Textbox101">
-                                            <CanGrow>true</CanGrow>
-                                            <KeepTogether>true</KeepTogether>
-                                            <Paragraphs>
-                                              <Paragraph>
-                                                <TextRuns>
-                                                  <TextRun>
-                                                    <Value>=Fields!PackageNumber.Value</Value>
-                                                    <Style>
-                                                      <FontFamily>Segoe UI</FontFamily>
-                                                      <FontSize>9pt</FontSize>
-                                                    </Style>
-                                                  </TextRun>
-                                                </TextRuns>
-                                                <Style>
-                                                  <TextAlign>Left</TextAlign>
-                                                </Style>
-                                              </Paragraph>
-                                            </Paragraphs>
-                                            <rd:DefaultName>Textbox93</rd:DefaultName>
-                                            <Style>
-                                              <Border>
-                                                <Style>None</Style>
-                                              </Border>
-                                              <BottomBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </BottomBorder>
-                                              <RightBorder>
-                                                <Color>Black</Color>
-                                                <Style>Solid</Style>
-                                                <Width>1pt</Width>
-                                              </RightBorder>
-                                              <VerticalAlign>Middle</VerticalAlign>
-                                              <PaddingLeft>5pt</PaddingLeft>
-                                              <PaddingRight>5pt</PaddingRight>
-                                            </Style>
-                                          </Textbox>
-                                        </CellContents>
-                                      </TablixCell>
-                                    </TablixCells>
-                                  </TablixRow>
-                                </TablixRows>
-                              </TablixBody>
-                              <TablixColumnHierarchy>
-                                <TablixMembers>
-                                  <TablixMember />
-                                  <TablixMember />
-                                </TablixMembers>
-                              </TablixColumnHierarchy>
-                              <TablixRowHierarchy>
-                                <TablixMembers>
-                                  <TablixMember>
-                                    <KeepTogether>true</KeepTogether>
-                                  </TablixMember>
-                                  <TablixMember />
-                                  <TablixMember />
-                                  <TablixMember />
-                                  <TablixMember />
-                                </TablixMembers>
-                              </TablixRowHierarchy>
-                              <KeepTogether>true</KeepTogether>
-                              <DataSetName>DataSet_Result</DataSetName>
-                              <Filters>
-                                <Filter>
-                                  <FilterExpression>=CStr(Fields!Lig_NoLigne.Value)</FilterExpression>
-                                  <Operator>GreaterThan</Operator>
-                                  <FilterValues>
-                                    <FilterValue>""</FilterValue>
-                                  </FilterValues>
-                                </Filter>
-                              </Filters>
-                              <Top>3.42936cm</Top>
-                              <Left>0.00001cm</Left>
-                              <Height>3.00875cm</Height>
-                              <Width>4.64969in</Width>
-                              <ZIndex>1</ZIndex>
-                              <Style>
-                                <FontFamily>Segoe UI</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </Tablix>
                             <Tablix Name="TableLines2">
                               <TablixBody>
                                 <TablixColumns>
@@ -1300,10 +517,10 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                     <Width>1.1in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>2.65in</Width>
+                                    <Width>2.2671in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.65in</Width>
+                                    <Width>0.98425in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
                                     <Width>0.55in</Width>
@@ -1315,7 +532,10 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                     <Width>0.8in</Width>
                                   </TablixColumn>
                                   <TablixColumn>
-                                    <Width>0.84014in</Width>
+                                    <Width>2.03806in</Width>
+                                  </TablixColumn>
+                                  <TablixColumn>
+                                    <Width>2.40252in</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -1396,14 +616,14 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="HdrQuantite">
+                                          <Textbox Name="Textbox4">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!LabelPrepQuantite.Value)</Value>
+                                                    <Value>=Fields!LabelPrepManquants.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -1416,13 +636,12 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
+                                            <rd:DefaultName>Textbox4</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
                                               </Border>
                                               <BackgroundColor>Gainsboro</BackgroundColor>
-                                              <FontFamily>Segoe UI</FontFamily>
-                                              <FontSize>8pt</FontSize>
                                               <VerticalAlign>Middle</VerticalAlign>
                                               <PaddingLeft>3pt</PaddingLeft>
                                               <PaddingRight>3pt</PaddingRight>
@@ -1504,14 +723,14 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="HdrNoPalette">
+                                          <Textbox Name="HdrQuantite">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!LabelPrepNoPalette.Value)</Value>
+                                                    <Value>=First(Fields!LabelPrepQuantite.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -1547,7 +766,7 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=First(Fields!LabelPrepManquants.Value)</Value>
+                                                    <Value>=First(Fields!LabelPrepNoPalette.Value)</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
@@ -1567,6 +786,41 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                               <BackgroundColor>Gainsboro</BackgroundColor>
                                               <FontFamily>Segoe UI</FontFamily>
                                               <FontSize>8pt</FontSize>
+                                              <VerticalAlign>Middle</VerticalAlign>
+                                              <PaddingLeft>3pt</PaddingLeft>
+                                              <PaddingRight>3pt</PaddingRight>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox1">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value>=Fields!LabelCommentaire.Value</Value>
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                      <FontWeight>Bold</FontWeight>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Center</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox1</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <BackgroundColor>Gainsboro</BackgroundColor>
                                               <VerticalAlign>Middle</VerticalAlign>
                                               <PaddingLeft>3pt</PaddingLeft>
                                               <PaddingRight>3pt</PaddingRight>
@@ -1649,18 +903,17 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DetQuantite">
+                                          <Textbox Name="Textbox5">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value>=Fields!Lig_Quantite.Value</Value>
+                                                    <Value />
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>=Fields!Lig_QuantiteFormat.Value</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -1669,12 +922,11 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
+                                            <rd:DefaultName>Textbox5</rd:DefaultName>
                                             <Style>
                                               <Border>
                                                 <Style>Solid</Style>
                                               </Border>
-                                              <FontFamily>Segoe UI</FontFamily>
-                                              <FontSize>8pt</FontSize>
                                               <VerticalAlign>Middle</VerticalAlign>
                                               <PaddingLeft>3pt</PaddingLeft>
                                               <PaddingRight>3pt</PaddingRight>
@@ -1752,22 +1004,23 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                       </TablixCell>
                                       <TablixCell>
                                         <CellContents>
-                                          <Textbox Name="DetNoPalette">
+                                          <Textbox Name="DetQuantite">
                                             <CanGrow>true</CanGrow>
                                             <KeepTogether>true</KeepTogether>
                                             <Paragraphs>
                                               <Paragraph>
                                                 <TextRuns>
                                                   <TextRun>
-                                                    <Value />
+                                                    <Value>=Fields!Lig_Quantite.Value</Value>
                                                     <Style>
                                                       <FontFamily>Segoe UI</FontFamily>
                                                       <FontSize>8pt</FontSize>
+                                                      <Format>=Fields!Lig_QuantiteFormat.Value</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
                                                 <Style>
-                                                  <TextAlign>Left</TextAlign>
+                                                  <TextAlign>Center</TextAlign>
                                                 </Style>
                                               </Paragraph>
                                             </Paragraphs>
@@ -1777,7 +1030,7 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                               </Border>
                                               <FontFamily>Segoe UI</FontFamily>
                                               <FontSize>8pt</FontSize>
-                                              <VerticalAlign>Top</VerticalAlign>
+                                              <VerticalAlign>Middle</VerticalAlign>
                                               <PaddingLeft>3pt</PaddingLeft>
                                               <PaddingRight>3pt</PaddingRight>
                                             </Style>
@@ -1818,12 +1071,46 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                                           </Textbox>
                                         </CellContents>
                                       </TablixCell>
+                                      <TablixCell>
+                                        <CellContents>
+                                          <Textbox Name="Textbox3">
+                                            <CanGrow>true</CanGrow>
+                                            <KeepTogether>true</KeepTogether>
+                                            <Paragraphs>
+                                              <Paragraph>
+                                                <TextRuns>
+                                                  <TextRun>
+                                                    <Value />
+                                                    <Style>
+                                                      <FontFamily>Segoe UI</FontFamily>
+                                                      <FontSize>8pt</FontSize>
+                                                    </Style>
+                                                  </TextRun>
+                                                </TextRuns>
+                                                <Style>
+                                                  <TextAlign>Left</TextAlign>
+                                                </Style>
+                                              </Paragraph>
+                                            </Paragraphs>
+                                            <rd:DefaultName>Textbox3</rd:DefaultName>
+                                            <Style>
+                                              <Border>
+                                                <Style>Solid</Style>
+                                              </Border>
+                                              <VerticalAlign>Top</VerticalAlign>
+                                              <PaddingLeft>3pt</PaddingLeft>
+                                              <PaddingRight>3pt</PaddingRight>
+                                            </Style>
+                                          </Textbox>
+                                        </CellContents>
+                                      </TablixCell>
                                     </TablixCells>
                                   </TablixRow>
                                 </TablixRows>
                               </TablixBody>
                               <TablixColumnHierarchy>
                                 <TablixMembers>
+                                  <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
                                   <TablixMember />
@@ -1870,8 +1157,8 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                               </Filters>
                               <Top>0.23813cm</Top>
                               <Height>1.8cm</Height>
-                              <Width>7.64014in</Width>
-                              <ZIndex>2</ZIndex>
+                              <Width>11.19193in</Width>
+                              <ZIndex>1</ZIndex>
                               <Style>
                                 <FontFamily>Segoe UI</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -1925,7 +1212,6 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                   </SortExpressions>
                   <TablixMembers>
                     <TablixMember />
-                    <TablixMember />
                     <TablixMember>
                       <Visibility>
                         <Hidden>=Fields!Comments_SalesHeader.Value=""</Hidden>
@@ -1949,27 +1235,398 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
               <ResetPageNumber>true</ResetPageNumber>
             </PageBreak>
             <Top>0.03781in</Top>
-            <Height>15.70249cm</Height>
-            <Width>19.40594cm</Width>
+            <Height>3.43125cm</Height>
+            <Width>28.55107cm</Width>
             <Style>
               <FontFamily>Segoe UI</FontFamily>
               <FontSize>8pt</FontSize>
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>15.79853cm</Height>
+        <Height>3.52729cm</Height>
         <Style>
           <FontFamily>Segoe UI</FontFamily>
           <FontSize>8pt</FontSize>
         </Style>
       </Body>
-      <Width>19.40594cm</Width>
+      <Width>28.55107cm</Width>
       <Page>
         <PageHeader>
-          <Height>4.28928cm</Height>
+          <Height>8.10599cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
+            <Textbox Name="CompanyAddr62">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Code.GetData(42,1)</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>2.81638cm</Top>
+              <Left>10.68501cm</Left>
+              <Height>10.28583pt</Height>
+              <Width>2.70784cm</Width>
+              <Style>
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="CompanyAddr64">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=code.GetData(24,1)</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>2.81638cm</Top>
+              <Left>13.46341cm</Left>
+              <Height>10.28583pt</Height>
+              <Width>5.51408cm</Width>
+              <ZIndex>1</ZIndex>
+              <Style>
+                <Border />
+                <VerticalAlign>Middle</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox46">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=code.GetData(26,1).replace("\lf\",VbCrlf)</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>3.21452cm</Top>
+              <Left>10.68501cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>8.2718cm</Width>
+              <ZIndex>2</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Rectangle Name="Rectangle11">
+              <ReportItems>
+                <Textbox Name="CustAddr35">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Fields!ShipToAddr1.Value</Value>
+                          <Style>
+                            <FontStyle>Normal</FontStyle>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <Top>0.80424cm</Top>
+                  <Left>0.30195cm</Left>
+                  <Height>12pt</Height>
+                  <Width>231.68172pt</Width>
+                  <Style>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Textbox Name="CustAddr45">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Fields!ShipToAddr2.Value</Value>
+                          <Style>
+                            <FontStyle>Normal</FontStyle>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <Top>1.26285cm</Top>
+                  <Left>0.30195cm</Left>
+                  <Height>12pt</Height>
+                  <Width>231.68172pt</Width>
+                  <ZIndex>1</ZIndex>
+                  <Style>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Textbox Name="CustAddr55">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Fields!ShipToAddr3.Value</Value>
+                          <Style>
+                            <FontStyle>Normal</FontStyle>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <Top>1.72146cm</Top>
+                  <Left>0.30195cm</Left>
+                  <Height>12pt</Height>
+                  <Width>231.68172pt</Width>
+                  <ZIndex>2</ZIndex>
+                  <Style>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Textbox Name="CustAddr65">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Fields!ShipToAddr4.Value</Value>
+                          <Style>
+                            <FontStyle>Normal</FontStyle>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <Top>2.14479cm</Top>
+                  <Left>0.30195cm</Left>
+                  <Height>12pt</Height>
+                  <Width>231.68172pt</Width>
+                  <ZIndex>3</ZIndex>
+                  <Style>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Textbox Name="CustAddr76">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Fields!ShipToAddr5.Value</Value>
+                          <Style>
+                            <FontStyle>Normal</FontStyle>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <Top>2.56812cm</Top>
+                  <Left>0.30195cm</Left>
+                  <Height>12pt</Height>
+                  <Width>231.68172pt</Width>
+                  <ZIndex>4</ZIndex>
+                  <Style>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox86">
+                  <CanGrow>true</CanGrow>
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Fields!ShipToAddr6.Value</Value>
+                          <Style>
+                            <FontStyle>Normal</FontStyle>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style />
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox17</rd:DefaultName>
+                  <Top>2.99145cm</Top>
+                  <Left>0.30195cm</Left>
+                  <Height>12pt</Height>
+                  <Width>8.17322cm</Width>
+                  <ZIndex>5</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Line Name="Line5">
+                  <Top>0.81138cm</Top>
+                  <Height>0cm</Height>
+                  <Width>8.54843cm</Width>
+                  <ZIndex>6</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>Solid</Style>
+                    </Border>
+                  </Style>
+                </Line>
+                <Textbox Name="CustAddr77">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Fields!ShiptoAddrCaption.Value</Value>
+                          <Style>
+                            <FontStyle>Normal</FontStyle>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                            <FontWeight>Bold</FontWeight>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Left</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <Top>0.06313cm</Top>
+                  <Left>0.32466cm</Left>
+                  <Height>0.6cm</Height>
+                  <Width>231.62423pt</Width>
+                  <ZIndex>7</ZIndex>
+                  <Style>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Textbox Name="CompanyAddr63">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>="Contact : " + Code.Getdata(14,1)</Value>
+                          <Style>
+                            <FontStyle>Normal</FontStyle>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Left</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <Top>3.55589cm</Top>
+                  <Left>0.30195cm</Left>
+                  <Height>10.28583pt</Height>
+                  <Width>8.17322cm</Width>
+                  <ZIndex>8</ZIndex>
+                  <Style>
+                    <VerticalAlign>Middle</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+              </ReportItems>
+              <KeepTogether>true</KeepTogether>
+              <Top>0.0644cm</Top>
+              <Left>19.95234cm</Left>
+              <Height>4.13108cm</Height>
+              <Width>8.54876cm</Width>
+              <ZIndex>3</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+              </Style>
+            </Rectangle>
+            <Textbox Name="CompanyAddr65">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=code.GetData(11,1)</Value>
+                      <Style>
+                        <FontStyle>Normal</FontStyle>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <Top>4.53304cm</Top>
+              <Left>10.69074cm</Left>
+              <Height>96.28042pt</Height>
+              <Width>17.73677cm</Width>
+              <ZIndex>4</ZIndex>
+              <Style>
+                <Border />
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
             <Rectangle Name="Rectangle1">
               <ReportItems>
                 <Textbox Name="Textbox2">
@@ -1979,7 +1636,7 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                     <Paragraph>
                       <TextRuns>
                         <TextRun>
-                          <Value>=code.GetData(75,1) + " " + code.GetData(63,1)</Value>
+                          <Value>="Version " + code.GetData(12,1) + " - " + code.GetData(13,1)</Value>
                           <Style>
                             <FontSize>14pt</FontSize>
                             <FontWeight>Bold</FontWeight>
@@ -2068,10 +1725,11 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                 </Textbox>
               </ReportItems>
               <KeepTogether>true</KeepTogether>
-              <Top>0.07062cm</Top>
-              <Left>10.69163cm</Left>
+              <Top>0.09489cm</Top>
+              <Left>10.44575cm</Left>
               <Height>2.61566cm</Height>
               <Width>8.51106cm</Width>
+              <ZIndex>5</ZIndex>
               <Style>
                 <Border>
                   <Style>Solid</Style>
@@ -2079,31 +1737,649 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                 <BackgroundColor>Gainsboro</BackgroundColor>
               </Style>
             </Rectangle>
-            <Image Name="CompanyInfoPicture">
-              <Source>Database</Source>
-              <Value>=Convert.ToBase64String(Fields!CompanyInfoPicture.Value)</Value>
-              <MIMEType>image/bmp</MIMEType>
-              <Sizing>FitProportional</Sizing>
-              <Top>0.07062cm</Top>
-              <Height>106.55748pt</Height>
-              <Width>8.75032cm</Width>
-              <ZIndex>1</ZIndex>
-              <DataElementOutput>NoOutput</DataElementOutput>
+            <Rectangle Name="Rectangle6">
+              <ReportItems>
+                <Textbox Name="Textbox52">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Code.Getdata(6,1)</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                            <TextDecoration>None</TextDecoration>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox20</rd:DefaultName>
+                  <Top>1.18271cm</Top>
+                  <Left>0.17639cm</Left>
+                  <Height>11.40338pt</Height>
+                  <Width>2.51302cm</Width>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <VerticalAlign>Top</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox51">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Code.Getdata(5,1)</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                            <TextDecoration>None</TextDecoration>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox20</rd:DefaultName>
+                  <Top>0.6746cm</Top>
+                  <Left>0.17639cm</Left>
+                  <Height>11.40338pt</Height>
+                  <Width>2.51302cm</Width>
+                  <ZIndex>1</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <VerticalAlign>Top</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+                <Textbox Name="Textbox50">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>=Code.Getdata(4,1)</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                            <TextDecoration>None</TextDecoration>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox20</rd:DefaultName>
+                  <Top>0.1312cm</Top>
+                  <Left>0.17639cm</Left>
+                  <Height>11.40338pt</Height>
+                  <Width>2.51302cm</Width>
+                  <ZIndex>2</ZIndex>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <VerticalAlign>Top</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+              </ReportItems>
+              <KeepTogether>true</KeepTogether>
+              <Top>0.97733cm</Top>
+              <Left>5.96101cm</Left>
+              <Height>1.92762cm</Height>
+              <Width>2.90927cm</Width>
+              <ZIndex>6</ZIndex>
               <Style>
-                <Border />
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <RightBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </RightBorder>
               </Style>
-            </Image>
-            <Textbox Name="CompanyAddr62">
+            </Rectangle>
+            <Rectangle Name="Rectangle5">
+              <KeepTogether>true</KeepTogether>
+              <Top>0.96742cm</Top>
+              <Left>3.12055cm</Left>
+              <Height>1.92762cm</Height>
+              <Width>2.84046cm</Width>
+              <ZIndex>7</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <RightBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </RightBorder>
+              </Style>
+            </Rectangle>
+            <Rectangle Name="Rectangle3">
+              <KeepTogether>true</KeepTogether>
+              <Top>0.96742cm</Top>
+              <Left>0.31606cm</Left>
+              <Height>1.92762cm</Height>
+              <Width>2.80449cm</Width>
+              <ZIndex>8</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <RightBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </RightBorder>
+              </Style>
+            </Rectangle>
+            <Textbox Name="Textbox47">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=Code.GetData(42,1)</Value>
+                      <Value>=Code.GetData(1,1)</Value>
                       <Style>
-                        <FontStyle>Normal</FontStyle>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>9pt</FontSize>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>1.07325cm</Top>
+              <Left>3.12055cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>2.19552cm</Width>
+              <ZIndex>9</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox48">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Code.Getdata(2,1)</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>1.65193cm</Top>
+              <Left>3.12055cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>2.19552cm</Width>
+              <ZIndex>10</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox49">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Code.Getdata(3,1)</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>2.19532cm</Top>
+              <Left>3.12055cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>2.19552cm</Width>
+              <ZIndex>11</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox53">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Code.Getdata(8,1)</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>1.07325cm</Top>
+              <Left>0.59848cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>2.22998cm</Width>
+              <ZIndex>12</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox54">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Code.Getdata(9,1)</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>1.65193cm</Top>
+              <Left>0.59848cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>2.22998cm</Width>
+              <ZIndex>13</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox55">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Code.Getdata(10,1)</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>2.19532cm</Top>
+              <Left>0.59848cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>2.22998cm</Width>
+              <ZIndex>14</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Rectangle Name="Rectangle4">
+              <ReportItems>
+                <Textbox Name="Textbox56">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value EvaluationMode="Constant">PHASE :</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                            <TextDecoration>None</TextDecoration>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox20</rd:DefaultName>
+                  <Top>0.26215cm</Top>
+                  <Left>0.28242cm</Left>
+                  <Height>11.40338pt</Height>
+                  <Width>2.19552cm</Width>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <VerticalAlign>Top</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+              </ReportItems>
+              <KeepTogether>true</KeepTogether>
+              <Top>0.12659cm</Top>
+              <Left>0.31606cm</Left>
+              <Height>0.84083cm</Height>
+              <Width>2.80449cm</Width>
+              <ZIndex>15</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <RightBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </RightBorder>
+              </Style>
+            </Rectangle>
+            <Rectangle Name="Rectangle7">
+              <ReportItems>
+                <Textbox Name="Textbox57">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Date chargt :</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                            <TextDecoration>None</TextDecoration>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox20</rd:DefaultName>
+                  <Top>0.26568cm</Top>
+                  <Left>0.19558cm</Left>
+                  <Height>11.40338pt</Height>
+                  <Width>2.31681cm</Width>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <VerticalAlign>Top</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+              </ReportItems>
+              <KeepTogether>true</KeepTogether>
+              <Top>0.12306cm</Top>
+              <Left>3.11068cm</Left>
+              <Height>0.84083cm</Height>
+              <Width>2.85033cm</Width>
+              <ZIndex>16</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <RightBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </RightBorder>
+              </Style>
+            </Rectangle>
+            <Rectangle Name="Rectangle9">
+              <ReportItems>
+                <Textbox Name="Textbox58">
+                  <KeepTogether>true</KeepTogether>
+                  <Paragraphs>
+                    <Paragraph>
+                      <TextRuns>
+                        <TextRun>
+                          <Value>Date liv :</Value>
+                          <Style>
+                            <FontFamily>Segoe UI</FontFamily>
+                            <FontSize>9pt</FontSize>
+                            <TextDecoration>None</TextDecoration>
+                          </Style>
+                        </TextRun>
+                      </TextRuns>
+                      <Style>
+                        <TextAlign>Center</TextAlign>
+                      </Style>
+                    </Paragraph>
+                  </Paragraphs>
+                  <rd:DefaultName>Textbox20</rd:DefaultName>
+                  <Top>0.26568cm</Top>
+                  <Left>0.18219cm</Left>
+                  <Height>11.40338pt</Height>
+                  <Width>2.19552cm</Width>
+                  <Style>
+                    <Border>
+                      <Style>None</Style>
+                    </Border>
+                    <VerticalAlign>Top</VerticalAlign>
+                    <PaddingLeft>3pt</PaddingLeft>
+                  </Style>
+                </Textbox>
+              </ReportItems>
+              <KeepTogether>true</KeepTogether>
+              <Top>0.12306cm</Top>
+              <Left>5.96101cm</Left>
+              <Height>0.84083cm</Height>
+              <Width>2.90927cm</Width>
+              <ZIndex>17</ZIndex>
+              <Style>
+                <Border>
+                  <Style>Solid</Style>
+                </Border>
+                <TopBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </TopBorder>
+                <BottomBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </BottomBorder>
+                <LeftBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </LeftBorder>
+                <RightBorder>
+                  <Color>Black</Color>
+                  <Style>Solid</Style>
+                  <Width>1pt</Width>
+                </RightBorder>
+              </Style>
+            </Rectangle>
+            <Textbox Name="Textbox59">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=Code.Getdata(7,1)</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <TextDecoration>None</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Center</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>3.06437cm</Top>
+              <Left>0.31606cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>7.83603cm</Width>
+              <ZIndex>18</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox60">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>Commentaires Prépa :</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
                       </Style>
                     </TextRun>
                   </TextRuns>
@@ -2112,53 +2388,27 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>2.86267cm</Top>
-              <Left>10.65717cm</Left>
-              <Height>12pt</Height>
-              <Width>2.70784cm</Width>
-              <ZIndex>2</ZIndex>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>3.9837cm</Top>
+              <Left>10.69074cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>4.21436cm</Width>
+              <ZIndex>19</ZIndex>
               <Style>
-                <VerticalAlign>Middle</VerticalAlign>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
                 <PaddingLeft>3pt</PaddingLeft>
               </Style>
             </Textbox>
-            <Textbox Name="CompanyAddr64">
+            <Textbox Name="Textbox61">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>=code.GetData(24,1)</Value>
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>9pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>2.89285cm</Top>
-              <Left>13.43557cm</Left>
-              <Height>12pt</Height>
-              <Width>5.76712cm</Width>
-              <ZIndex>3</ZIndex>
-              <Style>
-                <Border />
-                <VerticalAlign>Middle</VerticalAlign>
-                <PaddingLeft>3pt</PaddingLeft>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox46">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=code.GetData(26,1).replace("\lf\",VbCrlf)</Value>
+                      <Value>=code.GetData(80,1)</Value>
                       <Style>
                         <FontFamily>Segoe UI</FontFamily>
                         <FontSize>9pt</FontSize>
@@ -2170,11 +2420,43 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox20</rd:DefaultName>
-              <Top>3.40192cm</Top>
-              <Left>10.74442cm</Left>
+              <Top>4.53304cm</Top>
+              <Left>0.31606cm</Left>
               <Height>11.40338pt</Height>
-              <Width>8.45827cm</Width>
-              <ZIndex>4</ZIndex>
+              <Width>10.01337cm</Width>
+              <ZIndex>20</ZIndex>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <VerticalAlign>Top</VerticalAlign>
+                <PaddingLeft>3pt</PaddingLeft>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox62">
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>=code.GetData(84,1)</Value>
+                      <Style>
+                        <FontFamily>Segoe UI</FontFamily>
+                        <FontSize>9pt</FontSize>
+                        <FontWeight>Bold</FontWeight>
+                        <TextDecoration>Underline</TextDecoration>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox20</rd:DefaultName>
+              <Top>3.9837cm</Top>
+              <Left>0.31606cm</Left>
+              <Height>11.40338pt</Height>
+              <Width>4.51003cm</Width>
+              <ZIndex>21</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -2190,41 +2472,10 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>0.74523cm</Height>
+          <Height>0.56444cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Textbox Name="Footer6">
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=Globals!ExecutionTime</Value>
-                      <Style>
-                        <FontStyle>Italic</FontStyle>
-                        <FontFamily>Segoe UI</FontFamily>
-                        <FontSize>8pt</FontSize>
-                        <Format>d</Format>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Left</TextAlign>
-                    <LineHeight>6pt</LineHeight>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <Top>0.39243cm</Top>
-              <Height>10pt</Height>
-              <Width>5.04852cm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <VerticalAlign>Middle</VerticalAlign>
-              </Style>
-            </Textbox>
             <Textbox Name="PageNumberTextBox">
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
@@ -2244,11 +2495,10 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <Top>0.32187cm</Top>
-              <Left>14.51904cm</Left>
+              <Top>0.10583cm</Top>
+              <Left>24.74551cm</Left>
               <Height>12pt</Height>
               <Width>3.80556cm</Width>
-              <ZIndex>1</ZIndex>
               <Style>
                 <Border />
                 <VerticalAlign>Middle</VerticalAlign>
@@ -2262,13 +2512,13 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
             </Border>
           </Style>
         </PageFooter>
-        <PageHeight>29.7cm</PageHeight>
-        <PageWidth>21cm</PageWidth>
+        <PageHeight>21cm</PageHeight>
+        <PageWidth>29.7cm</PageWidth>
         <InteractiveHeight>11in</InteractiveHeight>
         <InteractiveWidth>8.5in</InteractiveWidth>
-        <LeftMargin>1cm</LeftMargin>
+        <LeftMargin>0.5cm</LeftMargin>
         <RightMargin>0.5cm</RightMargin>
-        <TopMargin>0.5cm</TopMargin>
+        <TopMargin>1cm</TopMargin>
         <BottomMargin>0.5cm</BottomMargin>
         <ColumnSpacing>1.27cm</ColumnSpacing>
         <Style>
@@ -2278,6 +2528,12 @@ Cstr(Fields!TitreDocumentFRALbl.Value)+ Chr(177) +Cstr(Fields!No_SalesHeader.Val
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParametersLayout>
+    <GridLayoutDefinition>
+      <NumberOfColumns>4</NumberOfColumns>
+      <NumberOfRows>2</NumberOfRows>
+    </GridLayoutDefinition>
+  </ReportParametersLayout>
   <Code>Public Function BlankZero(ByVal Value As Decimal)
     if Value = 0 then
         Return ""
@@ -2373,368 +2629,4 @@ End Function
   <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>
   <rd:ReportID>1c018c53-9485-45b8-86c3-49eb2763c85f</rd:ReportID>
-  <DataSets>
-    <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="DocType_SalesHeader">
-          <DataField>DocType_SalesHeader</DataField>
-        </Field>
-        <Field Name="No_SalesHeader">
-          <DataField>No_SalesHeader</DataField>
-        </Field>
-        <Field Name="Version">
-          <DataField>Version</DataField>
-        </Field>
-        <Field Name="SelltoCustNo_SalesHeader">
-          <DataField>SelltoCustNo_SalesHeader</DataField>
-        </Field>
-        <Field Name="BilltoCustNo_SalesHeader">
-          <DataField>BilltoCustNo_SalesHeader</DataField>
-        </Field>
-        <Field Name="DocDate_SalesHeader">
-          <DataField>DocDate_SalesHeader</DataField>
-        </Field>
-        <Field Name="ExternalDocumentNo_SalesHeader">
-          <DataField>ExternalDocumentNo_SalesHeader</DataField>
-        </Field>
-        <Field Name="SellToContact_SalesHeader">
-          <DataField>SellToContact_SalesHeader</DataField>
-        </Field>
-        <Field Name="ExitPoint_SalesHeader">
-          <DataField>ExitPoint_SalesHeader</DataField>
-        </Field>
-        <Field Name="QuoteNo_SalesHeader">
-          <DataField>QuoteNo_SalesHeader</DataField>
-        </Field>
-        <Field Name="VATRegNo_SalesHeader">
-          <DataField>VATRegNo_SalesHeader</DataField>
-        </Field>
-        <Field Name="ShipmentMethodDescriptionCaption">
-          <DataField>ShipmentMethodDescriptionCaption</DataField>
-        </Field>
-        <Field Name="OrderDate_SalesHeader">
-          <DataField>OrderDate_SalesHeader</DataField>
-        </Field>
-        <Field Name="JobName_SalesHeader">
-          <DataField>JobName_SalesHeader</DataField>
-        </Field>
-        <Field Name="ShipmentDate">
-          <DataField>ShipmentDate</DataField>
-        </Field>
-        <Field Name="Comments_SalesHeader">
-          <DataField>Comments_SalesHeader</DataField>
-        </Field>
-        <Field Name="Range_SalesHeader">
-          <DataField>Range_SalesHeader</DataField>
-        </Field>
-        <Field Name="LabelNoLocationName_SalesHeader">
-          <DataField>LabelNoLocationName_SalesHeader</DataField>
-        </Field>
-        <Field Name="NoLocationName_SalesHeader">
-          <DataField>NoLocationName_SalesHeader</DataField>
-        </Field>
-        <Field Name="LabelCommentaire">
-          <DataField>LabelCommentaire</DataField>
-        </Field>
-        <Field Name="LabelShipmentDate">
-          <DataField>LabelShipmentDate</DataField>
-        </Field>
-        <Field Name="LabellTotalWeight">
-          <DataField>LabellTotalWeight</DataField>
-        </Field>
-        <Field Name="LabelTotalGrossWeight">
-          <DataField>LabelTotalGrossWeight</DataField>
-        </Field>
-        <Field Name="LabelPalette">
-          <DataField>LabelPalette</DataField>
-        </Field>
-        <Field Name="PackageNumber">
-          <DataField>PackageNumber</DataField>
-        </Field>
-        <Field Name="PackageNumberFormat">
-          <DataField>PackageNumberFormat</DataField>
-        </Field>
-        <Field Name="PalletNumber">
-          <DataField>PalletNumber</DataField>
-        </Field>
-        <Field Name="PalletNumberFormat">
-          <DataField>PalletNumberFormat</DataField>
-        </Field>
-        <Field Name="TotalNetWeight">
-          <DataField>TotalNetWeight</DataField>
-        </Field>
-        <Field Name="TotalNetWeightFormat">
-          <DataField>TotalNetWeightFormat</DataField>
-        </Field>
-        <Field Name="TotalGrossWeight">
-          <DataField>TotalGrossWeight</DataField>
-        </Field>
-        <Field Name="TotalGrossWeightFormat">
-          <DataField>TotalGrossWeightFormat</DataField>
-        </Field>
-        <Field Name="LabelPackage">
-          <DataField>LabelPackage</DataField>
-        </Field>
-        <Field Name="LabelPrepNoArticle">
-          <DataField>LabelPrepNoArticle</DataField>
-        </Field>
-        <Field Name="LabelPrepDesignation">
-          <DataField>LabelPrepDesignation</DataField>
-        </Field>
-        <Field Name="LabelPrepQuantite">
-          <DataField>LabelPrepQuantite</DataField>
-        </Field>
-        <Field Name="LabelPrepPhase">
-          <DataField>LabelPrepPhase</DataField>
-        </Field>
-        <Field Name="LabelPrepNoCdeFourn">
-          <DataField>LabelPrepNoCdeFourn</DataField>
-        </Field>
-        <Field Name="LabelPrepNoPalette">
-          <DataField>LabelPrepNoPalette</DataField>
-        </Field>
-        <Field Name="LabelPrepManquants">
-          <DataField>LabelPrepManquants</DataField>
-        </Field>
-        <Field Name="CompanyInfoPicture">
-          <DataField>CompanyInfoPicture</DataField>
-        </Field>
-        <Field Name="SalesCopyText">
-          <DataField>SalesCopyText</DataField>
-        </Field>
-        <Field Name="TitreDocumentFRALbl">
-          <DataField>TitreDocumentFRALbl</DataField>
-        </Field>
-        <Field Name="CustAddr1">
-          <DataField>CustAddr1</DataField>
-        </Field>
-        <Field Name="CustAddr2">
-          <DataField>CustAddr2</DataField>
-        </Field>
-        <Field Name="CustAddr3">
-          <DataField>CustAddr3</DataField>
-        </Field>
-        <Field Name="CustAddr4">
-          <DataField>CustAddr4</DataField>
-        </Field>
-        <Field Name="CustAddr5">
-          <DataField>CustAddr5</DataField>
-        </Field>
-        <Field Name="CustAddr6">
-          <DataField>CustAddr6</DataField>
-        </Field>
-        <Field Name="CustAddr7">
-          <DataField>CustAddr7</DataField>
-        </Field>
-        <Field Name="CustAddr8">
-          <DataField>CustAddr8</DataField>
-        </Field>
-        <Field Name="CompanyAddr1">
-          <DataField>CompanyAddr1</DataField>
-        </Field>
-        <Field Name="CompanyAddr2">
-          <DataField>CompanyAddr2</DataField>
-        </Field>
-        <Field Name="CompanyAddr3">
-          <DataField>CompanyAddr3</DataField>
-        </Field>
-        <Field Name="CompanyAddr4">
-          <DataField>CompanyAddr4</DataField>
-        </Field>
-        <Field Name="CompanyAddr5">
-          <DataField>CompanyAddr5</DataField>
-        </Field>
-        <Field Name="CompanyAddr6">
-          <DataField>CompanyAddr6</DataField>
-        </Field>
-        <Field Name="CompanyInfoName">
-          <DataField>CompanyInfoName</DataField>
-        </Field>
-        <Field Name="CompanyInfoAddress">
-          <DataField>CompanyInfoAddress</DataField>
-        </Field>
-        <Field Name="CompanyInfoPostCode">
-          <DataField>CompanyInfoPostCode</DataField>
-        </Field>
-        <Field Name="CompanyInfoCity">
-          <DataField>CompanyInfoCity</DataField>
-        </Field>
-        <Field Name="CompanyInfoPhoneNo">
-          <DataField>CompanyInfoPhoneNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoFaxNo">
-          <DataField>CompanyInfoFaxNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoVATRegNo">
-          <DataField>CompanyInfoVATRegNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoRegNo">
-          <DataField>CompanyInfoRegNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoGiroNo">
-          <DataField>CompanyInfoGiroNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoBankName">
-          <DataField>CompanyInfoBankName</DataField>
-        </Field>
-        <Field Name="CompanyInfoHomePage">
-          <DataField>CompanyInfoHomePage</DataField>
-        </Field>
-        <Field Name="CompanyInfoEmail">
-          <DataField>CompanyInfoEmail</DataField>
-        </Field>
-        <Field Name="CompanyInfoBankAccountNo">
-          <DataField>CompanyInfoBankAccountNo</DataField>
-        </Field>
-        <Field Name="CompanyInfoTradeRegister">
-          <DataField>CompanyInfoTradeRegister</DataField>
-        </Field>
-        <Field Name="CompanyInfoLegalForm">
-          <DataField>CompanyInfoLegalForm</DataField>
-        </Field>
-        <Field Name="CompanyInfoStockCapital">
-          <DataField>CompanyInfoStockCapital</DataField>
-        </Field>
-        <Field Name="CompanyInfoAPECode">
-          <DataField>CompanyInfoAPECode</DataField>
-        </Field>
-        <Field Name="CompanyInfoIBAN">
-          <DataField>CompanyInfoIBAN</DataField>
-        </Field>
-        <Field Name="CompanyInfoSWIFTCode">
-          <DataField>CompanyInfoSWIFTCode</DataField>
-        </Field>
-        <Field Name="CompanyInfoCountryCode">
-          <DataField>CompanyInfoCountryCode</DataField>
-        </Field>
-        <Field Name="VATNoText">
-          <DataField>VATNoText</DataField>
-        </Field>
-        <Field Name="SalesPersonText">
-          <DataField>SalesPersonText</DataField>
-        </Field>
-        <Field Name="SalesPurchPersonName">
-          <DataField>SalesPurchPersonName</DataField>
-        </Field>
-        <Field Name="SalesPurchPersonEMail">
-          <DataField>SalesPurchPersonEMail</DataField>
-        </Field>
-        <Field Name="ReferenceText">
-          <DataField>ReferenceText</DataField>
-        </Field>
-        <Field Name="OutputNo">
-          <DataField>OutputNo</DataField>
-        </Field>
-        <Field Name="PageCaption">
-          <DataField>PageCaption</DataField>
-        </Field>
-        <Field Name="PaymentTermsDescription">
-          <DataField>PaymentTermsDescription</DataField>
-        </Field>
-        <Field Name="ShipmentMethodDescription">
-          <DataField>ShipmentMethodDescription</DataField>
-        </Field>
-        <Field Name="ShippingAgentName">
-          <DataField>ShippingAgentName</DataField>
-        </Field>
-        <Field Name="DateChargement">
-          <DataField>DateChargement</DataField>
-        </Field>
-        <Field Name="CompanyInfoVATRegNoCaption">
-          <DataField>CompanyInfoVATRegNoCaption</DataField>
-        </Field>
-        <Field Name="SalesHeaderNoCaption">
-          <DataField>SalesHeaderNoCaption</DataField>
-        </Field>
-        <Field Name="CompanyInfoEmailCaption">
-          <DataField>CompanyInfoEmailCaption</DataField>
-        </Field>
-        <Field Name="BilltoCustNo_SalesHeaderCaption">
-          <DataField>BilltoCustNo_SalesHeaderCaption</DataField>
-        </Field>
-        <Field Name="PricesInclVAT_SalesHeaderCaption">
-          <DataField>PricesInclVAT_SalesHeaderCaption</DataField>
-        </Field>
-        <Field Name="ShiptoAddrCaption">
-          <DataField>ShiptoAddrCaption</DataField>
-        </Field>
-        <Field Name="ShipToAddr1">
-          <DataField>ShipToAddr1</DataField>
-        </Field>
-        <Field Name="ShipToAddr2">
-          <DataField>ShipToAddr2</DataField>
-        </Field>
-        <Field Name="ShipToAddr3">
-          <DataField>ShipToAddr3</DataField>
-        </Field>
-        <Field Name="ShipToAddr4">
-          <DataField>ShipToAddr4</DataField>
-        </Field>
-        <Field Name="ShipToAddr5">
-          <DataField>ShipToAddr5</DataField>
-        </Field>
-        <Field Name="ShipToAddr6">
-          <DataField>ShipToAddr6</DataField>
-        </Field>
-        <Field Name="ShipToAddr7">
-          <DataField>ShipToAddr7</DataField>
-        </Field>
-        <Field Name="ShipToAddr8">
-          <DataField>ShipToAddr8</DataField>
-        </Field>
-        <Field Name="BilltoAddrCaption">
-          <DataField>BilltoAddrCaption</DataField>
-        </Field>
-        <Field Name="BillToAddr1">
-          <DataField>BillToAddr1</DataField>
-        </Field>
-        <Field Name="BillToAddr2">
-          <DataField>BillToAddr2</DataField>
-        </Field>
-        <Field Name="BillToAddr3">
-          <DataField>BillToAddr3</DataField>
-        </Field>
-        <Field Name="BillToAddr4">
-          <DataField>BillToAddr4</DataField>
-        </Field>
-        <Field Name="BillToAddr5">
-          <DataField>BillToAddr5</DataField>
-        </Field>
-        <Field Name="BillToAddr6">
-          <DataField>BillToAddr6</DataField>
-        </Field>
-        <Field Name="BillToAddr7">
-          <DataField>BillToAddr7</DataField>
-        </Field>
-        <Field Name="BillToAddr8">
-          <DataField>BillToAddr8</DataField>
-        </Field>
-        <Field Name="Lig_NoLigne">
-          <DataField>Lig_NoLigne</DataField>
-        </Field>
-        <Field Name="Lig_NoArticle">
-          <DataField>Lig_NoArticle</DataField>
-        </Field>
-        <Field Name="Lig_Designation">
-          <DataField>Lig_Designation</DataField>
-        </Field>
-        <Field Name="Lig_Quantite">
-          <DataField>Lig_Quantite</DataField>
-        </Field>
-        <Field Name="Lig_QuantiteFormat">
-          <DataField>Lig_QuantiteFormat</DataField>
-        </Field>
-        <Field Name="Lig_Phase">
-          <DataField>Lig_Phase</DataField>
-        </Field>
-        <Field Name="Lig_NoCdeFournisseur">
-          <DataField>Lig_NoCdeFournisseur</DataField>
-        </Field>
-      </Fields>
-      <Query>
-        <DataSourceName>DataSource</DataSourceName>
-        <CommandText />
-      </Query>
-    </DataSet>
-  </DataSets>
 </Report>

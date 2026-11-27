@@ -1199,7 +1199,7 @@ report 50006 "ABRANE : Sales - Invoice"
                 SiteName := '';
                 if "Code chantier" <> '' then begin
                     Chantier.Get("Code chantier");
-                    SiteName := Chantier."Description chantier";
+                    SiteName := Chantier."Nom chantier";
                 end else
                     if RecDimSetEntry.Get("Dimension Set ID", GLSetup."Shortcut Dimension 3 Code") then begin
                         RecDimSetEntry.CalcFields("Dimension Value Name");

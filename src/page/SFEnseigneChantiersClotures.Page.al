@@ -18,12 +18,14 @@ page 50086 "SF Enseigne-Chantiers clotures"
                 {
                     ToolTip = 'Code';
                 }
+                /*
                 field("Description chantier"; Rec."Description chantier")
                 {
                     ToolTip = 'Description chantier';
                     Style = Unfavorable;
                     StyleExpr = Impaye;
                 }
+                */
                 field("Chantier a verifier (>=2020)"; Rec."Chantier a verifier (>=2020)")
                 {
                     ToolTip = 'Chantier à vérifier (>=2020)';

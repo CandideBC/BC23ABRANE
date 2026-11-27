@@ -201,7 +201,7 @@ table 50025 Enseigne
                         Chantier."Code enseigne" := Code;
                         Chantier."Prefixe chantier" := "Prefixe chantier";
                         Chantier."Chantier Prototypes" := true;
-                        Chantier."Description chantier" := 'PROTOTYPES';
+                        //Chantier."Description chantier" := 'PROTOTYPES';
                         Chantier."Nom chantier" := 'PROTOTYPES';
                         Chantier.Insert();
                     end;
@@ -215,8 +215,8 @@ table 50025 Enseigne
                         Chantier."Code enseigne" := Code;
                         Chantier."Prefixe chantier" := "Prefixe chantier";
                         Chantier."Chantier destruction" := true;
-                        Chantier."Description chantier" := 'DESTRUCTION ' + Code;
-                        Chantier."Nom chantier" := Chantier."Description chantier";
+                        Chantier."Nom chantier" := 'DESTRUCTION ' + Code;
+                        //Chantier."Nom chantier" := Chantier."Description chantier";
                         Chantier.Insert();
                     end;
                     //KAN.FHA 10/01/2024 FIN

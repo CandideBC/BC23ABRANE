@@ -32,7 +32,7 @@ table 50018 TamponTriLignesDocument
             Caption = 'Acheté pour phase (si unique)';
             DataClassification = ToBeClassified;
         }
-        
+
         field(50; "Creer nouvelle commande"; Boolean)
         {
             Caption = 'Créer nouvelle commande';
@@ -69,7 +69,7 @@ table 50018 TamponTriLignesDocument
             Caption = 'Code pays d''origine';
             DataClassification = ToBeClassified;
         }
-        
+
         field(105; "Code magasin"; Code[20])
         {
             Caption = 'Code magasin';
@@ -91,6 +91,18 @@ table 50018 TamponTriLignesDocument
         {
             Caption = 'Code variante';
         }
+        field(117; "Prepa sur stock"; Boolean) //Champ rempli pour les bons de préparation uniquement. Vaut Oui si toute la quantité n'est pas achetée.
+        {
+            Caption = 'Prépa sur stock';
+        }
+        field(118; "Article divers"; Boolean) //Champ rempli pour les bons de préparation uniquement.
+        {
+            Caption = 'Article divers';
+        }
+        field(119; "Infos prepa"; Text[100]) //Champ rempli pour les bons de préparation uniquement.
+        {
+            Caption = 'Article divers';
+        }
         field(120; Quantite; Decimal)
         {
             Caption = 'Quantite';
@@ -100,7 +112,7 @@ table 50018 TamponTriLignesDocument
             Caption = 'Prix achat prévu';
             DataClassification = ToBeClassified;
         }
-        
+
         field(200; Description; Text[100])
         {
             Caption = 'Description';
@@ -130,7 +142,7 @@ table 50018 TamponTriLignesDocument
         {
         }
         //KAN.FHA 02/11/2026 FIN
-        
+
 
     }
     keys
@@ -143,15 +155,15 @@ table 50018 TamponTriLignesDocument
         {
 
         }
-        key(MyKey2; "Code utilisateur", "Creer nouvelle commande","Type Document", "No. fournisseur", Type, "No.", "Code Variante")
+        key(MyKey2; "Code utilisateur", "Creer nouvelle commande", "Type Document", "No. fournisseur", Type, "No.", "Code Variante")
         {
 
         }
-        key(MyKey3; "Code utilisateur","Creer nouvelle commande","Ajouter a la cde No.",Type,"No.","Code variante")
+        key(MyKey3; "Code utilisateur", "Creer nouvelle commande", "Ajouter a la cde No.", Type, "No.", "Code variante")
         {
-            
+
         }
-        key(MyKey4; "Code utilisateur", "Type document", "No. document", "No. ligne")
+        key(MyKey4; "Code utilisateur", "Type document", "No. document", "Prepa sur stock", "No. ligne")
         {
         }
 

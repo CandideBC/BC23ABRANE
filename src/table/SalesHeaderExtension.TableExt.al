@@ -454,6 +454,9 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
 
                 if Chantier.GET("Code chantier") then begin
                     Chantier.TESTFIELD(Cloture, false);
+                    //KAN.FHA 26/11/2026 DEBUT
+                    "No. And Location Name" := Chantier."Nom chantier";
+                    //KAN.FHA 26/11/2026 FIN
                     VALIDATE("Code enseigne", Chantier."Code enseigne");
                     if ("Document Type" = "Document Type"::Quote) and (Chantier."Statut chantier" in [Chantier."Statut chantier"::Création, Chantier."Statut chantier"::Terminé]) then begin
                         Chantier."Statut chantier" := Chantier."Statut chantier"::Devis;
@@ -2518,7 +2521,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         EnteteFactureVente."Acompte pour No. document" := "No.";
         EnteteFactureVente."Facture acompte" := true;
         EnteteFactureVente.VALIDATE("Payment Terms Code", "Code cond. paiement acomptes");
-        txtLibelleEcriture := STRSUBSTNO(LibelleEcritureLbl, FORMAT("% acompte demande"), NumDoc, Chantier."Description chantier", "Sell-to Customer Name");
+        txtLibelleEcriture := STRSUBSTNO(LibelleEcritureLbl, FORMAT("% acompte demande"), NumDoc, Chantier."Nom chantier", "Sell-to Customer Name");
         EnteteFactureVente."Posting Description" := COPYSTR(txtLibelleEcriture, 1, 50);
         EnteteFactureVente."External Document No." := "External Document No.";
         if "Document Type" = "Document Type"::Quote then
@@ -3827,6 +3830,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
         Tri: Integer;
     begin
         Tri := ChoisirTri();
+        Rec.EtablirSuiviAchats();
         Rec.RemplirLignesBonPrepa(Tri);
         Commit();
         EnteteVente.SETRANGE("Document Type", Rec."Document Type");
@@ -3850,21 +3854,25 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
     var
         TableTampon: Record TamponTriLignesDocument;
         LigneVente: Record "Sales Line";
+        TamponSuiviAchatsDocument: Record TamponAffectationsDocVente;
+        QteAchetee: Decimal;
         NumLigne: Integer;
         NumLigneDocCumul: Integer;
         CodeUtil: Text[50];
+        ListeCF: Text[100];
+        ListeCFTropLongueLbl: Label '... + Autres ...';
+        NouvelleListeCF: Text[200];
         LignesCumulees: Dictionary of [Text, Integer];
         CleCumul: Text;
     begin
         CodeUtil := CopyStr(UserId, 1, 50);
         TableTampon.SetRange("Code utilisateur", CodeUtil);
         TableTampon.DELETEALL();
-        case pTri of 
+        case pTri of
             1:
                 LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase, NumArtDuplique);
             2:
                 LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Phase, DescriptionDuplique);
-            //3: LigneVente.SetCurrentKey(TypeDocDuplique, NumDocDuplique, "Article a coliser", Description);
             else
                 exit;
         end;
@@ -3895,6 +3903,7 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                         TableTampon.Description := LigneVente.Description;
                         TableTampon.Quantite := LigneVente."Qty. to Ship";
                         TableTampon.Phase := LigneVente.Phase;
+                        TableTampon."Article divers" := LigneVente."Article divers";
                         TableTampon.Insert();
                         if not LigneVente."Article divers" then
                             LignesCumulees.Add(CleCumul, LigneVente."Line No.");
@@ -3902,6 +3911,52 @@ tableextension 50013 SalesHeaderExtension extends "Sales Header"
                     end;
                 end;
             until LigneVente.Next() = 0;
+            Commit();
+            //KAN.FHA 26/11/2026 DEBUT
+            //On va maintenant parcourir toutes les lignes de la table tampon pour comparer la quantité à préparer avec la quantité achetée
+            //Si tout est acheté, on indiqué les N° commandes achat en face de chaque article.
+            //Si une partie est achetée et l'autre prise sur stock, on dit "Stock+liste des commandes fournisseurs"
+            //Si rien n'est acheté, on dit "Stock".
+            //Pour info, les lignes dont au moins une partie est prise sur stock apparaitront en premier sur le bon de prépa.
+            //Au début de l'action "ImprimerBP", on appelle la fonction EtablirSuiviAchats() qui s'occupe de lister les quantités achetées par
+            //article. C'est cette table qu'on va utiliser ici.
+            TableTampon.Reset();
+            TableTampon.SetRange("Code utilisateur", CodeUtil);
+            TableTampon.setrange("Type document", Format(Rec."Document Type"));
+            TableTampon.SetRange("No. document", Rec."No.");
+            if TableTampon.FindSet(true) then begin
+                TamponSuiviAchatsDocument.Reset();
+                TamponSuiviAchatsDocument.SetCurrentKey("Code utilisateur", "No. article achete");
+                TamponSuiviAchatsDocument.SetRange("Code utilisateur", CodeUtil);
+                repeat
+                    QteAchetee := 0;
+                    ListeCF := '';
+                    if not TableTampon."Article divers" then begin
+                        TamponSuiviAchatsDocument.SetRange("No. article achete", TableTampon."No.");
+                        if TamponSuiviAchatsDocument.FindSet(false) then
+                            repeat
+                                QteAchetee := QteAchetee + TamponSuiviAchatsDocument."Quantite affectee";
+                                if ListeCF = '' then
+                                    ListeCF := TamponSuiviAchatsDocument."No. commande achat"
+                                else begin
+                                    NouvelleListeCF := ListeCF + '-' + TamponSuiviAchatsDocument."No. commande achat";
+                                    if StrLen(NouvelleListeCF) > 80 then
+                                        ListeCF := copystr(ListeCF + ListeCFTropLongueLbl, 1, 100) //Copystr juste pour eviter l'alerte CodeCop 
+                                    else
+                                        ListeCF := CopyStr(NouvelleListeCF, 1, 100) //Copystr juste pour eviter l'alerte CodeCop;
+                                end;
+                            until TamponSuiviAchatsDocument.Next() = 0;
+                        if QteAchetee < TableTampon.Quantite then begin
+                            TableTampon."Infos prepa" := 'Stock';
+                            if ListeCF <> '' then
+                                TableTampon."Infos prepa" := copystr(TableTampon."Infos prepa" + '+' + ListeCF, 1, 100);
+                        end else
+                            TableTampon."Infos prepa" := copystr(ListeCF, 1, 100);
+                        TableTampon.Modify();
+                    end;
+                until TableTampon.Next() = 0;
+            end;
+            //KAN.FHA 26/11/2026 FIN
         end;
     end;
 }

@@ -21,10 +21,7 @@ page 50083 "Liste des chantiers"
                 {
                     ToolTip = 'Code';
                 }
-                field("Description chantier"; Rec."Description chantier")
-                {
-                    ToolTip = 'Description chantier';
-                }
+
                 field("Annee du chantier"; Rec."Annee du chantier")
                 {
                     Caption = 'Année du chantier';

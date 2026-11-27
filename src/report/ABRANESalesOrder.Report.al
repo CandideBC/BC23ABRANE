@@ -1544,7 +1544,7 @@ report 50005 "ABRANE : Sales - Order"
                 SiteName := '';
                 if "Code chantier" <> '' then begin
                     Chantier.Get("Code chantier");
-                    SiteName := Chantier."Description chantier";
+                    SiteName := Chantier."Nom chantier";
                 end;
 
                 MentionEcoContribution := '';

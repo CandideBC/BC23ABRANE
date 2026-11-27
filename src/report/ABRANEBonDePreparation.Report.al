@@ -19,8 +19,12 @@ report 50012 "ABRANE : bon de preparation"
             column(No_SalesHeader; "No.")
             {
             }
-            column(Version; "No. of Archived Versions")
+            column(Version; NoVersionDernArchive)
             {
+            }
+            column(DateVersion; DateDernArchive)
+            {
+                
             }
             column(DocDate_SalesHeader; "Order Date")
             {
@@ -34,10 +38,10 @@ report 50012 "ABRANE : bon de preparation"
             column(CommentairesPrepaTxt; CommentairesPrepaTxt)
             {
             }
-            column(LabelNoLocationName_SalesHeader; LabelNoLocationNameLbl)
+            column(LabelNoLocationName_SalesHeader; NomChantierLbl)
             {
             }
-            column(NoLocationName_SalesHeader; "No. And Location Name")
+            column(NoLocationName_SalesHeader; NomChantier)
             {
             }
             column(LabelCommentaire; CommentaireLbl)
@@ -117,9 +121,7 @@ report 50012 "ABRANE : bon de preparation"
                 dataitem(PageLoop; "Integer")
                 {
                     DataItemTableView = sorting(Number) where(Number = const(1));
-                    column(CompanyInfoPicture; CompanyInfo.Picture)
-                    {
-                    }
+
                     column(SalesCopyText; SalesCopyTextTxt)
                     {
                     }
@@ -145,8 +147,6 @@ report 50012 "ABRANE : bon de preparation"
                     column(PageCaption; PageCaptionLbl)
                     {
                     }
-
-
                     column(SalesHeaderNoCaption; SalesHeaderNoCaptionLbl)
                     {
                     }
@@ -183,7 +183,7 @@ report 50012 "ABRANE : bon de preparation"
 
                     dataitem(Lignes; TamponTriLignesDocument)
                     {
-                        DataItemTableView = sorting("Code utilisateur", "Type document", "No. document", "No. ligne");
+                        DataItemTableView = sorting("Code utilisateur", "Type document", "No. document","Prepa sur stock", "No. ligne");
                         column(Lig_NoLigne; "No. ligne")
                         {
                         }
@@ -201,7 +201,7 @@ report 50012 "ABRANE : bon de preparation"
                         column(Lig_Phase; Phase)
                         {
                         }
-                        column(Lig_NoCdeFournisseur; NoCdeFournisseur)
+                        column(InfosPrepa; InfosPrepa)
                         {
                         }
 
@@ -245,12 +245,19 @@ report 50012 "ABRANE : bon de preparation"
                 else
                     SalesCopyTextTxt := 'Devis';
 
-                CompanyInfo.Get();
-                CompanyInfo.CalcFields(Picture);
 
                 CommentairesPrepaTxt := GetCommentairesPrepa();
+                RecupInfosDerniereArchive(MontantDernArchive, NoVersionDernArchive, DateDernArchive);
 
-                //FormatAddr.Company(CompanyAddr, CompanyInfo);
+                //KAN.FHA 26/11/2026 DEBUT
+                NomChantier := '';
+                if "No. And Location Name" <> '' then
+                    NomChantier := "No. And Location Name"
+                else 
+                    if "Code chantier" <> '' then
+                        if Chantier.get("Code chantier") then
+                            NomChantier := Chantier."Nom chantier"; 
+                //KAN.FHA 26/11/2026 FIN
 
                 if "Salesperson Code" = '' then begin
                     Clear(SalesPurchPerson);
@@ -332,9 +339,9 @@ report 50012 "ABRANE : bon de preparation"
 
     var
         SalesPurchPerson: Record "Salesperson/Purchaser";
-        CompanyInfo: Record "Company Information";
         SalesSetup: Record "Sales & Receivables Setup";
         PhasesDocument: Record "Phases document";
+        Chantier: Record chantier;
         FormatAddr: Codeunit "Format Address";
         ShipToAddr: array[8] of Text[100];
         CustAddr: array[8] of Text[100];
@@ -350,10 +357,9 @@ report 50012 "ABRANE : bon de preparation"
         PageCaptionLbl: Label 'Page';
         SalesHeaderNoCaptionLbl: Label 'No.';
         ShiptoAddrCaptionLbl: Label 'Adresse de livraison';
-        LabelNoLocationNameLbl: Label 'Magasin :';
+        NomChantierLbl: Label 'Magasin :';
         CommentaireLbl: Label 'Commentaires : ';
         TotalWeightLbl: Label 'Poids net total';
-        //MarchandiseLbl: Label 'Product Information';
         SalesCopyTextTxt: Text[100];
         NoCdeFournisseur: Text[100];
         NoArticleLbl: Label 'N° article';
@@ -379,7 +385,12 @@ report 50012 "ABRANE : bon de preparation"
         NbPhases: Integer;
         AutresPhasesLbl: Label 'Autres phases : voir récap infos achat';
         AutresPhasesTxt: Text[80];
+        NomChantier: Text[50];
+        InfosPrepa: Text[80];
         CommentairesPrepaTxt: Text;
+        MontantDernArchive: Decimal;
+        NoVersionDernArchive : integer; 
+        DateDernArchive: Date;
 
 
     procedure GetImprimerSuite(): Boolean

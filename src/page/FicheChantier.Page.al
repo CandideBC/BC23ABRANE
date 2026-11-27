@@ -33,10 +33,12 @@ page 50084 "Fiche chantier"
                 {
                     ToolTip = 'Nom du chantier';
                 }
+                /*
                 field("Description chantier"; Rec."Description chantier")
                 {
                     ToolTip = 'Description du chantier';
                 }
+                */
                 field("Adresse chantier"; Rec."Adresse chantier")
                 {
                     ToolTip = 'Adresse du chantier';

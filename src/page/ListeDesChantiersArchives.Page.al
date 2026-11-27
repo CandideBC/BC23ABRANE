@@ -21,10 +21,12 @@ page 50087 "Liste des chantiers archives"
                 {
                     ToolTip = 'Code';
                 }
+                /*
                 field("Description chantier"; Rec."Description chantier")
                 {
                     ToolTip = 'Description chantier';
                 }
+                */
                 field("Date derniere facture vte"; Rec."Date derniere facture vte")
                 {
                     ToolTip = 'Date derniere facture vte';

@@ -25,7 +25,7 @@ table 50031 "Mes Chantiers"
         }
         field(10; "Nom du chantier"; Text[50])
         {
-            CalcFormula = lookup (Chantier."Description chantier" where (Code = field ("Code chantier")));
+            CalcFormula = lookup (Chantier."Nom chantier" where (Code = field ("Code chantier")));
             Editable = false;
             FieldClass = FlowField;
         }

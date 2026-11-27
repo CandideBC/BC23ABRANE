@@ -86,15 +86,12 @@ table 50027 Chantier
             Editable = false;
             FieldClass = FlowField;
         }
+        /*
         field(20; "Description chantier"; Text[50])
         {
             Caption = 'Description chantier';
-
-            trigger OnValidate()
-            begin
-                MAJAnalytiqueChantier();
-            end;
         }
+        */
         field(30; "Filtre date"; Date)
         {
             FieldClass = FlowFilter;
@@ -624,7 +621,7 @@ table 50027 Chantier
 
     fieldgroups
     {
-        fieldgroup(DropDown; "Code", "Description chantier", "Nom chantier")
+        fieldgroup(DropDown; "Code", "Nom chantier")
         {
         }
     }
@@ -652,7 +649,6 @@ table 50027 Chantier
 
         "Activer rentabilite" := true;
 
-        MAJAnalytiqueChantier();
     end;
 
     trigger OnModify()
@@ -829,24 +825,7 @@ table 50027 Chantier
         end;
     end;
 
-    procedure MAJAnalytiqueChantier()
-    var
-        DimensionValue: Record "Dimension Value";
-        GLSetup: Record "General Ledger Setup";
-    begin
-        GLSetup.Get();
-        if GLSetup."Shortcut Dimension 3 Code" = '' then //Axe CHANTIER
-            exit;
 
-        if not DimensionValue.Get(GLSetup."Shortcut Dimension 3 Code", Code) then begin
-            DimensionValue.Init();
-            DimensionValue."Dimension Code" := GLSetup."Shortcut Dimension 3 Code";
-            DimensionValue.Code := Code;
-            DimensionValue.Insert();
-        end;
-        DimensionValue.Name := "Description chantier";
-        DimensionValue.Modify();
-    end;
 
     procedure FactureNonSoldee(): Boolean
     var

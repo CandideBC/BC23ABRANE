@@ -86,18 +86,10 @@ table 50012 "Etiquettes palettes"
         field(140; "Code postal chantier"; Code[20])
         {
             Caption = 'Code postal chantier';
-            //This property is currently not supported
-            //TestTableRelation = false;
-            //The property 'ValidateTableRelation' can only be set if the property 'TableRelation' is set
-            //ValidateTableRelation = false;
         }
         field(150; "Ville chantier"; Text[30])
         {
             Caption = 'Ville chantier';
-            //This property is currently not supported
-            //TestTableRelation = false;
-            //The property 'ValidateTableRelation' can only be set if the property 'TableRelation' is set
-            //ValidateTableRelation = false;
         }
         field(160; "Code pays chantier"; Code[10])
         {

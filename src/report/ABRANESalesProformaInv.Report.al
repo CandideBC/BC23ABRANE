@@ -1517,7 +1517,7 @@ report 50008 "ABRANE : Sales Proforma Inv."
                 SiteName := '';
                 if "Code chantier" <> '' then begin
                     Chantier.Get("Code chantier");
-                    SiteName := Chantier."Description chantier";
+                    SiteName := Chantier."Nom chantier";
                 end;
 
                 MentionEcoContribution := '';

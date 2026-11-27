@@ -20,6 +20,7 @@ page 50082 "SF Fiche Enseigne"
                     ToolTip = 'Code';
                     Caption = 'Code';
                 }
+                /*
                 field("Description chantier"; rec."Description chantier")
                 {
                     ToolTip = 'Description chantier';
@@ -27,6 +28,7 @@ page 50082 "SF Fiche Enseigne"
                     Style = Unfavorable;
                     StyleExpr = Impaye;
                 }
+                */
                 field("Chantier a verifier (>=2020)"; rec."Chantier a verifier (>=2020)")
                 {
                     ToolTip = 'Chantier à vérifier (>=2020)';

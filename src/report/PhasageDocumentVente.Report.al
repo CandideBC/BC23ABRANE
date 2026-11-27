@@ -604,7 +604,7 @@ report 50073 "Phasage document vente"
                 SiteName := '';
                 if "Code chantier" <> '' then begin
                     Chantier.Get("Code chantier");
-                    SiteName := Chantier."Description chantier";
+                    SiteName := Chantier."Nom chantier";
                 end;
                     //KAN.FHA 16/07/2020 FIN
 

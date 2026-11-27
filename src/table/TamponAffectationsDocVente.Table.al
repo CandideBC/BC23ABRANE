@@ -14,14 +14,7 @@ table 50010 TamponAffectationsDocVente
             Caption = 'N° commande achat';
             TableRelation = "Purchase Header"."No." where("Document Type" = const(Order));
         }
-        /*
-        field(20; "No. ligne document achat"; Integer)
-        {
-            Caption = 'N° ligne document achat';
-            TableRelation = "Purchase Line"."Line No." where("Document Type" = const(Order),
-                                                              "Document No." = field("No. commande achat"));
-        }
-        */
+
         field(21; "No. article achete"; Code[20])
         {
             Caption = 'N° article acheté';
@@ -70,6 +63,10 @@ table 50010 TamponAffectationsDocVente
         key(PK; "Code utilisateur", "No. commande achat", "No. article achete")
         {
             Clustered = true;
+        }
+        key(MyKey1; "Code utilisateur", "No. article achete")
+        {
+            
         }
     }
 

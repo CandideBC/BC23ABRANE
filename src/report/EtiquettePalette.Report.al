@@ -77,17 +77,7 @@ report 50098 "Etiquette palette"
         }
     }
 
-    requestpage
-    {
 
-        layout
-        {
-        }
-
-        actions
-        {
-        }
-    }
 
     labels
     {
